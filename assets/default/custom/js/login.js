@@ -13,12 +13,11 @@ $(document).ready(function(){
                 window.location.href = result.data.url_redirect;
             },
             error: function(requestObject, error, errorThrown){
-
                 //console.log(requestObject);
                 if(requestObject.status == 401){
                     $.each(requestObject.responseJSON.error ,function(index, error){
                         if(error.name == "username"){
-                            var target = $("#form-login  input[name=" + error.name +"]").data('target-error-text');
+                            var target = $("#form-login input[name=" + error.name +"]").data('target-error-text');
                             $(target).parent().parent().removeAttr('hidden');
                             $(target).parent().parent().parent().parent().addClass('error');
                             $(target).html(error.message);
