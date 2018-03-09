@@ -1,0 +1,39 @@
+.custom-container-header{
+    background: #3f9a74;
+    padding: 10px;
+    position: relative;
+}
+
+.custom-btn-color{
+    background: #00bc8c !important;
+    color: white;
+    
+}
+/*
+.dropzone{
+    
+    border: none !important;
+}
+
+.dz-custom-input {
+    border: 1px dashed grey;
+}*/
+
+.proposal-attatchment {
+    position: relative;
+    margin: 0 auto;
+    width: 30%;
+    text-align: center;
+    top:15px;
+}
+
+#ap{
+    width: 100%;
+    border: 1px dashed grey;
+    text-align: center;
+}
+#ap:hover{
+    cursor: pointer;
+    cursor: hand;
+}
+

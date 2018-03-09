@@ -1,0 +1,68 @@
+.home-hero {
+    background-image: url('/assets/images/bg_home_hero.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-top: -10px;
+}
+.home-hero .content {
+}
+.home-hero .content .title {
+    font-size: 2.8em;
+    line-height: 1.3em;
+}
+.home-hero .content .search-form {
+    max-width: 400px;
+}
+.home-hero .bottom-content {
+    background: rgba(0, 0, 0, 0.5);
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.home-services .blurb-icon {
+    max-width: 120px;
+}
+
+.home-numbers {
+    background-image: url('/assets/images/bg_home_numbers.png'); 
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.home-numbers .efab-shape {
+    max-width: 300px;
+}
+.home-featured {
+    position: relative;
+}
+
+.home-featured .carousel-control-prev,
+.home-featured .carousel-control-next {
+    width: initial;
+}
+.home-testimonial {
+    background-image: url('/assets/images/bg_home_testimonials.jpg');
+}
+.home-testimonial .efab-shape {
+    margin-top: -20%;
+    margin-bottom: -20%;
+    background: yellow;
+}
+.home-testimonial .efab-shape .inner-content {
+    transform: translate(-50%, -50%);
+}
+
+.home-testimonial .efab-shape .quote {
+    font-size: 1.2em;
+    font-weight: 400;
+}
+
+
+/* Inner Pages */
+
+.dropdown-profile-view {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 10;
+}

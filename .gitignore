@@ -1,0 +1,6 @@
+error_log
+application/cache/*
+application/config/database\.php
+
+attached/*
+application/views/qazwsx\.php

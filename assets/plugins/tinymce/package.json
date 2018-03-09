@@ -1,0 +1,94 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "tinymce",
+        "scope": null,
+        "escapedName": "tinymce",
+        "name": "tinymce",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "C:\\Users\\Rodel Ednalan\\Desktop\\libs"
+    ]
+  ],
+  "_from": "tinymce@latest",
+  "_id": "tinymce@4.7.9",
+  "_inCache": true,
+  "_location": "/tinymce",
+  "_nodeVersion": "8.9.3",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/tinymce_4.7.9_1519737049326_0.09995611083275979"
+  },
+  "_npmUser": {
+    "name": "ephox",
+    "email": "is-accounts@ephox.com"
+  },
+  "_npmVersion": "5.5.1",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "tinymce",
+    "scope": null,
+    "escapedName": "tinymce",
+    "name": "tinymce",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/tinymce/-/tinymce-4.7.9.tgz",
+  "_shasum": "2f14934cf42ab20e6d081fd282842c24aecf1866",
+  "_shrinkwrap": null,
+  "_spec": "tinymce",
+  "_where": "C:\\Users\\Rodel Ednalan\\Desktop\\libs",
+  "author": {
+    "name": "Ephox Corporation"
+  },
+  "bugs": {
+    "url": "https://github.com/tinymce/tinymce/issues"
+  },
+  "dependencies": {},
+  "description": "Web based JavaScript HTML WYSIWYG editor control.",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "integrity": "sha512-JGN0Hn8cYINgyHTw6ztnO086hez4SIWbkny+3S5tesyvggNFg6He1GSIHPZgSB3+ydCqO8J6qhjGSIyi0LPwpQ==",
+    "shasum": "2f14934cf42ab20e6d081fd282842c24aecf1866",
+    "tarball": "https://registry.npmjs.org/tinymce/-/tinymce-4.7.9.tgz",
+    "fileCount": 185,
+    "unpackedSize": 4584614
+  },
+  "homepage": "https://github.com/tinymce/tinymce-dist#readme",
+  "keywords": [
+    "editor",
+    "wysiwyg",
+    "tinymce",
+    "richtext",
+    "javascript",
+    "html"
+  ],
+  "license": "LGPL-2.1",
+  "main": "tinymce.js",
+  "maintainers": [
+    {
+      "name": "ephox",
+      "email": "is-accounts@ephox.com"
+    },
+    {
+      "name": "spocke",
+      "email": "spocke@moxiecode.com"
+    }
+  ],
+  "name": "tinymce",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tinymce/tinymce-dist.git"
+  },
+  "version": "4.7.9"
+}

@@ -1,0 +1,24 @@
+.profile-head img{
+    height: 100px;
+    width: 100px;
+    border: 5px solid white;
+    border-radius: 100%;
+    box-shadow: 0px 1px 1px 1px grey;
+}
+.custom-container-header{
+    background: #3f9a74;
+    padding: 5px;
+    position: relative;
+}
+
+.list-group-parent{
+    list-style: none;
+}
+
+.list-group-parent li{
+    border-bottom: 1px solid #80808030;
+}
+
+.list-group-parent li:last-child{
+    border-bottom: none;
+}
