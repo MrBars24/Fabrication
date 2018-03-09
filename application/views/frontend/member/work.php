@@ -44,6 +44,12 @@
         </div>
         <div class="col-sm-6 col-sm-offset-3">
             <!-- Jobs Feeds -->
+            <div class="d-flex flex-row-reverse mt-5">
+                <div class="form-inline mt-2 mt-md-0 mb-2">
+                    <label class="mr-2">Search</label>
+                    <input class="form-control frm-search" type="text" placeholder="" aria-label="Search">
+                </div>
+            </div>
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title font-weight-bold mb-0">Job Feed</h4>
@@ -52,7 +58,7 @@
                     
                 </ul>
             </div>
-            <div class="container"></div>
+            <div class="container loader-container"></div>
         </div>
             <!-- End of Jobs Feeds -->
         <div class="col-sm-3 ">

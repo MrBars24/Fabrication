@@ -64,7 +64,7 @@ class Job_model extends MX_Model{
         return $q;
     }
 
-     function all(){
+    function all(){
          $limit = 0;
          $offset = 0;
          $search = "";
@@ -93,11 +93,29 @@ class Job_model extends MX_Model{
          }
 
          @$id = auth()->id;
-         $q = $this->getIndexDataCount("jobs",$limit,$offset,'jobs.created_at','DESC',$search_sql,'','watchlists','jobs.id=watchlists.job_id','LEFT',"jobs.*,IF(watchlists.expert_id = '$id',1,0) as is_watchlist");
+         $q = $this->getIndexDataCount("jobs",
+                $limit,
+                $offset,
+                'jobs.created_at',
+                'DESC',
+                $search_sql,
+                '',
+                'watchlists',
+                'jobs.id=watchlists.job_id','LEFT',"jobs.*,IF(watchlists.expert_id = '$id',1,0) as is_watchlist,
+                (SELECT count(*) from bids where job_id = jobs.id) as bids");
          //$q = $this->getIndexDataCount("jobs",$limit,$offset,'created_at','DESC',);
          $q['draw'] = (int)$offset;
          return $q;
-     }
+    }
+
+    function getBidCount($id){
+        $q = $this->db->select("count(*) as count")
+            ->from('bids')
+            ->where('job_id',$id)
+            ->get();
+
+        return $q->row()->count;
+    }
 
     function addWish($data){
         return $this->db->insert("watchlists",$data);

@@ -9,6 +9,7 @@
 	_options = {},
 	_pageContainer = "",
 	_search = "",
+	_is_search = false,
 	_threshold = 100,
 	_processing = false,
 	_type = null,
@@ -110,11 +111,19 @@
 						_data = JSON.parse(atob(_data_hash));
 					}
 
-					_data = _data.concat(res.data);
-					_data_hash = btoa(JSON.stringify(_data));
-					var template = _options.render(res.data);
-					_total = res.total;
-					_ref.append(template);
+					if(_is_search){
+						_data = res.data;
+						_data_hash = btoa(JSON.stringify(_data));
+						var template = _options.render(res.data);
+						_total = res.total;
+						_ref.html(template);
+					}else{
+						_data = _data.concat(res.data);
+						_data_hash = btoa(JSON.stringify(_data));
+						var template = _options.render(res.data);
+						_total = res.total;
+						_ref.append(template);
+					}
 
 					if(_loaderContainer == ''){
 						_ref.after(``);
@@ -133,6 +142,7 @@
 
 	$.fn.search = function(search){
 		_search = search;
+		_is_search = true;
 		$.fn.requestData();
 	}
 
@@ -190,6 +200,7 @@
 	});
 
 	function generatePagination(current,max){
+		if(max == 0) return;
 		current = parseInt(current);
 		$(_pageContainer).html(``);
 
