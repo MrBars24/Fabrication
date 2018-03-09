@@ -88,7 +88,7 @@
             </div>
 
         </div>
-<div class="card card-margin">
+<div class="card">
     <div class="card-body">
         <div class="card-header">
            <i class="mdi mdi-rss"></i>  <b>198 jobs found</b>
