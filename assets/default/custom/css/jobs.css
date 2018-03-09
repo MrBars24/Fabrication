@@ -24,11 +24,39 @@
 
 .custom-container-header{
     background: #3f9a74;
-    padding: 10px;
     position: relative;
+    box-shadow: 0 1px 6px rgba(57,73,76,.35);
+}
+.custom-container-pagination{
+    background: #3f9a74;
+    /* padding: 11px; */
+    padding: 15px 0 0px 0;
+    position: relative;
+    box-shadow: 0 1px 6px rgba(57,73,76,.35);
 }
 
 .chat-container {
     height: 300px;
     overflow: auto;
+}
+li.list-group-item.border-0.py-4 {
+    box-shadow: 0px 0px 3px;
+}
+
+.pagination-right{
+    float: right;
+}
+.bookmark{
+	box-shadow: 0px 0px 3px #000000;
+	background: white;
+}
+.bookmark:hover{
+	box-shadow: 0px 0px 3px;
+	background: white;
+	color:#1976d2;
+}
+.card-margin{
+	widows: 90%;
+	margin-left: 5%;
+	margin-right: 5%;
 }

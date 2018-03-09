@@ -14,7 +14,7 @@ $(document).ready(function() {
                                 <div class="col-sm-6">
                                     <h5 class="font-weight-bold mb-1">${obj.title}</h5>
                                     <p class="text-secondary">${obj.description}</p>
-                                    <a href="/jobs/${obj.id}" class="btn btn-warning text-dark mt-2 py-0 "><span class="align-middle">Job Details and Requirements</span><i class="fa fa-angle-right fa-2x align-middle ml-2"></i></a>
+                                    <a href="/jobs/${obj.id}" class="btn btn-outline-info waves-effect waves-light m-t-18"><span class="align-middle">Job Details and Requirements</span><i class="fa fa-angle-right fa-2x align-middle ml-2"></i></a>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="row">
@@ -22,7 +22,7 @@ $(document).ready(function() {
                                         <div class="col">
                                             <div class="mb2">
                                                 <small class="text-secondary mb-0">PROJECT STATUS</small>
-                                                <h6 class="text-success font-weight-bold">Open for Bidding</h6>
+                                                <h6 class="text-info font-weight-bold">Open for Bidding</h6>
                                             </div>
                                             <div class="mb2">
                                                 <small class="text-secondary mb-0">CATEGORY</small>
@@ -36,7 +36,7 @@ $(document).ready(function() {
                                         <div class="col">
                                             <div class="mb2">
                                                 <small class="text-secondary mb-0">BIDDING CLOSES</small>
-                                                <h6 class="text-success font-weight-bold"><i class="fa fa-clock"></i> ${obj.bidding_expire_at}</h6>
+                                                <h6 class="text-info font-weight-bold"><i class="fa fa-clock"></i> ${obj.bidding_expire_at}</h6>
                                             </div>
                                             <div class="mb2">
                                                 <small class="text-secondary mb-0">BIDS</small>
@@ -48,7 +48,15 @@ $(document).ready(function() {
                                             </div>
                                         </div>
                                         <div class="col-1">
-                                            <i class="fa fa-bookmark"></i>
+                                            <button class="btn btn-circle btn-sm btn-default bookmark">                                           <i class="fa fa-bookmark"></i>
+                                               
+                                            </button>
+                                        </div>
+                                        <div class="col-1">
+
+                                            <button class="btn btn-circle btn-sm btn-default bookmark">                                           <i class="mdi mdi-send"></i>
+                                               
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
