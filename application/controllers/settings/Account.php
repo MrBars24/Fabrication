@@ -11,6 +11,7 @@ class Account extends MX_Controller {
 			"assets/default/custom/js/settings/settings-training.js"
 		);
 		$this->template->set_additional_js($js);
+		
 	}
 
 	public function index(){
