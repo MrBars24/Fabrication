@@ -141,10 +141,10 @@
 		return tmp[index];
 	}
 
-	$.fn.dataFind = function(id){
+	$.fn.dataFind = function(key,value){
 		var tmp = JSON.parse(atob(_data_hash));
 		for (var i = 0; i < tmp.length; i++) {
-			if(id == tmp[i].id){
+			if(value == tmp[i][key]){
 				return tmp[i];
 			}
 		}
@@ -154,16 +154,22 @@
 
 	$.fn.dataPrepend = function(t){
 		this.prepend(t.template);
-		_data.unshift(t.data);
+		var tmp = JSON.parse(atob(_data_hash));
+		tmp.unshift(t.data);
+		_data_hash = btoa(JSON.stringify(tmp));
 	}
 
 	$.fn.dataReplace = function(t){
-		_data[t.index] = t.data;
+		var tmp = JSON.parse(atob(_data_hash));
+		tmp[t.index] = t.data;
+		_data_hash = btoa(JSON.stringify(tmp));
 		this.children().eq(t.index).replaceWith(t.template);
 	}
 
 	$.fn.dataRemove = function(index){
-		_data.splice(index, 1);
+		var tmp = JSON.parse(atob(_data_hash));
+		tmp.splice(index, 1);
+		_data_hash = btoa(JSON.stringify(tmp));
 		this.children().eq(index).remove();	
 		console.log(_data);
 	}
