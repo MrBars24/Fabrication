@@ -9,7 +9,6 @@
 	_options = {},
 	_pageContainer = "",
 	_search = "",
-	_is_search = false,
 	_threshold = 100,
 	_processing = false,
 	_type = null,
@@ -111,19 +110,11 @@
 						_data = JSON.parse(atob(_data_hash));
 					}
 
-					if(_is_search){
-						_data = res.data;
-						_data_hash = btoa(JSON.stringify(_data));
-						var template = _options.render(res.data);
-						_total = res.total;
-						_ref.html(template);
-					}else{
-						_data = _data.concat(res.data);
-						_data_hash = btoa(JSON.stringify(_data));
-						var template = _options.render(res.data);
-						_total = res.total;
-						_ref.append(template);
-					}
+					_data = _data.concat(res.data);
+					_data_hash = btoa(JSON.stringify(_data));
+					var template = _options.render(res.data);
+					_total = res.total;
+					_ref.append(template);
 
 					if(_loaderContainer == ''){
 						_ref.after(``);
@@ -142,7 +133,6 @@
 
 	$.fn.search = function(search){
 		_search = search;
-		_is_search = true;
 		$.fn.requestData();
 	}
 
@@ -151,10 +141,10 @@
 		return tmp[index];
 	}
 
-	$.fn.dataFind = function(key,value){
+	$.fn.dataFind = function(id){
 		var tmp = JSON.parse(atob(_data_hash));
 		for (var i = 0; i < tmp.length; i++) {
-			if(value == tmp[i][key]){
+			if(id == tmp[i].id){
 				return tmp[i];
 			}
 		}
@@ -164,22 +154,16 @@
 
 	$.fn.dataPrepend = function(t){
 		this.prepend(t.template);
-		var tmp = (_data_hash == "") ? JSON.parse(atob(_data_hash)) : [];
-		tmp.unshift(t.data);
-		_data_hash = btoa(JSON.stringify(tmp));
+		_data.unshift(t.data);
 	}
 
 	$.fn.dataReplace = function(t){
-		var tmp = JSON.parse(atob(_data_hash));
-		tmp[t.index] = t.data;
-		_data_hash = btoa(JSON.stringify(tmp));
+		_data[t.index] = t.data;
 		this.children().eq(t.index).replaceWith(t.template);
 	}
 
 	$.fn.dataRemove = function(index){
-		var tmp = JSON.parse(atob(_data_hash));
-		tmp.splice(index, 1);
-		_data_hash = btoa(JSON.stringify(tmp));
+		_data.splice(index, 1);
 		this.children().eq(index).remove();	
 		console.log(_data);
 	}
@@ -200,7 +184,6 @@
 	});
 
 	function generatePagination(current,max){
-		if(max == 0) return;
 		current = parseInt(current);
 		$(_pageContainer).html(``);
 

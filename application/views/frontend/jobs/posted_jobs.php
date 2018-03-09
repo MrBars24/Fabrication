@@ -12,11 +12,9 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="profiletimeline">
-                                 <?php foreach(range(0, 10) as $number): ?>
                                 <!-- Post Job List Item -->
                                 <?php $this->load->view('frontend/partials/posted_job_item') ?>
                                 <!-- End of Job List Item -->
-                                <?php endforeach; ?>
                             </div>
                         </div>
 

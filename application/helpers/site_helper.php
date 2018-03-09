@@ -8,7 +8,7 @@ function get_current_endpoint(){
 function get_nav($user=null){
 	$CI =& get_instance();
 	if(empty($user) || get_user_type()=="admin"){
-		$file = "nav";	
+		$file = "nav";
 	}else{
 		$file = "nav_".$user;
 	}
@@ -19,7 +19,43 @@ function get_user_type(){
 	if(!isset($_SESSION['user'])){
 		return FALSE;
 	}
-	
+
 	$user = $_SESSION['user'];
 	return $user->user_type;
+}
+
+function get_redir_logreg(){
+	if(isset($_SESSION['url_redirect'])){
+		redirect($_SESSION["url_redirect"]);
+	}
+}
+
+function dateNewFormat($date, $format="F j, Y"){
+	$new_date = date($format, strtotime($date));
+	return $new_date;
+}
+
+function timeNewFormat($date){
+	$start_date = new DateTime($date);
+
+	$since_start = $start_date->diff(new DateTime(date("Y-m-d h:i:s")));
+
+	if($since_start->y != 0){
+		return $since_start->y . " years" . $since_start->m . " months" . $since_start->d . " days " . $since_start->h . "hours and " . $since_start->i . "minutes ago";
+	}
+	elseif ($since_start->m != 0) {
+		return $since_start->m . "months" . $since_start->d . " days " . $since_start->h . " hours and " . $since_start->i . " minutes ago ";
+	}
+	elseif ($since_start->d != 0) {
+		return $since_start->d . " days " . $since_start->h . " hours and " . $since_start->i . " minutes ago ";
+	}
+	elseif ($since_start->h != 0) {
+		return $since_start->h . " hours and " . $since_start->i . " minutes ago";
+	}
+	elseif ($since_start->i != 0) {
+		return $since_start->i . " minutes ago ";
+	}
+	else{
+		return $since_start->s . " seconds ago ";
+	}
 }

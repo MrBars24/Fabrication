@@ -8,7 +8,7 @@ class Portfolio_model extends MX_Model{
     }
 
     function createPort(){
-        
+
         $title = $this->input->post('title');
         $description = $this->input->post('description');
         //$attached = $this->input->file ??
@@ -55,9 +55,8 @@ class Portfolio_model extends MX_Model{
             return false;
         }
     }
-    
+
     function updatePort($id){
-            
         $project_name = $this->input->post('projectname');
         $description = $this->input->post('description');
 
@@ -70,10 +69,11 @@ class Portfolio_model extends MX_Model{
     }
 
     function deletePort($id){
-
     $this->db->delete('portfolios', array('id' => $id));
     $this->db->where('id', $id);
     return $this->db->delete('portfolios');
-
     }
+
+    
+
 }

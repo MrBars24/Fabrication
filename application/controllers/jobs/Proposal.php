@@ -29,7 +29,8 @@ class Proposal extends MX_Controller {
 		$this->template->set_additional_js($js);
     }
     function submit(){
-        $this->load->model('proposal_model');
+		header("Content-Type:application/json");
+		$this->load->model('proposal_model');
         $data = array(
             'job_id' => $this->input->post('id'),
             'expert_id' => $_SESSION['user']->id,
@@ -37,9 +38,11 @@ class Proposal extends MX_Controller {
             'amount' => $this->input->post('budget')
         );
         $submitproposal = $this->proposal_model->submitProposal($data);
+		$data['user_details'] = $_SESSION['user'];
         if($submitproposal){
             return json(array(
                 'success' => TRUE,
+				'data' => $data
             ),200);
         }
         return json(array(
