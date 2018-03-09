@@ -6,8 +6,6 @@ class Admin extends MX_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->template->set_template("admin");
-		$this->template->set_additional_css(array());
-		$this->template->set_additional_js(array());
 		$this->load->model("admin/cms_model");
 	}
 
