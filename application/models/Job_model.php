@@ -77,7 +77,7 @@ class Job_model extends MX_Model{
          if(isset(auth()->id)){
              $search_sql = array(
                  'fabricator_id !=' => auth()->id,
-                 'jobs.is_deleted' => 0
+                 'is_deleted' => 0
              );
          }else{
             $search_sql = array(

@@ -56,6 +56,28 @@ $(document).ready(function() {
         }
     });
 
+    $(document).on("submit", "#form-update-job", function(e){
+        e.preventDefault();
+        var url = $(this).attr('action');
+        var data = $(this).serializeArray();
+
+        $.ajax({
+            type: 'post',
+            url: url,
+            data: data,
+            dataType: 'json',
+            success: function(data){
+                console.log(data);
+                // $.each(data, function(index, field){
+                //     $('#form-update-job [data-value-target"'${field.name}'"] ').text(field.value);
+                // });
+            },
+            error: function(){
+
+            }
+        });
+    });
+
     $(document).on("click", "#btnsearch", function(e) {
         search_job();
     });
