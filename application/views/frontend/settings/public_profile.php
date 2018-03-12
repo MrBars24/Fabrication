@@ -31,7 +31,7 @@
                                             </div>
                                             <div class="col-8">
                                                 <h5 id="public-title" class="mb-0 form-control-settings-account-hide" data-value-target="public-title"> <?= $public_details->title; ?></h5>
-                                                <input type="text" class="form-control form-control-settings-account d-none" placeholder=" <?= $public_details->title; ?>" name="public-title">
+                                                <input type="text" class="form-control form-control-settings-account d-none" name="public-title" value="<?= $public_details->title; ?>">
                                                <!-- <small class="text-muted">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Porro, iste.</small> -->
                                             </div>
                                         </div>
@@ -61,7 +61,7 @@
                                                 <span class="font-weight-bold">Overview</span>
                                             </div>
                                             <div class="col-8">
-                                                <textarea  class="form-control form-control-settings-account d-none" name="public-overview" placeholder="<?= $public_details->overview; ?>"></textarea>
+                                                <textarea  class="form-control form-control-settings-account d-none" name="public-overview" ><?= $public_details->overview; ?></textarea>
                                                 <p id="public-overview" class="mb-0 form-control-settings-account-hide" data-value-target="public-overview"><?= $public_details->overview; ?></p>
                                             </div>
                                         </div>
@@ -70,7 +70,7 @@
                                                 <span class="font-weight-bold">Service Description</span>
                                             </div>
                                             <div class="col-8">
-                                                <textarea class="form-control form-control-settings-account d-none" name="public-service" placeholder="<?= $public_details->service_description; ?>"> </textarea>
+                                                <textarea class="form-control form-control-settings-account d-none" name="public-service"> <?= $public_details->service_description; ?> </textarea>
                                                 <p id="public-service" class="mb-0 form-control-settings-account-hide" data-value-target="public-service"><?= $public_details->service_description; ?></p>
                                                 
                                             </div>
