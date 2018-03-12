@@ -57,7 +57,7 @@ class Portfolio_model extends MX_Model{
     }
 
     function updatePort($id){
-        $project_name = $this->input->post('projectname');
+        $project_name = $this->input->post('project_name');
         $description = $this->input->post('description');
 
         $data = array(
