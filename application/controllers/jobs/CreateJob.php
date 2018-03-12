@@ -1,7 +1,7 @@
 	<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class CreateJob extends CI_Controller {
+class CreateJob extends MX_Controller {
 
 	public function __construct(){
 		parent::__construct();
@@ -11,6 +11,7 @@ class CreateJob extends CI_Controller {
 	public function index(){
         $css = array(
             "assets/images/favicon.png",
+            "assets/plugins/bootstrap-select/bootstrap-select.min.css",
             "assets/plugins/timepicker/bootstrap-timepicker.min.css",
             "assets/plugins/bootstrap-daterangepicker/daterangepicker.css",
 			"assets/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css",
@@ -22,13 +23,13 @@ class CreateJob extends CI_Controller {
             "assets/plugins/moment/moment.js",
             "assets/plugins/timepicker/bootstrap-timepicker.min.js",
             "assets/plugins/bootstrap-daterangepicker/daterangepicker.js",
+			"assets/plugins/bootstrap-select/bootstrap-select.min.js",
             "assets/admin/js/post-job.js",
 			"assets/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js",
 			"assets/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js",
 			"assets/plugins/multiselect/js/jquery.multi-select.js",
 			"assets/plugins/switchery/dist/switchery.min.js",
 			"assets/plugins/select2/dist/js/select2.full.min.js",
-			"assets/plugins/bootstrap-select/bootstrap-select.min.js",
 			"assets/plugins/styleswitcher/jQuery.style.switcher.js",
 			"assets/plugins/dropify/dist/js/dropify.min.js",
 			"assets/plugins/dropzone-master/dist/dropzone.js",

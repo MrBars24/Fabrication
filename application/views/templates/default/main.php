@@ -435,8 +435,8 @@
 
     <!-- Javascript Libraries -->
     <script src="<?php echo base_url() ?>/assets/plugins/jquery/jquery.min.js" deferred></script>
-    <script src="<?php echo base_url() ?>/assets/plugins/bootstrap/js/bootstrap.min.js" ></script>
     <script src="<?php echo base_url() ?>/assets/plugins/bootstrap/js/popper.min.js" ></script>
+    <script src="<?php echo base_url() ?>/assets/plugins/bootstrap/js/bootstrap.min.js" ></script>
     <script src="<?php echo base_url() ?>/assets/default/js/jquery.slimscroll.js" ></script>
     <script src="<?php echo base_url() ?>/assets/default/js/waves.js" ></script>
     <script src="<?php echo base_url() ?>/assets/default/js/sidebarmenu.js" ></script>
