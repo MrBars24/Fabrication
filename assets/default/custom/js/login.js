@@ -10,7 +10,9 @@ $(document).ready(function(){
             data: data,
             dataType: 'json',
             success: function(result){
-                window.location.href = result.data.url_redirect;
+                if(result.success == 200){
+                    window.location.href = result.data.url_redirect;
+                }
             },
             error: function(requestObject, error, errorThrown){
                 //console.log(requestObject);
