@@ -43,9 +43,8 @@ class Work extends MX_Controller {
 			"assets/admin/custom/js/bars-datatable.js",
             "assets/default/custom/js/work.js"
         );
-
-
-        $this->template->append_css($css);
+		$var = get_redir_logreg();
+		$this->template->append_css($css);
 		$this->template->append_js($js);
         $_SESSION['dashboard'] = "hire";
         $this->template->load('frontend/member/work');
@@ -54,7 +53,7 @@ class Work extends MX_Controller {
 	public function fetchWatchlist(){
 		header("Content-Type:application/json");
 		$jobsPagination = $this->job_model->allWatch();
-		echo json_encode($jobsPagination);	
+		echo json_encode($jobsPagination);
 	}
 
 	public function addWishlist($id){

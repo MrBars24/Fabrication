@@ -4,9 +4,8 @@ $(document).ready(function() {
         pageContainer: ".pagination-jobs-bars",
         render: function(data) {
             var container = ``;
-            if (data != undefined) {
-                data.forEach(function(obj, index) {
-                    container += `<li class="list-group-item border-0 py-4" data-filter="${obj.budget}">
+            data.forEach(function(obj, index) {
+                container += `<li class="list-group-item border-0 py-4" data-filter="${obj.budget}">
                         <div class="container">
                             <div class="row">
                                 <div class="col-sm-6">
@@ -57,16 +56,7 @@ $(document).ready(function() {
                             </div>
                         </div>
                     </li>`;
-                });
-            } else {
-                container += `
-                <div class="container d-flex justify-content-center align-items-center" style="height: 100px;">
-                    <div class="row h-100 d-flex justify-content-center align-items-center">
-                        <h1 class="text-dark ">NO WATCHLIST</h1>
-                    </div>
-                </div>
-                `;
-            }
+            });
             return container;
         }
     });

@@ -24,7 +24,7 @@
 
                         <div>
                             <small class="text-muted">Bids</small>
-                            <span class="d-block icon-2x"><?= $jobdata->bidding_type ?></span>
+                            <span class="d-block icon-2x bid-count"><?= count($bids) ?></span>
                         </div>
 
                         <div>
@@ -34,7 +34,13 @@
 
                         <div>
                             <small class="text-muted">Status</small>
-                            <span class="d-block icon-2x text-primary">OPEN</span>
+                            <span class="d-block icon-2x text-primary">
+                                <?php if(date("Y-m-d") < $jobdata->bidding_expire_at): ?>
+                                    OPEN
+                                <?php else: ?>
+                                    CLOSE
+                                <?php endif; ?>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -42,8 +48,8 @@
                     <div class="row">
                         <div class="col">
                             <ul class="p-0 list-style-type-none">
-                                <li class="">Bidding Start: <span class="font-weight-bold"><?= $jobdata->bidding_start_at ?></span></li>
-                                <li class="">Expire <span class="font-weight-bold"><?= $jobdata->bidding_expire_at ?></span></li>
+                                <li class="">Bidding Start: <span class="font-weight-bold"><?= dateNewFormat($jobdata->bidding_start_at) ?></span></li>
+                                <li class="">Expire: <span class="font-weight-bold"><?= dateNewFormat($jobdata->bidding_expire_at) ?></span></li>
                             </ul>
                         </div>
                         <div class="col">
@@ -68,7 +74,7 @@
                 <div class="card-body">
                     <div>
                         <div class="float-left">
-                            <h4 class="card-title">Experts Bidding (15)</h4>
+                            <h4 class="card-title">Experts Bidding <span class="bid-count"><?= count($bids) ?></span></h4>
                         </div>
                         <div class="float-right">
                             <select name="" class="form-control">
@@ -82,7 +88,7 @@
 
 
 
-                    <ul class="list-unstyled">
+                    <ul class="list-unstyled" id="bid-container">
                         <?php foreach($bids as $bid): ?>
                             <li class="media border-0">
                                 <img class="mr-3 rounded-circle" src="http://themedesigner.in/demo/admin-press/assets/images/users/8.jpg" width="64" alt="Generic placeholder image">
@@ -90,11 +96,11 @@
                                     <div class="row">
                                         <div class="col-sm-9">
                                             <h4 class="mt-0 mb-1 font-weight-bold"><?= $bid->fullname; ?></h4>
-                                            <small class="text-muted">10 mins ago</small>
+                                            <small class="text-muted"><?= timeNewFormat($bid->created_at); ?></small>
                                         </div>
                                         <div class="col-sm-3 text-right">
-                                        <small class="">Bid</small>
-                                            <h4>$<?= $bid->amount ?></h4>
+                                        <!-- <small class="">Bid</small>
+                                            <h4>$<?= $bid->amount ?></h4> -->
                                         </div>
                                     </div>
                                 </div>
@@ -121,7 +127,7 @@
                             <h3 class="text-truncate font-weight-bold mb-0"><?= @$fabricatordata->fullname ?></h3>
                             <small class="text-muted">Client Verified</small>
 
-                            <div class="d-flex flex-column align-items-start mb-3">
+                            <!-- <div class="d-flex flex-column align-items-start mb-3">
                                 <span class="badge badge-warning px-3">4.5</span>
                                 <ul class="d-flex flex-row list-style-type-none mb-0">
                                     <li><a href="#" class="text-warning"><i class="fa fa-star"></i></a></li>
@@ -131,7 +137,7 @@
                                     <li><a href="#" class="text-warning"><i class="fa fa-star"></i></a></li>
                                 </ul>
                                 <small class="text-muted d-block">(17 reviews)</small>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
 
@@ -156,7 +162,7 @@
                             </div>
                             <div>
                                 <small class="text-muted">Member Since</small>
-                                <h4>Apr 2009</h4>
+                                <h4><?= dateNewFormat($jobdata->created_at); ?></h4>
                             </div>
                         </div>
                     </div>

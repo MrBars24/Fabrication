@@ -364,7 +364,7 @@
                             <span class="hide-menu">JOBS CATEGORY</span></a></li>
                         <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-chart-line"></i>
                             <span class="hide-menu">PROJECTS </span></a></li>
-                        <li> <a class="waves-effect waves-dark" href="/admin/news" aria-expanded="false"><i class="mdi mdi-newspaper"></i><span class="hide-menu">NEWS AND ARTICLES </span></a></li>
+                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-newspaper"></i><span class="hide-menu">NEWS AND ARTICLES </span></a></li>
                         <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-pen"></i><span class="hide-menu">BLOGS </span></a></li>
                         <li> <a class="waves-effect waves-dark" href="/admin/users" aria-expanded="false"><i class="fa fa-users"></i><span class="hide-menu">USERS </span></a></li>
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Content Menu</span></a>

@@ -77,6 +77,9 @@ class BrowseJobs extends MX_Controller {
 	}
 
 	public function postedJob() {
+		$this->load->model('job_model');
+		$myjob = $this->job_model->getMyJobs();
+		$this->template->load_sub('jobs', $myjob);
 		$this->template->load('frontend/jobs/posted_jobs');
 	}
 

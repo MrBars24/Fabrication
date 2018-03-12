@@ -39,13 +39,16 @@ class ViewJob extends MX_Controller {
 		);
 		$this->template->append_js($js);
 		$this->template->append_css($css);
-
-		$this->load->model('job_model');
+		if(!isset($_SESSION['user'])){
+			$this->session->set_userdata('url_redirect', "jobs/$id");
+			redirect('login-register', 'refresh');
+		}
+		$this->load->model('proposal_model');
 		$this->load->model('user_model');
 		$this->load->model('bid_model');
 		$getJob = $this->job_model->getJob($id);
 		$fabricatorDetails = $this->user_model->getMemberInfo($getJob->fabricator_id);
-		$getBids = $this->bid_model->getBidsByJobId($getJob->id);
+		$getBids = $this->proposal_model->getBidsByJobId($getJob->id);
 		$this->template->load_sub('bids', $getBids);
 		$this->template->load_sub('jobdata', $getJob);
 		$this->template->load_sub('fabricatordata', $fabricatorDetails);

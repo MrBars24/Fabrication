@@ -7,6 +7,7 @@ class Bid_model extends CI_Model{
     }
 
     public function getBidsByJobId($job_id) {
+        header("Content-Type:application/json");
         $query = $this->db->select('bids.*, member.id, member.fullname')
             ->join('bids', 'bids.expert_id = member.id')
             ->where('bids.is_deleted', 0)
