@@ -120,7 +120,7 @@ $route['questions-e-fab'] = 'welcome/questionsEfab';
 $route['about'] = 'welcome/about';
 $route['how-it-works/fabricator'] = 'welcome/howFabricator';
 $route['how-it-works/expert'] = 'welcome/howExpert';
-    
+
 //About
 $route['about'] = 'welcome/about';
 
@@ -137,6 +137,7 @@ $route['training/create']['POST'] = 'settings/Training/createTraining';
 // Jobs Create
 $route['jobs/create']['GET'] = 'jobs/CreateJob/index';
 $route['jobs/create']['POST'] = 'jobs/CreateJob/createJob';
+$route['jobs/update/(:num)']['POST'] = 'jobs/UpdateJob/updateJob/$1';
 $route['jobs/get']['GET'] = 'jobs/BrowseJobs/getAllJobs';
 $route['jobs/list']['GET'] = 'jobs/BrowseJobs/getAllJobsPagination';
 // Jobs
@@ -167,6 +168,7 @@ $route['jobs']['get'] = 'jobs/BrowseJobs/index';
 $route['jobs/latest']['get'] = 'jobs/LatestJobs/index';
 $route['jobs/invitations']['get'] = 'jobs/InvitationJobs/index';
 $route['jobs/my-jobs']['get'] = 'jobs/MyJob/index';
+$route['jobs/my-jobs/list']['get'] = 'jobs/MyJob/myJobsPagination';
 $route['jobs/my-jobs/(:num)']['get'] = 'jobs/Contract/show/$1';
 $route['jobs/posted']['get'] = 'jobs/BrowseJobs/postedJob';
 $route['jobs/posted/manage/(:num)']['get'] = 'jobs/BrowseJobs/postedJobView/$1';

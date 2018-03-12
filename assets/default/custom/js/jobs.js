@@ -6,7 +6,6 @@ $(document).ready(function() {
         render:function(data){
         var container = ``;
         if(data != undefined){
-            console.log(data);
         data.forEach(function(obj,index){
             container += `<li class="list-group-item border-0 py-4" data-filter="${obj.budget}">
                         <div class="container">
@@ -68,10 +67,33 @@ $(document).ready(function() {
             }
             return container;
         }
+    });
+
+    $(document).on("submit", "#form-update-job", function(e){
+        e.preventDefault();
+        var url = $(this).attr('action');
+        var data = $(this).serializeArray();
+
+        $.ajax({
+            type: 'post',
+            url: url,
+            data: data,
+            dataType: 'json',
+            success: function(data){
+                console.log(data);
+                // $.each(data, function(index, field){
+                //     $('#form-update-job [data-value-target"'${field.name}'"] ').text(field.value);
+                // });
+            },
+            error: function(){
+
+            }
         });
+    });
 
     $(document).on("click","#btnsearch",function(e){
         var search= $("#search").val();
         table.search(search);
     });
+
 });

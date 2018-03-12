@@ -11,7 +11,7 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="">
     <title>E-fab Market online - E-fab Market</title>
-    
+
     <link rel="stylesheet" href="/assets/plugins/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/default/css/style.css">
     <link rel="stylesheet" href="/assets/default/css/colors/blue.css">
@@ -444,7 +444,7 @@
     <script src="<?php echo base_url() ?>/assets/plugins/sparkline/jquery.sparkline.min.js" ></script>
     <script src="<?php echo base_url() ?>/assets/default/js/custom.min.js" ></script>
     <script src="<?php echo base_url() ?>/assets/plugins/styleswitcher/jQuery.style.switcher.js" ></script>
-    <script src="<?php echo base_url() ?>/assets/default/custom/js/login.js" ></script>-->
+    <script src="<?php echo base_url() ?>/assets/default/custom/js/login.js" ></script>
 
     <?php if(isset($add_js)){
           foreach($add_js as $js){ ?>

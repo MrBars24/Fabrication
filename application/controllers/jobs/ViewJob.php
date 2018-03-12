@@ -31,7 +31,7 @@ class ViewJob extends MX_Controller {
 		$this->template->load_sub('bids', $getBids);
 		$this->template->load_sub('jobdata', $getJob);
 		$this->template->load_sub('fabricatordata', $fabricatorDetails);
-
+	
 		// echo '<pre>';
 		// var_dump($getBids);
 		// echo '</pre>';
