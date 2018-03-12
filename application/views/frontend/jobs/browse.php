@@ -20,14 +20,14 @@
 </section>
 -->
 <section class="">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                 <div class="stickyside">
                     <div class="card card-body">
-                        <div class="input-group input-group-sm mb-4 mt-4 d-flex flex-column">
-                            <input type="text" class="form-control border border-white w-100" id="search" placeholder="Search for jobs">
-                            <span class="input-group-append d-flex justify-content-center m-3">
+                        <div class="input-group input-group-sm mb-4 mt-4">
+                            <input type="text" class="form-control border border-white" id="search" placeholder="Search for jobs">
+                            <span class="input-group-append">
                                     <button class="btn btn-warning text-white" id="btnsearch">Search</button>
                             </span>
                         </div>
@@ -66,9 +66,8 @@
                 </div>
             </div>
             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                
-                <div class="pagination-jobs-container col-12" id="final-result">
-                </div>
+                    <div class="row pagination-jobs-container col-12" id="final-result">      
+                    </div>
 
                 <div class="pagination pagination-jobs-bars col-12 justify-content-center mb-4"></div>
             

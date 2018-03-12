@@ -24,7 +24,9 @@ class BrowseJobs extends MX_Controller {
 
 		$this->load->model('Industry_model');
 		$industries = $this->Industry_model->getIndustries();
+		$budget_filters = $this->Industry_model->getBudgetfilters();
 		$this->template->load_sub('industries', $industries);
+		$this->template->load_sub('budget_filters', $budget_filters);
 		$this->template->load('frontend/jobs/browse');
 	}
 

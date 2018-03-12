@@ -9,7 +9,7 @@ $(document).ready(function() {
             console.log(data);
         data.forEach(function(obj,index){
             container += `
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 float-left">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <div class="card" style="min-height: 400px;">
                     <div class="col-sm-12 text-right mt-3">
                             <button type="button" class="btn btn-outline-danger btn-circle"><i class="fa fa-bookmark"></i> </button>

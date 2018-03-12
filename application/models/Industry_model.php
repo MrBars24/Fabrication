@@ -19,6 +19,19 @@ class Industry_model extends CI_Model{
         return $query->result_array();
     }
 
+    function getBudgetfilters() {
+        $query = $this->db->select('*')
+            ->from('budget_filter')
+            ->where('is_deleted', 0)
+            ->order_by('min_budget', 'ASC')
+            ->get();
+        
+        if($query->num_rows() < 1) {
+            return array();
+        }
+        return $query->result_array();
+    }
+
     function getJobs() {
         $query = $this->db->select('*')
             ->from('jobs')
