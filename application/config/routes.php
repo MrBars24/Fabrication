@@ -91,6 +91,20 @@ $route['admin/jobs-category/update/(:num)']['POST'] = 'adm/category/update/$1';
 $route['admin/jobs-category/delete/(:num)']['POST'] = 'adm/category/destroy/$1';
 
 
+//News and Articles
+$route['admin/news']['GET'] = 'adm/news';
+$route['admin/news/create']['POST'] = 'adm/news/store';
+$route['admin/news/update/(:num)']['POST'] = 'adm/news/update/$1';
+$route['admin/news/delete/(:num)']['POST'] = 'adm/news/destroy/$1';
+$route['admin/news/list']['GET'] = 'adm/news/fetch';
+
+//Settings/Budget Filter
+$route['admin/settings/budget-filter']['GET'] = 'adm/budget';
+$route['admin/settings/budget-filter/list']['GET'] = 'adm/budget/fetch';
+$route['admin/settings/budget-filter/create']['POST'] = 'adm/budget/store';
+$route['admin/settings/budget-filter/update/(:num)']['POST'] = 'adm/budget/update/$1';
+$route['admin/settings/budget-filter/delete/(:num)']['POST'] = 'adm/budget/destroy/$1';
+
 //api
 $route['admin/image/assets/list']['GET'] = 'adm/file/getImageAsssets';
 $route['admin/user/list']['GET'] = 'adm/user/getUsers';
