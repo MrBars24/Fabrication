@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	var index = null;
-	$('#psdate,#pedate,#bsdate,#bedate').bootstrapMaterialDatePicker({ format : 'YYYY-MM-DD', time:false });
+	//$('#psdate,#pedate,#bsdate,#bedate').bootstrapMaterialDatePicker({ format : 'YYYY-MM-DD', time:false });
 
 	var table = $(".category-container").initTable({
 		url:"/admin/jobs-category/list",
