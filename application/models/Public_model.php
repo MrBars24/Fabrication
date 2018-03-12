@@ -7,6 +7,18 @@ class Public_model extends MX_Model{
         parent::__construct();
         $this->load->database();
     }
+
+    function getPublicProf($id){
+         $this->db->select('*');
+         $this->db->where('id', $id);
+         $query = $this->db->get('member');
+         if($query->num_rows() > 0){
+            return $query->row();
+        }
+        return array();
+        
+    }
+
     function updatePubProf($id){
     $title = $this->input->post('public-title');
     $keyword = $this->input->post('public-keywords');

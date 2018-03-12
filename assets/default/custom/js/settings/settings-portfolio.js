@@ -197,7 +197,7 @@ $(document).on("submit", "#form-portfolio-create", function(e){
         var data = $(this).serializeArray();
         $.ajax({
         data: data,
-        type: 'delete',
+        type: 'post',
         dataType: 'json',
         url: '/portfolio/delete/'+id,
             success: function (result){
