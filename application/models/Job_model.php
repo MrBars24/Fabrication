@@ -189,9 +189,9 @@ class Job_model extends MX_Model{
     }
 
     function getJob($id){
-
-        $query = $this->db->select('*')
-        ->from('jobs')
+        $user_id = auth()->id;
+        $query = $this->db->select("*,IF(expert_watchlist = '$user_id',1,0) as is_watchlist")
+        ->from('job_details')
         ->where('id',$id)
         ->get();
         if($query->num_rows() > 0){

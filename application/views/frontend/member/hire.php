@@ -33,7 +33,7 @@
                 </div> -->
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title font-weight-bold mb-0">My Active Job Posts <span class="text-muted">(2)</span></h4>
+                        <h4 class="card-title font-weight-bold mb-0">My Active Job Posts <span class="text-muted">(<?=count($active_jobs)?>)</span></h4>
                     </div>
                     <ul class="list-group list-group-flush">
                         <?php foreach($active_jobs as $job): ?>
