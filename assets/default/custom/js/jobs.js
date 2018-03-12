@@ -3,16 +3,16 @@ $(document).ready(function() {
     var table = $(".pagination-jobs-container").initTable({
         url: '/jobs/list',
         pageContainer: ".pagination-jobs-bars",
-        render:function(data){
-        var container = ``;
-        if(data != undefined){
-            console.log(data);
-        data.forEach(function(obj,index){
-            container += `
+        render: function(data) {
+            var container = ``;
+            if (data != undefined) {
+                console.log(data);
+                data.forEach(function(obj, index) {
+                    container += `
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <div class="card" style="min-height: 400px;">
                     <div class="col-sm-12 text-right mt-3">
-                            <button type="button" class="btn btn-outline-danger btn-circle"><i class="fa fa-bookmark"></i> </button>
+                            <button type="button" class="btn ${(obj.is_watchlist == 1) ? "btn-outline-danger" : ""} btn-circle"><i class="fa fa-bookmark"></i> </button>
                         </div>
                     <div class="card-body">
                         <h4 class="font-weight-bold mb-1 text-center">${obj.title}</h4>
@@ -24,12 +24,12 @@ $(document).ready(function() {
                                     <small class="text-secondary mb-0">DISCIPLINE(S)</small>
                                     <h6 class="text-dark font-weight-bold">Structural</h6>
                                     <small class="text-secondary mb-0">FABRICATOR</small>
-                                    <h6 class="text-dark font-weight-bold"> ${obj.user_details.fullname} </h6>
+                                    <h6 class="text-dark font-weight-bold"> ${obj.fullname} </h6>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <small class="text-secondary mb-0">CATEGORY</small>
-                                    <h6 class="text-dark font-weight-bold">Commercial</h6>
+                                    <h6 class="text-dark font-weight-bold">${obj.bidding_type}</h6>
                                     <small class="text-secondary mb-0">BIDDING CLOSES</small>
                                     <h6 class="text-success font-weight-bold"><i class="fa fa-clock"></i> ${obj.bidding_expire_at}</h6>
                                     <small class="text-secondary mb-0">BIDS</small>
@@ -81,8 +81,4 @@ $(document).ready(function() {
     $(".stickyside").stick_in_parent({
         offset_top: 12
     });
-$(".stickyside").stick_in_parent({
-    offset_top: 130
 });
-});
-
