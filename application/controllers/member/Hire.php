@@ -5,6 +5,7 @@ class Hire extends MX_Controller {
 
 	public function __construct(){
 		parent::__construct();
+		$this->load->model('job_model');
 		$this->template->set_template("default");
 	}
 	public function index()
@@ -22,6 +23,8 @@ class Hire extends MX_Controller {
         $this->template->append_js($js);
 
 		$_SESSION['dashboard'] = 'work';
+
+		$this->template->load_sub("active_jobs",$this->job_model->allOpen(TRUE));
         $this->template->load('frontend/member/hire');
 	}
 }

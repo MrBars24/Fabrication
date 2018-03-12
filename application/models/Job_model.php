@@ -72,11 +72,11 @@ class Job_model extends MX_Model{
          if(isset($_SESSION['user']->id)){
              $search_sql = array(
                  'fabricator_id !=' => $_SESSION['user']->id,
-                 'jobs.is_deleted' => 0
+                 'is_deleted' => 0
              );
          }else{
             $search_sql = array(
-                'jobs.is_deleted' => 0
+                'is_deleted' => 0
             );
          }
          if(isset($_GET['limit'])){
@@ -93,19 +93,42 @@ class Job_model extends MX_Model{
          }
 
          @$id = auth()->id;
-         $q = $this->getIndexDataCount("jobs",
+         $q = $this->getIndexDataCount("job_details",
                 $limit,
                 $offset,
-                'jobs.created_at',
+                'created_at',
                 'DESC',
                 $search_sql,
                 '',
-                'watchlists',
-                'jobs.id=watchlists.job_id','LEFT',"jobs.*,IF(watchlists.expert_id = '$id',1,0) as is_watchlist,
-                (SELECT count(*) from bids where job_id = jobs.id) as bids");
+                '',
+                '',
+                '',"*,IF(expert_watchlist = '$id',1,0) as is_watchlist");
          //$q = $this->getIndexDataCount("jobs",$limit,$offset,'created_at','DESC',);
          $q['draw'] = (int)$offset;
          return $q;
+    }
+
+    function allOpen($isMe = FALSE){
+        if($isMe){
+            $search_sql = array(
+                'fabricator_id' => $_SESSION['user']->id,
+                'is_deleted' => 0
+            );
+        }else{
+            $search_sql = array(
+                'fabricator_id !=' => $_SESSION['user']->id,
+                'is_deleted' => 0
+            );
+        }
+
+        $this->db->where($search_sql);
+        $q = $this->db->get("job_details");
+
+        if($q->num_rows() > 0){
+            return $q->result();
+        }
+
+        return [];
     }
 
     function getBidCount($id){
