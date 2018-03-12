@@ -9,7 +9,20 @@ class UpdatePortfolio extends CI_Controller {
     }
 
 	public function updatePort($id){
+		header("Content-Type:application/json");
 		$this->load->model('portfolio_model');
+		$this->form_validation->set_rules('project_name', 'Project Name', 'required');
+		$this->form_validation->set_rules('description', 'Description', 'required');
+
+		if($this->form_validation->run() == FALSE){
+			$errors = $this->form_validation->error_array();
+			return json(array(
+				"success" => FALSE,
+				"errors" => $errors
+			),401);
+			exit;
+		}
+		
 		$r = $this->portfolio_model->updatePort($id);
 		if($r){
 			echo json_encode( array(

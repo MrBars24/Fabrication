@@ -1,5 +1,6 @@
 
-<?php foreach ($portfolios as $v):?>
+<?php foreach (array_reverse($portfolios) as $v):?>
+
 <div class="col-sm-4" id="<?= $v['id']; ?>">
     <div class="el-card-item">
         <div class="el-card-avatar el-overlay-1 mb-1">
@@ -29,5 +30,6 @@
     </div>
 </div>
 <?php endforeach; ?>
+
 <?php $this->load->view('frontend/partials/edit_portfolio_modal') ?>
 <?php $this->load->view('frontend/partials/delete_portfolio_modal') ?>
