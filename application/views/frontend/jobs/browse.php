@@ -49,7 +49,7 @@
                                 <option value="500000">between $500,000 & $1,000,000</option>
                                 <option value="1000000">between $1,000,000 & $10,000,000</option>
                                 <option value="10000000">between $10,000,000 & $100,000,000</option>
-                            </select>
+                            </select> 
                         </div>
                     </div>
                     <div class="col-sm-4 text-white pt-2">

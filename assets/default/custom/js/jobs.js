@@ -9,7 +9,7 @@ $(document).ready(function() {
             console.log(data);
         data.forEach(function(obj,index){
             container += `<li class="list-group-item border-0 py-4" data-filter="${obj.budget}">
-                        <div class="container">
+                        <div class="container" >
                             <div class="row">
                                 <div class="col-sm-6">
                                     <h5 class="font-weight-bold mb-1">${obj.title}</h5>
