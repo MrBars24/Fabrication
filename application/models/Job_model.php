@@ -16,6 +16,11 @@ class Job_model extends MX_Model{
         return $id;
     }
 
+    function UpdateJob($id, $data){
+        $query = $this->db->where('id', $id)
+            ->update('jobs', $data);
+        return $query;
+    }
     function createAttached($files, $attachable_id){
         for($i=0; $i<count($files['name']); $i++){
             $data = array(
@@ -69,10 +74,10 @@ class Job_model extends MX_Model{
          $offset = 0;
          $search = "";
 
-         if(isset($_SESSION['user']->id)){
+         if(isset(auth()->id)){
              $search_sql = array(
-                 'fabricator_id !=' => $_SESSION['user']->id,
-                 'is_deleted' => 0
+                 'fabricator_id !=' => auth()->id,
+                 'jobs.is_deleted' => 0
              );
          }else{
             $search_sql = array(
@@ -129,6 +134,46 @@ class Job_model extends MX_Model{
          //$q = $this->getIndexDataCount("jobs",$limit,$offset,'created_at','DESC',);
          $q['draw'] = (int)$offset;
          return $q;
+    }
+
+
+    function myAllJobs(){
+         $limit = 5;
+         $offset = 0;
+         $search = "";
+         if(isset(auth()->id)){
+             $search_sql = array(
+                 'fabricator_id' => auth()->id,
+                 'is_deleted' => 0
+             );
+         }
+         $q = $this->getIndexDataCount("job_details",$limit,$offset,'created_at','DESC', $search_sql);
+         return $q;
+        //  if(isset($_GET['limit'])){
+        //      $limit = $_GET['limit'];
+        //  }
+        //
+        //  if(isset($_GET['page'])){
+        //      $offset = $_GET['page'];
+        //  }
+        //
+        // if(isset($_GET['search']) > 0){
+        //     $search = $_GET['search'];
+        //     $this->like(array("title"=>$search));
+        //  }
+
+         //@$id = auth()->id;
+         // $q = $this->getIndexDataCount("jobs",
+         //        $limit,
+         //        $offset,
+         //        'jobs.created_at',
+         //        'DESC',
+         //        $search_sql,
+         //        '',
+         //        'watchlists',
+         //        'jobs.id=watchlists.job_id','LEFT',"jobs.*,IF(watchlists.expert_id = '$id',1,0) as is_watchlist,
+         //        (SELECT count(*) from bids where job_id = jobs.id) as bids");
+         //$q['draw'] = (int)$offset;
     }
 
     function allOpen($isMe = FALSE){
@@ -224,7 +269,13 @@ class Job_model extends MX_Model{
             return false;
         }
     }
-
+    function getAllJobInfo($id){
+        $query = $this->db->select('*')
+                ->from('job_details')
+                ->where('id', $id)
+                ->get();
+        return $query->row();
+    }
     function getSearchJobs($search){
         /*$query = $this->db->select('*');
         ->where(array('title' => $search ));
@@ -236,7 +287,6 @@ class Job_model extends MX_Model{
             return false;
         }*/
     }
-
 
 
     function getJobsByCategoryId($categoryId) {
