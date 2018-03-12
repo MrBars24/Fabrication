@@ -13,7 +13,13 @@ class Hire extends MX_Controller {
 			"/assets/default/css/custom/sections.css",
 			"/assets/default/custom/css/dashboard.css"
 		);
+
+		$js = array(
+			"/assets/default/custom/js/hire.js"
+		);
+
         $this->template->append_css($css);
+        $this->template->append_js($js);
 
 		$_SESSION['dashboard'] = 'work';
         $this->template->load('frontend/member/hire');
