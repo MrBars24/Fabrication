@@ -7,6 +7,9 @@ class MX_Controller extends CI_Controller{
     }
 
     function _init_site(){
+        $this->template->set_additional_css(array());
+		$this->template->set_additional_js(array());
+
         $this->load->driver('cache');
         $config = $this->cache->file->get('sconfig');
         $this->template->load_sub('config',$config);

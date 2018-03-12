@@ -6,7 +6,7 @@ $(document).ready(function () {
     var table =  $(".pagination-jobs-container").infiniteScroll({
         url: '/work/list',
         limit: 10,
-        loaderContainer:'.container',
+        loaderContainer:'.loader-container',
         threshold:500,
         render: function (data) {
             var container = ``;
@@ -19,7 +19,7 @@ $(document).ready(function () {
                     <div class="d-flex justify-content-between">
                         <div>
                             <h4 class="mb-0"><a href="/jobs/${obj.id}" class="text-dark">${obj.title}</a></h4>
-                            <h6 class="text-muted mt-2">Posted ${moment(obj.created_at).format("MMMM DD, YYYY")}  - 25 Bids</h6>
+                            <h6 class="text-muted mt-2">Posted ${moment(obj.created_at).format("MMMM DD, YYYY")}  - ${obj.bids} Bids</h6>
                             <h6 class="text-muted mt-2">Budget : ${obj.budget_min} - ${obj.budget_max}</h6>
                         </div>
                         <div>
@@ -73,6 +73,12 @@ $(document).ready(function () {
                 </li>`;
             });
             return container;
+        }
+    });
+
+    $(document).on('keydown','.frm-search',function(e){
+        if(e.keyCode == 13){
+            table.search($(this).val());
         }
     });
 

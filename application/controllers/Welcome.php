@@ -7,31 +7,10 @@ class Welcome extends CI_Controller {
 		parent::__construct();
 		$this->template->set_template("default");
 		$css = array(
-			"assets/plugins/bootstrap/css/bootstrap.min.css",
-			"assets/default/css/style.css",
-			"assets/default/css/colors/blue.css",
-			"assets/plugins/bootstrap-select/bootstrap-select.min.css",
-			"assets/default/css/custom/global.css"
-			
+			"assets/plugins/bootstrap-select/bootstrap-select.min.css"
 		);
 
-		$js = array(
-			"assets/plugins/jquery/jquery.min.js",
-			"assets/plugins/bootstrap/js/popper.min.js",
-			"assets/plugins/bootstrap/js/bootstrap.min.js",
-			"assets/default/js/jquery.slimscroll.js",
-			"assets/default/js/waves.js",
-			"assets/default/js/sidebarmenu.js",
-			"assets/plugins/sticky-kit-master/dist/sticky-kit.min.js",
-			"assets/plugins/sparkline/jquery.sparkline.min.js",
-			"assets/default/js/custom.min.js",
-			"assets/plugins/styleswitcher/jQuery.style.switcher.js",
-			"assets/admin/js/submit-contact-us.js",
-			"assets/plugins/select2/dist/js/select2.full.min.js",
-			"assets/plugins/bootstrap-select/bootstrap-select.min.js"
-		);
 		$this->template->set_additional_css($css);
-		$this->template->set_additional_js($js);
 	}
 
 	public function index()
