@@ -14,12 +14,12 @@
                     <div class="col-sm-9  bg-light-part">
                         <div class="card-body">
                             <!-- content here -->
-                         <?= form_open('settings/account/public-basic', array('id'=>'form-basic-update')); ?>
+                         <?= form_open('settings/account/public-basic', array('id'=>'form-basic-update', 'data-target-id'=>$public_details->id)); ?>
                             <div class="card">
                                 <div class="p-4">
                                     <h3 class="card-title font-weight-bold mb-0  float-left">Public Profile</h3>
                                     <span class="float-right">
-                                        <button type="submit" class="btn btn-success form-control-settings-account d-none" name="submit">Save Changes</button>
+                                        <button type="submit"  class="btn btn-success form-control-settings-account d-none" name="submit">Save Changes</button>
                                         <button type="button" class="btn btn-success" data-toggle="edit-public-profile" data-target=".form-control-settings-account">Edit</button>
                                     </span>
                                 </div>
@@ -30,8 +30,8 @@
                                                 <span class="font-weight-bold">Title</span>
                                             </div>
                                             <div class="col-8">
-                                                <h5 class="mb-0 form-control-settings-account-hide" data-value-target="public-title">Professional Graphics Design</h5>
-                                                <input type="text" class="form-control form-control-settings-account d-none" name="public-title">
+                                                <h5 id="public-title" class="mb-0 form-control-settings-account-hide" data-value-target="public-title"> <?= $public_details->title; ?></h5>
+                                                <input type="text" class="form-control form-control-settings-account d-none" placeholder=" <?= $public_details->title; ?>" name="public-title">
                                                <!-- <small class="text-muted">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Porro, iste.</small> -->
                                             </div>
                                         </div>
@@ -40,16 +40,19 @@
                                             <div class="col-4">
                                                 <span class="font-weight-bold">Keywords</span>
                                             </div>
-                                            <div class="col-8 tags-default form-control-settings-account-hide">
-                                                <span class="badge badge-secondary badge-pill mx-1 px-3 py-2 mb-1">Keyword 1</span>
-                                                <span class="badge badge-secondary badge-pill mx-1 px-3 py-2 mb-1">Keyword 2</span>
-                                                <span class="badge badge-secondary badge-pill mx-1 px-3 py-2 mb-1">Keyword 3</span>
-                                                <span class="badge badge-secondary badge-pill mx-1 px-3 py-2 mb-1">Keyword 4</span>
-                                                <span class="badge badge-secondary badge-pill mx-1 px-3 py-2 mb-1">Keyword 5</span>
-                                                <span class="badge badge-secondary badge-pill mx-1 px-3 py-2 mb-1">Keyword 6</span>
+                                            <div class="col-8 tags-default form-control-settings-account-hide" id="public-keywords">
+                                            <?php
+                                                $keys = $public_details->keywords;
+                                                $array = explode(',',$keys);
+                                                foreach ($array as $keywords){ 
+                                            ?>
+                                                <span class="badge badge-secondary badge-pill mx-1 px-3 py-2 mb-1"><?= $keywords; ?></span>                                          
+                                            <?php
+                                                }
+                                            ?>
                                             </div>
                                             <div class="col-8 tags-default form-control-settings-account d-none">
-                                            <input type="text" name="public-keywords" class="form-control-settings-account d-none" id="keywords" data-role="tagsinput" placeholder="add tags" value="Graphics, Photoshop" />
+                                            <input type="text" name="public-keywords" class="form-control-settings-account d-none" id="keywords" data-role="tagsinput" placeholder="add tags" />
                                             </div>
                                         </div>
 
@@ -58,8 +61,8 @@
                                                 <span class="font-weight-bold">Overview</span>
                                             </div>
                                             <div class="col-8">
-                                                <textarea class="form-control form-control-settings-account d-none" name="public-overview"></textarea>
-                                                <p class="mb-0 form-control-settings-account-hide" data-value-target="public-overview">Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto beatae fugiat quasi, doloremque minima accusamus.</p>
+                                                <textarea  class="form-control form-control-settings-account d-none" name="public-overview" placeholder="<?= $public_details->overview; ?>"></textarea>
+                                                <p id="public-overview" class="mb-0 form-control-settings-account-hide" data-value-target="public-overview"><?= $public_details->overview; ?></p>
                                             </div>
                                         </div>
                                         <div class="row mb-2">
@@ -67,8 +70,8 @@
                                                 <span class="font-weight-bold">Service Description</span>
                                             </div>
                                             <div class="col-8">
-                                                <textarea class="form-control form-control-settings-account d-none" name="public-service"></textarea>
-                                                <p class="mb-0 form-control-settings-account-hide" data-value-target="public-service">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio vero tempore amet ducimus adipisci repudiandae.</p>
+                                                <textarea class="form-control form-control-settings-account d-none" name="public-service" placeholder="<?= $public_details->service_description; ?>"> </textarea>
+                                                <p id="public-service" class="mb-0 form-control-settings-account-hide" data-value-target="public-service"><?= $public_details->service_description; ?></p>
                                                 
                                             </div>
                                         </div>

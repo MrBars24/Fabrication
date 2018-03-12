@@ -30,10 +30,11 @@ class Portfolio_model extends MX_Model{
 
 
     function getAllPortfolio(){
-
         $query = $this->db->select('*')
         ->from('portfolios')
+        ->where('is_deleted',0)
         ->get();
+        
         if($query->num_rows() > 0){
             return $query->result_array();
         }
