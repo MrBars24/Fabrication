@@ -56,7 +56,8 @@
             <?= form_open_multipart('portfolio/create', array("id"=>"form-portfolio-create")); ?>
                 <div class="form-group">
                     <h5 class="font-weight-bold">Project Title</h5>
-                    <input type="text" name="title" class="form-control" placeholder="Project Title">
+                    <input type="text" id="title-input-error" name="title" class="form-control" placeholder="Project Title">
+                    <label id="title-error"></label>
                 </div>
                 <div class="form-group">
                     <h5 class="font-weight-bold">Project Category</h5>
@@ -68,7 +69,8 @@
                 </div>
                 <div class="form-group">
                     <h5 class="font-weight-bold">Project Description</h5>
-                    <textarea rows="5" name="description" class="form-control"></textarea>
+                    <textarea rows="5" id="description-input-area" name="description" class="form-control"></textarea>
+                     <label id="description-error"></label>
                 </div>
                 <div class="form-group">
                     <h5 class="font-weight-bold">Images</h5>
