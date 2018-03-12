@@ -64,7 +64,7 @@ class Account extends MX_Controller {
 			$updateFabricator = $this->User_model->submitUpdateFabricator($fab, $id);
 			if($updateFabricator){
 				$row = $this->User_model->getUserInfo($id);
-				$row->user_details = $this->User_model->getMemberInfo($id);
+				$row->user_details = $this->User_model->getFabricatorInfo($id);
 				$this->session->set_userdata(array('user' => $row));
 				echo json_encode(array(
 					"success" => 200,
