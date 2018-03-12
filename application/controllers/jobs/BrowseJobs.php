@@ -35,9 +35,7 @@ class BrowseJobs extends MX_Controller {
 		$this->load->model('job_model');
 		$this->load->model('user_model');
 		$jobsPagination = $this->job_model->all();
-		for($i=0; $i<count($jobsPagination['data']); $i++){
-			$jobsPagination['data'][$i]->user_details = $this->user_model->getMemberInfo($jobsPagination['data'][$i]->fabricator_id);
-		}
+
 		if($jobsPagination){
 			echo json_encode($jobsPagination);
 		}

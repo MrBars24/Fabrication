@@ -43,8 +43,7 @@ $(document).ready(function() {
                 </div>
             </div>`;
                 });
-            }
-            else{
+            } else {
                 container += `
                 <div class="container d-flex justify-content-center align-items-center" style="height: 100px;">
                     <div class="row h-100 d-flex justify-content-center align-items-center">
@@ -55,11 +54,32 @@ $(document).ready(function() {
             }
             return container;
         }
-        });
+    });
 
-    $(document).on("click","#btnsearch",function(e){
-        var search= $("#search").val();
-        table.search(search);
+    $(document).on("click", "#btnsearch", function(e) {
+        search_job();
+    });
+
+    $(document).on("change","#category,#budget,[name='status']",function(){
+        search_job();
+    });
+
+    function search_job(){
+        var txtsearch = $("#search").val();
+        var search = $("#category").val();
+        var budget = $("#budget").val();
+        var status = $("[name='status']:checked").val();
+
+        table.search({
+            'string':txtsearch,
+            'category':search,
+            'budget':budget,
+            'status':status
+        });
+    }
+
+    $(".stickyside").stick_in_parent({
+        offset_top: 12
     });
 $(".stickyside").stick_in_parent({
     offset_top: 130

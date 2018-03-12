@@ -87,10 +87,33 @@ class Job_model extends MX_Model{
              $offset = $_GET['page'];
          }
 
-        if(isset($_GET['search']) > 0){
-            $search = $_GET['search'];
-            $this->like(array("title"=>$search));
-         }
+        if(isset($_GET['search']['string'])){
+            $search = $_GET['search']['string'];
+            $search_sql['title LIKE'] = "%$search%";
+        }
+
+        if(isset($_GET['search']['status'])){
+            if($_GET['search']['status'] != 'all'){
+                $search = $_GET['search']['status'];
+                $search_sql['status'] = $_GET['search']['status'];
+            }
+        }
+
+        if(isset($_GET['search']['budget'])){
+            if($_GET['search']['budget'] != 'any'){
+                list($min,$max) = explode("-", $_GET['search']['budget']);
+
+                $search = $_GET['search']['budget'];
+                $this->rawWhere("(budget_min >= $min AND budget_min <= $max) OR (budget_max >= $min AND budget_max <= $max)");
+            }
+        }
+
+        if(isset($_GET['search']['category'])){
+            if($_GET['search']['category'] != 'any'){
+                $search = $_GET['search']['category'];
+                $search_sql['bidding_type_id'] = $search;
+            }
+        }
 
          @$id = auth()->id;
          $q = $this->getIndexDataCount("job_details",
@@ -189,9 +212,9 @@ class Job_model extends MX_Model{
     }
 
     function getJob($id){
-        $user_id = auth()->id;
-        $query = $this->db->select("*,IF(expert_watchlist = '$user_id',1,0) as is_watchlist")
-        ->from('job_details')
+
+        $query = $this->db->select('*')
+        ->from('jobs')
         ->where('id',$id)
         ->get();
         if($query->num_rows() > 0){

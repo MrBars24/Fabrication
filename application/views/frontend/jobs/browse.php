@@ -2,21 +2,21 @@
 <!--
 
 <section id="jobs-header">
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-lg-8">
-				<div class="float-left"><i class="mdi mdi-mouse-variant" style="font-size:80px;"></i></div>
-				<div class="float-none" style="margin:20px 0 0 10px;">
-					<h2 style="line-height:90%;">Job Bank Accross the World<br>
-						<span style="font-size:.6em;line-height:90%;">Quick search jobs and send quotation. <a href="#">Read Our FAQ</a></span>
-					</h2>
-				</div>
-			</div>
-			<div class="col-lg-4">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="float-left"><i class="mdi mdi-mouse-variant" style="font-size:80px;"></i></div>
+                <div class="float-none" style="margin:20px 0 0 10px;">
+                    <h2 style="line-height:90%;">Job Bank Accross the World<br>
+                        <span style="font-size:.6em;line-height:90%;">Quick search jobs and send quotation. <a href="#">Read Our FAQ</a></span>
+                    </h2>
+                </div>
+            </div>
+            <div class="col-lg-4">
 
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 </section>
 -->
 <section class="">
