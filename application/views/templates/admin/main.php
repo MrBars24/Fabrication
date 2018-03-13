@@ -304,7 +304,7 @@
                                     <li role="separator" class="divider"></li>
                                     <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="#"><i class="fa fa-power-off"></i> Logout</a></li>
+                                    <li><a href="/logout"><i class="fa fa-power-off"></i> Logout</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -367,6 +367,11 @@
                         <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-newspaper"></i><span class="hide-menu">NEWS AND ARTICLES </span></a></li>
                         <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-pen"></i><span class="hide-menu">BLOGS </span></a></li>
                         <li> <a class="waves-effect waves-dark" href="/admin/users" aria-expanded="false"><i class="fa fa-users"></i><span class="hide-menu">USERS </span></a></li>
+                        <li> <a class="has-arrow waves-effect waves-dark" href="/admin/settings" aria-expanded="false"><i class="fa fa-gear"></i><span class="hide-menu">SETTINGS </span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="/admin/settings/budget-filter">Budget Range Filter</a></li>
+                            </ul>
+                        </li>
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Content Menu</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="/admin/pages">Pages Content</a></li>

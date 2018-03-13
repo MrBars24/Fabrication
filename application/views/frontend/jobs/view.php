@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-sm-8">
             <h1 class="mt-2 mb-0"><strong><?= $jobdata->title ?></strong></h1>
-            <small class="text-muted">Posted 10 hours ago</small>
+            <small class="text-muted">Posted <?=dateNewFormat($jobdata->created_at)?></small>
         </div>
     </div>
     <div class="row mt-2">
@@ -14,10 +14,10 @@
                             <div>
                                 <span class="">New York, US</span>
                             </div>
-                            <span class="badge badge-secondary">Commercial</span>
+                            <span class="badge badge-secondary"><?=$jobdata->bidding_type?></span>
                         </div>
                         <div>
-                            <button class="btn default btn-circle"><i class="text-white fa fa-bookmark"></i></button>
+                            <button class="btn default btn-circle <?=($jobdata->is_watchlist==1)? "btn-unbook bg-danger text-white" : "btn-bookmark"?>"><i class="text-white fa fa-bookmark"></i></button>
                         </div>
                     </div>
                     <div class="d-flex flex-row justify-content-between mt-4">
@@ -35,11 +35,7 @@
                         <div>
                             <small class="text-muted">Status</small>
                             <span class="d-block icon-2x text-primary">
-                                <?php if(date("Y-m-d") < $jobdata->bidding_expire_at): ?>
-                                    OPEN
-                                <?php else: ?>
-                                    CLOSE
-                                <?php endif; ?>
+                                <?= $jobdata->status ?>
                             </span>
                         </div>
                     </div>
@@ -113,7 +109,68 @@
         <div class="col-sm-4">
 <!--            data-toggle="modal" data-target=".modal-bid-now"-->
             <!-- <a class="btn btn-success btn-lg btn-block" href="<?= base_url('jobs/proposal/'); ?><?= $fabricatordata->id ?>" target="_blank">Bid Now</a> -->
-            <a class="text-white btn btn-success btn-lg btn-block" data-toggle="modal" data-target=".modal-bid-now">Bid Now</a>
+            <?php if($jobdata->fabricator_id == auth()->id): ?>
+                <a href="/jobs/posted/manage/<?=$jobdata->id?>" class="text-white btn btn-success btn-lg btn-block">Manage Job</a>
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h4 class="card-title mb-0">AWARDED TO:</h4>
+                    </div>
+                     <hr class="m-0">
+                    <div class="comment-widgets mb-0 mt-3">
+                        <div class="comment-text w-100 py-0">
+                            <div class="d-flex justify-content-between">
+                                <h4 class="font-weight-bold mb-0"><a href="#"><?= $awardedUser->fullname ?></a></h4>
+
+                                <span>
+                                    <a href="#" class="text-info mdi mdi-email"></a>
+                                </span>
+                            </div>
+                            <!-- <h6>Date Hired:  ?></h6> -->
+                            <div class="comment-footer">
+                                <span class="label label-info">Autocad 2010</span>
+                                <span class="label label-info">Autocad 2015</span>
+                            </div>
+                            <br>
+                            <h6>Rate: $ 33.5 /hr</h6>
+                            <h6>Work Hour: 140 hrs</h6>
+
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            <?php else: ?>
+                <?php if($jobdata->status == "open"): ?>
+                    <a class="text-white btn btn-success btn-lg btn-block" data-toggle="modal" data-target=".modal-bid-now">Bid Now</a>
+                <?php else: ?>
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title mb-0">AWARDED TO:</h4>
+                        </div>
+                         <hr class="m-0">
+                        <div class="comment-widgets mb-0 mt-3">
+                            <div class="comment-text w-100 py-0">
+                                <div class="d-flex justify-content-between">
+                                    <h4 class="font-weight-bold mb-0"><a href="#"><?= $awardedUser->fullname ?></a></h4>
+
+                                    <span>
+                                        <a href="#" class="text-info mdi mdi-email"></a>
+                                    </span>
+                                </div>
+                                <!-- <h6>Date Hired:  ?></h6> -->
+                                <div class="comment-footer">
+                                    <span class="label label-info">Autocad 2010</span>
+                                    <span class="label label-info">Autocad 2015</span>
+                                </div>
+                                <br>
+                                <h6>Rate: $ 33.5 /hr</h6>
+                                <h6>Work Hour: 140 hrs</h6>
+
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            <?php endif; ?>
             <!-- Fabricator Snapshot -->
             <div class="card mt-4">
                 <div class="card-body">

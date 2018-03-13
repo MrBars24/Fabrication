@@ -91,6 +91,20 @@ $route['admin/jobs-category/update/(:num)']['POST'] = 'adm/category/update/$1';
 $route['admin/jobs-category/delete/(:num)']['POST'] = 'adm/category/destroy/$1';
 
 
+//News and Articles
+$route['admin/news']['GET'] = 'adm/news';
+$route['admin/news/create']['POST'] = 'adm/news/store';
+$route['admin/news/update/(:num)']['POST'] = 'adm/news/update/$1';
+$route['admin/news/delete/(:num)']['POST'] = 'adm/news/destroy/$1';
+$route['admin/news/list']['GET'] = 'adm/news/fetch';
+
+//Settings/Budget Filter
+$route['admin/settings/budget-filter']['GET'] = 'adm/budget';
+$route['admin/settings/budget-filter/list']['GET'] = 'adm/budget/fetch';
+$route['admin/settings/budget-filter/create']['POST'] = 'adm/budget/store';
+$route['admin/settings/budget-filter/update/(:num)']['POST'] = 'adm/budget/update/$1';
+$route['admin/settings/budget-filter/delete/(:num)']['POST'] = 'adm/budget/destroy/$1';
+
 //api
 $route['admin/image/assets/list']['GET'] = 'adm/file/getImageAsssets';
 $route['admin/user/list']['GET'] = 'adm/user/getUsers';
@@ -120,7 +134,7 @@ $route['questions-e-fab'] = 'welcome/questionsEfab';
 $route['about'] = 'welcome/about';
 $route['how-it-works/fabricator'] = 'welcome/howFabricator';
 $route['how-it-works/expert'] = 'welcome/howExpert';
-    
+
 //About
 $route['about'] = 'welcome/about';
 
@@ -137,6 +151,7 @@ $route['training/create']['POST'] = 'settings/Training/createTraining';
 // Jobs Create
 $route['jobs/create']['GET'] = 'jobs/CreateJob/index';
 $route['jobs/create']['POST'] = 'jobs/CreateJob/createJob';
+$route['jobs/update/(:num)']['POST'] = 'jobs/UpdateJob/updateJob/$1';
 $route['jobs/get']['GET'] = 'jobs/BrowseJobs/getAllJobs';
 $route['jobs/list']['GET'] = 'jobs/BrowseJobs/getAllJobsPagination';
 // Jobs
@@ -153,6 +168,9 @@ $route['portfolio/delete/(:num)']= 'portfolio/DeletePortfolio/deletePort/$1';
 //Proposal
 $route['jobs/proposal/(:num)']['get'] = 'jobs/ViewJob/proposal/$1';
 $route['jobs/submit/proposal']['post'] = 'jobs/Proposal/submit';
+
+//Bid Accecpt
+$route['job/bid/accept/(:num)']['get'] = 'jobs/Proposal/accept/$1';
 //Bid History
 $route['jobs/bid-history']['get'] = 'jobs/ViewBidHistory/index';
 $route['jobs/bid-history']['post'] = 'jobs/ViewBidHistory/index';
@@ -167,6 +185,7 @@ $route['jobs']['get'] = 'jobs/BrowseJobs/index';
 $route['jobs/latest']['get'] = 'jobs/LatestJobs/index';
 $route['jobs/invitations']['get'] = 'jobs/InvitationJobs/index';
 $route['jobs/my-jobs']['get'] = 'jobs/MyJob/index';
+$route['jobs/my-jobs/list']['get'] = 'jobs/MyJob/myJobsPagination';
 $route['jobs/my-jobs/(:num)']['get'] = 'jobs/Contract/show/$1';
 $route['jobs/posted']['get'] = 'jobs/BrowseJobs/postedJob';
 $route['jobs/posted/manage/(:num)']['get'] = 'jobs/BrowseJobs/postedJobView/$1';

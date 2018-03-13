@@ -30,8 +30,6 @@ class CreatePortfolio extends CI_Controller {
 			"assets/plugins/styleswitcher/jQuery.style.switcher.js",
 			"assets/plugins/dropify/dist/js/dropify.min.js",
 			"assets/default/custom/js/create-job.js"
-			
-
         );
         $this->template->append_css($css);
 		$this->template->append_js($js);

@@ -1,4 +1,5 @@
 $(document).ready(function(){
+    var id = get_segment(2);
 
     $(document).on('submit', '#form-proposal-submit', function(e){
         e.preventDefault();
@@ -36,4 +37,33 @@ $(document).ready(function(){
         });
     });
 
+    $(document).on('click',".btn-bookmark",function(){
+        var that = $(this);
+        that.removeClass('btn-bookmark');
+
+        $.ajax({
+            url:"/watchlist/" + id,
+            type:"POST",
+            success:function(res){
+                if(res.success){
+                    that.addClass('bg-danger text-white btn-unbook');
+                }
+            }
+        })
+    });
+
+    $(document).on('click','.btn-unbook',function(){
+        var that = $(this);
+        that.removeClass('bg-danger text-white btn-unbook');
+
+        $.ajax({
+            url:"/watchlist/delete/" + id,
+            type:"POST",
+            success:function(res){
+                if(res.success){
+                    that.addClass('btn-bookmark');
+                }
+            }
+        })
+    });
 });

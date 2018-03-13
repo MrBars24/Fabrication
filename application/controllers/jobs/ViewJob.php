@@ -7,31 +7,10 @@ class ViewJob extends MX_Controller {
 		parent::__construct();
 		$this->template->set_template("default");
 		$this->load->model('job_model');
-		$css = array(
-			"/assets/plugins/bootstrap/css/bootstrap.min.css",
-			"/assets/default/css/style.css",
-            "/assets/default/css/colors/blue.css"
-		);
-
-		$js = array(
-			"assets/plugins/jquery/jquery.min.js",
-			"assets/plugins/bootstrap/js/popper.min.js",
-			"assets/plugins/bootstrap/js/bootstrap.min.js",
-			"assets/default/js/jquery.slimscroll.js",
-			"assets/default/js/waves.js",
-			"assets/default/js/sidebarmenu.js",
-			"assets/plugins/sticky-kit-master/dist/sticky-kit.min.js",
-			"assets/plugins/sparkline/jquery.sparkline.min.js",
-			"assets/default/js/custom.min.js",
-            "assets/plugins/styleswitcher/jQuery.style.switcher.js"
-		);
-		$this->template->set_additional_css($css);
-		$this->template->set_additional_js($js);
 	}
 
 	public function show($id){
 		$css = array(
-			"/assets/default/css/custom/global.css",
 			"/assets/default/css/custom/sections.css"
 		);
 		$js = array(
@@ -46,18 +25,25 @@ class ViewJob extends MX_Controller {
 		$this->load->model('proposal_model');
 		$this->load->model('user_model');
 		$this->load->model('bid_model');
+
 		$getJob = $this->job_model->getJob($id);
 		$fabricatorDetails = $this->user_model->getMemberInfo($getJob->fabricator_id);
 		$getBids = $this->proposal_model->getBidsByJobId($getJob->id);
+
+		if($getJob->status == "close"){
+			$awardedUser = $this->user_model->getMemberInfo($getJob->accepted_bid);
+			$this->template->load_sub('awardedUser', $awardedUser);
+		}
+
 		$this->template->load_sub('bids', $getBids);
 		$this->template->load_sub('jobdata', $getJob);
 		$this->template->load_sub('fabricatordata', $fabricatorDetails);
 
 		// echo '<pre>';
-		// var_dump($getBids);
+		// var_dump($awardedUser);
 		// echo '</pre>';
 		// echo '<pre>';
-		// var_dump($getJob);
+		// var_dump($getBids[0]->expert_id);
 		// echo '</pre>';
 		// echo "awdawd";
 		// echo '<pre>';

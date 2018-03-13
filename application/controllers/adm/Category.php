@@ -12,15 +12,12 @@ class Category  extends Admin {
 
 	public function index()
 	{
-		$this->template->append_css(array(
-			"assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css"
-		));
+		$this->template->append_css(array());
 
 		$this->template->append_js(
 			array(
 				"assets/admin/js/mask.js",
 				"assets/plugins/moment/moment.js",
-				"assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js",
 				"assets/admin/custom/js/bars-datatable.js",
 				"assets/admin/custom/js/jobs-category.js"
 			)

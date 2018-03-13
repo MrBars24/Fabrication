@@ -6,26 +6,6 @@ class BrowseJobs extends MX_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->template->set_template("default");
-		$css = array(
-			"/assets/plugins/bootstrap/css/bootstrap.min.css",
-			"/assets/default/css/style.css",
-			"/assets/default/css/colors/blue.css"
-		);
-
-		$js = array(
-			"assets/plugins/jquery/jquery.min.js",
-			"assets/plugins/bootstrap/js/popper.min.js",
-			"assets/plugins/bootstrap/js/bootstrap.min.js",
-			"assets/default/js/jquery.slimscroll.js",
-			"assets/default/js/waves.js",
-			"assets/default/js/sidebarmenu.js",
-			"assets/plugins/sticky-kit-master/dist/sticky-kit.min.js",
-			"assets/plugins/sparkline/jquery.sparkline.min.js",
-			"assets/default/js/custom.min.js",
-			"assets/plugins/styleswitcher/jQuery.style.switcher.js"
-		);
-		$this->template->set_additional_css($css);
-		$this->template->set_additional_js($js);
 	}
 
 	public function index(){
@@ -44,14 +24,10 @@ class BrowseJobs extends MX_Controller {
 
 		$this->load->model('Industry_model');
 		$industries = $this->Industry_model->getIndustries();
+		$budget_filters = $this->Industry_model->getBudgetfilters();
 		$this->template->load_sub('industries', $industries);
+		$this->template->load_sub('budget_filters', $budget_filters);
 		$this->template->load('frontend/jobs/browse');
-		// echo json_encode(array(
-		// 	'jobs' => $jobs,
-		// 	'industries' => $industries
-		// ));
-		// exit;
-
 	}
 
 	public function getAllJobsPagination(){
@@ -59,13 +35,14 @@ class BrowseJobs extends MX_Controller {
 		$this->load->model('job_model');
 		$this->load->model('user_model');
 		$jobsPagination = $this->job_model->all();
-		for($i=0; $i<count($jobsPagination['data']); $i++){
-			$jobsPagination['data'][$i]->user_details = $this->user_model->getMemberInfo($jobsPagination['data'][$i]->fabricator_id);
-		}
+
 		if($jobsPagination){
 			echo json_encode($jobsPagination);
 		}
+
 	}
+
+
 
 	public function getAllJobs(){
 		header("Content-Type:application/json");
@@ -77,25 +54,49 @@ class BrowseJobs extends MX_Controller {
 	}
 
 	public function postedJob() {
-		$this->load->model('job_model');
-		$myjob = $this->job_model->getMyJobs();
-		$this->template->load_sub('jobs', $myjob);
-		$this->template->load('frontend/jobs/posted_jobs');
-	}
-
-	public function postedJobView() {
-        $css = array(
+		$css = array(
 			"https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css",
 			"assets/default/css/custom/global.css",
 			"assets/default/custom/css/jobs.css"
+		);
+		$js = array(
+			"assets/plugins/select2/js/select2.min.js",
+			"assets/default/custom/js/myjobs.js",
+			"assets/admin/custom/js/bars-datatable.js"
+		);
+		$this->template->append_css($css);
+		$this->template->append_js($js);
+		$this->load->model('job_model');
+		$myjob = $this->job_model->getMyJobs();
+		$this->template->load_sub('jobs', $myjob);
+
+		$this->template->load('frontend/jobs/posted_jobs');
+	}
+
+	public function postedJobView($id) {
+        $css = array(
+			"assets/default/css/custom/global.css",
+			"assets/default/custom/css/jobs.css",
+			"assets/admin/colors/blue.css",
+			"assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css"
         );
         $js = array(
-            "assets/plugins/select2/js/select2.min.js",
+			"assets/plugins/moment/moment.js",
+			"assets/default/custom/js/update-job.js",
             "assets/default/custom/js/jobs.js",
+            "assets/admin/custom/js/bars-datatable.js",
+            "assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js",
+            "assets/admin/js/mask.js",
         );
         $this->template->append_css($css);
 		$this->template->append_js($js);
-
+		$this->load->model('job_model');
+		$this->load->model('proposal_model');
+		$job = $this->job_model->getAllJobInfo($id);
+		$bid = $this->proposal_model->getBidsByJobId($id);
+		$this->template->load_Sub('job', $job);
+		$this->template->load_Sub('bid', $bid);
+		
 		$this->template->load('frontend/jobs/posted_job_view');
 	}
 

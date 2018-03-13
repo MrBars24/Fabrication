@@ -6,73 +6,83 @@ $(document).ready(function () {
     var table =  $(".pagination-jobs-container").infiniteScroll({
         url: '/work/list',
         limit: 10,
-        loaderContainer:'.container',
+        loaderContainer:'.loader-container',
         threshold:500,
         render: function (data) {
             var container = ``;
             
-            data.forEach(function (obj, index) {
-                ago = compute_ago(obj.created_at);
+            if(data != null){
+                data.forEach(function (obj, index) {
+                    ago = compute_ago(obj.created_at);
 
-                container += `
-                <li class="list-group-item pt-4 pb-1">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h4 class="mb-0"><a href="/jobs/${obj.id}" class="text-dark">${obj.title}</a></h4>
-                            <h6 class="text-muted mt-2">Posted ${moment(obj.created_at).format("MMMM DD, YYYY")}  - 25 Bids</h6>
-                            <h6 class="text-muted mt-2">Budget : ${obj.budget_min} - ${obj.budget_max}</h6>
-                        </div>
-                        <div>
-                            <button class="${(obj.is_watchlist == 1) ? "bg-danger text-white btn-unbook" : "btn-bookmark"} btn btn-sm btn-circle "><i class="fa fa-bookmark"></i></button>
-                            <button class="btn btn-sm btn-circle "><i class="mdi mdi-send"></i></button>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-sm-12 col-md-6 mr-0 col-lg-9">
-                            <span class="badge badge-secondary px-2 py-1">Commercial</span>
-                            <span class="badge badge-secondary px-2 py-1">30 tons</span>
-                            <h6 class="text-dark mt-3 mb-3">
-                                <span class="mb-1">Location: Laguna, Philippines</span>
-                            </h6>
-                            <p>${obj.description}</p>
+                    container += `
+                    <li class="list-group-item pt-4 pb-1">
+                        <div class="d-flex justify-content-between">
                             <div>
-                                <small>Fabricator:</small>
-                                <div class="d-flex justify-content-between">
-                                     <h6 class="font-weight-bold"><a href="http://efab.ifltest08.tk/members/1" class="text-dark">Company Name</a></h6>
-                                </div>
-
-                                <!--<div class="d-flex justify-content-start">
-                                    <span class="text-warning">4.5</span>
-                                    <ul class="d-inline-flex flex-row justify-content-start list-style-type-none mb-0 ml-1">
-                                        <li class="mr-1"><a href="#" class="text-warning"><i class="fa fa-star"></i></a></li>
-                                        <li class="mr-1"><a href="#" class="text-warning"><i class="fa fa-star"></i></a></li>
-                                        <li class="mr-1"><a href="#" class="text-warning"><i class="fa fa-star"></i></a></li>
-                                        <li class="mr-1"><a href="#" class="text-warning"><i class="fa fa-star"></i></a></li>
-                                        <li class="mr-1"><a href="#" class="text-warning"><i class="fa fa-star"></i></a></li>
-                                    </ul>                            <span class="text-muted ml-1">(12 reviews)</span>
-                                </div>-->
+                                <h4 class="mb-0"><a href="/jobs/${obj.id}" class="text-dark">${obj.title}</a></h4>
+                                <h6 class="text-muted mt-2">Posted ${moment(obj.created_at).format("MMMM DD, YYYY")}  - ${obj.bids} Bids</h6>
+                                <h6 class="text-muted mt-2">Budget : ${obj.budget_min} - ${obj.budget_max}</h6>
+                            </div>
+                            <div>
+                                <button class="${(obj.is_watchlist == 1) ? "bg-danger text-white btn-unbook" : "btn-bookmark"} btn btn-sm btn-circle "><i class="fa fa-bookmark"></i></button>
+                                <button class="btn btn-sm btn-circle "><i class="mdi mdi-send"></i></button>
                             </div>
                         </div>
-                        <div class="col-sm-12 col-md-6 col-lg-3">
-                            <img src="https://thelogocompany.net/wp-content/uploads/2016/10/main_dlugos.jpg" alt="" class="img-fluid">
-                            <a href="/jobs/${obj.id}" class="btn btn-success btn-block" target="_blank">View</a>
-                        </div>
-                    </div>
 
-                    <div>
-                        <ul class="list-style-type-none d-flex d-row justify-content-between mt-2">
-                            <li>
-                                <h6 class="text-muted"></h6>
-                            </li>
-                            <li>
-                                <h6 class="text-muted"></h6>
-                            </li>
-                        </ul>
-                    </div>
-                </li>`;
-            });
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6 mr-0 col-lg-9">
+                                <span class="badge badge-secondary px-2 py-1">Commercial</span>
+                                <span class="badge badge-secondary px-2 py-1">30 tons</span>
+                                <h6 class="text-dark mt-3 mb-3">
+                                    <span class="mb-1">Location: Laguna, Philippines</span>
+                                </h6>
+                                <p>${obj.description}</p>
+                                <div>
+                                    <small>Fabricator:</small>
+                                    <div class="d-flex justify-content-between">
+                                         <h6 class="font-weight-bold"><a href="http://efab.ifltest08.tk/members/1" class="text-dark">Company Name</a></h6>
+                                    </div>
+
+                                    <!--<div class="d-flex justify-content-start">
+                                        <span class="text-warning">4.5</span>
+                                        <ul class="d-inline-flex flex-row justify-content-start list-style-type-none mb-0 ml-1">
+                                            <li class="mr-1"><a href="#" class="text-warning"><i class="fa fa-star"></i></a></li>
+                                            <li class="mr-1"><a href="#" class="text-warning"><i class="fa fa-star"></i></a></li>
+                                            <li class="mr-1"><a href="#" class="text-warning"><i class="fa fa-star"></i></a></li>
+                                            <li class="mr-1"><a href="#" class="text-warning"><i class="fa fa-star"></i></a></li>
+                                            <li class="mr-1"><a href="#" class="text-warning"><i class="fa fa-star"></i></a></li>
+                                        </ul>                            <span class="text-muted ml-1">(12 reviews)</span>
+                                    </div>-->
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-3">
+                                <img src="https://thelogocompany.net/wp-content/uploads/2016/10/main_dlugos.jpg" alt="" class="img-fluid">
+                                <a href="/jobs/${obj.id}" class="btn btn-success btn-block" target="_blank">View</a>
+                            </div>
+                        </div>
+
+                        <div>
+                            <ul class="list-style-type-none d-flex d-row justify-content-between mt-2">
+                                <li>
+                                    <h6 class="text-muted"></h6>
+                                </li>
+                                <li>
+                                    <h6 class="text-muted"></h6>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>`;
+                });
+            }else{
+                container = `<h1 class="text-center">NO JOBS POSTED</h1>`;
+            }
             return container;
+        }
+    });
+
+    $(document).on('keydown','.frm-search',function(e){
+        if(e.keyCode == 13){
+            table.search($(this).val());
         }
     });
 

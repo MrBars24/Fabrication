@@ -30,26 +30,26 @@
                             <div class="help-block"></div></div>
                         </div>
 
-                        <!-- <fieldset class="form-group">
-                            <label class="custom-file d-block">
-                                <input type="file" id="file"  class="form-control" name="attached">
-                                <span class="custom-file-control"></span>
-                            </label>
-                        </fieldset> -->
-
                         <div id="test" class="dropzone"></div>
-
-                        <div clas="form-group">
-                            <h4 class="text-dark font-weight-bold mt-5">Does this project need to be done in a specific location?</h4>
-                            <p>Where do you want this done?</p>
-                            <div class="controls">
-                                <input type="text" name="location" value="" class="form-control">
+                        <div class="row">
+                            <div class="col-6">
+                                <h4 class="text-dark font-weight-bold mt-5">Does this project need to be done in a specific location?</h4>
+                                <p>Where do you want this done?</p>
+                                <div class="controls">
+                                    <input type="text" name="location" value="" class="form-control">
+                                </div>
+                            </div> 
+                            <div class="col-6">
+                                <h4 class="mb-3 text-dark font-weight-bold mt-5">Approx Tonnes</h4>
+                                <p></p>
+                                <div class="controls">
+                                    <input type="number" name="tonnes" value="" class="form-control mt-5">
+                                </div>
                             </div>
                         </div>
 
                         <div class="form-group mt-3">
                             <div class="">
-                                <!-- <h4 class="card-title">Date Range</h4> -->
                                 <div class="row">
                                      <div class="col-md-12">
                                          <div class="example">

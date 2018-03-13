@@ -1,40 +1,17 @@
 	<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class CreateJob extends CI_Controller {
+class CreateJob extends MX_Controller {
 
 	public function __construct(){
 		parent::__construct();
 		$this->template->set_template("default");
-		$css = array(
-			"assets/plugins/bootstrap/css/bootstrap.min.css",
-			"assets/default/css/style.css",
-			"assets/default/css/colors/blue.css",
-			"assets/plugins/bootstrap-select/bootstrap-select.min.css"
-		);
-
-		$js = array(
-			"assets/plugins/jquery/jquery.min.js",
-			"assets/plugins/bootstrap/js/popper.min.js",
-			"assets/plugins/bootstrap/js/bootstrap.min.js",
-			"assets/default/js/jquery.slimscroll.js",
-			"assets/default/js/waves.js",
-			"assets/default/js/sidebarmenu.js",
-			"assets/plugins/sticky-kit-master/dist/sticky-kit.min.js",
-			"assets/plugins/sparkline/jquery.sparkline.min.js",
-			"assets/default/js/custom.min.js",
-			"assets/plugins/styleswitcher/jQuery.style.switcher.js",
-			"assets/admin/js/submit-contact-us.js",
-			"assets/plugins/select2/dist/js/select2.full.min.js",
-			"assets/plugins/bootstrap-select/bootstrap-select.min.js"
-		);
-		$this->template->set_additional_css($css);
-		$this->template->set_additional_js($js);
 	}
 
 	public function index(){
         $css = array(
             "assets/images/favicon.png",
+            "assets/plugins/bootstrap-select/bootstrap-select.min.css",
             "assets/plugins/timepicker/bootstrap-timepicker.min.css",
             "assets/plugins/bootstrap-daterangepicker/daterangepicker.css",
 			"assets/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css",
@@ -43,20 +20,20 @@ class CreateJob extends CI_Controller {
 
         );
         $js = array(
+			"assets/plugins/dropzone-master/dist/dropzone.js",
+			"assets/default/custom/js/create-job.js",
             "assets/plugins/moment/moment.js",
             "assets/plugins/timepicker/bootstrap-timepicker.min.js",
             "assets/plugins/bootstrap-daterangepicker/daterangepicker.js",
+			"assets/plugins/bootstrap-select/bootstrap-select.min.js",
             "assets/admin/js/post-job.js",
 			"assets/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js",
 			"assets/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js",
 			"assets/plugins/multiselect/js/jquery.multi-select.js",
 			"assets/plugins/switchery/dist/switchery.min.js",
 			"assets/plugins/select2/dist/js/select2.full.min.js",
-			"assets/plugins/bootstrap-select/bootstrap-select.min.js",
 			"assets/plugins/styleswitcher/jQuery.style.switcher.js",
 			"assets/plugins/dropify/dist/js/dropify.min.js",
-			"assets/plugins/dropzone-master/dist/dropzone.js",
-			"assets/default/custom/js/create-job.js"
         );
         $this->template->append_css($css);
 		$this->template->append_js($js);
@@ -69,7 +46,7 @@ class CreateJob extends CI_Controller {
 	}
 
 	public function createJob(){
-		$fabricator_id = $_SESSION['user']->id;
+		$fabricator_id = auth()->id;
         $title = $this->input->post('title');
         $description = $this->input->post('description');
         $slug = $this->slug($title);
@@ -79,10 +56,15 @@ class CreateJob extends CI_Controller {
         $project_end = date("Y-m-d h:i:s", strtotime(substr($this->input->post('project'), -10)));
         $bidding_start = date("Y-m-d ",strtotime(substr($this->input->post('bidding'), 0,10)));
         $bidding_end = date("Y-m-d ",strtotime(substr($this->input->post('bidding'), -10)));
-
+		$approx_tonnes = $this->input->post('tonnes');
+		$location = $this->input->post('location');
+		$project_category = $this->input->post('industry');
         $data = array(
             'fabricator_id' => $fabricator_id,
             'title' => $title,
+            'project_category' => $project_category,
+            'location' => $location,
+            'approx_tonnes' => $approx_tonnes,
             'description' => $description,
             'budget_min' => $budget_min,
             'budget_max' => $budget_max,
@@ -119,20 +101,7 @@ class CreateJob extends CI_Controller {
 				}
 			}
 		}
-		// $this->load->library('upload', $config);
-        // $config['upload_path']          = './uploads/attached/';
-        // $config['allowed_types']        = '*';
-        // $config['max_size']             = 100;
-	    // $config['max_width']            = 1024;
-	    // $config['max_height']           = 768;
-		// if(!$this->upload->do_upload('userfile')){
-		// 	echo json_encode(array(
-		// 		'success' => false,
-		// 		'error' => $this->upload->display_errors()
-		// 	));
-		// }
-		// else{
-		// }
+
 	}
 
 	function slug($text){

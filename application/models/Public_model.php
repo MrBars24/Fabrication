@@ -16,7 +16,7 @@ class Public_model extends MX_Model{
             return $query->row();
         }
         return array();
-        
+
     }
 
     function updatePubProf($id){
@@ -33,10 +33,5 @@ class Public_model extends MX_Model{
         );
     $this->db->where('id', $id);
     return $this->db->update('member',$data );
-
-
-
     }
-
-
 }
