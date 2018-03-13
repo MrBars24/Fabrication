@@ -20,6 +20,8 @@ class CreateJob extends MX_Controller {
 
         );
         $js = array(
+			"assets/plugins/dropzone-master/dist/dropzone.js",
+			"assets/default/custom/js/create-job.js",
             "assets/plugins/moment/moment.js",
             "assets/plugins/timepicker/bootstrap-timepicker.min.js",
             "assets/plugins/bootstrap-daterangepicker/daterangepicker.js",
@@ -32,8 +34,6 @@ class CreateJob extends MX_Controller {
 			"assets/plugins/select2/dist/js/select2.full.min.js",
 			"assets/plugins/styleswitcher/jQuery.style.switcher.js",
 			"assets/plugins/dropify/dist/js/dropify.min.js",
-			"assets/plugins/dropzone-master/dist/dropzone.js",
-			"assets/default/custom/js/create-job.js"
         );
         $this->template->append_css($css);
 		$this->template->append_js($js);
@@ -46,7 +46,7 @@ class CreateJob extends MX_Controller {
 	}
 
 	public function createJob(){
-		$fabricator_id = $_SESSION['user']->id;
+		$fabricator_id = auth()->id;
         $title = $this->input->post('title');
         $description = $this->input->post('description');
         $slug = $this->slug($title);
@@ -56,10 +56,15 @@ class CreateJob extends MX_Controller {
         $project_end = date("Y-m-d h:i:s", strtotime(substr($this->input->post('project'), -10)));
         $bidding_start = date("Y-m-d ",strtotime(substr($this->input->post('bidding'), 0,10)));
         $bidding_end = date("Y-m-d ",strtotime(substr($this->input->post('bidding'), -10)));
-
+		$approx_tonnes = $this->input->post('tonnes');
+		$location = $this->input->post('location');
+		$project_category = $this->input->post('industry');
         $data = array(
             'fabricator_id' => $fabricator_id,
             'title' => $title,
+            'project_category' => $project_category,
+            'location' => $location,
+            'approx_tonnes' => $approx_tonnes,
             'description' => $description,
             'budget_min' => $budget_min,
             'budget_max' => $budget_max,
@@ -96,20 +101,7 @@ class CreateJob extends MX_Controller {
 				}
 			}
 		}
-		// $this->load->library('upload', $config);
-        // $config['upload_path']          = './uploads/attached/';
-        // $config['allowed_types']        = '*';
-        // $config['max_size']             = 100;
-	    // $config['max_width']            = 1024;
-	    // $config['max_height']           = 768;
-		// if(!$this->upload->do_upload('userfile')){
-		// 	echo json_encode(array(
-		// 		'success' => false,
-		// 		'error' => $this->upload->display_errors()
-		// 	));
-		// }
-		// else{
-		// }
+
 	}
 
 	function slug($text){

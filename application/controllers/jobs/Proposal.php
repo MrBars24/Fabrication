@@ -29,4 +29,16 @@ class Proposal extends MX_Controller {
             'success' => FALSE
         ), 400);
     }
+
+	function accept($id){
+		$this->load->model('proposal_model');
+		$data = array(
+			'status' => 1,
+			'accepted_at' => date("Y-m-d h:i:sa")
+		);
+		$result = $this->proposal_model->acceptBid($id,$data);
+		if($result){
+			redirect("jobs/$result");
+		}
+	}
 }

@@ -36,7 +36,7 @@ $(document).ready(function() {
                                     <h6 class="text-dark font-weight-bold">6</h6>
                                 </div>
                             </div>
-                            <div class="text-center">        
+                            <div class="text-center">
                                 <a href="/jobs/${obj.id}" class="btn btn-warning text-dark mt-3 py-0 "><span class="align-middle">Job Details</span><i class="fa fa-angle-right fa-2x align-middle ml-2"></i></a>
                             </div>
                         </div>
@@ -56,27 +56,7 @@ $(document).ready(function() {
         }
     });
 
-    $(document).on("submit", "#form-update-job", function(e){
-        e.preventDefault();
-        var url = $(this).attr('action');
-        var data = $(this).serializeArray();
 
-        $.ajax({
-            type: 'post',
-            url: url,
-            data: data,
-            dataType: 'json',
-            success: function(data){
-                console.log(data);
-                // $.each(data, function(index, field){
-                //     $('#form-update-job [data-value-target"'${field.name}'"] ').text(field.value);
-                // });
-            },
-            error: function(){
-
-            }
-        });
-    });
 
     $(document).on("click", "#btnsearch", function(e) {
         search_job();

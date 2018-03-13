@@ -82,10 +82,11 @@ class BrowseJobs extends MX_Controller {
         );
         $js = array(
 			"assets/plugins/moment/moment.js",
+			"assets/default/custom/js/update-job.js",
             "assets/default/custom/js/jobs.js",
             "assets/admin/custom/js/bars-datatable.js",
             "assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js",
-            "assets/admin/js/mask.js"
+            "assets/admin/js/mask.js",
         );
         $this->template->append_css($css);
 		$this->template->append_js($js);
@@ -95,6 +96,7 @@ class BrowseJobs extends MX_Controller {
 		$bid = $this->proposal_model->getBidsByJobId($id);
 		$this->template->load_Sub('job', $job);
 		$this->template->load_Sub('bid', $bid);
+		
 		$this->template->load('frontend/jobs/posted_job_view');
 	}
 

@@ -168,6 +168,9 @@ $route['portfolio/delete/(:num)']= 'portfolio/DeletePortfolio/deletePort/$1';
 //Proposal
 $route['jobs/proposal/(:num)']['get'] = 'jobs/ViewJob/proposal/$1';
 $route['jobs/submit/proposal']['post'] = 'jobs/Proposal/submit';
+
+//Bid Accecpt
+$route['job/bid/accept/(:num)']['get'] = 'jobs/Proposal/accept/$1';
 //Bid History
 $route['jobs/bid-history']['get'] = 'jobs/ViewBidHistory/index';
 $route['jobs/bid-history']['post'] = 'jobs/ViewBidHistory/index';

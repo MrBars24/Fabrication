@@ -1,5 +1,8 @@
 <?php if(!empty($bid)): ?>
     <?php foreach($bid as $b): ?>
+            <!-- <pre>
+                <?php var_dump($b) ?>
+            </pre> -->
     <tr>
         <td>
             <div class="row">
@@ -7,15 +10,15 @@
                     <img src="/assets/images/users/6.jpg" width="50" class="img-circle m-r-10" alt="logo">
                 </div>
                 <div class="col-9">
-                    <a href="#"><?= $b->fullname; ?></a>
+                    <a href=""><?= $b->fullname; ?></a>
                     <p>
                         <?= $b->cover_letter ?>
                     </p>
                     <div class="like-comm">
-                        <a href="<?= base_url('job/bid/accept') ?>" class="link m-r-10"><i class="mdi mdi-checkbox-marked-circle text-success"></i> Accept Bid</a>
+                        <a href="<?= base_url('job/bid/accept') ?>/<?= $b->id ?>" class="link m-r-10"><i class="mdi mdi-checkbox-marked-circle text-success"></i> Accept Bid</a>
                         <a href="<?= base_url('job/bid/decline') ?>" class="text-dark m-r-10"><i class="mdi mdi-close text-danger"></i> Decline</a>
                         <a href="javascript:void(0)" class="text-dark m-r-10" data-toggle="modal" data-target=".modal-message-bidder" ><i class="mdi mdi-email text-primary"></i> Message</a>
-                        
+
                     </div>
                 </div>
             </div>

@@ -13,7 +13,7 @@ class Proposal_model extends MX_Model{
     }
 
     public function getBidsByJobId($job_id){
-        $query = $this->db->select('bids.*, member.id, member.fullname')
+        $query = $this->db->select('bids.*, member.fullname')
             ->join('bids', 'bids.expert_id = member.id')
             ->where('bids.is_deleted', 0)
             ->where('bids.job_id', $job_id)
@@ -25,5 +25,10 @@ class Proposal_model extends MX_Model{
         return $query->result();
     }
 
-
+    public function acceptBid($id,$data){
+        $expert_id = $this->db->select('expert_id, job_id')->where('id', $id)->get('bids')->row();
+        $this->db->where('id', $id)->update('bids', $data);
+        $query = $this->db->set('accepted_bid', $expert_id->expert_id)->set('status','close')->where('id', $expert_id->job_id)->update('jobs');
+        return $expert_id->job_id;
+    }
 }

@@ -26,7 +26,7 @@ $(document).ready(function(){
                     <div class="like-comm">
                         <a href="javascript:void(0)" class="link m-r-10"><i class="fa fa-gavel text-danger"></i> ${obj.bids} Bids</a>
                         <a href="/jobs/posted/manage/${obj.id}" class="text-dark m-r-10" data-toggle="tooltip" title="Manage Job"><i class="mdi mdi-settings"></i> Manage</a>
-                        <a href="/jobs/posted/contract/${obj.id}" class="text-dark" data-toggle="tooltip" title="View Job"><i class="mdi mdi-eye-outline"></i> View Job</a>
+                        <a href="/jobs" class="text-dark" data-toggle="tooltip" title="View Job"><i class="mdi mdi-eye-outline"></i> View Job</a>
                     </div>
                 </div>
             </div>`;
