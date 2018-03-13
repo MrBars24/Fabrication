@@ -40,19 +40,19 @@
                                             <div class="col-4">
                                                 <span class="font-weight-bold">Keywords</span>
                                             </div>
-                                            <div class="col-8 tags-default form-control-settings-account-hide" id="public-keywords">
+                                            <div class="col-8 tags-default form-control-settings-account-hide" id="public-keywords-div">
                                             <?php
                                                 $keys = $public_details->keywords;
                                                 $array = explode(',',$keys);
                                                 foreach ($array as $keywords){ 
                                             ?>
-                                                <span class="badge badge-secondary badge-pill mx-1 px-3 py-2 mb-1"><?= $keywords; ?></span>                                          
+                                                <span class="public-keywords badge badge-secondary badge-pill mx-1 px-3 py-2 mb-1"><?= $keywords; ?></span>                                          
                                             <?php
                                                 }
                                             ?>
                                             </div>
                                             <div class="col-8 tags-default form-control-settings-account d-none">
-                                            <input type="text" name="public-keywords" class="form-control-settings-account d-none" id="keywords" data-role="tagsinput" placeholder="add tags" />
+                                            <input value="<?= $keywords ?>" type="text" name="public-keywords" class="form-control-settings-account d-none" id="keywords" data-role="tagsinput" placeholder="add tags" />
                                             </div>
                                         </div>
 
