@@ -202,7 +202,9 @@ $(document).on("submit", "#form-portfolio-create", function(e){
         dataType: 'json',
         url: '/portfolio/delete/'+id,
             success: function (result){
-                $('#project-empty-error').html('');
+                if (!$('#portfolio-container').val()) {
+                    $('#project-empty-error').html(`<h2 class="text-center text-muted">You haven't add any project yet.</h2>`);
+              }
                 $("#delete-portfolio").modal('hide');
                 $("#"+ id).remove();
             }    
