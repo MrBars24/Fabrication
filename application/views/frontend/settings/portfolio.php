@@ -19,9 +19,9 @@
                                            </span>
                                        </div>
 
-                                       <div class="py-5">
+                                       <div id="project-empty-error"  class="py-5">
                                        <?php if (empty($portfolios)){ ?>
-                                           <h2 id="project-empty-error" class="text-center text-muted">You haven't add any project yet.</h2>
+                                           <h2   class="text-center text-muted">You haven't add any project yet.</h2>
                                        <?php 
                                         }else{
                                         } ?>
