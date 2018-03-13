@@ -33,6 +33,7 @@ class Portfolio_model extends MX_Model{
         $query = $this->db->select('*')
         ->from('portfolios')
         ->where('is_deleted',0)
+        ->order_by('created_at','desc')
         ->get();
         
         if($query->num_rows() > 0){
