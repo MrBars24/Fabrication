@@ -22,6 +22,7 @@ $(document).on("submit", "#form-portfolio-create", function(e){
             var text = "You have successfully added your portfolio.";
             var heading = "Success!!";
             successtoast(text,heading);
+            $('#project-empty-error').html('');
             $("#portfolio-container").prepend(`<div class="col-sm-4" id="${result.id}">
                 <div class="el-card-item">
                     <div class="el-card-avatar el-overlay-1 mb-1">
@@ -201,9 +202,11 @@ $(document).on("submit", "#form-portfolio-create", function(e){
         dataType: 'json',
         url: '/portfolio/delete/'+id,
             success: function (result){
-            if(result.success){
+                if (!$('#portfolio-container').val()) {
+                    $('#project-empty-error').html(`<h2 class="text-center text-muted">You haven't add any project yet.</h2>`);
+              }
                 $("#delete-portfolio").modal('hide');
-                $("#"+ id).remove();}
+                $("#"+ id).remove();
             }    
         });
     });
