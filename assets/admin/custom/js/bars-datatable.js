@@ -200,7 +200,10 @@
 	});
 
 	function generatePagination(current,max){
-		if(max == 0) return;
+		if(max == 0){
+			$(_pageContainer).html("");
+			return;
+		}
 		current = parseInt(current);
 		$(_pageContainer).html(``);
 

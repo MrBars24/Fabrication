@@ -28,7 +28,6 @@ class Portfolio extends MX_Controller {
 		$this->template->append_css($css);
 		$this->load->model('portfolio_model');
 		$data = $this->portfolio_model->getAllPortfolio();
-		
 		$this->template->load_sub('portfolios', $data);
 		$this->template->load('frontend/settings/portfolio');
 		

@@ -34,6 +34,14 @@ class MyJob extends MX_Controller {
         $this->template->load('frontend/jobs/view_my_job');
 	}
 
-
+	public function myJobsPagination(){
+		header("Content-Type:application/json");
+		$this->load->model('job_model');
+		$this->load->model('user_model');
+		$jobsPagination = $this->job_model->myAllJobs();
+		if($jobsPagination){
+			echo json_encode($jobsPagination);
+		}
+	}
 
 }
