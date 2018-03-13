@@ -35,11 +35,7 @@
                         <div>
                             <small class="text-muted">Status</small>
                             <span class="d-block icon-2x text-primary">
-                                <?php if(date("Y-m-d") < $jobdata->bidding_expire_at): ?>
-                                    OPEN
-                                <?php else: ?>
-                                    CLOSE
-                                <?php endif; ?>
+                                <?= $jobdata->status ?>
                             </span>
                         </div>
                     </div>
@@ -115,8 +111,65 @@
             <!-- <a class="btn btn-success btn-lg btn-block" href="<?= base_url('jobs/proposal/'); ?><?= $fabricatordata->id ?>" target="_blank">Bid Now</a> -->
             <?php if($jobdata->fabricator_id == auth()->id): ?>
                 <a href="/jobs/posted/manage/<?=$jobdata->id?>" class="text-white btn btn-success btn-lg btn-block">Manage Job</a>
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h4 class="card-title mb-0">AWARDED TO:</h4>
+                    </div>
+                     <hr class="m-0">
+                    <div class="comment-widgets mb-0 mt-3">
+                        <div class="comment-text w-100 py-0">
+                            <div class="d-flex justify-content-between">
+                                <h4 class="font-weight-bold mb-0"><a href="#"><?= $awardedUser->fullname ?></a></h4>
+
+                                <span>
+                                    <a href="#" class="text-info mdi mdi-email"></a>
+                                </span>
+                            </div>
+                            <!-- <h6>Date Hired:  ?></h6> -->
+                            <div class="comment-footer">
+                                <span class="label label-info">Autocad 2010</span>
+                                <span class="label label-info">Autocad 2015</span>
+                            </div>
+                            <br>
+                            <h6>Rate: $ 33.5 /hr</h6>
+                            <h6>Work Hour: 140 hrs</h6>
+
+                        </div>
+                        <hr>
+                    </div>
+                </div>
             <?php else: ?>
-                <a class="text-white btn btn-success btn-lg btn-block" data-toggle="modal" data-target=".modal-bid-now">Bid Now</a>
+                <?php if($jobdata->status == "open"): ?>
+                    <a class="text-white btn btn-success btn-lg btn-block" data-toggle="modal" data-target=".modal-bid-now">Bid Now</a>
+                <?php else: ?>
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title mb-0">AWARDED TO:</h4>
+                        </div>
+                         <hr class="m-0">
+                        <div class="comment-widgets mb-0 mt-3">
+                            <div class="comment-text w-100 py-0">
+                                <div class="d-flex justify-content-between">
+                                    <h4 class="font-weight-bold mb-0"><a href="#"><?= $awardedUser->fullname ?></a></h4>
+
+                                    <span>
+                                        <a href="#" class="text-info mdi mdi-email"></a>
+                                    </span>
+                                </div>
+                                <!-- <h6>Date Hired:  ?></h6> -->
+                                <div class="comment-footer">
+                                    <span class="label label-info">Autocad 2010</span>
+                                    <span class="label label-info">Autocad 2015</span>
+                                </div>
+                                <br>
+                                <h6>Rate: $ 33.5 /hr</h6>
+                                <h6>Work Hour: 140 hrs</h6>
+
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                <?php endif; ?>
             <?php endif; ?>
             <!-- Fabricator Snapshot -->
             <div class="card mt-4">
