@@ -1,18 +1,24 @@
 $(document).ready(function() {
 
+    init();
     var table = $(".pagination-jobs-container").initTable({
         url: '/jobs/list',
         pageContainer: ".pagination-jobs-bars",
+        search:{
+            'status': $("[name='status']:checked").val(),
+            'string': $("#search").val(),
+            'category': $("#category").val(),
+            'budget': $("#budget").val()
+        },
         render: function(data) {
             var container = ``;
             if (data != undefined) {
-                console.log(data);
                 data.forEach(function(obj, index) {
                     container += `
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <div class="card" style="min-height: 400px;">
                     <div class="col-sm-12 text-right mt-3">
-                            <button type="button" class="btn ${(obj.is_watchlist == 1) ? "btn-outline-danger" : ""} btn-circle"><i class="fa fa-bookmark"></i> </button>
+                            <button type="button" data-id="${obj.id}" class="btn ${(obj.is_watchlist == 1) ? "btn-outline-danger btn-unbook" : "btn-bookmark"} btn-circle"><i class="fa fa-bookmark"></i> </button>
                         </div>
                     <div class="card-body">
                         <h4 class="font-weight-bold mb-1 text-center">${obj.title}</h4>
@@ -56,7 +62,7 @@ $(document).ready(function() {
         }
     });
 
-    $(document).on("submit", "#form-update-job", function(e){
+    $(document).on("submit", "#form-update-job", function(e) {
         e.preventDefault();
         var url = $(this).attr('action');
         var data = $(this).serializeArray();
@@ -66,13 +72,13 @@ $(document).ready(function() {
             url: url,
             data: data,
             dataType: 'json',
-            success: function(data){
+            success: function(data) {
                 console.log(data);
                 // $.each(data, function(index, field){
                 //     $('#form-update-job [data-value-target"'${field.name}'"] ').text(field.value);
                 // });
             },
-            error: function(){
+            error: function() {
 
             }
         });
@@ -82,26 +88,94 @@ $(document).ready(function() {
         search_job();
     });
 
-    $(document).on("change","#category,#budget,[name='status']",function(){
+    $(document).on("change", "#category,#budget,[name='status']", function() {
         search_job();
     });
 
-    function search_job(){
+    $(document).on('click','.btn-bookmark',function(){
+        var that = $(this);
+        var index = that.attr("data-id");
+        var data = table.dataFind("id",index);
+
+        that.removeClass('btn-bookmark');
+        $.ajax({
+            url:"/watchlist/" + data.id,
+            type:"POST",
+            success:function(res){
+                if(res.success){
+                    that.addClass('btn-outline-danger btn-unbook');
+                }
+            }
+        })
+    });
+
+    $(document).on('click','.btn-unbook',function(){
+        var that = $(this);
+        var index = that.attr("data-id");
+        var data = table.dataFind("id",index);
+
+        that.removeClass('btn-outline-danger btn-unbook');
+
+        $.ajax({
+            url:"/watchlist/delete/" + data.id,
+            type:"POST",
+            success:function(res){
+                if(res.success){
+                    that.addClass('btn-bookmark');
+                }
+            }
+        })
+    });
+
+    function search_job() {
         var txtsearch = $("#search").val();
         var search = $("#category").val();
         var budget = $("#budget").val();
         var status = $("[name='status']:checked").val();
 
-        table.search({
-            'string':txtsearch,
-            'category':search,
-            'budget':budget,
-            'status':status
-        });
+        var params = {
+            'string': txtsearch,
+            'category': search,
+            'budget': budget,
+            'status': status
+        };
+
+        table.search(params);
+        window.history.replaceState("", "Title", "/jobs?" + $.param(params));
     }
 
     $(".stickyside").stick_in_parent({
         offset_top: 12
     });
 
+    function init() {
+        var params = get_parameters();
+        if (params.q != "") {
+            $("#search").val(params.q);
+        }
+
+        if (params.category != "") {
+            if ($("#category option[value='" + params.category + "']").length != 0) {
+                $("#category").val(params.category);
+            } else {
+                $("#category").prop('selectedIndex', 0);
+            }
+        }
+
+        if (params.status != "") {
+            if ($("[name='status'][value='" + params.status + "']").length != 0) {
+                $("[name='status'][value='" + params.status + "']").prop('checked', true);
+            } else {
+                $("[name='status'][value='all']").prop('checked', true);
+            }
+        }
+
+        if (params.budget != "") {
+            if ($("#budget option[value='" + params.budget + "']").length != 0) {
+                $("#budget").val(params.budget);
+            } else {
+                $("#budget").prop('selectedIndex', 0);
+            }
+        }
+    }
 });
