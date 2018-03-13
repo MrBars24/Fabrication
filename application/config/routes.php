@@ -105,6 +105,13 @@ $route['admin/settings/budget-filter/create']['POST'] = 'adm/budget/store';
 $route['admin/settings/budget-filter/update/(:num)']['POST'] = 'adm/budget/update/$1';
 $route['admin/settings/budget-filter/delete/(:num)']['POST'] = 'adm/budget/destroy/$1';
 
+//Settings/Package Settings
+$route['admin/settings/package-settings']['GET'] = 'adm/package';
+$route['admin/settings/package-settings/list']['GET'] = 'adm/package/fetch';
+$route['admin/settings/package-settings/create']['POST'] = 'adm/package/store';
+$route['admin/settings/package-settings/update/(:num)']['POST'] = 'adm/package/update/$1';
+$route['admin/settings/package-settings/delete/(:num)']['POST'] = 'adm/package/destroy/$1';
+
 //api
 $route['admin/image/assets/list']['GET'] = 'adm/file/getImageAsssets';
 $route['admin/user/list']['GET'] = 'adm/user/getUsers';

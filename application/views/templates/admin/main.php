@@ -370,6 +370,7 @@
                         <li> <a class="has-arrow waves-effect waves-dark" href="/admin/settings" aria-expanded="false"><i class="fa fa-gear"></i><span class="hide-menu">SETTINGS </span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="/admin/settings/budget-filter">Budget Range Filter</a></li>
+                                <li><a href="/admin/settings/package-settings">Package Settings</a></li>
                             </ul>
                         </li>
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Content Menu</span></a>
