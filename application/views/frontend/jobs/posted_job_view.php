@@ -43,25 +43,21 @@
                                 </div>
                                 <div class="col">
                                     <ul class="p-0 list-style-type-none">
-                                        <li class="">Status: <span class="font-weight-bold text-success">Open</span></li>
+                                        <li class="">Status: <span class="font-weight-bold text-success"><?php echo $job->status ?></span></li>
                                         <li class="">Project Start: <span class="font-weight-bold"><?= date_new_format($job->project_start) ?></span></li>
                                         <li class="">Expire <span class="font-weight-bold"><?= date_new_format($job->project_end) ?></span></li>
                                         <li class="">Materials: <span class="font-weight-bold">Steel, Wood, Concrete</span></li>
                                     </ul>
                                 </div>
                             </div>
-
                         </div>
-
                         <div class="col-sm-12 mt-3">
                             <div class="earning-widget">
-<!--
-                                <div class="card-body">
+                                <!--<div class="card-body">
                                     <div class="card-title">
                                         <h4 class="card-title m-b-0">Bids</h4>
                                     </div>
-                                </div>
--->
+                                </div>-->
                                 <div class="card-body b-t">
                                     <table class="table v-middle no-border">
                                         <tbody>
@@ -71,16 +67,12 @@
                                         </tbody>
                                     </table>
                                 </div>
-
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
-
         </div>
-
     </div>
 </div>
 

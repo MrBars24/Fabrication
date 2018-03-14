@@ -17,7 +17,9 @@
                             <span class="badge badge-secondary"><?=$jobdata->project_category?></span>
                         </div>
                         <div>
-                            <button class="btn default btn-circle <?=($jobdata->is_watchlist==1)? "btn-unbook bg-danger text-white" : "btn-bookmark"?>"><i class="text-white fa fa-bookmark"></i></button>
+                            <?php if($jobdata->fabricator_id != auth()->id): ?>
+                                <button class="btn default btn-circle <?=($jobdata->is_watchlist==1)? "btn-unbook bg-danger text-white" : "btn-bookmark"?>"><i class="text-white fa fa-bookmark"></i></button>
+                            <?php endif; ?>
                         </div>
                     </div>
                     <div class="d-flex flex-row justify-content-between mt-4">
@@ -81,9 +83,6 @@
                         </div>
                     </div>
                     <div class="clearfix"></div>
-
-
-
                     <ul class="list-unstyled" id="bid-container">
                         <?php foreach($bids as $bid): ?>
                             <li class="media border-0">
@@ -91,10 +90,12 @@
                                 <div class="media-body">
                                     <div class="row">
                                         <div class="col-sm-9">
-                                            <h4 class="mt-0 mb-1 font-weight-bold"><?= $bid->fullname; ?></h4>
+                                            <h4 class="mt-0 mb-0 font-weight-bold"><?= $bid->fullname; ?></h4>
                                             <small class="text-muted"><?= time_new_format($bid->created_at); ?></small>
+
                                         </div>
                                         <div class="col-sm-3 text-right">
+
                                         <!-- <small class="">Bid</small>
                                             <h4>$<?= $bid->amount ?></h4> -->
                                         </div>
@@ -121,10 +122,6 @@
                         <div class="comment-text w-100 py-0">
                             <div class="d-flex justify-content-between">
                                 <h4 class="font-weight-bold mb-0"><a href="#"><?= $awardedUser->fullname ?></a></h4>
-
-                                <span>
-                                    <a href="#" class="text-info mdi mdi-email"></a>
-                                </span>
                             </div>
                             <!-- <h6>Date Hired:  ?></h6> -->
                             <div class="comment-footer">
@@ -141,8 +138,34 @@
                 </div>
                 <?php endif; ?>
             <?php else: ?>
-                <?php if($jobdata->status == "open"): ?>
-                    <a class="text-white btn btn-success btn-lg btn-block" data-toggle="modal" data-target=".modal-bid-now">Bid Now</a>
+                <?php if($jobdata->status == "open"): 
+                        $token = FALSE;
+                    ?>
+                    
+                    <?php foreach($bids as $bid): ?>
+                        <?php $token = FALSE; ?>
+                        <?php if($bid->expert_id == auth()->id): ?>
+                            <?php
+                                $token = TRUE;
+                                break;
+                             ?>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                    <?php if($token == FALSE): ?>
+                        <a class="text-white btn btn-success btn-lg btn-block" data-toggle="modal" data-target=".modal-bid-now">Bid Now</a>
+                    <?php else: ?>
+                        <div class="card">
+                            <div class="d-flex justify-content-center align-items-center card-body flex-column">
+                                <h5 class="text-dark font-weight-bold">You already submitted a proposal </h5>
+                                <?php if($bid->expert_id == auth()->id): ?>
+                                    <div classs="d-flex">
+                                        <button type="button" class="btn btn-success btn-sm" data-target=".modal-view-bid" data-toggle="modal">Edit Proposal</button>
+                                        <button type="submit" class="btn btn-danger btn-sm">Cancel bid</button>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    <?php endif; ?>
                 <?php else: ?>
                     <div class="card">
                         <div class="card-body">
@@ -266,6 +289,48 @@
             </div>
             <?= form_close(); ?>
         </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade modal-view-bid" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <?php foreach($bids as $bid): ?>
+            <?php if($bid->expert_id == auth()->id): ?>
+                <?= form_open("jobs/edit/proposal/$bid->id", array('id' => 'form-edit-proposal')); ?>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="myLargeModalLabel">Proposal</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="id" value="<?= $jobdata->id ?>" >
+                        <h5 class="font-weight-bold">Bid</h5>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" name="budget" class="form-control form-control-lg" placeholder="Amount" value="<?= $bid->amount ?>">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <small class="text-muted">Client's Budget</small>
+                                <h4 class="font-weight-bold text-success m-0">$<?= $jobdata->budget_min ?> - $<?= $jobdata->budget_max ?></h4>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h5 class="font-weight-bold">Additional Information</h5>
+                            <textarea class="form-control" rows="5" name="cover_letter"><?= $bid->cover_letter ?></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger waves-effect text-left" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success waves-effect text-left">Save Changes</button>
+                    </div>
+                </div>
+                <?= form_close(); ?>
+            <?php endif; ?>
+        <?php endforeach; ?>
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->

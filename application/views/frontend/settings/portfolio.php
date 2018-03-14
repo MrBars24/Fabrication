@@ -19,9 +19,13 @@
                                            </span>
                                        </div>
 
-                                       <div class="py-5">
-                                           <h2 class="text-center text-muted">You haven't add any project yet.</h2>
-                                       </div>
+                                       <div id="project-empty-error"  class="py-5">
+                                       <?php if (empty($portfolios)){ ?>
+                                           <h2   class="text-center text-muted">You haven't add any project yet.</h2>
+                                       <?php 
+                                        }else{
+                                        } ?>
+                                           </div>
 
                                      <div class="row el-element-overlay" id="portfolio-container">
                                                   
@@ -62,9 +66,9 @@
                 <div class="form-group">
                     <h5 class="font-weight-bold">Project Category</h5>
                     <select class="form-control" name="category">
-                        <option value="">1</option>
-                        <option value="">2</option>
-                        <option value="">3</option>
+                    <?php foreach ($industries as $i): ?>
+                        <option value=""><?= $i['display_name']; ?></option>
+                    <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="form-group">

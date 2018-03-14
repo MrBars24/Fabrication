@@ -5,7 +5,7 @@
             <div class="modal-header" id="modal-portfolio-header">
 
             </div>
-            <div class="modal-body">
+            <div class="modal-body" id="modal-portfolio-body">
             
             </div>
             <div class="modal-footer">
