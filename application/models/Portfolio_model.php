@@ -71,9 +71,12 @@ class Portfolio_model extends MX_Model{
     }
 
     function deletePort($id){
-    $this->db->delete('portfolios', array('id' => $id));
+
+    $data = array(
+        'is_deleted' => '1'
+    );   
     $this->db->where('id', $id);
-    return $this->db->delete('portfolios');
+    return $this->db->update('portfolios', $data);
     }
 
     

@@ -1,5 +1,12 @@
 $(document).ready(function(){
     
+    $('#login').on('shown.bs.modal', function (){
+        $("#username-focus").focus();
+    });
+    $('#signupModal').on('shown.bs.modal', function (){
+        $("#firstname-focus").focus();
+    });
+
     $(document).on("submit", "#form-login",function(e){
         e.preventDefault();
         var url = $(this).attr('action');
