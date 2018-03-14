@@ -228,7 +228,7 @@
                                     <a href="javascript:void(0)" class="m-t-10 text-white" data-toggle="modal" data-target="#login" >Login</a>
                                 </li>
                                 <li class="nav-item mx-3">
-                                    <a href="javascript:void(0)" class="btn btn-success text-white" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Signup</a>
+                                    <a href="javascript:void(0)" class="btn btn-success text-white" data-toggle="modal" data-target="#signupModal" data-whatever="@getbootstrap">Signup</a>
                                 </li>
                         <?php else: ?>
                             <li class="nav-item dropdown">
@@ -288,7 +288,7 @@
         <!-- ============================================================== -->
         <!-- End Page wrapper  -->
         <!-- ============================================================== -->
-        <div class="modal fade bs-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" style="display: none;">
+        <div class="modal fade bs-example-modal-lg" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" style="display: none;">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -321,7 +321,7 @@
                                     <h3 class="font-weight-bold mt-3 font-13"> Your New Account Details </h3>
                                     <div class="row p-1">
                                         <div class="col-6 form-group">
-                                            <input type="text" class="form-control" placeholder="Firstname" name="firstname">
+                                            <input id="firstname-focus" type="text" class="form-control" placeholder="Firstname" name="firstname">
                                         </div>
                                         <div class="col-6 form-group">
                                             <input type="text" class="form-control" placeholder="Lastname" name="lastname">
@@ -382,7 +382,7 @@
                             <div class="form-group">
                                 <div class="col-xs-12">
                                     <label for="">Email Address or Username</label>
-                                    <input class="form-control" type="text" data-target-error-text="#username-error" required="" name="username">
+                                    <input class="form-control" id="username-focus" type="text" data-target-error-text="#username-error" required="" name="username">
                                     <div class="help-block" hidden>
                                         <ul role="alert">
                                             <li id="username-error"></li>
