@@ -207,6 +207,13 @@
 		_data_hash = btoa(JSON.stringify(tmp));
 	}
 
+    $.fn.dataAppend = function(t){
+        this.append(t.template);
+        var tmp = JSON.parse(atob(_data_hash));
+        tmp.push(t.data);
+        _data_hash = btoa(JSON.stringify(tmp));
+    }
+
 	$.fn.dataReplace = function(t){
 		var tmp = JSON.parse(atob(_data_hash));
 		tmp[t.index] = t.data;
@@ -218,8 +225,7 @@
 		var tmp = JSON.parse(atob(_data_hash));
 		tmp.splice(index, 1);
 		_data_hash = btoa(JSON.stringify(tmp));
-		this.children().eq(index).remove();	
-		console.log(_data);
+		this.children().eq(index).remove();
 	}
 
 	$(document).on('click','.page-link',function(){

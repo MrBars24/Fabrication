@@ -105,6 +105,7 @@ $(document).ready(function () {
             success:function(res){
                 if(res.success){
                     that.addClass('bg-danger text-white btn-unbook');
+                    toastr.success('Successfully added to watchlist.');
                 }
             }
         })

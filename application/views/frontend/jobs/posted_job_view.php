@@ -36,16 +36,16 @@
                                 <div class="col">
                                     <ul class="p-0 list-style-type-none">
                                         <li class="">Budget: <span class="font-weight-bold text-info">$<?= $job->budget_min ?> - $<?= $job->budget_max ?></span></li>
-                                        <li class="">Bidding Start: <span class="font-weight-bold"><?= dateNewFormat($job->bidding_start_at) ?></span></li>
-                                        <li class="">Expire <span class="font-weight-bold"><?= dateNewFormat($job->bidding_expire_at) ?></span></li>
+                                        <li class="">Bidding Start: <span class="font-weight-bold"><?= date_new_format($job->bidding_start_at) ?></span></li>
+                                        <li class="">Expire <span class="font-weight-bold"><?= date_new_format($job->bidding_expire_at) ?></span></li>
                                         <li class="">Discipline: <span class="font-weight-bold">Structural</span></li>
                                     </ul>
                                 </div>
                                 <div class="col">
                                     <ul class="p-0 list-style-type-none">
                                         <li class="">Status: <span class="font-weight-bold text-success">Open</span></li>
-                                        <li class="">Project Start: <span class="font-weight-bold"><?= dateNewFormat($job->project_start) ?></span></li>
-                                        <li class="">Expire <span class="font-weight-bold"><?= dateNewFormat($job->project_end) ?></span></li>
+                                        <li class="">Project Start: <span class="font-weight-bold"><?= date_new_format($job->project_start) ?></span></li>
+                                        <li class="">Expire <span class="font-weight-bold"><?= date_new_format($job->project_end) ?></span></li>
                                         <li class="">Materials: <span class="font-weight-bold">Steel, Wood, Concrete</span></li>
                                     </ul>
                                 </div>
@@ -185,13 +185,13 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Bidding Start</label>
-                            <input type="text" name="bstart" value="<?= dateNewFormat($job->bidding_start_at, "Y-m-j") ?>" class="form-control" placeholder="Bidding Start Date" id="bsdate" data-dtp="dtp_egKES">
+                            <input type="text" name="bstart" value="<?= date_new_format($job->bidding_start_at, "Y-m-j") ?>" class="form-control" placeholder="Bidding Start Date" id="bsdate" data-dtp="dtp_egKES">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Bidding End</label>
-                            <input type="text" name="bend" class="form-control" value="<?= dateNewFormat($job->bidding_expire_at, "Y-m-j") ?>" placeholder="Bidding End Date" id="bedate" data-dtp="dtp_WDyFA">
+                            <input type="text" name="bend" class="form-control" value="<?= date_new_format($job->bidding_expire_at, "Y-m-j") ?>" placeholder="Bidding End Date" id="bedate" data-dtp="dtp_WDyFA">
                         </div>
                     </div>
                 </div>

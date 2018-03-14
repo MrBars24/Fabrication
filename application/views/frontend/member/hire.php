@@ -1,3 +1,18 @@
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+
+    </div>
+    <div class="col-md-7 align-self-center">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+            <li class="breadcrumb-item active">Hire</li>
+        </ol>
+    </div>
+    <div class="">
+        <button class="right-side-toggle waves-effect waves-light btn-inverse btn btn-circle btn-sm pull-right m-l-10"><i class="ti-settings text-white"></i></button>
+    </div>
+</div>
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-4">
@@ -41,7 +56,7 @@
                                 <a href="<?php echo base_url('jobs/'.$job->id) ?>">
                                     <div>
                                         <h5 class="mb-0"><?=$job->title?></h5>
-                                        <small class="text-muted"><?=dateNewFormat($job->created_at)?></small>
+                                        <small class="text-muted"><?=date_new_format($job->created_at)?></small>
                                     </div>
                                 </a>
                                 <div>

@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-sm-8">
             <h1 class="mt-2 mb-0"><strong><?= $jobdata->title ?></strong></h1>
-            <small class="text-muted">Posted <?=dateNewFormat($jobdata->created_at)?></small>
+            <small class="text-muted">Posted <?=date_new_format($jobdata->created_at)?></small>
         </div>
     </div>
     <div class="row mt-2">
@@ -44,8 +44,8 @@
                     <div class="row">
                         <div class="col">
                             <ul class="p-0 list-style-type-none">
-                                <li class="">Bidding Start: <span class="font-weight-bold"><?= dateNewFormat($jobdata->bidding_start_at) ?></span></li>
-                                <li class="">Expire: <span class="font-weight-bold"><?= dateNewFormat($jobdata->bidding_expire_at) ?></span></li>
+                                <li class="">Bidding Start: <span class="font-weight-bold"><?= date_new_format($jobdata->bidding_start_at) ?></span></li>
+                                <li class="">Expire: <span class="font-weight-bold"><?= date_new_format($jobdata->bidding_expire_at) ?></span></li>
                             </ul>
                         </div>
                         <div class="col">
@@ -92,7 +92,7 @@
                                     <div class="row">
                                         <div class="col-sm-9">
                                             <h4 class="mt-0 mb-1 font-weight-bold"><?= $bid->fullname; ?></h4>
-                                            <small class="text-muted"><?= timeNewFormat($bid->created_at); ?></small>
+                                            <small class="text-muted"><?= time_new_format($bid->created_at); ?></small>
                                         </div>
                                         <div class="col-sm-3 text-right">
                                         <!-- <small class="">Bid</small>
@@ -221,7 +221,7 @@
                             </div>
                             <div>
                                 <small class="text-muted">Member Since</small>
-                                <h4><?= dateNewFormat($jobdata->created_at); ?></h4>
+                                <h4><?= date_new_format($jobdata->created_at); ?></h4>
                             </div>
                         </div>
                     </div>

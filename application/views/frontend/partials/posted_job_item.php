@@ -8,7 +8,7 @@
             <br>
 
             <span class="sl-date">
-                <?= dateNewFormat($job->created_at) ?>
+                <?= date_new_format($job->created_at) ?>
             </span>
 
             <p>
