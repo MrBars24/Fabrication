@@ -19,7 +19,7 @@ class Package_model extends MX_Model{
         }
 
         $where = array("is_deleted"=>0);
-        $q = $this->getIndexDataCount("package_settings",$limit,$offset,'created_at','DESC',$where);
+        $q = $this->getIndexDataCount("package_settings",$limit,$offset,'package_price','ASC',$where);
 
         return $q;
     }
