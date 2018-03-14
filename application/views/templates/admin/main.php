@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/assets/plugins/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/plugins/morrisjs/morris.css">
     <link rel="stylesheet" href="/assets/admin/css/style.css">
+    <link rel="stylesheet" href="/assets/plugins/toastr/build/toastr.min.css">
     <link rel="stylesheet" href="/assets/admin/colors/blue.css">
     <?php if(isset($additional_css)){
         foreach($additional_css as $css){
@@ -605,6 +606,7 @@
     <script src="<?php echo base_url() ?>assets/plugins/raphael/raphael-min.js"></script>
     <script src="<?php echo base_url() ?>assets/plugins/morrisjs/morris.min.js"></script>
     <script src="<?php echo base_url() ?>assets/admin/js/dashboard1.js"></script>
+    <script src="<?php echo base_url() ?>assets/plugins/toastr/build/toastr.min.js"></script>
     <script src="<?php echo base_url() ?>assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
     <?php if(isset($add_js)){
           foreach($add_js as $js){ ?>

@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/assets/plugins/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/default/css/style.css">
     <link rel="stylesheet" href="/assets/default/css/colors/blue.css">
+    <link rel="stylesheet" href="/assets/plugins/toastr/build/toastr.min.css">
     <link rel="stylesheet" href="/assets/default/css/custom/global.css">
 
     <?php if(isset($additional_css)){
@@ -434,18 +435,19 @@
     </div>
 
     <!-- Javascript Libraries -->
-    <script src="<?php echo base_url() ?>/assets/plugins/jquery/jquery.min.js" deferred></script>
-    <script src="<?php echo base_url() ?>/assets/plugins/bootstrap/js/popper.min.js" ></script>
-    <script src="<?php echo base_url() ?>/assets/plugins/bootstrap/js/bootstrap.min.js" ></script>
-    <script src="<?php echo base_url() ?>/assets/global.js" deferred></script>
-    <script src="<?php echo base_url() ?>/assets/default/js/jquery.slimscroll.js" ></script>
-    <script src="<?php echo base_url() ?>/assets/default/js/waves.js" ></script>
-    <script src="<?php echo base_url() ?>/assets/default/js/sidebarmenu.js" ></script>
-    <script src="<?php echo base_url() ?>/assets/plugins/sticky-kit-master/dist/sticky-kit.min.js" ></script>
-    <script src="<?php echo base_url() ?>/assets/plugins/sparkline/jquery.sparkline.min.js" ></script>
-    <script src="<?php echo base_url() ?>/assets/default/js/custom.min.js" ></script>
-    <script src="<?php echo base_url() ?>/assets/plugins/styleswitcher/jQuery.style.switcher.js" ></script>
-    <script src="<?php echo base_url() ?>/assets/default/custom/js/login.js" ></script>
+    <script src="<?php echo base_url() ?>assets/plugins/jquery/jquery.min.js" deferred></script>
+    <script src="<?php echo base_url() ?>assets/plugins/bootstrap/js/popper.min.js" ></script>
+    <script src="<?php echo base_url() ?>assets/plugins/bootstrap/js/bootstrap.min.js" ></script>
+    <script src="<?php echo base_url() ?>assets/global.js" deferred></script>
+    <script src="<?php echo base_url() ?>assets/default/js/jquery.slimscroll.js" ></script>
+    <script src="<?php echo base_url() ?>assets/default/js/waves.js" ></script>
+    <script src="<?php echo base_url() ?>assets/default/js/sidebarmenu.js" ></script>
+    <script src="<?php echo base_url() ?>assets/plugins/sticky-kit-master/dist/sticky-kit.min.js" ></script>
+    <script src="<?php echo base_url() ?>assets/plugins/sparkline/jquery.sparkline.min.js" ></script>
+    <script src="<?php echo base_url() ?>assets/default/js/custom.min.js" ></script>
+    <script src="<?php echo base_url() ?>assets/plugins/styleswitcher/jQuery.style.switcher.js" ></script>
+    <script src="<?php echo base_url() ?>assets/plugins/toastr/build/toastr.min.js" ></script>
+    <script src="<?php echo base_url() ?>assets/default/custom/js/login.js" ></script>
 
     <?php if(isset($add_js)){
           foreach($add_js as $js){ ?>
