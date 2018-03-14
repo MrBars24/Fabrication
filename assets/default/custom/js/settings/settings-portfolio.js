@@ -137,7 +137,7 @@ $(document).on("submit", "#form-portfolio-create", function(e){
                                     </button>
                                 </li>
                                 <li>
-                                    <button class="btn border-white btn-outline image-popup-vertical-fit" id="portfolio-delete" data-target-id = "${id}">
+                                <button class="btn border-white btn-outline image-popup-vertical-fit" id="portfolio-delete" data-toggle="modal" data-target-id = "${id}" data-target=".modal-delete-portfolio">
                                         <i class="icon-trash"></i>
                                     </button>
                                 </li>
@@ -184,9 +184,9 @@ $(document).on("submit", "#form-portfolio-create", function(e){
         $.ajax({
             success: function(result){
         $('#delete-modal-header').html(`<h3>Are you sure you want to delete?</h3>`);
-        $('#delete-modal-body').html(`
-            <form id="portfolio-modal-delete" data-target-id="${id}"><center><button type="submit" id="${id}" class="btn btn-danger waves-effect waves-light">Yes</button>
-            <button type="button" data-dismiss="modal" class="btn btn-default waves-effect waves-light">No</button></center></form>
+        $('#delete-modal-footer').html(`
+            <form id="portfolio-modal-delete" data-target-id="${id}"><button type="submit" id="${id}" class="btn btn-danger waves-effect waves-light">Yes</button></form>
+            <button type="button" data-dismiss="modal" class="btn btn-default waves-effect waves-light">No</button>
             `);
             }
         });
@@ -222,7 +222,7 @@ $(document).on("submit", "#form-portfolio-create", function(e){
             success: function(result){
                 $('#modal-portfolio-header').html(`<h3 class="modal-title" id="myLargeModalLabel">${result.data.project_name}</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>`);
-                $('.modal-body').html(`<div>
+                $('#modal-portfolio-body').html(`<div>
                     <h2 class="font-weight-bold">${result.data.project_name}</h2>
                     <div class="row">
                             <div class="col-sm-6">

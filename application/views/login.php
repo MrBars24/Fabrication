@@ -7,11 +7,11 @@
                         <h3 class="box-title m-b-20">Sign In</h3>
                         <div class="form-group ">
                             <div class="col-xs-12">
-                                <input class="form-control" type="text" required="" placeholder="Username" name="username"> </div>
+                                <input class="form-control" type="text" required="" placeholder="Username" name="username" > </div>
                         </div>
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <input class="form-control" type="password" required="" placeholder="Password" name="pwd"> </div>
+                                <input class="form-control" type="password" required="" placeholder="Password" name="pwd" > </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12 font-14">

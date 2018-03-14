@@ -4,10 +4,7 @@
             <div class="modal-header" id="delete-modal-header">
             
             </div>
-            <div class="modal-body" id="delete-modal-body">
-            
-            </div>
-            <div class="modal-footer">
+            <div class="modal-footer" id="delete-modal-footer">
                 
             </div>
         </div>

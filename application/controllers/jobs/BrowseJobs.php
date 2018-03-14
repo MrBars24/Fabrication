@@ -21,7 +21,6 @@ class BrowseJobs extends MX_Controller {
         );
         $this->template->append_css($css);
 		$this->template->append_js($js);
-
 		$this->load->model('Industry_model');
 		$industries = $this->Industry_model->getIndustries();
 		$budget_filters = $this->Industry_model->getBudgetfilters();
