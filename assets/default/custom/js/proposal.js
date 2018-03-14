@@ -1,6 +1,6 @@
 $(document).ready(function(){
-    var id = get_segment(2);
 
+    var id = get_segment(2);
     $(document).on('submit', '#form-proposal-submit', function(e){
         e.preventDefault();
         var url = $(this).attr('action');
@@ -66,4 +66,23 @@ $(document).ready(function(){
             }
         })
     });
+
+    $(document).on('submit','#form-edit-proposal', function(e){
+        e.preventDefault();
+        var url = $(this).attr('action');
+        var data = $(this).serializeArray();
+        $.ajax({
+            url: url,
+            data: data,
+            type: 'post',
+            dataType: 'json',
+            success: function(result){
+                $('.modal-view-bid').modal('hide');
+            },
+            error: function(){
+
+            }
+        });
+    });
+
 });
