@@ -67,11 +67,8 @@
                 </div>
             </div>
             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                    <div class="row pagination-jobs-container col-12" id="final-result">      
-                    </div>
-
-                <div class="pagination pagination-jobs-bars col-12 justify-content-center mb-4"></div>
-            
+                <div class="row pagination-jobs-container col-12" id="final-result"></div>
+                <div class="pagination pagination-bid-history-bars col-12 justify-content-center mb-4"></div>
             </div>
         </div>
     </div>

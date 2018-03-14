@@ -14,6 +14,7 @@ $(document).ready(function() {
             var container = ``;
             if (data.length > 0) {
                 data.forEach(function(obj, index) {
+                    console.log(obj);
                     container += `
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <div class="card" style="min-height: 400px;">
@@ -26,7 +27,7 @@ $(document).ready(function() {
                             <div class="row">
                                 <div class="col-sm-6">
                                     <small class="text-secondary mb-0">PROJECT STATUS</small>
-                                    <h6 class="text-success font-weight-bold">Open for Bidding</h6>
+                                    <h6 class="text-success text-uppercase font-weight-bold">${obj.status}</h6>
                                     <small class="text-secondary mb-0">DISCIPLINE(S)</small>
                                     <h6 class="text-dark font-weight-bold">Structural</h6>
                                     <small class="text-secondary mb-0">FABRICATOR</small>
@@ -39,13 +40,13 @@ $(document).ready(function() {
                                     <small class="text-secondary mb-0">BIDDING CLOSES</small>
                                     <h6 class="text-success font-weight-bold"><i class="fa fa-clock"></i> ${obj.bidding_expire_at}</h6>
                                     <small class="text-secondary mb-0">BIDS</small>
-                                    <h6 class="text-dark font-weight-bold">6</h6>
+                                    <h6 class="text-dark font-weight-bold">${obj.accepted_bid}</h6>
                                 </div>
                             </div>
-                            <div class="text-center">        
+                            <div class="text-center">
                                 <a href="/jobs/${obj.id}" class="btn btn-warning text-dark mt-3 py-0 "><span class="align-middle">Job Details</span><i class="fa fa-angle-right fa-2x align-middle ml-2"></i></a>
                             </div>
-                        </div>
+                    </div>
                 </div>
             </div>`;
                 });
@@ -62,7 +63,7 @@ $(document).ready(function() {
         }
     });
 
-    $(document).on("submit", "#form-update-job", function(e) {
+    $(document).on('submit', '#form-update-job', function(e) {
         e.preventDefault();
         var url = $(this).attr('action');
         var data = $(this).serializeArray();

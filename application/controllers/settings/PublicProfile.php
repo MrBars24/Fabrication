@@ -30,7 +30,10 @@ class PublicProfile extends MX_Controller {
 		$this->template->append_js($js);
 		$this->load->model('public_model');
 		$id = $_SESSION['user']->user_id;
+		$this->load->model('industry_model');
+		$industry = $this->industry_model->getIndustries();
 		$data = $this->public_model->getPublicProf($id);
+		$this->template->load_sub('industries', $industry);
 		$this->template->load_sub('public_details', $data);
 		$this->template->load('frontend/settings/public_profile');
 	}
@@ -45,6 +48,17 @@ class PublicProfile extends MX_Controller {
 			));
 		}
 
+	}
+	public function updatePublicIndustry(){
+		dd($_POST['industry']);
+		$this->load->model('public_model');
+		$id = $_SESSION['user']->user_id;
+		$r = $this->public_model->updatePublicIndustry($id);
+			if($r){
+			echo json_encode( array(
+				'success' => 201
+			));
+		}
 	}
 
 }

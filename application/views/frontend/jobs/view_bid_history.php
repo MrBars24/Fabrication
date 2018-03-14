@@ -29,20 +29,13 @@
                     </div>
                 </div>
             </div>
-            
-            <div class="card">
-               
 
-                 <ul class="list-group list-group-flush">
-                    <?php foreach(range(0, 10) as $number): ?>
-                        <!-- Job List Item -->
-                            <?php $this->load->view('frontend/partials/bid_history_item') ?>
-                        <!-- End of Job List Item -->
-                    <?php endforeach; ?>
-                </ul>
+            <div class="card">
+                <ul class="list-group list-group-flush pagination-bid-history-container"></ul>
+                <div class="pagination pagination-jobs-bars col-12 justify-content-center mb-4"></div>
             </div>
         </div>
 
-        
+
     </div>
 </div>

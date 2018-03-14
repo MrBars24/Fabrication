@@ -34,4 +34,14 @@ class Public_model extends MX_Model{
     $this->db->where('id', $id);
     return $this->db->update('member',$data );
     }
+
+    function updatePublicIndustry($id){
+        $industries = $this->input->post('industry[]');
+        $data = array(
+            'industry' => $industries
+        );
+        $this->db->where('id', $id);
+        return $this->db->update('member' , $data);
+
+    }
 }

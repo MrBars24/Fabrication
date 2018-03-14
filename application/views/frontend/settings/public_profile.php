@@ -40,19 +40,19 @@
                                             <div class="col-4">
                                                 <span class="font-weight-bold">Keywords</span>
                                             </div>
-                                            <div class="col-8 tags-default form-control-settings-account-hide" id="public-keywords">
+                                            <div class="col-8 tags-default form-control-settings-account-hide" id="public-keywords-div">
                                             <?php
                                                 $keys = $public_details->keywords;
                                                 $array = explode(',',$keys);
                                                 foreach ($array as $keywords){ 
                                             ?>
-                                                <span class="badge badge-secondary badge-pill mx-1 px-3 py-2 mb-1"><?= $keywords; ?></span>                                          
+                                                <span class="public-keywords badge badge-secondary badge-pill mx-1 px-3 py-2 mb-1"><?= $keywords; ?></span>                                          
                                             <?php
                                                 }
                                             ?>
                                             </div>
                                             <div class="col-8 tags-default form-control-settings-account d-none">
-                                            <input type="text" name="public-keywords" class="form-control-settings-account d-none" id="keywords" data-role="tagsinput" placeholder="add tags" />
+                                            <input value="<?= $keywords ?>" type="text" name="public-keywords" class="form-control-settings-account d-none" id="keywords" data-role="tagsinput" placeholder="add tags" />
                                             </div>
                                         </div>
 
@@ -70,9 +70,8 @@
                                                 <span class="font-weight-bold">Service Description</span>
                                             </div>
                                             <div class="col-8">
-                                                <textarea class="form-control form-control-settings-account d-none" name="public-service"> <?= $public_details->service_description; ?> </textarea>
+                                                <textarea class="form-control form-control-settings-account d-none" name="public-service"><?= $public_details->service_description; ?></textarea>
                                                 <p id="public-service" class="mb-0 form-control-settings-account-hide" data-value-target="public-service"><?= $public_details->service_description; ?></p>
-                                                
                                             </div>
                                         </div>
                                     </li>
@@ -80,7 +79,7 @@
                             </div>
                         <?= form_close(); ?>
                             <!-- Industries -->
-                            <div class="card">
+                            <!-- <div class="card">
                                    <div class="p-4">
                                         <h3 class="card-title font-weight-bold mb-0 float-left">Industries</h3>
                                         <span class="d-flex float-right">
@@ -112,25 +111,28 @@
                                                <h4 class="modal-title" id="exampleModalLabel1">Edit Industries</h4>
                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                                            </div>
-                                           <?= form_open('settings/account/industries', array('id'=>'form-industry')); ?>
+                                           <?= form_open('settings/account/public-industries', array('id'=>'form-industry-update','data-target-id'=>$public_details->id)); ?>
                                                <div class="modal-body">
                                                    <div class="form-group">
-                                                       <label for="recipient-name" class="control-label">Select Industries</label>
-                                                       <select  class="form-control" name="industry">
-                                                           <option value="1" class="">Oil and Mining</option>
-                                                           <option value="2" class="">Architectural</option>
-                                                           <option value="3" class="">Industries</option>
-                                                       </select>
+                                                       <label for="recipient-name" class="control-label"><strong>Select Industries</strong></label>
+                                                       <br /><br />
+                                                       <div class="checkbox_industry">
+                                                       <?php foreach ($industries as $industry){ ?>
+                                                        <input name="industry[]" value="<?= $industry['id']; ?>" type="checkbox" id="basic_checkbox_<?= $industry['id'];?>" class="filled-in"/>
+                                                        <label for="basic_checkbox_<?= $industry['id'];?>"><?= $industry['display_name']; ?></label>
+                                                        <br />
+                                                       <?php } ?>
+                                                       </div>
                                                    </div>
                                                </div>
                                                <div class="modal-footer">
-                                                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                   <button type="submit" class="btn btn-primary">Add Industry</button>
+                                                    <button type="submit" class="btn btn-primary">Update</button>
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                </div>
                                            <?= form_close(); ?>
                                        </div>
                                    </div>
-                               </div>
+                               </div> -->
                                <!-- End of Industries -->
                             <!-- end content here -->
 
@@ -146,7 +148,7 @@
                                             <h4>Expertise</h4>
                                         </div>
                                         <div class="float-right">
-                                            <button class="btn btn-sm btn-success">Edit</button>
+                                            <button class="btn btn-success" data-toggle="edit-public-expertise" data-target=".form-control-settings-expertise" >Edit</button>
                                         </div>
                                         <div class="clearfix"></div>
                                         <ul>
@@ -164,7 +166,7 @@
                                             </li>
                                         </ul>
                                         <div class="text-center py-2">
-                                            <button class="btn btn-circle btn-success btn-lg"><i class="fa fa-plus"></i></button>
+                                            <button class="btn btn-circle btn-success btn-lg form-control-settings-expertise d-none"><i class="fa fa-plus"></i></button>
                                         </div>
                                     </li>
                                     <li class="list-group-item">
@@ -172,7 +174,7 @@
                                             <h4>Specialization</h4>
                                         </div>
                                         <div class="float-right">
-                                            <button class="btn btn-sm btn-success">Edit</button>
+                                            <button class="btn btn-success" data-toggle="edit-public-specialization" data-target=".form-control-settings-specialization">Edit</button>
                                         </div>
                                         <div class="clearfix"></div>
                                         <ul>
@@ -190,7 +192,7 @@
                                             </li>
                                         </ul>
                                         <div class="text-center py-2">
-                                            <button class="btn btn-circle btn-success btn-lg"><i class="fa fa-plus"></i></button>
+                                            <button class="btn btn-circle btn-success btn-lg form-control-settings-specialization d-none"><i class="fa fa-plus"></i></button>
                                         </div>
                                     </li>
                                 </ul>
