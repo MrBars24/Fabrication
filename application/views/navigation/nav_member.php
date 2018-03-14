@@ -11,7 +11,7 @@
                 <span class="hide-menu">Job Bank</span><i class="mdi mdi-chevron-down"></i>
             </a>
             <ul>
-                <li><a href="<?= base_url('jobs'); ?>">Browse Jobs </a></li>
+                <!-- <li><a href="<?= base_url('jobs'); ?>">Browse Jobs </a></li> -->
                 <li><a href="<?= base_url('jobs/posted'); ?>">My Posted Job</a></li>
                 <li><a href="<?= base_url('jobs/invitations'); ?>">Job Invitations</a></li>
                 <li><a href="<?= base_url('jobs/bid-history') ?>">My Bids</a></li>

@@ -74,6 +74,7 @@ class CreateJob extends MX_Controller {
             'bidding_expire_at' => $bidding_end,
             'slug' => $slug,
         );
+
 		$storeFolder = 'attached';
 		$files = array();
 		if (!empty($_FILES)) {
@@ -100,7 +101,11 @@ class CreateJob extends MX_Controller {
 					));
 				}
 			}
+		}else{
+			$this->load->model('job_model');
+			$r = $this->job_model->createJob($data);
 		}
+
 
 	}
 

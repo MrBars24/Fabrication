@@ -5,6 +5,12 @@ function get_current_endpoint(){
 	return $url;
 }
 
+function get_referer_endpoint(){
+	$tmp = parse_url($_SERVER['HTTP_REFERER']);
+	$url = substr($tmp['path'],1);
+	return $url;	
+}
+
 function get_nav($user=null){
 	$CI =& get_instance();
 	if(empty($user) || get_user_type()=="admin"){

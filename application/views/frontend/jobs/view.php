@@ -14,7 +14,7 @@
                             <div>
                                 <span class="">New York, US</span>
                             </div>
-                            <span class="badge badge-secondary"><?=$jobdata->bidding_type?></span>
+                            <span class="badge badge-secondary"><?=$jobdata->project_category?></span>
                         </div>
                         <div>
                             <button class="btn default btn-circle <?=($jobdata->is_watchlist==1)? "btn-unbook bg-danger text-white" : "btn-bookmark"?>"><i class="text-white fa fa-bookmark"></i></button>
@@ -111,6 +111,7 @@
             <!-- <a class="btn btn-success btn-lg btn-block" href="<?= base_url('jobs/proposal/'); ?><?= $fabricatordata->id ?>" target="_blank">Bid Now</a> -->
             <?php if($jobdata->fabricator_id == auth()->id): ?>
                 <a href="/jobs/posted/manage/<?=$jobdata->id?>" class="text-white btn btn-success btn-lg btn-block">Manage Job</a>
+                <?php if($jobdata->status == "close"): ?>
                 <div class="card mt-4">
                     <div class="card-body">
                         <h4 class="card-title mb-0">AWARDED TO:</h4>
@@ -138,6 +139,7 @@
                         <hr>
                     </div>
                 </div>
+                <?php endif; ?>
             <?php else: ?>
                 <?php if($jobdata->status == "open"): ?>
                     <a class="text-white btn btn-success btn-lg btn-block" data-toggle="modal" data-target=".modal-bid-now">Bid Now</a>

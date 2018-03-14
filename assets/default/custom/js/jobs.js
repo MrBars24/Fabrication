@@ -12,7 +12,7 @@ $(document).ready(function() {
         },
         render: function(data) {
             var container = ``;
-            if (data != undefined) {
+            if (data.length > 0) {
                 data.forEach(function(obj, index) {
                     container += `
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">

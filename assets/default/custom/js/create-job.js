@@ -20,7 +20,20 @@ $(document).ready(function() {
                 // Make sure that the form isn't actually being sent.
                 e.preventDefault();
                 e.stopPropagation();
-                myDropzone.processQueue();
+                if (myDropzone.getQueuedFiles().length > 0) {        
+                    myDropzone.processQueue();
+                }else{
+                    $.ajax({
+                        url:"/jobs/create",
+                        type:"POST",
+                        data : $("#form-job-create").serializeArray(),
+                        success:function(res){
+                            window.location.href = "/jobs/posted";
+                        }
+                    })
+                }
+
+
             });
 
             // Listen to the sendingmultiple event. In this case, it's the sendingmultiple event instead

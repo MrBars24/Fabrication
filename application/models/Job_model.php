@@ -76,7 +76,7 @@ class Job_model extends MX_Model{
 
          if(isset(auth()->id)){
              $search_sql = array(
-                 'fabricator_id !=' => auth()->id,
+                 //'fabricator_id !=' => auth()->id,
                  'is_deleted' => 0
              );
          }else{
@@ -116,7 +116,7 @@ class Job_model extends MX_Model{
         if(isset($_GET['search']['category'])){
             if($_GET['search']['category'] != 'any'){
                 $search = $_GET['search']['category'];
-                $search_sql['bidding_type_id'] = $search;
+                $search_sql['project_category_id'] = $search;
             }
         }
 

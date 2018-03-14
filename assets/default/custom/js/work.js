@@ -1,17 +1,25 @@
 $(".stickyside").stick_in_parent({
-    offset_top: 100
+    offset_top: 130
 });
 
 $(document).ready(function () {
+
+    init();
     var table =  $(".pagination-jobs-container").infiniteScroll({
         url: '/work/list',
         limit: 10,
         loaderContainer:'.loader-container',
         threshold:500,
+        search:{
+            'status': $("[name='status']:checked").val(),
+            'string': $("#search").val(),
+            'category': $("#category").val(),
+            'budget': $("#budget").val()
+        },
         render: function (data) {
             var container = ``;
             
-            if(data != null){
+            if(data.length > 0){
                 data.forEach(function (obj, index) {
                     ago = compute_ago(obj.created_at);
 
@@ -31,10 +39,10 @@ $(document).ready(function () {
 
                         <div class="row">
                             <div class="col-sm-12 col-md-6 mr-0 col-lg-9">
-                                <span class="badge badge-secondary px-2 py-1">Commercial</span>
-                                <span class="badge badge-secondary px-2 py-1">30 tons</span>
+                                <span class="badge badge-secondary px-2 py-1">${obj.project_category}</span>
+                                <span class="badge badge-secondary px-2 py-1">${obj.approx_tonnes} tons</span>
                                 <h6 class="text-dark mt-3 mb-3">
-                                    <span class="mb-1">Location: Laguna, Philippines</span>
+                                    <span class="mb-1">Location: ${obj.location}</span>
                                 </h6>
                                 <p>${obj.description}</p>
                                 <div>
@@ -149,5 +157,61 @@ $(document).ready(function () {
         //console.log(moment(a).diff(created, 'minutes'));
         return ago;
     }
+
+    function init() {
+        var params = get_parameters();
+        if (params.q != "") {
+            $("#search").val(params.q);
+        }
+
+        if (params.category != "") {
+            if ($("#category option[value='" + params.category + "']").length != 0) {
+                $("#category").val(params.category);
+            } else {
+                $("#category").prop('selectedIndex', 0);
+            }
+        }
+
+        if (params.status != "") {
+            if ($("[name='status'][value='" + params.status + "']").length != 0) {
+                $("[name='status'][value='" + params.status + "']").prop('checked', true);
+            } else {
+                $("[name='status'][value='all']").prop('checked', true);
+            }
+        }
+
+        if (params.budget != "") {
+            if ($("#budget option[value='" + params.budget + "']").length != 0) {
+                $("#budget").val(params.budget);
+            } else {
+                $("#budget").prop('selectedIndex', 0);
+            }
+        }
+    }
+
+    function search_job() {
+        var txtsearch = $("#search").val();
+        var search = $("#category").val();
+        var budget = $("#budget").val();
+        var status = $("[name='status']:checked").val();
+
+        var params = {
+            'string': txtsearch,
+            'category': search,
+            'budget': budget,
+            'status': status
+        };
+
+        table.search(params);
+        window.history.replaceState("", "Title", "/work?" + $.param(params));
+    }
+
+    $(document).on("click", "#btnsearch", function(e) {
+        search_job();
+    });
+
+    $(document).on("change", "#category,#budget,[name='status']", function() {
+        search_job();
+    });
 
 });
