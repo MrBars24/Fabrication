@@ -21,9 +21,7 @@ class Package extends Admin {
 				"assets/plugins/moment/moment.js",
 				"assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js",
 				"assets/admin/custom/js/bars-datatable.js",
-				"assets/admin/custom/js/package-settings.js",
-				"assets/plugins/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.js"
-
+				"assets/admin/custom/js/package-settings.js"
 			)
 		);
 
@@ -38,28 +36,62 @@ class Package extends Admin {
 
 	function store(){
 		header("Content-Type:application/json");
+		$this->form_validation->set_rules('package_name', 'Package Name', 'required');
+		$this->form_validation->set_rules('package_include', 'Feature', 'required');
+		$this->form_validation->set_rules('package_desc', 'Description', 'required');
+		$this->form_validation->set_rules('package_price', 'Price', 'required');
+		$this->form_validation->set_rules('bid_number', 'Bid Count', 'required');
+		$this->form_validation->set_rules('post_number', 'Post Count', 'required');
 
-		$data = array(
-			"package_name" => $this->input->post('package_name'),
-			"package_include" => $this->input->post('package_include'),
-			"package_price" => $this->input->post('package_price'),
-			"package_desc" => $this->input->post('package_desc')
-		);
+		if($this->form_validation->run() == FALSE){
+			$error = $this->form_validation->error_array(); 
+			echo json_encode( array(
+				'success' => FALSE,
+				'errors' => $error
+			));
+		}
+		else{
+			$data = array(
+				"package_name" => $this->input->post('package_name'),
+				"package_include" => $this->input->post('package_include'),
+				"package_price" => $this->input->post('package_price'),
+				"package_desc" => $this->input->post('package_desc'),
+				"bid_number" => $this->input->post('bid_number'),
+				"post_number" => $this->input->post('post_number')
+			);
 
-		if($res = $this->package_model->save($data)){
-			echo json_encode(array("success" => TRUE,"data" => $res));
-		}else{
-			echo json_encode(array("success" => FALSE));
+			if($res = $this->package_model->save($data)){
+				echo json_encode(array("success" => TRUE,"data" => $res));
+			}else{
+				echo json_encode(array("success" => FALSE));
+			}
 		}
 	}
 
 	function update($id){
 		header("Content-Type:application/json");
+		$this->form_validation->set_rules('package_name', 'Package Name', 'required');
+		$this->form_validation->set_rules('package_include', 'Feature', 'required');
+		$this->form_validation->set_rules('package_desc', 'Description', 'required');
+		$this->form_validation->set_rules('package_price', 'Price', 'required');
+		$this->form_validation->set_rules('bid_number', 'Bid Count', 'required');
+		$this->form_validation->set_rules('post_number', 'Post Count', 'required');
+
+		if($this->form_validation->run() == FALSE){
+			$error = $this->form_validation->error_array(); 
+			echo json_encode( array(
+				'success' => FALSE,
+				'errors' => $error
+			));
+		}
+		else{
 		$data = array(
 			"package_name" => $this->input->post('package_name'),
 			"package_include" => $this->input->post('package_include'),
 			"package_price" => $this->input->post('package_price'),
-			"package_desc" => $this->input->post('package_desc')
+			"package_desc" => $this->input->post('package_desc'),
+			"bid_number" => $this->input->post('bid_number'),
+			"post_number" => $this->input->post('post_number')
 		);
 
 		if($res = $this->package_model->update($id,$data)){
@@ -68,6 +100,7 @@ class Package extends Admin {
 			echo json_encode(array("success" => FALSE));
 		}
 	}
+}
 
 	function destroy($id){
 		header("Content-Type:application/json");

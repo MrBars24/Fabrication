@@ -9,7 +9,7 @@
     </div>
 </div>
 <div class="container-fluid">
-	<a href="#" class="btn btn-info mb-2 add"><i class="fa fa-plus"></i> New Package</a>
+	<a href="#" class="btn btn-info mb-4 ml-3 add"><i class="fa fa-plus"></i> New Package</a>
 	   <?=form_open('/admin/settings/package-settings/create',array('id'=>'frm-package'))?>
 		    <div class="row">
 		    		<div class="package-container col-lg-12">

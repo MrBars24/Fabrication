@@ -7,44 +7,40 @@ $(document).ready(function(){
 			if(data != null){
 				data.forEach(function(obj,index){
 					container += `
-				<div class="col-lg-6 float-left">
+				<div id="hello" class="col-lg-4 package-item float-left">
 		            <div class="card">
 		                <div class="card-body">
+		               	<table>
+		               		<tr>
+		                    	<td>
+			                		<a class="pointer edit"><i class="text-warning fa fa-pencil mb-3"></i></a>
+			                    	<a class="pointer delete"><i class="text-danger fa fa-trash mb-3 ml-2"></i></a>
+			                    </td>
+			                </tr>
+						</table>
+		                	<div class="pricing-body b-l">
+	                            <div class="pricing-header">
+	                                <h4 class="package-name pointer text-center">${obj.package_name}</h4>
 
-		                	<a class="pointer delete" data-id="${index}"><i class="text-danger fa fa-trash float-right mb-3 ml-2"></i></a>
-
-		                	<a class="pointer edit" data-index="${index}"><i class="text-warning fa fa-pencil float-right mb-3"></i></a>
-
-		                    <table style="clear: both" class="table table-bordered table-striped" id="user">
-		                        <tbody>
-						 	<tr>
-                                <td>Package Name</td>
-                                <td>
-                                    <a href="#" id="package-name" class="editable editable-click">${obj.package_name}</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Price<small>/month</small></td>
-                                <td>
-                                    <a href="#" id="package-price" class="editable editable-click">${obj.package_price}</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Package Description</td>
-                                <td>
-                                    <a href="#" id="package-desc" class="editable editable-click">${obj.package_desc}</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Package Includes</td>
-                                <td><a href="#" id="package-include" class="editable editable-pre-wrapped editable-click">${obj.package_include}</a></td>
-                            </tr>
-                         </tbody>
-		                    </table>
-		                    <input type="hidden" class="hidden-name" name="package_name">
-				        	<input type="hidden" class="hidden-include" name="package_include">
-				        	<input type="hidden" class="hidden-price" name="package_price">
-				        	<input type="hidden" class="hidden-desc" name="package_desc">
+	                                <h2 class="package-price pointer text-center"><span class="price-sign">$</span>${obj.package_price}</h2>
+	                                <p class="pointer text-center uppercase">per month</p>
+	                            </div>
+	                            <div class="price-table-content">
+	                                <div class="package-desc pointer text-center">${obj.package_desc}</div>
+	                                <div class="package-include pointer text-center px-3">${obj.package_include}</div>
+		                                <div class="text-center font-weight-bold">Package Includes</div>
+			                                <div class="row">
+				                                <div class="col-md-6">
+				                                <div class="bid-number pointer text-center px-3">${obj.bid_number} number of bids</div>
+				                                </div>
+				                                <div class="col-md-6">
+				                                <div class="post-number pointer text-center px-3">${obj.post_number} number of post</div>
+				                                </div>
+			                                </div>
+	                                <div class="submit-edit pointer text-center"></div>
+                            	</div>
+                           
+                          </div>
 		                </div>
 		            </div>
 	        	</div><!--End of column-->
@@ -63,12 +59,7 @@ $(document).ready(function(){
 		}
 	});
 
-
 		$(document).on('submit','#frm-package',function(e){
-		$('.hidden-name').attr('value', $('#package-name').text());
-		$('.hidden-include').attr('value', $('#package-include').text());
-		$('.hidden-price').attr('value', $('#package-price').text());
-		$('.hidden-desc').attr('value', $('#package-desc').text());
 		e.preventDefault();
 		var serial = $('#frm-package').serializeArray();
 		var action = "/admin/settings/package-settings/create";
@@ -83,46 +74,45 @@ $(document).ready(function(){
 			type:'POST',
 			data : serial,
 			success:function(res){
+				$('.add-field').remove();
 				if(res.success){
 					var d = res.data;
 					$('#no-results').remove('tr');
 					var data = {
 						data:d,
 						template:`
-					<div class="col-lg-6 float-left add-field">
+				<div class="col-lg-4 package-item float-left">
 		            <div class="card">
 		                <div class="card-body">
-
-		                	<a class="pointer delete" data-id="${index}"><i class="text-danger fa fa-trash float-right mb-3 ml-2"></i></a>
-
-		                	<a class="pointer edit" data-index="${index}"><i class="text-warning fa fa-pencil float-right mb-3"></i></a>
-
-		                    <table style="clear: both" class="table table-bordered table-striped" id="user">
-		                        <tbody>
-						 	<tr>
-                                <td>Package Name</td>
-                                <td>
-                                    <a href="#" id="package-name" class="editable editable-click">${d.package_name}</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Price<small>/month</small></td>
-                                <td>
-                                    <a href="#" id="package-price" class="editable editable-click">${d.package_price}</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Package Description</td>
-                                <td>
-                                    <a href="#" id="package-desc" class="editaSble editable-click">${d.package_desc}</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Package Includes</td>
-                                <td><a href="#" id="package-include" class="editable editable-pre-wrapped editable-click">${d.package_include}</a></td>
-                            </tr>
-                         </tbody>
-		                    </table>
+	                    	<table>
+			               		<tr>
+			                    	<td>
+				                		<a class="pointer edit" data-index="${index}"><i class="text-warning fa fa-pencil mb-3"></i></a>
+				                    	<a class="pointer delete" data-id="${index}"><i class="text-danger fa fa-trash mb-3 ml-2"></i></a>
+				                    </td>
+				                </tr>
+							</table>
+		                	<div class="pricing-body b-l">
+	                            <div class="pricing-header">
+	                                <h4 class="package-name pointer text-center">${d.package_name}</h4>
+	                                <h2 class="package-price pointer text-center"><span class="price-sign">$</span>${d.package_price}</h2>
+	                                <p class="pointer text-center uppercase">per month</p>
+	                            </div>
+	                            <div class="price-table-content">
+	                                <div class="package-desc pointer text-center">${d.package_desc}</div>
+	                                <div class="package-include pointer text-center px-3">${d.package_include}</div>
+	                                <div class="text-center font-weight-bold">Package Includes</div>
+			                                <div class="row">
+				                                <div class="col-md-6">
+				                                <div class="bid-number pointer text-center px-3">${d.bid_number} number of bids</div>
+				                                </div>
+				                                <div class="col-md-6">
+				                                <div class="post-number pointer text-center px-3">${d.post_number} number of post</div>
+				                                </div>
+			                                </div>
+	                                <div class="submit-edit pointer text-center"></div>
+                            </div>
+                          </div>
 		                </div>
 		            </div>
 	        	</div><!--End of column-->
@@ -132,15 +122,20 @@ $(document).ready(function(){
 					if(that.attr('data-action') == "update"){
 						data.index = index;
 						table.dataReplace(data);
-						table.html(data);
 					}else{
 						table.dataPrepend(data);
 						$('.add-field').remove();
+						$('.button-edit').remove();
 					}
 
 					index = null;
 				}else{
-					alert("failed");
+					$('.name-package').text(res.errors.package_name);
+					$('.price-package').text(res.errors.package_price);
+					$('.desc-package').text(res.errors.package_desc);
+					$('.include-package').text(res.errors.package_include);
+					$('.bid-package').text(res.errors.bid_number);
+					$('.post-package').text(res.errors.post_number);
 				}
 			}
 		});
@@ -149,132 +144,132 @@ $(document).ready(function(){
 			$('.add-field').remove();
 		});
 	$(document).on('click','.add',function(e){
+		$('#no-results').remove();
+		if($('.package-item').hasClass('add-field')){
+			return
+		}
+		else{
+
 		table.prepend(`
-						<div class="col-lg-6 float-left">
+			<div class="col-lg-4 float-left package-item add-field">
 		            <div class="card">
 		                <div class="card-body">
-		                <a class="pointer delete"><i class="text-danger fa fa-window-close-o float-right mb-3 ml-2 cancel-add"></i></a>
-		                    <table style="clear: both" class="table table-bordered table-striped" id="user">
-		                        <tbody>
-						 	<tr>
-                                <td>Package Name</td>
-                                <td>
-                                    <a href="#" id="package-name" class="editable editable-click">Package Name</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Price<small>/month</small></td>
-                                <td>
-                                    <a href="#" id="package-price" class="editable editable-click">Package Price</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Package Description</td>
-                                <td>
-                                    <a href="#" id="package-desc" class="editable editable-click">Package Description</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Package Includes</td>
-                                <td><a href="#" id="package-include" class="editable editable-pre-wrapped editable-click">Package Include</a></td>
-                            </tr>
-                         </tbody>
-		                    </table>
-		                    <input type="hidden" class="hidden-name" name="package_name">
-				        	<input type="hidden" class="hidden-include" name="package_include">
-				        	<input type="hidden" class="hidden-price" name="package_price">
-				        	<input type="hidden" class="hidden-desc" name="package_desc">
-		                     <button type="submit" class="btn btn-danger waves-effect text-left float-right">Save</button>
+		                			<td>
+				                    	<a class="pointer cancel-add" data-id="${index}"><i class="text-danger mdi mdi-close mb-3 ml-2"></i></a>
+				                    </td>
+		                	<div class="pricing-body b-l">
+	                            <div class="pricing-header">
+	                                <input type="text" placeholder="Package Name" class="form-control" name="package_name">
+	                                <small class="name-package error text-danger"></small>
+	                                <input type="text" placeholder="Price" class="form-control mt-3" name="package_price">
+	                                <small class="price-package error text-danger"></small>
+	                                <p class="pointer text-center uppercase">per month</p>
+	                            </div>
+	                            <div class="price-table-content">
+	                                <input type="text" placeholder="Description" class="form-control mt-3" name="package_desc">
+	                                <small class="desc-package error text-danger"></small>
+	                                <textarea class="form-control mt-3" placeholder="Features" name="package_include" rows="5"></textarea>
+	                                <small class="include-package error text-danger"></small>
+	                                <div class="pointer text-center">
+	                                <div class="text-center font-weight-bold">Package Includes</div>
+			                                <div class="row">
+				                                <div class="col-md-6">
+				                                	<input type="number" class="form-control mt-3" name="bid_number"><span>number of bids</span>
+				                                	<small class="bid-package error text-danger"></small>
+				                                </div>
+				                                <div class="col-md-6">
+				                                <input type="number" class="form-control mt-3" name="post_number"><span>number of post</span>
+				                                <small class="post-package error text-danger"></small>
+			                               		</div>
+	                            			</div>
+	                            			<div class="text-center">
+	                                     	<button type="submit" class="btn btn-danger waves-effect text-left mt-3">Save</button>
+	                                     </div>
+                            </div>
+                          </div>
 		                </div>
 		            </div>
 	        	</div><!--End of column-->
 
 					`);
+		}
 	});
 
 	$(document).on('click','.edit',function(e){
-		index = $(this).parent().parent().index();
+		if($('.package-item').hasClass('form-edit')){
+			return
+		}
+		else{
+		index = $(this).parents('.package-item').index();
+		$(this).parents('.package-item').addClass("form-edit");
 		var data = table.fetch(index);
-				$(".container-fluid").find('form').attr('data-action','update');
+		var settingItem = $(this).parents('.package-item');
+		$(".container-fluid").find('form').attr('data-action','update');
 		$(".container-fluid").find('form').attr('action','/admin/settings/package-settings/update/' + data.id);
-		table.prepend(`<button type="submit" class="btn btn-danger waves-effect text-left float-right ">Save</button>`);
-		$('#package-name').editable({
-            validate: function(value) {
-                if ($.trim(value) == '') return;
-            },
-            type: 'text',
-            name: 'package-name',
-            mode: 'inline'
-        });
-        $('#package-price').editable({
-            validate: function(value) {
-                if ($.trim(value) == '') return;
-            },
-            type: 'text',
-            name: 'package-price',
-            mode: 'inline'
-        });
-        $('#package-desc').editable({
-            validate: function(value) {
-                if ($.trim(value) == '') return;
-            },
-          	type: 'textarea',
-            name: 'package-desc',
-            mode: 'inline'
-        });
-        $('#package-include').editable({
-            validate: function(value) {
-                if ($.trim(value) == '') return;
-            },
-            type: 'textarea',
-            name: 'package-include',
-            showbuttons: 'bottom',
-            mode: 'inline'
-        });
+		settingItem.find('.package-name').html(`<input type="text" class="form-control" name="package_name" value="${data.package_name}">
+												<small class="name-package error text-danger"></small>`);
+		settingItem.find('.package-price').html(`<input type="number" class="form-control" name="package_price" value="${data.package_price}">
+			<small class="price-package error text-danger"style="font-size:15px;"></small>`);
+		settingItem.find('.package-desc').html(`<input type="text" class="form-control" name="package_desc" value="${data.package_desc}">
+												<small class="desc-package error text-danger"></small>`);
+		settingItem.find('.package-include').html(`<textarea rows="5" class="mt-3 form-control" name="package_include">${data.package_include}</textarea>
+			<small class="include-package error text-danger"></small>`);
+		settingItem.find('.bid-number').html(`<input type="number"class="mt-3 form-control" name="bid_number" value="${data.bid_number}"><span>number of bids</span>
+			<small class="bid-package error text-danger"></small>`);
+		settingItem.find('.post-number').html(`<input type="number"class="mt-3 form-control" name="post_number" value="${data.post_number}"><span>number of bids</span>
+			<small class="post-package error text-danger"></small>`);
+		settingItem.find('.submit-edit').html(`<button type="submit" class="btn btn-danger waves-effect text-left mt-3 button-edit">Save</button>
+			<button type="reset" class="btn btn-inverse waves-effect text-left mt-3 cancel-submit">Cancel</button>`);
+		return false;
+		}
 
 	});
-	$(document).on('click','.add',function(e){
-		index = $(this).parent().parent().index();
+
+	$(document).on('click', '.cancel-submit',function(e){
+		index = $(this).parents('.package-item').index();
 		var data = table.fetch(index);
+			$(this).parents('.package-item').html(`
+		            <div class="card">
+		                <div class="card-body">
+		               	<table>
+		               		<tr>
+		                    	<td>
+			                		<a class="pointer edit"><i class="text-warning fa fa-pencil mb-3"></i></a>
+			                    	<a class="pointer delete"><i class="text-danger fa fa-trash mb-3 ml-2"></i></a>
+			                    </td>
+			                </tr>
+						</table>
+		                	<div class="pricing-body b-l">
+	                            <div class="pricing-header">
+	                                <h4 class="package-name pointer text-center">${data.package_name}</h4>
 
-		$('#package-name').editable({
-            validate: function(value) {
-                if ($.trim(value) == '') return;
-            },
-            type: 'text',
-            name: 'package-name',
-            mode: 'inline'
-        });
-        $('#package-price').editable({
-            validate: function(value) {
-                if ($.trim(value) == '') return;
-            },
-            type: 'text',
-            name: 'package-price',
-            mode: 'inline'
-        });
-        $('#package-desc').editable({
-            validate: function(value) {
-                if ($.trim(value) == '') return;
-            },
-          	type: 'textarea',
-            name: 'package-desc',
-            mode: 'inline'
-        });
-        $('#package-include').editable({
-            validate: function(value) {
-                if ($.trim(value) == '') return;
-            },
-            type: 'textarea',
-            name: 'package-include',
-            showbuttons: 'bottom',
-            mode: 'inline'
-        });
+	                                <h2 class="package-price pointer text-center"><span class="price-sign">$</span>${data.package_price}</h2>
+	                                <p class="pointer text-center uppercase">per month</p>
+	                            </div>
+	                            <div class="price-table-content">
+	                                <div class="package-desc pointer text-center">${data.package_desc}</div>
+	                                <div class="package-include pointer text-center px-3">${data.package_include}</div>
+		                                <div class="text-center font-weight-bold">Package Includes</div>
+			                                <div class="row">
+				                                <div class="col-md-6">
+				                                <div class="bid-number pointer text-center px-3">${data.bid_number} number of bids</div>
+				                                </div>
+				                                <div class="col-md-6">
+				                                <div class="post-number pointer text-center px-3">${data.post_number} number of post</div>
+				                                </div>
+			                                </div>
+	                                <div class="submit-edit pointer text-center"></div>
+                            	</div>
+                           
+                          </div>
+		                </div>
+		            </div>
 
+					`);
 	});
 
 	$(document).on('click','.delete',function(e){
-		index = $(this).parent().parent().index();
+		index = $(this).parents('.package-item').index();
 		var data = table.fetch(index);
 
 		$.ajax({
