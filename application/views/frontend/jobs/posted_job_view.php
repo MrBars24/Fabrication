@@ -44,8 +44,8 @@
                                 <div class="col">
                                     <ul class="p-0 list-style-type-none">
                                         <li class="">Status: <span class="font-weight-bold text-success"><?php echo $job->status ?></span></li>
-                                        <li class="">Project Start: <span class="font-weight-bold"><?= dateNewFormat($job->project_start) ?></span></li>
-                                        <li class="">Expire <span class="font-weight-bold"><?= dateNewFormat($job->project_end) ?></span></li>
+                                        <li class="">Project Start: <span class="font-weight-bold"><?= date_new_format($job->project_start) ?></span></li>
+                                        <li class="">Expire <span class="font-weight-bold"><?= date_new_format($job->project_end) ?></span></li>
                                         <li class="">Materials: <span class="font-weight-bold">Steel, Wood, Concrete</span></li>
                                     </ul>
                                 </div>

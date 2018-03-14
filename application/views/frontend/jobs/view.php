@@ -91,7 +91,7 @@
                                     <div class="row">
                                         <div class="col-sm-9">
                                             <h4 class="mt-0 mb-0 font-weight-bold"><?= $bid->fullname; ?></h4>
-                                            <small class="text-muted"><?= timeNewFormat($bid->created_at); ?></small>
+                                            <small class="text-muted"><?= time_new_format($bid->created_at); ?></small>
 
                                         </div>
                                         <div class="col-sm-3 text-right">
@@ -138,8 +138,10 @@
                 </div>
                 <?php endif; ?>
             <?php else: ?>
-                <?php if($jobdata->status == "open"): ?>
-
+                <?php if($jobdata->status == "open"): 
+                        $token = FALSE;
+                    ?>
+                    
                     <?php foreach($bids as $bid): ?>
                         <?php $token = FALSE; ?>
                         <?php if($bid->expert_id == auth()->id): ?>
