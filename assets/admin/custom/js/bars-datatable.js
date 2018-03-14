@@ -35,6 +35,7 @@
 		}
 
 		if(option.search != null){
+			_is_search = true;
 			_search = option.search;
 		}
 
@@ -78,6 +79,7 @@
 		}
 
 		if(option.search != null){
+			_is_search = true;
 			_search = option.search;
 		}
 
@@ -138,6 +140,10 @@
 				}else{
 					if(_data_hash != ""){
 						_data = JSON.parse(atob(_data_hash));
+					}
+
+					if(res.data.length <= 0){
+						_data_hash = "";
 					}
 
 					if(_is_search){

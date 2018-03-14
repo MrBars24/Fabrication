@@ -82,7 +82,7 @@ class MX_Model extends CI_Model{
     public function getIndexDataCount($table, $limit = 0, $offset = 0, $orderby = '', $sort = '', $search_sql = '', $groupby = '', $join_db = '', $join_where = '', $join_type = '', $sel_field = '*'){
         $q = $this->getData($table, $limit, $offset, $orderby, $sort, $search_sql, $groupby, $join_db, $join_where, $join_type, $sel_field);
 
-        if($limit != 0){
+        if($limit != 0 && $q['total'] > 0){
             $max_page = ceil($q['total'] / $limit);
         }else{
             $max_page = 0;
@@ -163,10 +163,13 @@ class MX_Model extends CI_Model{
                 );
                 return $tmp;
             }else{
-                return FALSE;
+                return array(
+                    "total" => 0,
+                    "data" => []
+                );
             }
         }else{
-            return FALSE;
+            return [];
         }
         unset($query, $row);
     }
