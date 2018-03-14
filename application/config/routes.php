@@ -105,6 +105,13 @@ $route['admin/settings/budget-filter/create']['POST'] = 'adm/budget/store';
 $route['admin/settings/budget-filter/update/(:num)']['POST'] = 'adm/budget/update/$1';
 $route['admin/settings/budget-filter/delete/(:num)']['POST'] = 'adm/budget/destroy/$1';
 
+//Settings/Package Settings
+$route['admin/settings/package-settings']['GET'] = 'adm/package';
+$route['admin/settings/package-settings/list']['GET'] = 'adm/package/fetch';
+$route['admin/settings/package-settings/create']['POST'] = 'adm/package/store';
+$route['admin/settings/package-settings/update/(:num)']['POST'] = 'adm/package/update/$1';
+$route['admin/settings/package-settings/delete/(:num)']['POST'] = 'adm/package/destroy/$1';
+
 //api
 $route['admin/image/assets/list']['GET'] = 'adm/file/getImageAsssets';
 $route['admin/user/list']['GET'] = 'adm/user/getUsers';
@@ -154,10 +161,6 @@ $route['jobs/create']['POST'] = 'jobs/CreateJob/createJob';
 $route['jobs/update/(:num)']['POST'] = 'jobs/UpdateJob/updateJob/$1';
 $route['jobs/get']['GET'] = 'jobs/BrowseJobs/getAllJobs';
 $route['jobs/list']['GET'] = 'jobs/BrowseJobs/getAllJobsPagination';
-// Jobs
-$route['jobs/(:num)']['GET'] = 'jobs/ViewJob/show/$1';
-
-//Job Seeker
 
 //Portfolio
 $route['portfolio/create']['POST'] = 'portfolio/CreatePortfolio/createPort';
@@ -168,12 +171,14 @@ $route['portfolio/delete/(:num)']= 'portfolio/DeletePortfolio/deletePort/$1';
 //Proposal
 $route['jobs/proposal/(:num)']['get'] = 'jobs/ViewJob/proposal/$1';
 $route['jobs/submit/proposal']['post'] = 'jobs/Proposal/submit';
+$route['jobs/edit/proposal/(:num)']['post'] = 'jobs/Proposal/editProposal/$1';
 
 //Bid Accecpt
 $route['job/bid/accept/(:num)']['get'] = 'jobs/Proposal/accept/$1';
 //Bid History
 $route['jobs/bid-history']['get'] = 'jobs/ViewBidHistory/index';
-$route['jobs/bid-history']['post'] = 'jobs/ViewBidHistory/index';
+$route['jobs/bid-history']['post'] = 'jobs/ViewBidHistory/postBid';
+$route['jobs/bid-history/list']['get'] = 'jobs/ViewBidHistory/bidHistoryList';
 $route['jobs/bid-history/view/(:num)']['get'] = 'jobs/ViewBidHistory/show/$1';
 
 //Previous Project
@@ -182,6 +187,7 @@ $route['jobs/previous-project/(:num)']['get'] = 'jobs/ViewPreviousProject/show/$
 
 //Job Banks
 $route['jobs']['get'] = 'jobs/BrowseJobs/index';
+$route['jobs/(:num)']['GET'] = 'jobs/ViewJob/show/$1';
 $route['jobs/latest']['get'] = 'jobs/LatestJobs/index';
 $route['jobs/invitations']['get'] = 'jobs/InvitationJobs/index';
 $route['jobs/my-jobs']['get'] = 'jobs/MyJob/index';

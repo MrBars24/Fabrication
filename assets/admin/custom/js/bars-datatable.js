@@ -14,6 +14,8 @@
 	_processing = false,
 	_type = null,
 	_total = 100,
+	_beforeRequest = null,
+	_successRequest = null,
 	_loaderContainer = '',
 	_loader = `<svg class="circular-static d-flex" viewBox="25 25 50 50">
 		<circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"></circle> 
@@ -30,6 +32,18 @@
 
 		if(option.limit != null){
 			_limit = option.limit;
+		}
+
+		if(option.search != null){
+			_search = option.search;
+		}
+
+		if(option.onSuccessRequest != null){
+			_successRequest = option.onSuccessRequest;
+		}
+
+		if(option.onBeforeRequest != null){
+			_beforeRequest = option.onBeforeRequest;
 		}
 
 		_pageContainer = option.pageContainer;
@@ -53,6 +67,18 @@
 
 		if(option.threshold != null){
 			_threshold = option.threshold;
+		}
+
+		if(option.onSuccessRequest != null){
+			_successRequest = option.onSuccessRequest;
+		}
+
+		if(option.onBeforeRequest != null){
+			_beforeRequest = option.onBeforeRequest;
+		}
+
+		if(option.search != null){
+			_search = option.search;
 		}
 
 		if(option.loaderContainer != null){
@@ -89,6 +115,9 @@
 	}
 
 	$.fn.requestData = function(){
+		if(_beforeRequest != null){
+			_beforeRequest();
+		}
 		$.ajax({
 			url:_url,
 			type:"GET",
@@ -134,6 +163,9 @@
 					setTimeout(function(){
 						_processing = false;
 					},1000);
+				}
+				if(_successRequest != null){
+					_successRequest();
 				}
 			}
 		});

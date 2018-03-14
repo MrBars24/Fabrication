@@ -29,7 +29,26 @@ class Proposal extends MX_Controller {
             'success' => FALSE
         ), 400);
     }
-
+	function editProposal($id){
+		header("Content-Type:application/json");
+		$this->load->model('proposal_model');
+		$data = array(
+			'cover_letter' => $this->input->post('cover_letter'),
+			'amount' => $this->input->post('budget')
+		);
+		$result = $this->proposal_model->editProposal($id, $data);
+		if($result){
+			echo json_encode(array(
+				'success' => TRUE,
+				'data' => $data
+			));
+			exit;
+		}
+		echo json_encode(array(
+			'success' => FALSE
+		));
+		exit;
+	}
 	function accept($id){
 		$this->load->model('proposal_model');
 		$data = array(
