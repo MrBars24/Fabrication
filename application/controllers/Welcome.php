@@ -87,8 +87,9 @@ class Welcome extends CI_Controller {
 		   echo json_encode($this->email->print_debugger());
 		   exit;
 		} */
-		echo json_encode($sendReturn);
-		exit;
+		//echo json_encode($sendReturn);
+		//exit;
+		redirect($_SERVER['HTTP_REFERER']);
 	}
 	public function postJob() {
 		$css = array(

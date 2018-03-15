@@ -7,12 +7,12 @@ $(document).ready(function() {
             if (data != undefined) {
                 data.forEach(function(obj, index) {
                     //console.log();
-                    container += `<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    container += `<div class="col-lg-4">
                     <div class="card" style="min-height: 400px;">
                         <div class="col-sm-12 text-right mt-3">
                             </div>
                             <div class="card-body little-profile text-center">
-                            <div class="pro-img mt-1"><img src="../assets/images/users/4.jpg" alt="user" /></div>
+                            <!--<div class="pro-img mt-1"><img src="../assets/images/users/4.jpg" alt="user" /></div>-->
                             <div class="card-body little-profile text-center">
                                 <h4 class="font-weight-bold mb-1 text-center">${obj.title}</h4>
                                 <p class="text-secondary text-center">${obj.description}</p>
@@ -36,7 +36,7 @@ $(document).ready(function() {
                                         <h6 class="text-dark font-weight-bold">${obj.bids}</h6>
                                     </div>
                                 </div>
-                            <div class="text-right">        
+                            <div class="text-center">        
                                 <a href="/jobs/${obj.id}" class="btn btn-warning text-dark mt-3 py-0 "><span class="align-middle">Job Details</span><i class="fa fa-angle-right fa-2x align-middle ml-2"></i></a>
                             </div>    
                             </div>

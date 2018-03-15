@@ -48,7 +48,7 @@ $(document).ready(function () {
                                 <div>
                                     <small>Fabricator:</small>
                                     <div class="d-flex justify-content-between">
-                                         <h6 class="font-weight-bold"><a href="http://efab.ifltest08.tk/members/1" class="text-dark">Company Name</a></h6>
+                                         <h6 class="font-weight-bold"><a href="/members/1" class="text-dark">Company Name</a></h6>
                                     </div>
 
                                     <!--<div class="d-flex justify-content-start">

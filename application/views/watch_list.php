@@ -96,7 +96,7 @@
 <section class="">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+            <!-- <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                 <div class="stickyside">
                     <div class="card card-body">
                         <div class="input-group input-group-sm mb-4 mt-4">
@@ -129,20 +129,20 @@
                                     <br>
                                     <input type="radio" class="radio-col-black with-gap" value="all" id="all" name="status" checked>
                                     <label for="all">All</label>
-
+            
                                     <input type="radio" class="radio-col-black with-gap" value="open" id="open" name="status">
                                     <label for="open">Open</label>
-
+            
                                     <input type="radio" class="radio-col-black with-gap" value="close" id="close" name="status">
                                     <label for="close">Close</label>
                                 </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-            <ul  class="row pagination-watchlist-container col-12">
-            </ul>
+            </div> -->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <ul  class="row pagination-watchlist-container col-12">
+                </ul>
             </div>
         </div>
     </div>

@@ -55,17 +55,14 @@ class Job_model extends MX_Model{
 
         if(isset($_GET['search']) > 0){
             $search = $_GET['search'];
-            $this->like(array("jobs.title"=>$search));
+            $this->like(array("title"=>$search));
         }
 
         $where = array(
-            "watchlists.expert_id" => $id = auth()->id
+            "expert_watchlist" => auth()->id
         );
 
-        $q = $this->getIndexDataCount("jobs",$limit,$offset,'jobs.created_at','DESC',$where,'','watchlists','jobs.id=watchlists.job_id','LEFT',"jobs.*");
-
-
-
+        $q = $this->getIndexDataCount("job_details",$limit,$offset,'created_at','DESC',$where);
         $q['draw'] = (int)$offset;
         return $q;
     }
@@ -77,7 +74,7 @@ class Job_model extends MX_Model{
 
          if(isset(auth()->id)){
              $search_sql = array(
-                 //'fabricator_id !=' => auth()->id,
+                 'fabricator_id !=' => auth()->id,
                  'is_deleted' => 0
              );
          }else{

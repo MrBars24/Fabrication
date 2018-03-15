@@ -402,7 +402,7 @@
             <div class="col-sm-6 offset-3">
                 <div class="card card-body ">
                     <h4 class="card-title text-center">Send your comments and suggestions</h4>
-                    <form class="contact-form m-t-10">
+                    <form class="contact-form m-t-10" action="/submit-contact-us" method="POST">
                         <div class="form-group">
                             <label>Name <span class="help"> e.g. "George deo"</span></label>
                             <input type="text" name="contactName" class="form-control" value="George deo..." required>
