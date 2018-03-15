@@ -10,8 +10,6 @@ $(document).ready(function(){
             // 'budget': $("#budget").val()
         },
         render: function(data) {
-            console.log(data);
-
             var container = ``;
             if (data != undefined) {
                 data.forEach(function(obj, index) {
@@ -24,8 +22,7 @@ $(document).ready(function(){
                                         <h5 class="font-weight-bold mb-1">${obj.title}</h5>
                                         <p class="text-secondary">${obj.description}</p>
 
-                                        <a href="/jobs/${obj.job_id}" class="btn btn-info btn-sm collapsed" >View Job</a> |
-                                        <a href="/jobs/${obj.job_id}" class="btn btn-danger btn-sm collapsed">Cancel Bid</a>
+                                        <a href="/jobs/${obj.job_id}" class="btn btn-info btn-sm collapsed" >View Job</a>
 
                                     </div>
                                     <div class="col-sm-6">

@@ -16,7 +16,7 @@ $(document).ready(function(){
                 $('.bid-count').html(num);
                 $('.modal-bid-now').modal('hide');
                 $('#bid-container').prepend(`
-                    <li class="media border-0">
+                    <li class="media border-0" data-mybid-id="${data.id.id}">
                         <img class="mr-3 rounded-circle" src="http://themedesigner.in/demo/admin-press/assets/images/users/8.jpg" width="64" alt="Generic placeholder image">
                         <div class="media-body">
                             <div class="row">
@@ -30,6 +30,14 @@ $(document).ready(function(){
                         </div>
                     </li>
                 `);
+                $('#card-bid-status').html(`
+                    <div class="d-flex justify-content-center align-items-center card-body flex-column">
+                        <h5 class="text-dark font-weight-bold">You already submitted a proposal </h5>
+                            <div classs="d-flex">
+                                <button type="button" class="btn btn-success btn-sm" data-target=".modal-view-bid" data-toggle="modal">Edit Proposal</button>
+                                <button type="submit" class="btn btn-danger btn-sm cancel-bid" data-target-id="${data.id.id}">Cancel bid</button>
+                            </div>
+                    </div>`);
             },
             error: function(){
 
@@ -67,7 +75,32 @@ $(document).ready(function(){
         })
     });
 
+    $(document).on('click', '.cancel-bid', function(e){
+        e.preventDefault();
+        var num = +$('.bid-count').html() - 1;
+        $('.bid-count').html(num);
+        var id = $(this).data('target-id');
+        var url = '/job/bid/cancel/'+ id;
+        $.ajax({
+            url: url,
+            dataType: 'json',
+            type: 'get',
+                success: function(result){
+                if(result.success == true){
+                    $('.media[data-mybid-id="'+result.id+'"]').remove();
+                    $('#card-bid-status').html(`
+                        <a class="text-white btn btn-success btn-lg btn-block" data-toggle="modal" data-target=".modal-bid-now">Bid Now</a>
+                    `);
+                }
+            },
+            error: function(){
+
+            }
+        });
+    });
+
     $(document).on('submit','#form-edit-proposal', function(e){
+
         e.preventDefault();
         var url = $(this).attr('action');
         var data = $(this).serializeArray();
@@ -77,7 +110,7 @@ $(document).ready(function(){
             type: 'post',
             dataType: 'json',
             success: function(result){
-                $('.modal-view-bid').modal('hide');
+                $('.modal-view-bid ').modal('hide');
             },
             error: function(){
 

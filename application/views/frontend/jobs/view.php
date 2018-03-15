@@ -85,7 +85,7 @@
                     <div class="clearfix"></div>
                     <ul class="list-unstyled" id="bid-container">
                         <?php foreach($bids as $bid): ?>
-                            <li class="media border-0">
+                            <li class="media border-0" data-mybid-id="<?= $bid->id ?>">
                                 <img class="mr-3 rounded-circle" src="http://themedesigner.in/demo/admin-press/assets/images/users/8.jpg" width="64" alt="Generic placeholder image">
                                 <div class="media-body">
                                     <div class="row">
@@ -138,10 +138,10 @@
                 </div>
                 <?php endif; ?>
             <?php else: ?>
-                <?php if($jobdata->status == "open"): 
+                <?php if($jobdata->status == "open"):
                         $token = FALSE;
                     ?>
-                    
+
                     <?php foreach($bids as $bid): ?>
                         <?php $token = FALSE; ?>
                         <?php if($bid->expert_id == auth()->id): ?>
@@ -152,15 +152,17 @@
                         <?php endif; ?>
                     <?php endforeach; ?>
                     <?php if($token == FALSE): ?>
-                        <a class="text-white btn btn-success btn-lg btn-block" data-toggle="modal" data-target=".modal-bid-now">Bid Now</a>
+                        <div class="card" id="card-bid-status">
+                            <a class="text-white btn btn-success btn-lg btn-block" data-toggle="modal" data-target=".modal-bid-now">Bid Now</a>
+                        </div>
                     <?php else: ?>
-                        <div class="card">
+                        <div class="card" id="card-bid-status">
                             <div class="d-flex justify-content-center align-items-center card-body flex-column">
                                 <h5 class="text-dark font-weight-bold">You already submitted a proposal </h5>
                                 <?php if($bid->expert_id == auth()->id): ?>
                                     <div classs="d-flex">
                                         <button type="button" class="btn btn-success btn-sm" data-target=".modal-view-bid" data-toggle="modal">Edit Proposal</button>
-                                        <button type="submit" class="btn btn-danger btn-sm">Cancel bid</button>
+                                        <button type="submit" class="btn btn-danger btn-sm cancel-bid" data-target-id="<?= $bid->id ?>">Cancel bid</button>
                                     </div>
                                 <?php endif; ?>
                             </div>
@@ -310,7 +312,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <input type="text" name="budget" class="form-control form-control-lg" placeholder="Amount" value="<?= $bid->amount ?>">
+                                    <input type="number" name="budget" class="form-control form-control-lg" placeholder="Amount" value="<?= $bid->amount ?>">
                                 </div>
                             </div>
                             <div class="col-sm-6">

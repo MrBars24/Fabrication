@@ -46,9 +46,40 @@ class Proposal_model extends MX_Model{
         return $expert_id->job_id;
     }
 
+    public function checkProposal($job_id, $id){
+        $query = $this->db->select('*')
+                 ->where('job_id', $job_id)
+                 ->where('expert_id', $id)
+                 ->get('bids');
+        if($query->num_rows() > 0){
+            return $query->row();
+        }
+        return FALSE;
+    }
+
+    public function updateBid($job_id, $id, $data){
+        $query = $this->db->where('job_id', $job_id)
+                 ->where('expert_id', $id)
+                 ->update('bids', $data);
+        if($query){
+            $query1 = $this->db->select('id')
+                      ->where('expert_id', $id)
+                      ->where('job_id', $job_id)
+                      ->get('bids');
+
+                      return $query1->row();
+        }
+    }
+
     public function editProposal($id, $data){
         $query = $this->db->where('id', $id)
                 ->update('bids', $data);
+        return $query;
+    }
+
+    public function cancelBid($id, $data){
+        $query = $this->db->where('id', $id)
+                 ->update('bids', $data);
         return $query;
     }
 }

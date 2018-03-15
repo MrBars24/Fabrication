@@ -175,6 +175,7 @@ $route['jobs/edit/proposal/(:num)']['post'] = 'jobs/Proposal/editProposal/$1';
 
 //Bid Accecpt
 $route['job/bid/accept/(:num)']['get'] = 'jobs/Proposal/accept/$1';
+$route['job/bid/cancel/(:num)']['get'] = 'jobs/Proposal/cancel/$1';
 //Bid History
 $route['jobs/bid-history']['get'] = 'jobs/ViewBidHistory/index';
 $route['jobs/bid-history']['post'] = 'jobs/ViewBidHistory/postBid';
