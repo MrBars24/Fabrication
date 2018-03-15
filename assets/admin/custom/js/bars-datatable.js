@@ -221,11 +221,34 @@
 		this.children().eq(t.index).replaceWith(t.template);
 	}
 
+	$.fn.dataReplaceByKey = function(key,value){
+		var tmp = JSON.parse(atob(_data_hash));
+		for (var i = 0; i < tmp.length; i++) {
+			if(value == tmp[i][key]){
+				tmp[i] = value.data;
+				this.children().eq(value.index).replaceWith(value.template);
+			}
+		}
+
+		_data_hash = btoa(JSON.stringify(tmp));
+	}
+
 	$.fn.dataRemove = function(index){
 		var tmp = JSON.parse(atob(_data_hash));
 		tmp.splice(index, 1);
-		_data_hash = btoa(JSON.stringify(tmp));
+		
 		this.children().eq(index).remove();
+	}
+
+	$.fn.dataRemoveByKey = function(key,value){
+		var tmp = JSON.parse(atob(_data_hash));
+		for (var i = 0; i < tmp.length; i++) {
+			if(value == tmp[i][key]){
+				tmp.splice(i, 1);
+				this.children().eq(i).remove();
+			}
+		}
+		_data_hash = btoa(JSON.stringify(tmp));
 	}
 
 	$(document).on('click','.page-link',function(){

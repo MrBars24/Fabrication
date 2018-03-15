@@ -10,6 +10,7 @@ $(document).ready(function() {
                     container += `<div class="col-lg-4">
                     <div class="card" style="min-height: 400px;">
                         <div class="col-sm-12 text-right mt-3">
+                            <button type="button" data-id="${obj.id}" class="btn btn-outline-danger btn-unbook btn-circle"><i class="fa fa-bookmark"></i> </button>
                             </div>
                             <div class="card-body little-profile text-center">
                             <!--<div class="pro-img mt-1"><img src="../assets/images/users/4.jpg" alt="user" /></div>-->
@@ -55,6 +56,24 @@ $(document).ready(function() {
             }
             return container;
         }
+    });
+
+    $(document).on('click','.btn-unbook',function(){
+        var that = $(this);
+        var index = that.parent().parent().parent().index();
+        var data = table.fetch(index);
+        that.removeClass('bg-danger text-white btn-unbook');
+        //return;
+        $.ajax({
+            url:"/watchlist/delete/" + data.id,
+            type:"POST",
+            success:function(res){
+                if(res.success){
+                    table.dataRemoveByKey("id",data.id);
+                    that.parent().parent().parent().remove();
+                }
+            }
+        })
     });
 
 });
