@@ -47,6 +47,20 @@ class Package_model extends MX_Model{
             return FALSE;
         }
     }
+    function defaultpackage($id,$data){
+        $defaultZero = array("is_default" => 0); 
+        $query1 = $this->db->update("package_settings", $defaultZero);
+
+        $this->db->where("id",$id);
+        $res = $this->db->update("package_settings",$data);
+
+        if($res){
+            $data = $this->findBy("package_settings",$id);
+            return $data;
+        }else{
+            return FALSE;
+        }
+    }
 
     function destroy($id){
         $this->db->where("id",$id);

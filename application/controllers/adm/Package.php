@@ -21,6 +21,8 @@ class Package extends Admin {
 				"assets/plugins/moment/moment.js",
 				"assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js",
 				"assets/admin/custom/js/bars-datatable.js",
+				"assets/plugins/toastr/toastr.js",
+				"assets/global.js",
 				"assets/admin/custom/js/package-settings.js"
 			)
 		);
@@ -32,6 +34,19 @@ class Package extends Admin {
 		header("Content-Type:application/json");
 		$packageSettings = $this->package_model->all();
 		echo json_encode($packageSettings);
+	}
+
+	public function defaultpackage($id){
+		header("Content-Type:application/json");
+		$data = array(
+			"is_default" => "1"
+		);
+
+		if($res = $this->package_model->defaultpackage($id,$data)){
+			echo json_encode(array("success" => TRUE, "data" => $res));
+		}else{
+			echo json_encode(array("success" => FALSE));
+		}
 	}
 
 	function store(){

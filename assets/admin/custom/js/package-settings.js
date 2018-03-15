@@ -2,22 +2,36 @@ $(document).ready(function(){
 	var index = null;
 	var table = $(".package-container").initTable({
 		url:"/admin/settings/package-settings/list",
+		onSuccessRequest:function(){	
+		},
 		render:function(data){
 			var container = ``;
-			if(data != null){
+			if(data.length > 0){
 				data.forEach(function(obj,index){
+					if(obj.is_default == 1){
+							var defaultChecked = `checked`;
+							var defaultText = `Setted as default`;
+						}else{
+							var defaultChecked = '';
+							var defaultText = `Set as default`;
+						}
 					container += `
 				<div class="col-lg-4 package-item float-left">
 		            <div class="card">
 		                <div class="card-body">
-		               	<table>
-		               		<tr>
-		                    	<td>
+			                <div class="d-flex justify-content-between">
+			                	<div class="m-b-10">
+				                <small class="text-center font-weight-bold radio-text">${defaultText}</small>
+	                                <label class="pointer custom-control custom-radio">
+	                                    <input id="radio" name="is_default" value="" type="radio" class="radio custom-control-input" ${defaultChecked}>
+	                                    <span class="custom-control-label"></span>
+	                                </label>
+	                            </div>
+			                	<div>
 			                		<a class="pointer edit"><i class="text-warning fa fa-pencil mb-3"></i></a>
-			                    	<a class="pointer delete"><i class="text-danger fa fa-trash mb-3 ml-2"></i></a>
-			                    </td>
-			                </tr>
-						</table>
+				                	<a class="pointer delete"><i class="text-danger fa fa-trash mb-3 ml-2"></i></a>
+			                	</div>
+	                        </div>
 		                	<div class="b-all">
 	                            <div class="pricing-header mt-3 mb-2">
 	                                <h4 class="package-name pointer text-center px-3">${obj.package_name}</h4>
@@ -49,10 +63,35 @@ $(document).ready(function(){
 								</td>
 							</tr>`;
 			}
-
+			
 			return container;
 		}
 	});
+
+		$(document).on('change','#radio',function(e){
+			e.preventDefault();
+			var radioItem = $(this).parents('.package-item');
+			index = $(this).parents('.package-item').index();
+			var data = table.fetch(index);
+			radioItem.find('.radio').attr('checked', 'checked');
+			$('.radio-text').text('Set as default');
+			radioItem.find('.radio-text').attr('checked', 'checked').text('Setted as default');
+			var serial = $('#frm-package').serializeArray();
+			var action = "/admin/settings/package-settings/default-package/" + data.id;
+			var that = $(this);
+
+			$.ajax({
+				url:action,
+				type:'POST',
+				data : serial,
+				success:function(res){
+					if(res.success){
+						toastr.success('You have changed the default Package!', 'Success');
+					}
+				}
+			});
+
+		});
 
 		$(document).on('submit','#frm-package',function(e){
 		e.preventDefault();
@@ -69,29 +108,38 @@ $(document).ready(function(){
 			type:'POST',
 			data : serial,
 			success:function(res){
-				console.log('success');
-				$('.add-field').remove();
 				if(res.success){
 					var d = res.data;
 					$('#no-results').remove('tr');
+					if(d.is_default == 1){
+							var defaultChecked = `checked`;
+							var defaultText = `Setted as default`;
+						}else{
+							var defaultChecked = '';
+							var defaultText = `Set as default`;
+						}
 					var data = {
 						data:d,
 						template:`
 				<div class="col-lg-4 package-item float-left">
 		            <div class="card">
 		                <div class="card-body">
-		               	<table>
-		               		<tr>
-		                    	<td>
-			                		<a class="pointer edit" data-index="${index}"><i class="text-warning fa fa-pencil mb-3"></i></a>
-			                    	<a class="pointer delete" data-id="${index}"><i class="text-danger fa fa-trash mb-3 ml-2"></i></a>
-			                    </td>
-			                </tr>
-						</table>
+		               	<div class="d-flex justify-content-between">
+			                <div class="m-b-10">
+				                <small class="text-center font-weight-bold radio-text">${defaultText}</small>
+	                                <label class="pointer custom-control custom-radio">
+	                                    <input id="radio" name="is_default" value="" type="radio" class="radio custom-control-input" ${defaultChecked}>
+	                                    <span class="custom-control-label"></span>
+	                                </label>
+	                            </div>
+			                	<div>
+			                		<a class="pointer edit"><i class="text-warning fa fa-pencil mb-3"></i></a>
+				                	<a class="pointer delete"><i class="text-danger fa fa-trash mb-3 ml-2"></i></a>
+			                	</div>
+	                        </div>
 		                	<div class="b-all">
 	                            <div class="pricing-header mt-3 mb-2">
 	                                <h4 class="package-name pointer text-center">${d.package_name}</h4>
-
 	                                <h1 class="package-price pointer text-center px-3"><span class="price-sign">$</span>${d.package_price}</h1>
 	                                <p class="text-center uppercase"><small class="font-weight-bold">per month</small></p>
 	                            </div>
@@ -109,21 +157,18 @@ $(document).ready(function(){
 		                </div>
 		            </div>
 	        	</div><!--End of column-->
-
-
-
-
-		
 						`
 					}
 
 					if(that.attr('data-action') == "update"){
 						data.index = index;
 						table.dataReplace(data);
+						toastr.success('You have successfully updated a Package setting!', 'Success');
 					}else{
 						table.dataPrepend(data);
 						$('.add-field').remove();
 						$('.button-edit').remove();
+						toastr.success('You have successfully added a Package setting.', 'Success');
 					}
 
 					index = null;
@@ -145,7 +190,8 @@ $(document).ready(function(){
 		$('#no-results').remove();
 		$(".container-fluid").find('form').attr('data-action','');
 		$(".container-fluid").find('form').attr('action','/admin/settings/package-settings/create');
-		if($('.package-item').hasClass('add-field')){
+		if($('.package-item').hasClass('add-field') || $('.package-item').hasClass('form-edit')){
+			toastr.warning('Oops!, you cannot add more package forms. Please submit the form and try again.', 'Warning', {timeOut: 8000});
 			return
 		}
 		else{
@@ -176,9 +222,9 @@ $(document).ready(function(){
 	                                <textarea class="form-control mt-3" placeholder="Features" name="package_include" rows="2"></textarea>
 	                                	<small class="include-package error text-danger px-3 p-20"></small>
 		                                <div class="text-center font-weight-bold">Package Includes</div>
-				                                <input type="number" class="form-control px-3" name="bid_number"><span>number of bids</span>
+				                                <input type="number" class="form-control px-3" name="bid_number"><span>number of bids</span><br>
 				                                	<small class="bid-package error text-danger"></small>
-				                                <input type="number" class="form-control mt-3" name="post_number"><span>number of post</span>
+				                                <input type="number" class="form-control mt-3" name="post_number"><span>number of post</span><br>
 				                                <small class="post-package error text-danger"></small>
 			                    </div>
 	                                <button type="submit" class="btn btn-danger waves-effect text-left mt-3">Save</button>
@@ -188,16 +234,13 @@ $(document).ready(function(){
 		                </div>
 		            </div>
 	        	</div><!--End of column-->
-
-
-
-
-					`);
+			`);
 		}
 	});
 
 	$(document).on('click','.edit',function(e){
-		if($('.package-item').hasClass('form-edit')){
+		if($('.package-item').hasClass('form-edit') || $('.package-item').hasClass('add-field')){
+			toastr.warning('Oops!, there seems to be an open edit form. Please submit or cancel the form edit and try again.', 'Warning', {timeOut: 8000});
 			return
 		}
 		else{
@@ -230,17 +273,28 @@ $(document).ready(function(){
 		$(this).parents('.package-item').removeClass("form-edit");
 		index = $(this).parents('.package-item').index();
 		var data = table.fetch(index);
+		if(data.is_default == 1){
+							var defaultChecked = `checked`;
+							var defaultText = `Setted as default`;
+						}else{
+							var defaultChecked = '';
+							var defaultText = `Set as default`;
+						}
 			$(this).parents('.package-item').html(`
 		             <div class="card">
 		                <div class="card-body">
-		               	<table>
-		               		<tr>
-		                    	<td>
-			                		<a class="pointer edit"><i class="text-warning fa fa-pencil mb-3"></i></a>
-			                    	<a class="pointer delete"><i class="text-danger fa fa-trash mb-3 ml-2"></i></a>
-			                    </td>
-			                </tr>
-						</table>
+			               	<div class="m-b-10">
+					                <small class="text-center font-weight-bold radio-text">${defaultText}</small>
+		                                <label class="pointer custom-control custom-radio">
+		                                    <input id="radio" name="is_default" value="" type="radio" class="radio custom-control-input" ${defaultChecked}>
+		                                    <span class="custom-control-label"></span>
+		                                </label>
+		                            </div>
+				                	<div>
+				                		<a class="pointer edit"><i class="text-warning fa fa-pencil mb-3"></i></a>
+					                	<a class="pointer delete"><i class="text-danger fa fa-trash mb-3 ml-2"></i></a>
+				                	</div>
+		                        </div>
 		                	<div class="b-all">
 	                            <div class="pricing-header mt-3 mb-2">
 	                                <h4 class="package-name pointer text-center px-3">${data.package_name}</h4>
@@ -273,8 +327,8 @@ $(document).ready(function(){
 			url:'/admin/settings/package-settings/delete/' + data.id,
 			type:'POST',
 			success:function(res){
-
 				if(res.success){
+					toastr.error('You have just deleted a  Package settings', 'Danger')
 					table.dataRemove(index);
 				}else{
 					alert("failed");
