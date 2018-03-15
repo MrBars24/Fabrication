@@ -10,31 +10,28 @@ $(document).ready(function(){
 				data.forEach(function(obj,index){
 					if(obj.is_default == 1){
 							var defaultChecked = `checked`;
-							var defaultText = `Default`;
+							var defaultText = `Setted as popular`;
 						}else{
 							var defaultChecked = '';
-							var defaultText = ``;
+							var defaultText = `Set as popular`;
 						}
 					container += `
 				<div class="col-lg-4 package-item float-left">
 		            <div class="card">
 		                <div class="card-body">
-		               	<table>
-	               		<tr>
-		                    <td>
-			                	<a class="pointer edit"><i class="text-warning fa fa-pencil mb-3"></i></a>
-			                   	<a class="pointer delete"><i class="text-danger fa fa-trash mb-3 ml-2"></i></a>
-			                </td>
-			                <td>
-			                <div class="m-b-10 m-l-30">
-                                <label class="pointer custom-control custom-radio">
-                                    <input id="radio" name="is_default" value="" type="radio" class="radio custom-control-input" ${defaultChecked}>
-                                    <span class="custom-control-label radio-text">${defaultText}</span>
-                                </label>
-                            </div>
-			                </td>
-			            </tr>
-						</table>
+			                <div class="d-flex justify-content-between">
+			                	<div class="m-b-10">
+				                <small class="text-center font-weight-bold radio-text">${defaultText}</small>
+	                                <label class="pointer custom-control custom-radio">
+	                                    <input id="radio" name="is_default" value="" type="radio" class="radio custom-control-input" ${defaultChecked}>
+	                                    <span class="custom-control-label"></span>
+	                                </label>
+	                            </div>
+			                	<div>
+			                		<a class="pointer edit"><i class="text-warning fa fa-pencil mb-3"></i></a>
+				                	<a class="pointer delete"><i class="text-danger fa fa-trash mb-3 ml-2"></i></a>
+			                	</div>
+	                        </div>
 		                	<div class="b-all">
 	                            <div class="pricing-header mt-3 mb-2">
 	                                <h4 class="package-name pointer text-center px-3">${obj.package_name}</h4>
@@ -76,8 +73,9 @@ $(document).ready(function(){
 			var radioItem = $(this).parents('.package-item');
 			index = $(this).parents('.package-item').index();
 			var data = table.fetch(index);
-			radioItem.find('.radio').attr('checked', 'checked');$('.radio-text').html('');
-			radioItem.find('.radio-text').attr('checked', 'checked').text('Default');
+			radioItem.find('.radio').attr('checked', 'checked');
+			$('.radio-text').text('Set as popular');
+			radioItem.find('.radio-text').attr('checked', 'checked').text('Setted as popular');
 			var serial = $('#frm-package').serializeArray();
 			var action = "/admin/settings/package-settings/default-package/" + data.id;
 			var that = $(this);
@@ -115,10 +113,10 @@ $(document).ready(function(){
 					$('#no-results').remove('tr');
 					if(d.is_default == 1){
 							var defaultChecked = `checked`;
-							var defaultText = `Default`;
+							var defaultText = `Setted as popular`;
 						}else{
 							var defaultChecked = '';
-							var defaultText = ``;
+							var defaultText = `Set as popular`;
 						}
 					var data = {
 						data:d,
@@ -126,22 +124,19 @@ $(document).ready(function(){
 				<div class="col-lg-4 package-item float-left">
 		            <div class="card">
 		                <div class="card-body">
-		               	<table>
-		               		<tr>
-		                    	<td>
-			                		<a class="pointer edit" data-index="${index}"><i class="text-warning fa fa-pencil mb-3"></i></a>
-			                    	<a class="pointer delete" data-id="${index}"><i class="text-danger fa fa-trash mb-3 ml-2"></i></a>
-			                    </td>
-			                    <td>
-				                    <div class="m-b-10 m-l-30">
-		                                <label class="pointer custom-control custom-radio">
-		                                    <input id="radio" name="is_default" value="" type="radio" class="radio custom-control-input" ${defaultChecked}>
-		                                    <span class="custom-control-label radio-text">${defaultText}</span>
-		                                </label>
-	                            	</div>
-				                </td>
-			                </tr>
-						</table>
+		               	<div class="d-flex justify-content-between">
+			                <div class="m-b-10">
+				                <small class="text-center font-weight-bold radio-text">${defaultText}</small>
+	                                <label class="pointer custom-control custom-radio">
+	                                    <input id="radio" name="is_default" value="" type="radio" class="radio custom-control-input" ${defaultChecked}>
+	                                    <span class="custom-control-label"></span>
+	                                </label>
+	                            </div>
+			                	<div>
+			                		<a class="pointer edit"><i class="text-warning fa fa-pencil mb-3"></i></a>
+				                	<a class="pointer delete"><i class="text-danger fa fa-trash mb-3 ml-2"></i></a>
+			                	</div>
+	                        </div>
 		                	<div class="b-all">
 	                            <div class="pricing-header mt-3 mb-2">
 	                                <h4 class="package-name pointer text-center">${d.package_name}</h4>
@@ -280,31 +275,26 @@ $(document).ready(function(){
 		var data = table.fetch(index);
 		if(data.is_default == 1){
 							var defaultChecked = `checked`;
-							var defaultText = `Default`;
+							var defaultText = `Setted as popular`;
 						}else{
 							var defaultChecked = '';
-							var defaultText = ``;
+							var defaultText = `Set as popular`;
 						}
 			$(this).parents('.package-item').html(`
 		             <div class="card">
 		                <div class="card-body">
-		               	<table>
-		               		<tr>
-		                    	<td>
-			                		<a class="pointer edit"><i class="text-warning fa fa-pencil mb-3"></i></a>
-			                    	<a class="pointer delete"><i class="text-danger fa fa-trash mb-3 ml-2"></i></a>
-			                    </td>
-			                    <td>
-				                    <div class="m-b-10 m-l-30">
+			               	<div class="m-b-10">
+					                <small class="text-center font-weight-bold radio-text">${defaultText}</small>
 		                                <label class="pointer custom-control custom-radio">
 		                                    <input id="radio" name="is_default" value="" type="radio" class="radio custom-control-input" ${defaultChecked}>
-		                                    <span class="custom-control-label radio-text">${defaultText}</span>
+		                                    <span class="custom-control-label"></span>
 		                                </label>
-	                            	</div>
-				                </td>
-			                </tr>
-			                
-						</table>
+		                            </div>
+				                	<div>
+				                		<a class="pointer edit"><i class="text-warning fa fa-pencil mb-3"></i></a>
+					                	<a class="pointer delete"><i class="text-danger fa fa-trash mb-3 ml-2"></i></a>
+				                	</div>
+		                        </div>
 		                	<div class="b-all">
 	                            <div class="pricing-header mt-3 mb-2">
 	                                <h4 class="package-name pointer text-center px-3">${data.package_name}</h4>
