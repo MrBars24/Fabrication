@@ -18,7 +18,7 @@ class ViewJob extends MX_Controller {
 		);
 		$this->template->append_js($js);
 		$this->template->append_css($css);
-		if(!isset($_SESSION['user'])){
+		if(!auth()){
 			$this->session->set_userdata('url_redirect', "jobs/$id");
 			redirect('login-register', 'refresh');
 		}
