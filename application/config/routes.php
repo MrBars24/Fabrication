@@ -109,8 +109,10 @@ $route['admin/settings/budget-filter/delete/(:num)']['POST'] = 'adm/budget/destr
 $route['admin/settings/package-settings']['GET'] = 'adm/package';
 $route['admin/settings/package-settings/list']['GET'] = 'adm/package/fetch';
 $route['admin/settings/package-settings/create']['POST'] = 'adm/package/store';
+$route['admin/settings/package-settings/default-package/(:num)']['POST'] = 'adm/package/defaultpackage/$1';
 $route['admin/settings/package-settings/update/(:num)']['POST'] = 'adm/package/update/$1';
 $route['admin/settings/package-settings/delete/(:num)']['POST'] = 'adm/package/destroy/$1';
+
 
 //api
 $route['admin/image/assets/list']['GET'] = 'adm/file/getImageAsssets';
