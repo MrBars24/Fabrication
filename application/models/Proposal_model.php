@@ -11,7 +11,16 @@ class Proposal_model extends MX_Model{
         $query = $this->db->insert('bids', $data);
         return $query;
     }
-
+    function getAttachment($id){
+        $query = $this->db->select('*')
+                 ->where('job_id', $id)
+                 ->get('attachments');
+        if($query->num_rows() > 0){
+            return $query->result();
+        }else{
+            return FALSE;
+        }
+    }
     function getBidHistory(){
 
          $limit = 5;

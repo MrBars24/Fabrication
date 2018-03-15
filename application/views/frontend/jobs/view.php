@@ -1,3 +1,4 @@
+
 <div class="container job-view">
     <div class="row">
         <div class="col-sm-8">
@@ -54,6 +55,19 @@
                             <ul class="p-0 list-style-type-none">
                                 <li class="">Discipline: <span class="font-weight-bold">Structural</span></li>
                                 <li class="">Materials: <span class="font-weight-bold">Steel, Wood, Concrete</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <ul class="p-0 list-style-type-none">
+                                <li class="col-12">Attachments:<br>
+                                <?php if($getAttachment): ?>
+                                    <?php foreach($getAttachment as $attachment): ?>
+                                        <a class="btn btn-primary btn-xs mt-1" href="<?= base_url(); ?><?= $attachment->path; ?>" download>download</a><span class="font-weight-bold ml-1"><?= $attachment->filename; ?></span><br>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                                </li>
                             </ul>
                         </div>
                     </div>

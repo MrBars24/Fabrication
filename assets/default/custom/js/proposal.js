@@ -12,6 +12,7 @@ $(document).ready(function(){
             url: url,
             dataType: 'json',
             success: function(data){
+                toastr.success('Successfully Added Bid', 'Success!');
                 var num = +$('.bid-count').html() + 1;
                 $('.bid-count').html(num);
                 $('.modal-bid-now').modal('hide');
@@ -46,6 +47,7 @@ $(document).ready(function(){
     });
 
     $(document).on('click',".btn-bookmark",function(){
+
         var that = $(this);
         that.removeClass('btn-bookmark');
 
@@ -54,6 +56,7 @@ $(document).ready(function(){
             type:"POST",
             success:function(res){
                 if(res.success){
+                    toastr.success('Added bookmark', 'Success!');
                     that.addClass('bg-danger text-white btn-unbook');
                 }
             }
@@ -61,6 +64,7 @@ $(document).ready(function(){
     });
 
     $(document).on('click','.btn-unbook',function(){
+
         var that = $(this);
         that.removeClass('bg-danger text-white btn-unbook');
 
@@ -69,6 +73,7 @@ $(document).ready(function(){
             type:"POST",
             success:function(res){
                 if(res.success){
+                    toastr.warning('Removed Bookmark', 'Warning!');
                     that.addClass('btn-bookmark');
                 }
             }
@@ -77,6 +82,7 @@ $(document).ready(function(){
 
     $(document).on('click', '.cancel-bid', function(e){
         e.preventDefault();
+
         var num = +$('.bid-count').html() - 1;
         $('.bid-count').html(num);
         var id = $(this).data('target-id');
@@ -87,6 +93,7 @@ $(document).ready(function(){
             type: 'get',
                 success: function(result){
                 if(result.success == true){
+                    toastr.warning(' Removed a Bid', 'Warning!');
                     $('.media[data-mybid-id="'+result.id+'"]').remove();
                     $('#card-bid-status').html(`
                         <a class="text-white btn btn-success btn-lg btn-block" data-toggle="modal" data-target=".modal-bid-now">Bid Now</a>
@@ -110,6 +117,7 @@ $(document).ready(function(){
             type: 'post',
             dataType: 'json',
             success: function(result){
+                toastr.success('Successfully Edited bid', 'success!');
                 $('.modal-view-bid ').modal('hide');
             },
             error: function(){
