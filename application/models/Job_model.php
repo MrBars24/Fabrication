@@ -28,6 +28,7 @@ class Job_model extends MX_Model{
                 'path' => $files[$i]['file'],
                 'user_id' => $_SESSION['user']->id,
                 'attachable_type' => "job",
+                'job_id' => $attachable_id
             );
             $query = $this->db->insert('attachments', $data);
         }
@@ -41,7 +42,7 @@ class Job_model extends MX_Model{
      */
 
     function allWatch(){
-        
+
         $limit = 0;
         $offset = 0;
         $search = "";

@@ -29,7 +29,7 @@ class ViewJob extends MX_Controller {
 		$getJob = $this->job_model->getJob($id);
 		$fabricatorDetails = $this->user_model->getMemberInfo($getJob->fabricator_id);
 		$getBids = $this->proposal_model->getBidsByJobId($getJob->id);
-
+		$getAttachment = $this->proposal_model->getAttachment($getJob->id);
 		if($getJob->status == "close"){
 			$awardedUser = $this->user_model->getMemberInfo($getJob->accepted_bid);
 			$this->template->load_sub('awardedUser', $awardedUser);
@@ -37,6 +37,7 @@ class ViewJob extends MX_Controller {
 
 		$this->template->load_sub('bids', $getBids);
 		$this->template->load_sub('jobdata', $getJob);
+		$this->template->load_sub('getAttachment', $getAttachment);
 		$this->template->load_sub('fabricatordata', $fabricatorDetails);
 
 		// echo '<pre>';

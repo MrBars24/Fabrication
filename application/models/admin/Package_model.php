@@ -55,6 +55,15 @@ class Package_model extends MX_Model{
         return $this->db->update("package_settings");
     }
 
-
+    function getDefault(){
+        $query = $this->db->select('id')
+                 ->where('is_default', 1)
+                 ->get('package_settings');
+        if($query->num_rows() > 0){
+            return $query->row();
+        }else{
+            return FALSE;
+        }
+    }
 
 }

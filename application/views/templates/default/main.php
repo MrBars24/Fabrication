@@ -448,6 +448,7 @@
     <script src="<?php echo base_url() ?>assets/default/js/custom.min.js" ></script>
     <script src="<?php echo base_url() ?>assets/plugins/styleswitcher/jQuery.style.switcher.js" ></script>
     <script src="<?php echo base_url() ?>assets/default/custom/js/login.js" ></script>
+    <script src="<?php echo base_url() ?>assets/default/custom/js/exp-reg.js" ></script>
 
     <?php if(isset($add_js)){
           foreach($add_js as $js){ ?>
