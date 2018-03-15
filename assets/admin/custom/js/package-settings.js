@@ -10,10 +10,10 @@ $(document).ready(function(){
 				data.forEach(function(obj,index){
 					if(obj.is_default == 1){
 							var defaultChecked = `checked`;
-							var defaultText = `Setted as popular`;
+							var defaultText = `Setted as default`;
 						}else{
 							var defaultChecked = '';
-							var defaultText = `Set as popular`;
+							var defaultText = `Set as default`;
 						}
 					container += `
 				<div class="col-lg-4 package-item float-left">
@@ -74,8 +74,8 @@ $(document).ready(function(){
 			index = $(this).parents('.package-item').index();
 			var data = table.fetch(index);
 			radioItem.find('.radio').attr('checked', 'checked');
-			$('.radio-text').text('Set as popular');
-			radioItem.find('.radio-text').attr('checked', 'checked').text('Setted as popular');
+			$('.radio-text').text('Set as default');
+			radioItem.find('.radio-text').attr('checked', 'checked').text('Setted as default');
 			var serial = $('#frm-package').serializeArray();
 			var action = "/admin/settings/package-settings/default-package/" + data.id;
 			var that = $(this);
@@ -113,10 +113,10 @@ $(document).ready(function(){
 					$('#no-results').remove('tr');
 					if(d.is_default == 1){
 							var defaultChecked = `checked`;
-							var defaultText = `Setted as popular`;
+							var defaultText = `Setted as default`;
 						}else{
 							var defaultChecked = '';
-							var defaultText = `Set as popular`;
+							var defaultText = `Set as default`;
 						}
 					var data = {
 						data:d,
@@ -275,10 +275,10 @@ $(document).ready(function(){
 		var data = table.fetch(index);
 		if(data.is_default == 1){
 							var defaultChecked = `checked`;
-							var defaultText = `Setted as popular`;
+							var defaultText = `Setted as default`;
 						}else{
 							var defaultChecked = '';
-							var defaultText = `Set as popular`;
+							var defaultText = `Set as default`;
 						}
 			$(this).parents('.package-item').html(`
 		             <div class="card">
