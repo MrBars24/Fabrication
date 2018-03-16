@@ -91,4 +91,29 @@ class Proposal_model extends MX_Model{
                  ->update('bids', $data);
         return $query;
     }
+
+    public function activeBids(){
+        $q = $this->db->select("*")
+            ->from('bids')
+            ->join('jobs','bids.job_id=jobs.id')
+            ->where('expert_id',auth()->user_id)
+            ->order_by('created_at','DESC')
+            ->get();
+
+        if($q->num_rows() > 0){
+            return $q->result();
+        }
+
+        return [];
+    }
+
+    public function activeBidsCount(){
+        $q = $this->db->select("*")
+            ->from('bids')
+            ->join('jobs','bids.job_id=jobs.id')
+            ->where('expert_id',auth()->user_id)
+            ->get();
+
+        return $q->num_rows();
+    }
 }

@@ -10,3 +10,6 @@ application/views/qazwsx\.php
 efab\.sublime-workspace
 
 efab\.sublime-project
+
+application/third_party/vendor/
+application/third_party/composer.lock

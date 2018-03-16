@@ -51,6 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 */
 //text ROUTES
+$route['pusher'] = 'test/pusher';
 $route['test'] = 'expert/Profile/test';
 
 // home routes

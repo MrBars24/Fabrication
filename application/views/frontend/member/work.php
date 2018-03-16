@@ -103,10 +103,16 @@
                         <div class="progress">
                             <div class="progress-bar bg-info" style="width: 75%; height:15px;" role="progressbar">75%</div>
                         </div>
+                        <div class="d-flex justify-content-around">
+                            <div class="d-flex flex-column text-center mt-3">
+                                <span><span class="icon-2x font-weight-bold"><?=auth()->my_bids?></span>/<?=auth()->max_bid?></span>
+                                <span class="text-muted">bids<br>remaining</span>
+                            </div>
 
-                        <div class="d-flex flex-column text-center mt-3">
-                            <span><span class="icon-2x font-weight-bold">8</span>/10</span>
-                            <span class="text-muted">bids remaining</span>
+                            <div class="d-flex flex-column text-center mt-3">
+                                <span><span class="icon-2x font-weight-bold"><?=auth()->my_posts?></span>/<?=auth()->max_post?></span>
+                                <span class="text-muted">post<br>remaining</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -118,7 +124,7 @@
                         </a> -->
                         <a href="<?php echo base_url('jobs/bid-history') ?>" class="d-flex flex-row justify-content-between align-items-center py-2">
                             <h6 class="font-weight-bold mb-0">Active Biddings</h6>
-                            <span class="badge badge-pill badge-secondary">1</span>
+                            <span class="badge badge-pill badge-secondary"><?=$active_bids?></span>
                         </a>
                         <a href="<?php echo base_url('jobs/invitations') ?>" class="d-flex flex-row justify-content-between align-items-center py-2">
                             <h6 class="font-weight-bold mb-0">Job Invites</h6>

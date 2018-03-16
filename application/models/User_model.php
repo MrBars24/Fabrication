@@ -91,7 +91,7 @@ class User_model extends MX_Model{
         $username = $this->input->post('username');
         $password = $pwd;
 
-        $this->db->select('id, email, username, user_type, user_id, firstname, lastname');
+        $this->db->select('id, email, username, user_type, user_id, firstname, lastname, max_bid, max_post, my_bids, my_posts');
 
         if(filter_var($username, FILTER_VALIDATE_EMAIL)){
             $this->db->where('email', $username);
@@ -101,7 +101,7 @@ class User_model extends MX_Model{
         }
 
         $this->db->where('password', $password);
-        $query = $this->db->get('users');
+        $query = $this->db->get('user_details');
         if($query->num_rows() > 0){
             $row = $query->row();
             $row->user_details = $this->getMemberInfo($row->user_id);
