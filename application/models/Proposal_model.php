@@ -13,6 +13,7 @@ class Proposal_model extends MX_Model{
     }
     function getAttachment($id){
         $query = $this->db->select('*')
+                 ->where('is_deleted', 0)
                  ->where('job_id', $id)
                  ->get('attachments');
         if($query->num_rows() > 0){

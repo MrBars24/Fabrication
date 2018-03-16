@@ -34,8 +34,16 @@ class Job_model extends MX_Model{
         }
         return $query;
     }
-
-    /**
+    function deleteFiles($id){
+        $data = array(
+            'is_deleted' => 1,
+            'deleted_at' => date("Y-m-d h:i:sa")
+        );
+        $this->db->where_in('id', $id);
+        $query = $this->db->update('attachments', $data);
+        return $query;
+    }
+     /**
      *
      *
      * @params $category

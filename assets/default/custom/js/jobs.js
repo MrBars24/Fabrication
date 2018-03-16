@@ -14,7 +14,6 @@ $(document).ready(function() {
             var container = ``;
             if (data.length > 0) {
                 data.forEach(function(obj, index) {
-                    console.log(obj);
                     container += `
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <div class="card" style="min-height: 400px;">

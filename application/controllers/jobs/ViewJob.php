@@ -34,7 +34,7 @@ class ViewJob extends MX_Controller {
 			$awardedUser = $this->user_model->getMemberInfo($getJob->accepted_bid);
 			$this->template->load_sub('awardedUser', $awardedUser);
 		}
-
+	
 		$this->template->load_sub('bids', $getBids);
 		$this->template->load_sub('jobdata', $getJob);
 		$this->template->load_sub('getAttachment', $getAttachment);

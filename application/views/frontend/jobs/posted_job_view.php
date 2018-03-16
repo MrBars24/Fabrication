@@ -143,6 +143,9 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <?= form_open("/jobs/update/$job->id" ,array('class'=>'modal-content','id'=>'form-update-job'))?>
+            <div id="input-hidden-attach">
+                <input type="hidden" value="" name="removed_attach" id="input-removed-attachments-test">
+            </div>
             <div class="modal-header">
                 <h3 class="modal-title" id="myLargeModalLabel">Edit <span class="text-primary">Job Information</span></h3>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -176,6 +179,35 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
+                            <label>Location</label>
+                            <input class="form-control" name="location" value="<?= $job->location ?>">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Approx Tonnes</label>
+                            <input class="form-control" name="tonnes" value="<?= $job->approx_tonnes ?>">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Attachments</label><br>
+                            <?php if($getAttachment): ?>
+                                <?php foreach($getAttachment as $attachment): ?>
+                                    <div class="attachment-container">
+                                        <button data-target-id-attachment="<?= $attachment->id ?>" type="button" class="btn btn-removed-attach btn-danger btn-xs mt-1 ml-5 mb-2">removed</button><span class="font-weight-bold ml-1"><?= $attachment->filename ?></span><br>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                            <div id="test1" class="dropzone"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
                             <label>Bidding Start</label>
                             <input type="text" name="bstart" value="<?= date_new_format($job->bidding_start_at, "Y-m-j") ?>" class="form-control" placeholder="Bidding Start Date" id="bsdate" data-dtp="dtp_egKES">
                         </div>
@@ -191,13 +223,13 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Project Start</label>
-                            <input type="text" name="pstart" class="form-control" placeholder="Project Start Date" id="psdate" data-dtp="dtp_8lFVz">
+                            <input type="text" name="pstart" class="form-control" placeholder="Project Start Date" id="psdate" data-dtp="dtp_8lFVz" value="<?= date_new_format($job->project_start, "Y-m-j"); ?>">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Project End</label>
-                            <input type="text" name="pend" class="form-control" placeholder="Project End Date" id="pedate" data-dtp="dtp_JLEkR">
+                            <input type="text" name="pend" class="form-control" placeholder="Project End Date" id="pedate" data-dtp="dtp_JLEkR" value="<?= date_new_format($job->project_end, "Y-m-j"); ?>">
                         </div>
                     </div>
                 </div>
