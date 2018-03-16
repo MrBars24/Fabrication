@@ -12,6 +12,11 @@ $(document).ready(function(){
             url: url,
             dataType: 'json',
             success: function(data){
+                if(!data.success){
+                    $('.modal-bid-now').modal('hide');
+                    $('#modal-job-error').modal('show');
+                    return FALSE;
+                }
                 toastr.success('Successfully Added Bid', 'Success!');
                 var num = +$('.bid-count').html() + 1;
                 $('.bid-count').html(num);

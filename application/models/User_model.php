@@ -142,5 +142,17 @@ class User_model extends MX_Model{
     //     }
     //     return array();
     // }
+    function updateUserSession(){
+        $this->db->select('id, email, username, user_type, user_id, firstname, lastname, max_bid, max_post, my_bids, my_posts');
 
+        $this->db->where("id",auth()->id);
+        $query = $this->db->get('user_details');
+
+        if($query->num_rows() > 0){
+            $row = $query->row();
+            $row->user_details = $this->getMemberInfo($row->user_id);
+
+            $_SESSION['user'] = $row;
+        }
+    }
 }

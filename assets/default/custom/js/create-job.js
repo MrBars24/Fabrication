@@ -20,7 +20,7 @@ $(document).ready(function() {
                 // Make sure that the form isn't actually being sent.
                 e.preventDefault();
                 e.stopPropagation();
-                if (myDropzone.getQueuedFiles().length > 0) {        
+                if (myDropzone.getQueuedFiles().length > 0) {
                     myDropzone.processQueue();
                 }else{
                     $.ajax({
@@ -47,8 +47,10 @@ $(document).ready(function() {
             });
 
             this.on("success", function(file, responseText) {
-                console.log(responseText);
-                //console.log(responseText);
+                if(!responseText.success){
+                    $('#modal-job-error').modal('show');
+                }
+                // //console.log(responseText);
                 window.location.href = "/jobs/posted";
                 // if(responseText.success=="true"){
                 //     location.reload();

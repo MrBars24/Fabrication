@@ -8,9 +8,18 @@ class Proposal extends MX_Controller {
 		$this->template->set_template("default");
 		$this->load->model('job_model');
 		$this->load->model('proposal_model');
+		$this->load->model('user_model');
     }
     function submit(){
 		header("Content-Type:application/json");
+
+		if(auth()->my_bids >= auth()->max_bid){
+			echo json_encode(array(
+				'success' => FALSE,
+				'error' => 'package'
+			));
+			exit;
+		}
         $data = array(
             'job_id' => $this->input->post('id'),
             'expert_id' => auth()->id,
@@ -27,8 +36,8 @@ class Proposal extends MX_Controller {
 					'amount' => $this->input->post('budget')
 				);
 				$result = $this->proposal_model->updateBid($this->input->post('id'), auth()->id, $dataUpdate);
-
 				$data['user_details'] = auth();
+				$this->user_model->updateUserSession();
 				if($result){
 					echo json_encode(array(
 						'success' => TRUE,
@@ -45,6 +54,7 @@ class Proposal extends MX_Controller {
 			}
 
         $submitproposal = $this->proposal_model->submitProposal($data);
+		$this->user_model->updateUserSession();
 		$data['user_details'] = auth();
         if($submitproposal){
             return json(array(

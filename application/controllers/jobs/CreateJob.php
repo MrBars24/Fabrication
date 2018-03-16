@@ -6,6 +6,8 @@ class CreateJob extends MX_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->template->set_template("default");
+		$this->load->model('user_model');
+		$this->load->model('job_model');
 	}
 
 	public function index(){
@@ -39,6 +41,7 @@ class CreateJob extends MX_Controller {
 		$this->template->append_js($js);
 
 		$this->load->model('Industry_model');
+		$this->load->model('User_model');
 
 		$industries = $this->Industry_model->getIndustries();
 		$this->template->load_sub('industries', $industries);
@@ -46,6 +49,15 @@ class CreateJob extends MX_Controller {
 	}
 
 	public function createJob(){
+		header("Content-Type:application/json");
+		if(auth()->my_posts >= auth()->max_post){
+			echo json_encode(array(
+				'success' => FALSE,
+				'error' => "account_type",
+				'message' => "You've reach the maximum amount of post."
+			));
+			exit;
+		}
 		$fabricator_id = auth()->id;
         $title = $this->input->post('title');
         $description = $this->input->post('description');
@@ -91,7 +103,7 @@ class CreateJob extends MX_Controller {
 			          	array_push($files,array("file"=>"/".$targetFile));
 			        }
 		      	}
-				$this->load->model('job_model');
+				$this->user_model->updateUserSession();
 				$r = $this->job_model->createJob($data);
 				$a = $this->job_model->createAttached($files,$r);
 
@@ -102,7 +114,7 @@ class CreateJob extends MX_Controller {
 				}
 			}
 		}else{
-			$this->load->model('job_model');
+			$this->user_model->updateUserSession();
 			$r = $this->job_model->createJob($data);
 		}
 

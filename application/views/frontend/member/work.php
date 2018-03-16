@@ -1,6 +1,6 @@
 <div class="row page-titles">
     <div class="col-md-5 align-self-center">
-        
+
     </div>
     <div class="col-md-7 align-self-center">
         <ol class="breadcrumb">
@@ -18,7 +18,7 @@
         <div class="col-sm-3" >
             <div class="stickyside">
                 <h1 class="font-weight-bold">Work</h1>
-                <div> 
+                <div>
                     <?php if(isset($_SESSION['user'])): ?>
                         <?php if($_SESSION['dashboard'] == 'hire'): ?>
                             <span><a class="text-mute" style="padding:10px;" href="<?=  base_url(); ?>hire"><i class="mdi mdi-subdirectory-arrow-right"></i>Hire </a></span>
@@ -82,7 +82,7 @@
                     <h4 class="card-title font-weight-bold mb-0">Job Feed</h4>
                 </div>
                 <ul class="list-group list-group-flush pagination-jobs-container">
-                    
+
                 </ul>
             </div>
             <div class="container loader-container"></div>
