@@ -108,7 +108,7 @@
                                             <small class="text-muted"><?= time_new_format($bid->created_at); ?></small>
 
                                         </div>
-                                        <div class="col-sm-3 text-right">
+                                        <div class="col-sm-3 text-right" id="bid-container">
 
                                         <!-- <small class="">Bid</small>
                                             <h4>$<?= $bid->amount ?></h4> -->
@@ -347,6 +347,27 @@
                 <?= form_close(); ?>
             <?php endif; ?>
         <?php endforeach; ?>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+<div id="modal-job-error" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none; padding-right: 19px;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Package Upgrade</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <h4>You need to upgrade you membership to bid in job!</h4>
+            </div>
+            <div class="modal-footer">
+                <a href="/settings/subscription" class="btn btn-success waves-effect">Upgrade Now</a>
+                <button type="button" class="btn btn-info waves-effect" data-dismiss="modal">Close</button>
+            </div>
+        </div>
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
