@@ -1,13 +1,13 @@
 <div class="row page-titles">
     <div class="col-md-5 align-self-center">
-        
+
     </div>
     <div class="col-md-7 align-self-center">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
             <?php if(get_referer_endpoint() == "hire"): ?>
-            <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="/hire">Hire</a></li>
+                <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="/hire">Hire</a></li>
             <?php endif; ?>
             <li class="breadcrumb-item active">Post Job</li>
         </ol>
@@ -56,7 +56,7 @@
                                 <div class="controls">
                                     <input type="text" name="location" value="" class="form-control">
                                 </div>
-                            </div> 
+                            </div>
                             <div class="col-6">
                                 <h4 class="mb-3 text-dark font-weight-bold mt-5">Approx Tonnes</h4>
                                 <p></p>

@@ -75,14 +75,16 @@ class BrowseJobs extends MX_Controller {
 	public function postedJobView($id) {
         $css = array(
 			"assets/default/css/custom/global.css",
+			"assets/plugins/dropzone-master/dist/dropzone.css",
 			"assets/default/custom/css/jobs.css",
 			"assets/admin/colors/blue.css",
-			"assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css"
+			"assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css",
+			"assets/plugins/dropify/dist/css/dropify.min.css",
         );
         $js = array(
-			"assets/plugins/moment/moment.js",
+			"assets/plugins/dropzone-master/dist/dropzone.js",
 			"assets/default/custom/js/update-job.js",
-            "assets/default/custom/js/jobs.js",
+			"assets/plugins/moment/moment.js",
             "assets/admin/custom/js/bars-datatable.js",
             "assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js",
             "assets/admin/js/mask.js",
@@ -93,9 +95,11 @@ class BrowseJobs extends MX_Controller {
 		$this->load->model('proposal_model');
 		$job = $this->job_model->getAllJobInfo($id);
 		$bid = $this->proposal_model->getBidsByJobId($id);
+		$getAttachment = $this->proposal_model->getAttachment($job->id);
+		$this->template->load_Sub('getAttachment', $getAttachment);
 		$this->template->load_Sub('job', $job);
 		$this->template->load_Sub('bid', $bid);
-		
+
 		$this->template->load('frontend/jobs/posted_job_view');
 	}
 
