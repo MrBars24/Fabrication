@@ -233,12 +233,14 @@
 		_data_hash = btoa(JSON.stringify(tmp));
 	}
 
-	$.fn.dataRemove = function(index){
-		var tmp = JSON.parse(atob(_data_hash));
-		tmp.splice(index, 1);
-		
-		this.children().eq(index).remove();
-	}
+	$.fn.dataRemove = function(index){ 
+  var tmp = JSON.parse(atob(_data_hash)); 
+  tmp.splice(index, 1); 
+  console.log(tmp); 
+  _data_hash = btoa(JSON.stringify(tmp)); 
+  this.children().eq(index).remove();  
+  console.log(_data); 
+ } 
 
 	$.fn.dataRemoveByKey = function(key,value){
 		var tmp = JSON.parse(atob(_data_hash));
