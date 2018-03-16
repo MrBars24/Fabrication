@@ -108,7 +108,7 @@
                                             <small class="text-muted"><?= time_new_format($bid->created_at); ?></small>
 
                                         </div>
-                                        <div class="col-sm-3 text-right">
+                                        <div class="col-sm-3 text-right" id="bid-container">
 
                                         <!-- <small class="">Bid</small>
                                             <h4>$<?= $bid->amount ?></h4> -->
