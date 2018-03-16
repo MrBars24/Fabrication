@@ -155,7 +155,7 @@ $route['submit-contact-us'] = 'welcome/submitContactUs';
 //Training
 $route['settings/training']['GET'] = 'settings/training';
 $route['settings/training/list']['GET'] = 'settings/training/fetch';
-$route['settings/training/create']['POST'] = 'settings/training1/store';
+$route['settings/training/create']['POST'] = 'settings/training/store';
 $route['settings/training/update/(:num)']['POST'] = 'settings/training/update/$1';
 $route['settings/training/delete/(:num)']['POST'] = 'settings/training/destroy/$1';
 
