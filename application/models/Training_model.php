@@ -1,78 +1,59 @@
 <?php
+
 class Training_model extends MX_Model{
 
     function __construct(){
         parent::__construct();
+        $this->load->database();
     }
 
-    function getTrainings() {
-        $query = $this->db->select('*')
-            ->from('trainings')
-            ->where('is_deleted', 0)
-            ->order_by('id', 'ASC')
-            ->get();
-        
-        if($query->num_rows() < 1) {
-            return array();
+    function all(){
+        $limit = 0;
+        $offset = 0;
+        if(isset($_GET['limit'])){
+            $limit = $_GET['limit'];
         }
-        return $query->result_array();
-    }
-    
-    function getView($id){
-        $query = $this->db->select('*')
-        ->from('trainings')
-        ->where('is_deleted',0)
-        ->where('id', $id)
-        ->order_by('id','ASC')
-        ->get();
 
-        if($query->num_rows() > 0){
-            return $query->row();
-        } 
+        if(isset($_GET['page'])){
+            $offset = $_GET['page'];
+        }
 
-        return [];
+        $where = array("is_deleted"=>0);
+        $q = $this->getIndexDataCount("trainings",$limit,$offset,'created_at','DESC',$where);
+
+        return $q;
     }
 
-    function delData($id) {
-        $this->db->set('is_deleted','1');
-        $this->db->where('id', $id);
-        return $this->db->update('trainings');
 
-        /*$table = $this->config->item('trainings');
-        $this->db->where("id",$id);
-        return $this->db->delete($table);*/
-    }
+    function save($data){
+        $res = $this->db->insert("trainings",$data);
 
-    function createTraining(){
-        
-        $title = $this->input->post('title');
-        $description = $this->input->post('description');
-        //$attached = $this->input->file ??
-
-        $data = array(
-            'training_name' => $title,
-            'description' => $description
-        );
-
-        if($this->db->insert('trainings', $data)){
-            return $this->getView($this->db->insert_id());
+        if($res){
+            $data = $this->findBy("trainings",$this->db->insert_id());
+            return $data;
         }else{
             return FALSE;
         }
     }
 
-    function getPageById($id){
-        $table = $this->config->item('trainings');
-
+    function update($id,$data){
         $this->db->where("id",$id);
-        $q = $this->db->get($table);
+        $res = $this->db->update("trainings",$data);
 
-        if($q->num_rows() > 0){
-            return $q->row();
+        if($res){
+            $data = $this->findBy("trainings",$id);
+            return $data;
+        }else{
+            return FALSE;
         }
-        return [];
     }
 
+    function destroy($id){
+        $this->db->where("id",$id);
+        $this->db->set("is_deleted",1);
+        $this->db->set("deleted_at",'NOW()',false);
+        return $this->db->update("trainings");
+    }
 
 
 
