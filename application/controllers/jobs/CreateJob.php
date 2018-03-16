@@ -103,9 +103,9 @@ class CreateJob extends MX_Controller {
 			          	array_push($files,array("file"=>"/".$targetFile));
 			        }
 		      	}
-				$this->user_model->updateUserSession();
 				$r = $this->job_model->createJob($data);
 				$a = $this->job_model->createAttached($files,$r);
+				$this->user_model->updateUserSession();
 
 				if($r && $a){
 					echo json_encode( array(
@@ -114,8 +114,12 @@ class CreateJob extends MX_Controller {
 				}
 			}
 		}else{
-			$this->user_model->updateUserSession();
 			$r = $this->job_model->createJob($data);
+			$this->user_model->updateUserSession();
+
+			echo json_encode( array(
+				'success' => 201
+			));
 		}
 
 
