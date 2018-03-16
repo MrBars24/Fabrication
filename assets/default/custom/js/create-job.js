@@ -28,7 +28,12 @@ $(document).ready(function() {
                         type:"POST",
                         data : $("#form-job-create").serializeArray(),
                         success:function(res){
-                            window.location.href = "/jobs/posted";
+                            if(!res.success){
+                                $('#modal-job-error').modal('show');
+                            }else{
+
+                                window.location.href = "/jobs/posted";
+                            }
                         }
                     })
                 }
@@ -39,19 +44,23 @@ $(document).ready(function() {
             // Listen to the sendingmultiple event. In this case, it's the sendingmultiple event instead
             // of the sending event because uploadMultiple is set to true.
             this.on("sendingmultiple", function() {
-            //console.log("sendingmultiple");
+
             });
 
             this.on("successmultiple", function(files, response) {
-
+            
             });
 
             this.on("success", function(file, responseText) {
+                console.log(responseText.success);
                 if(!responseText.success){
                     $('#modal-job-error').modal('show');
+                }else{
+
+                    window.location.href = "/jobs/posted";
                 }
+
                 // //console.log(responseText);
-                window.location.href = "/jobs/posted";
                 // if(responseText.success=="true"){
                 //     location.reload();
                 // }else{
