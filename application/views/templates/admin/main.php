@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/logo_favicon.png">
     <title><?=APPNAME?></title>
     <link rel="stylesheet" href="/assets/plugins/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/plugins/morrisjs/morris.css">
@@ -372,6 +372,7 @@
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="/admin/settings/budget-filter">Budget Range Filter</a></li>
                                 <li><a href="/admin/settings/package-settings">Package Settings</a></li>
+                                <li><a href="/admin/settings/materials-list">List of Materials</a></li>
                             </ul>
                         </li>
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Content Menu</span></a>
