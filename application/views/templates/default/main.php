@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <meta name="current" content="<?=date('Y-m-d h:i:s')?>">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/logo_favicon.png">
     <title>E-fab Market online - E-fab Market</title>
 
     <link rel="stylesheet" href="/assets/plugins/bootstrap/css/bootstrap.min.css">
