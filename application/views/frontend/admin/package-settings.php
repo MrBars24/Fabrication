@@ -1,3 +1,13 @@
+<style>
+    .custom-preloader{
+    width: 0;
+    height: 0;
+    top: 0px;
+    position: static;
+    z-index: 99999;
+    background: #fdfdfd00;
+    }
+</style>
 <div class="row page-titles">
     <div class="col-md-5 align-self-center">
         <h3 class="text-themecolor">Package Settings</h3>

@@ -2,8 +2,12 @@ $(document).ready(function(){
 	var index = null;
 	var table = $(".package-container").initTable({
 		url:"/admin/settings/package-settings/list",
-		onSuccessRequest:function(){	
-		},
+		onBeforeRequest:function(){
+            $(".package-container").html(`<div class="preloader custom-preloader" style="display: none;">
+                    <svg class="circular" viewBox="25 25 50 50">
+                    <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"></circle> </svg>
+                </div>`);
+		      },
 		render:function(data){
 			var container = ``;
 			if(data.length > 0){
