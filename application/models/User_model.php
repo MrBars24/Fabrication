@@ -133,6 +133,16 @@ class User_model extends MX_Model{
         }
         return array();
     }
+    function getUserDetails($id){
+        $query = $this->db->select('*')
+             ->where('user_id', $id)
+             ->get('user_details');
+        if($query->num_rows() > 0){
+            return $query->row();
+        }
+        return array();
+
+    }
     // function getFabricatorInfo($id){
     //     $this->db->select('*');
     //     $this->db->where('id', $id);

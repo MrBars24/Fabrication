@@ -1,6 +1,6 @@
 <div class="container">
-    <div class="row"> 
-        
+    <div class="row">
+
 <!--    Profile    -->
         <div class="col-sm-12">
             <div class="card">
@@ -10,22 +10,23 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-12">
-                            <div class="profiletimeline">
-                                 <?php foreach(range(0, 10) as $number): ?>
-                                <!-- Post Job List Item -->
+                            <div class="profiletimeline" id="jobs-invitation-container">
+                            <div class="pagination pagination-jobs-invitation-container col-12 justify-content-center mb-4"></div>
+                                 <!-- <?php foreach(range(0, 10) as $number): ?>
+
                                 <?php $this->load->view('frontend/partials/job_invitation_item') ?>
-                                <!-- End of Job List Item -->
-                                <?php endforeach; ?>
+
+                                <?php endforeach; ?> -->
                             </div>
                         </div>
-                        
+
                     </div>
-                   
+
                 </div>
             </div>
-        
+
         </div>
-        
+
     </div>
 </div>
 
@@ -43,7 +44,7 @@
 				</div>
 			</div>
 			<div class="col-lg-4">
-				
+
 			</div>
 		</div>
 	</div>
@@ -63,13 +64,13 @@
 			<div class="card">
 				<div class="card-body">
 					<h4 class="card-title"></h4>
-					
+
 					<form>
 
 						<a class="btn btn-outline-info btn-block"> Archive </a>
 
-						
-						  				
+
+
 						<button type="submit" class="btn btn-info btn-block">Submit</button>
 					</form>
 				</div>
@@ -77,7 +78,7 @@
 		</div>
 
  -->
- 		
+
 		<!-- For List -->
 <!--
 		<div class="col-lg-12">
@@ -87,14 +88,14 @@
 				    <li class="breadcrumb-item"><a href="#accepted">Accepted</a></li>
 				    <li class="breadcrumb-item"><a href="#declined">Declined</a></li>
 				    <li class="breadcrumb-item"><a href="#archived">Archived</a></li>
-				   
+
 				</ol>
 			</nav>
 			<div class="card">
 				<div class="card-body">
 					<div class="row">
 						<div class="col-lg-9 text-center text-dark">
-							 Header 
+							 Header
 						 	<label><b> (4) Job Invitation </b></label>
 						</div>
 						<div class="col-lg-3">
@@ -108,19 +109,19 @@
 							</div>
 						</div>
 					</div>
-			 	</div> 
+			 	</div>
 			</div>
 -->
-			<!-- List 
-			<div class="card"> 
+			<!-- List
+			<div class="card">
 				<!-- <ul class="list-group list-group-flush">
-					<li class="list-group-item"> 
+					<li class="list-group-item">
 						Jobs
 					</li>
 				</ul>
 				<ul class="list-group list-group-flush">
 					<!-- ITEM LIST
-					
+
 				</ul>
 				<nav aria-label="Page navigation example">
 					<ul class="pagination">

@@ -1,4 +1,4 @@
-	<?php
+<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*
@@ -167,6 +167,9 @@ $route['jobs/update/(:num)']['POST'] = 'jobs/UpdateJob/updateJob/$1';
 $route['jobs/get']['GET'] = 'jobs/BrowseJobs/getAllJobs';
 $route['jobs/list']['GET'] = 'jobs/BrowseJobs/getAllJobsPagination';
 
+// Jobs invite
+$route['jobs/invite/(:num)']['POST'] = 'jobs/InvitationJobs/inviteMember/$1';
+$route['jobs/invite']['GET'] = 'jobs/InvitationJobs/getAllInvites/$1';
 //Portfolio
 $route['portfolio/create']['POST'] = 'portfolio/CreatePortfolio/createPort';
 $route['portfolio/(:num)']['GET'] = 'settings/Portfolio/showPortfolio/$1';
@@ -230,7 +233,8 @@ $route['watchlist/delete/(:num)']['POST'] = 'member/Work/removeWishlist/$1';
 
 // Member
 $route['members']['get'] = 'member/Browse/index';
-$route['members/(:any)']['get'] = 'member/ViewProfile/show/$1';
+$route['members/(:num)']['get'] = 'member/ViewProfile/show/$1';
+$route['members/test/(:num)']['get'] = 'member/ViewProfile/test/$1';
 $route['hire']['get'] = 'member/Hire/index';
 $route['work']['get'] = 'member/Work/index';
 $route['work/list']['GET'] = 'member/Work/getAllJobsPagination';
