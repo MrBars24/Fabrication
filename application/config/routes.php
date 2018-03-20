@@ -178,10 +178,17 @@ $route['jobs/list']['GET'] = 'jobs/BrowseJobs/getAllJobsPagination';
 $route['jobs/invite/(:num)']['POST'] = 'jobs/InvitationJobs/inviteMember/$1';
 $route['jobs/invite']['GET'] = 'jobs/InvitationJobs/getAllInvites/$1';
 //Portfolio
-$route['portfolio/create']['POST'] = 'portfolio/CreatePortfolio/createPort';
+/*$route['portfolio/create']['POST'] = 'portfolio/CreatePortfolio/createPort';
 $route['portfolio/(:num)']['GET'] = 'settings/Portfolio/showPortfolio/$1';
 $route['portfolio/update/(:num)']['POST'] = 'portfolio/UpdatePortfolio/updatePort/$1';
-$route['portfolio/delete/(:num)']= 'portfolio/DeletePortfolio/deletePort/$1';
+$route['portfolio/delete/(:num)']= 'portfolio/DeletePortfolio/deletePort/$1';*/
+
+$route['settings/portfolio']['GET'] = 'settings/portfolio';
+$route['settings/portfolio/create']['POST'] = 'settings/portfolio/store';
+$route['settings/portfolio/update/(:num)']['POST'] = 'settings/portfolio/update/$1';
+$route['settings/portfolio/delete/(:num)']['POST'] = 'settings/portfolio/destroy/$1';
+$route['settings/portfolio/list']['GET'] = 'settings/portfolio/fetch';
+
 
 //Proposal
 $route['jobs/proposal/(:num)']['get'] = 'jobs/ViewJob/proposal/$1';
@@ -204,6 +211,10 @@ $route['jobs/previous-project/(:num)']['get'] = 'jobs/ViewPreviousProject/show/$
 //Job Banks
 $route['jobs']['get'] = 'jobs/BrowseJobs/index';
 $route['jobs/(:num)']['GET'] = 'jobs/ViewJob/show/$1';
+
+$route['jobs/bid-list/(:num)'] = 'jobs/ViewJob/bidderfetch/$1';
+$route['jobs/bid-list/(:num)/(:num)'] = 'jobs/ViewJob/bidderfetchsort/$1/$2';
+
 $route['jobs/latest']['get'] = 'jobs/LatestJobs/index';
 $route['jobs/invitations']['get'] = 'jobs/InvitationJobs/index';
 $route['jobs/my-jobs']['get'] = 'jobs/MyJob/index';
@@ -223,7 +234,7 @@ $route['settings/public']['get'] = 'settings/PublicProfile/index';
 $route['settings/company']['get'] = 'settings/CompanyProfile/index';
 $route['settings/password']['get'] = 'settings/Password/index';
 $route['settings/notification']['get'] = 'settings/Notification/index';
-$route['settings/portfolio']['get'] = 'settings/Portfolio/index';
+//$route['settings/portfolio']['get'] = 'settings/Portfolio/index';
 $route['settings/training']['get'] = 'settings/Training/index';
 
 // Profile Settings Functions

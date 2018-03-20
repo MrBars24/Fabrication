@@ -89,7 +89,7 @@
                             <h4 class="card-title">Experts Bidding <span class="bid-count"><?= count($bids) ?></span></h4>
                         </div>
                         <div class="float-right">
-                            <select name="" class="form-control">
+                            <select name="" class="form-control bidding-filter">
                                 <option value="">Recent</option>
                                 <option value="">Lowest First</option>
                                 <option value="">Highest First</option>
@@ -98,25 +98,10 @@
                     </div>
                     <div class="clearfix"></div>
                     <ul class="list-unstyled" id="bid-container">
-                        <?php foreach($bids as $bid): ?>
-                            <li class="media border-0" data-mybid-id="<?= $bid->id ?>">
-                                <img class="mr-3 rounded-circle" src="http://themedesigner.in/demo/admin-press/assets/images/users/8.jpg" width="64" alt="Generic placeholder image">
-                                <div class="media-body">
-                                    <div class="row">
-                                        <div class="col-sm-9">
-                                            <h4 class="mt-0 mb-0 font-weight-bold"><?= $bid->fullname; ?></h4>
-                                            <small class="text-muted"><?= time_new_format($bid->created_at); ?></small>
-
-                                        </div>
-                                        <div class="col-sm-3 text-right" id="bid-container">
-
-                                        <!-- <small class="">Bid</small>
-                                            <h4>$<?= $bid->amount ?></h4> -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        <?php endforeach; ?>
+                       <nav aria-label="Page navigation example" class="m-t-40">
+                         <ul class="pagination pagination-bars d-flex justify-content-center">
+                         </ul>
+                      </nav>
                     </ul>
                 </div>
             </div>

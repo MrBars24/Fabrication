@@ -8,17 +8,12 @@ $(document).ready(function(){
 			var container = ``;
 			if(data.length > 0){
 				data.forEach(function(obj,index){
-                    
-                    obj.date_start = new Date(obj.date_start);
-					obj.date_start = moment(obj.date_start).format('MM, DD YYYY');
-                    obj.date_end = new Date(obj.date_end);
-					obj.date_end = moment(obj.date_end).format('MM, DD YYYY');
-                    
+                
 					container += `
 				<div id="training-id" class="list-group list-group-flush col-12">
                     <div class="list-group-item pb-4">
                         <h5 class="font-weight-bold mb-1">${obj.training_name}</h5>
-                        <h6 class="text-muted"><small><span class="font-weight-bold">From</span> ${obj.date_start}</small> <small><span class="font-weight-bold">To</span> ${obj.date_end}</small></h6>
+                        <h6 class="text-muted"><small><span class="font-weight-bold">From</span> ${moment(obj.date_start).format('MMM D, YYYY')}</small> <small><span class="font-weight-bold">To</span> ${moment(obj.date_end).format('MMM D, YYYY')}</small></h6>
                         <h6>${obj.description}</h6>
 
                         <a href="#" class="btn btn-success view"><span class="align-middle">View</span><i class="icon-eye align-middle ml-2"></i></a>
