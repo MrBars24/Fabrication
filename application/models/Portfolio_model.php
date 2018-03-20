@@ -2,83 +2,59 @@
 
 class Portfolio_model extends MX_Model{
 
-    function __construct(){
+   function __construct(){
         parent::__construct();
         $this->load->database();
     }
 
-    function createPort(){
+    function all(){
+        $limit = 0;
+        $offset = 0;
+        if(isset($_GET['limit'])){
+            $limit = $_GET['limit'];
+        }
 
-        $title = $this->input->post('title');
-        $description = $this->input->post('description');
-        //$attached = $this->input->file ??
+        if(isset($_GET['page'])){
+            $offset = $_GET['page'];
+        }
 
-        $data = array(
-            'project_name' => $title,
-            'description' => $description
-        );
+        $where = array("is_deleted"=>0);
+        $q = $this->getIndexDataCount("portfolios",$limit,$offset,'created_at','DESC',$where);
 
-        $query = $this->db->insert('portfolios', $data);
-        return $this->db->insert_id();
+        return $q;
     }
 
-    /**
-     *
-     *
-     * @params $category
-     */
 
+    function save($data){
+        $res = $this->db->insert("portfolios",$data);
 
-    function getAllPortfolio(){
-        $query = $this->db->select('*')
-        ->from('portfolios')
-        ->where('is_deleted',0)
-        ->order_by('created_at','desc')
-        ->get();
-        
-        if($query->num_rows() > 0){
-            return $query->result_array();
-        }
-        else {
-            return false;
+        if($res){
+            $data = $this->findBy("portfolios",$this->db->insert_id());
+            return $data;
+        }else{
+            return FALSE;
         }
     }
 
-    function getPortfolio($id){
+    function update($id,$data){
+        $this->db->where("id",$id);
+        $res = $this->db->update("portfolios",$data);
 
-        $query = $this->db->select('*')
-        ->from('portfolios')
-        ->where('id',$id)
-        ->get();
-        if($query->num_rows() > 0){
-            return $query->row();
-        }
-        else {
-            return false;
+        if($res){
+            $data = $this->findBy("portfolios",$id);
+            return $data;
+        }else{
+            return FALSE;
         }
     }
 
-    function updatePort($id){
-        $project_name = $this->input->post('project_name');
-        $description = $this->input->post('description');
-
-        $data = array(
-            'project_name' => $project_name,
-            'description' =>  $description
-        );
-        $this->db->where('id', $id);
-        return $this->db->update('portfolios',$data );
+    function destroy($id){
+        $this->db->where("id",$id);
+        $this->db->set("is_deleted",1);
+        $this->db->set("deleted_at",'NOW()',false);
+        return $this->db->update("portfolios");
     }
 
-    function deletePort($id){
 
-    $data = array(
-        'is_deleted' => '1'
-    );   
-    $this->db->where('id', $id);
-    return $this->db->update('portfolios', $data);
-    }
-
-    
 
 }

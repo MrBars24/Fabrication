@@ -175,10 +175,17 @@ $route['jobs/get']['GET'] = 'jobs/BrowseJobs/getAllJobs';
 $route['jobs/list']['GET'] = 'jobs/BrowseJobs/getAllJobsPagination';
 
 //Portfolio
-$route['portfolio/create']['POST'] = 'portfolio/CreatePortfolio/createPort';
+/*$route['portfolio/create']['POST'] = 'portfolio/CreatePortfolio/createPort';
 $route['portfolio/(:num)']['GET'] = 'settings/Portfolio/showPortfolio/$1';
 $route['portfolio/update/(:num)']['POST'] = 'portfolio/UpdatePortfolio/updatePort/$1';
-$route['portfolio/delete/(:num)']= 'portfolio/DeletePortfolio/deletePort/$1';
+$route['portfolio/delete/(:num)']= 'portfolio/DeletePortfolio/deletePort/$1';*/
+
+$route['settings/portfolio']['GET'] = 'settings/portfolio';
+$route['settings/portfolio/create']['POST'] = 'settings/portfolio/store';
+$route['settings/portfolio/update/(:num)']['POST'] = 'settings/portfolio/update/$1';
+$route['settings/portfolio/delete/(:num)']['POST'] = 'settings/portfolio/destroy/$1';
+$route['settings/portfolio/list']['GET'] = 'settings/portfolio/fetch';
+
 
 //Proposal
 $route['jobs/proposal/(:num)']['get'] = 'jobs/ViewJob/proposal/$1';
@@ -224,7 +231,7 @@ $route['settings/public']['get'] = 'settings/PublicProfile/index';
 $route['settings/company']['get'] = 'settings/CompanyProfile/index';
 $route['settings/password']['get'] = 'settings/Password/index';
 $route['settings/notification']['get'] = 'settings/Notification/index';
-$route['settings/portfolio']['get'] = 'settings/Portfolio/index';
+//$route['settings/portfolio']['get'] = 'settings/Portfolio/index';
 $route['settings/training']['get'] = 'settings/Training/index';
 
 // Profile Settings Functions
