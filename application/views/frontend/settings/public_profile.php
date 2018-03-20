@@ -1,3 +1,10 @@
+<style>
+
+.select2-container{
+    width: 100% !important;
+}
+
+</style>
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
@@ -8,7 +15,7 @@
                         <?php $this->load->view('frontend/partials/settings_nav') ?>
 
         </div>
-        
+
             <!-- Public Profile -->
 
                     <div class="col-sm-9  bg-light-part">
@@ -44,9 +51,9 @@
                                             <?php
                                                 $keys = $public_details->keywords;
                                                 $array = explode(',',$keys);
-                                                foreach ($array as $keywords){ 
+                                                foreach ($array as $keywords){
                                             ?>
-                                                <span class="public-keywords badge badge-secondary badge-pill mx-1 px-3 py-2 mb-1"><?= $keywords; ?></span>                                          
+                                                <span class="public-keywords badge badge-secondary badge-pill mx-1 px-3 py-2 mb-1"><?= $keywords; ?></span>
                                             <?php
                                                 }
                                             ?>
@@ -151,22 +158,15 @@
                                             <button class="btn btn-success" data-toggle="edit-public-expertise" data-target=".form-control-settings-expertise" >Edit</button>
                                         </div>
                                         <div class="clearfix"></div>
-                                        <ul>
-                                            <li>
-                                                <h5 class="font-weight-bold">Expertise 1</h5>
-                                                <h6 class="text-muted">Expertise Description</h6>
-                                            </li>
-                                            <li>
-                                                <h5 class="font-weight-bold">Expertise 1</h5>
-                                                <h6 class="text-muted">Expertise Description</h6>
-                                            </li>
-                                            <li>
-                                                <h5 class="font-weight-bold">Expertise 1</h5>
-                                                <h6 class="text-muted">Expertise Description</h6>
-                                            </li>
+                                        <ul id="skills-container">
+                                            <?php foreach($skills as $skill): ?>
+                                                <li>
+                                                    <h5 class="font-weight-bold"><?= $skill->title ?></h5>
+                                                </li>
+                                            <?php endforeach; ?>
                                         </ul>
                                         <div class="text-center py-2">
-                                            <button class="btn btn-circle btn-success btn-lg form-control-settings-expertise d-none"><i class="fa fa-plus"></i></button>
+                                            <button class="btn btn-circle btn-success btn-lg form-control-settings-expertise d-none" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i></button>
                                         </div>
                                     </li>
                                     <li class="list-group-item">
@@ -192,7 +192,7 @@
                                             </li>
                                         </ul>
                                         <div class="text-center py-2">
-                                            <button class="btn btn-circle btn-success btn-lg form-control-settings-specialization d-none"><i class="fa fa-plus"></i></button>
+                                            <button class="btn btn-circle btn-success btn-lg form-control-settings-specialization d-none" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i></button>
                                         </div>
                                     </li>
                                 </ul>
@@ -202,6 +202,29 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" style="display: none; padding-right: 19px;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel1">New message</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <?= form_open('settings/account/skills/create', array('id'=>'form-skills-create')); ?>
+            <div class="modal-body">
+                    <div class="form-group">
+                        <label for="recipient-name" class="control-label">Recipient:</label>
+                        <select id="e6" class="" name="skills">
+                        </select>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+            <?= form_close(); ?>
         </div>
     </div>
 </div>
