@@ -1,4 +1,4 @@
-	<?php
+<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*
@@ -114,6 +114,13 @@ $route['admin/settings/package-settings/default-package/(:num)']['POST'] = 'adm/
 $route['admin/settings/package-settings/update/(:num)']['POST'] = 'adm/package/update/$1';
 $route['admin/settings/package-settings/delete/(:num)']['POST'] = 'adm/package/destroy/$1';
 
+//Settings/Material List
+$route['admin/settings/materials-list']['GET'] = 'adm/materials';
+$route['admin/settings/materials-list/list']['GET'] = 'adm/materials/fetch';
+$route['admin/settings/materials-list/create']['POST'] = 'adm/materials/store';
+$route['admin/settings/materials-list/default-package/(:num)']['POST'] = 'adm/materials/defaultpackage/$1';
+$route['admin/settings/materials-list/update/(:num)']['POST'] = 'adm/materials/update/$1';
+$route['admin/settings/materials-list/delete/(:num)']['POST'] = 'adm/materials/destroy/$1';
 
 //api
 $route['admin/image/assets/list']['GET'] = 'adm/file/getImageAsssets';
@@ -167,6 +174,9 @@ $route['jobs/update/(:num)']['POST'] = 'jobs/UpdateJob/updateJob/$1';
 $route['jobs/get']['GET'] = 'jobs/BrowseJobs/getAllJobs';
 $route['jobs/list']['GET'] = 'jobs/BrowseJobs/getAllJobsPagination';
 
+// Jobs invite
+$route['jobs/invite/(:num)']['POST'] = 'jobs/InvitationJobs/inviteMember/$1';
+$route['jobs/invite']['GET'] = 'jobs/InvitationJobs/getAllInvites/$1';
 //Portfolio
 $route['portfolio/create']['POST'] = 'portfolio/CreatePortfolio/createPort';
 $route['portfolio/(:num)']['GET'] = 'settings/Portfolio/showPortfolio/$1';
@@ -230,7 +240,8 @@ $route['watchlist/delete/(:num)']['POST'] = 'member/Work/removeWishlist/$1';
 
 // Member
 $route['members']['get'] = 'member/Browse/index';
-$route['members/(:any)']['get'] = 'member/ViewProfile/show/$1';
+$route['members/(:num)']['get'] = 'member/ViewProfile/show/$1';
+$route['members/test/(:num)']['get'] = 'member/ViewProfile/test/$1';
 $route['hire']['get'] = 'member/Hire/index';
 $route['work']['get'] = 'member/Work/index';
 $route['work/list']['GET'] = 'member/Work/getAllJobsPagination';

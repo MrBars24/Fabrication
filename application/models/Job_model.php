@@ -249,7 +249,6 @@ class Job_model extends MX_Model{
 
         return $query->result_array();
     }
-
     function getMyJobs(){
         $query = $this->db->select('*')
         ->from('jobs')
@@ -262,7 +261,6 @@ class Job_model extends MX_Model{
         }
         return array();
     }
-
     function getJob($id){
         $user_id = auth()->id;
         $query = $this->db->select("*,IF(expert_watchlist = '$user_id',1,0) as is_watchlist")
@@ -283,6 +281,16 @@ class Job_model extends MX_Model{
                 ->get();
         return $query->row();
     }
+    function getAllJobsInfo($id){
+        $query = $this->db->select('*')
+                 ->from('job_details')
+                 ->where('fabricator_id', $id)
+                 ->get();
+        if($query->num_rows() > 0){
+            return $query->result();
+        }
+        return array();
+    }
     function getSearchJobs($search){
         /*$query = $this->db->select('*');
         ->where(array('title' => $search ));
@@ -294,8 +302,6 @@ class Job_model extends MX_Model{
             return false;
         }*/
     }
-
-
     function getJobsByCategoryId($categoryId) {
         $query = $this->db->select('*')
             ->from('jobs')
@@ -311,5 +317,28 @@ class Job_model extends MX_Model{
         }
         return $query->result_array();
     }
-
+    function getWinJob($id){
+        $query = $this->db->select('jobs.*, bids.*, member.fullname, member.id')
+                 ->from('jobs')
+                 ->join('bids', 'jobs.id = bids.job_id')
+                 ->join('member','member.id = jobs.accepted_bid')
+                 ->where('bids.expert_id', $id)
+                 ->where('bids.status', 1)
+                 ->get();
+        if($query->num_rows() > 0){
+            return $query->result();
+        }
+        return array();
+    }
+    function getJobAvailable($id){
+        $query = $this->db->select('jobs.title, jobs.id')
+                 ->where('fabricator_id', $id)
+                 ->where('status', "open")
+                 ->where('is_deleted', 0)
+                 ->get('jobs');
+        if($query->num_rows() > 0){
+            return $query->result();
+        }
+        return array();
+    }
 }

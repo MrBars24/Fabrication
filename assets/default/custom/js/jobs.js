@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    init();
+    //init();
     var table = $(".pagination-jobs-container").initTable({
         url: '/jobs/list',
         pageContainer: ".pagination-jobs-bars",
