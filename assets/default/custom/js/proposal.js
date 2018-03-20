@@ -1,6 +1,99 @@
 $(document).ready(function(){
-
     var id = get_segment(2);
+    var index = null;
+    var url = "/jobs/bid-list/" + id; 
+	var table = $("#bid-container").initTable({
+		url: url,
+        pageContainer:".pagination-bars",
+		render:function(data){
+			var container = ``;
+			if(data.length > 0){
+				data.forEach(function(obj,index){
+                    container += `
+                            <li class="media border-0" data-mybid-id="${index}">
+                                <img class="mr-3 rounded-circle" src="http://themedesigner.in/demo/admin-press/assets/images/users/8.jpg" width="64" alt="Generic placeholder image">
+                                <div class="media-body">
+                                    <div class="row">
+                                        <div class="col-sm-9">
+                                            <h4 class="mt-0 mb-0 font-weight-bold">${obj.fullname}</h4>
+                                            <small class="text-muted time">${moment(obj.created_at).format('MMM D, YYYY')}</small>
+
+                                        </div>
+                                        <div class="col-sm-3 text-right">
+
+                                        <small class="">Bid</small>
+                                            <h4 class="amount">${obj.amount}</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+					`
+					;
+				});
+			}else{
+				container = `<tr id="no-results">
+								<td colspan="5">
+									<h1 class="text-center">NO RESULTS FOUND</h1>
+								</td>
+							</tr>`;
+			}
+
+			return container;
+		}
+	});
+    
+     $(document).on('change','.bidding-filter', function(e){
+        var bidFilter = $('.bidding-filter option:selected').text();
+        e.preventDefault();
+        if(bidFilter == 'Recent'){
+            console.log(1);
+            var url = "/jobs/bid-list/" + id+ "/" + 1; 
+        }else if(bidFilter == 'Lowest First'){
+            console.log(2);
+            var url = "/jobs/bid-list/" + id+ "/" + 2; 
+            
+        }else if(bidFilter == 'Highest First'){
+            console.log(3);
+            var url = "/jobs/bid-list/" + id+ "/" + 3; 
+        }
+         
+        var table = $("#bid-container").initTable({
+		url: url,
+        pageContainer:".pagination-bars",
+		render:function(data){
+			var container = ``;
+			if(data.length > 0){
+				data.forEach(function(obj,index){
+                    obj.created_at = new Date(obj.created_at);
+                    obj.created_at = moment(obj.created_at).format('MM, DD YYYY - hh:mm A');
+                    container += `
+                            <li class="media border-0" data-mybid-id="${index}">
+                                <img class="mr-3 rounded-circle" src="http://themedesigner.in/demo/admin-press/assets/images/users/8.jpg" width="64" alt="Generic placeholder image">
+                                <div class="media-body">
+                                    <div class="row">
+                                        <div class="col-sm-9">
+                                            <h4 class="mt-0 mb-0 font-weight-bold">${obj.fullname}</h4>
+                                            <small class="text-muted time">${obj.created_at}</small>
+
+                                        </div>
+                                        <div class="col-sm-3 text-right">
+
+                                        <small class="">Bid</small>
+                                            <h4 class="amount">${obj.amount}</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+					`
+					;
+				});
+			}
+			return container;
+		}
+	});
+});
+    
+    
     $(document).on('submit', '#form-proposal-submit', function(e){
         e.preventDefault();
         var url = $(this).attr('action');
@@ -130,5 +223,9 @@ $(document).ready(function(){
             }
         });
     });
+    
+   
+
+
 
 });

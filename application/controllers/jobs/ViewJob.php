@@ -7,6 +7,7 @@ class ViewJob extends MX_Controller {
 		parent::__construct();
 		$this->template->set_template("default");
 		$this->load->model('job_model');
+        $this->load->model('proposal_model');
 	}
 
 	public function show($id){
@@ -14,7 +15,10 @@ class ViewJob extends MX_Controller {
 			"/assets/default/css/custom/sections.css"
 		);
 		$js = array(
-			"/assets/default/custom/js/proposal.js"
+            "/assets/admin/custom/js/bars-datatable.js",
+            "/assets/plugins/moment/moment.js",
+			"/assets/default/custom/js/proposal.js",
+            
 		);
 		$this->template->append_js($js);
 		$this->template->append_css($css);
@@ -72,7 +76,23 @@ class ViewJob extends MX_Controller {
 
         $this->template->load('frontend/jobs/proposal');
 	}
-
-
+    
+    public function bidderfetch($id){
+    
+        header("Content-Type:application/json");
+        $getJob = $this->job_model->getJob($id);
+		$bidderFetch = $this->proposal_model->getBidsById($getJob->id);
+            
+        echo json_encode($bidderFetch);
+	}
+    
+    public function bidderfetchsort($id, $id2){
+    
+        header("Content-Type:application/json");
+        $getJob = $this->job_model->getJob($id);
+		$bidderFetch = $this->proposal_model->getBidsByIdsort($getJob->id, $id2);
+            
+        echo json_encode($bidderFetch);
+	}
 
 }

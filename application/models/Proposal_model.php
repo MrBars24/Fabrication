@@ -48,7 +48,65 @@ class Proposal_model extends MX_Model{
         }
         return $query->result();
     }
+    
+    public function getBidsById($job_id){
+        $limit = 5;
+         $offset = 0;
+         $search = "";
+         if(isset(auth()->id)){
+         $search_sql = array(
+                 'bids.is_deleted' => 0,
+                 'bids.job_id' => $job_id
+             );
+             
+         $q = $this->getIndexDataCount("member",$limit,$offset,'bids.created_at','DESC', $search_sql, '', 'bids', "bids.expert_id = member.id", '', 'bids.*, member.fullname');
+    
+         return $q;
+    }
+}
+    public function getBidsByIdsort($job_id, $id2){
+        $limit = 5;
+         $offset = 0;
+         $search = "";
+        
+         if(isset($id2) AND $id2 == '1'){
+             $orderby = 'bids.created_at';
+             $sort = 'DESC';
+         }
+        if(isset($id2) AND $id2 == '2'){
+             $orderby = 'bids.amount';
+             $sort = 'ASC';
+         }
+        if(isset($id2) AND $id2 == '3'){
+             $orderby = 'bids.amount';
+             $sort = 'DESC';
+         }
+        
+         if(isset(auth()->id)){
+         $search_sql = array(
+                 'bids.is_deleted' => 0,
+                 'bids.job_id' => $job_id
+             );
+         }
+         $q = $this->getIndexDataCount("member",$limit,$offset,$orderby,$sort, $search_sql, '', 'bids', "bids.expert_id = member.id", '', 'bids.*, member.fullname');
+    
+         return $q;
+    }
+        
 
+     function getBidAll($id){
+         $limit = 5;
+         $offset = 0;
+         $search = "";
+         if(isset(auth()->id)){
+             $search_sql = array(
+                 'expert_id' => auth()->id
+             );
+         }
+         $q = $this->getIndexDataCount("bids",$limit,$offset,'bids.created_at','DESC', $search_sql, '', 'jobs', "bids.job_id =  $id");
+         return $q;
+     }
+    
     public function acceptBid($id,$data){
         $expert_id = $this->db->select('expert_id, job_id')->where('id', $id)->get('bids')->row();
         $this->db->where('id', $id)->update('bids', $data);

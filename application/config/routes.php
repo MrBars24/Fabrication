@@ -201,6 +201,10 @@ $route['jobs/previous-project/(:num)']['get'] = 'jobs/ViewPreviousProject/show/$
 //Job Banks
 $route['jobs']['get'] = 'jobs/BrowseJobs/index';
 $route['jobs/(:num)']['GET'] = 'jobs/ViewJob/show/$1';
+
+$route['jobs/bid-list/(:num)'] = 'jobs/ViewJob/bidderfetch/$1';
+$route['jobs/bid-list/(:num)/(:num)'] = 'jobs/ViewJob/bidderfetchsort/$1/$2';
+
 $route['jobs/latest']['get'] = 'jobs/LatestJobs/index';
 $route['jobs/invitations']['get'] = 'jobs/InvitationJobs/index';
 $route['jobs/my-jobs']['get'] = 'jobs/MyJob/index';

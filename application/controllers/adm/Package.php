@@ -33,7 +33,11 @@ class Package extends Admin {
 	public function fetch(){
 		header("Content-Type:application/json");
 		$packageSettings = $this->package_model->all();
-		echo json_encode($packageSettings);
+        if($packageSettings){
+            echo json_encode($packageSettings);
+            exit;
+        }
+        
 	}
 
 	public function defaultpackage($id){
