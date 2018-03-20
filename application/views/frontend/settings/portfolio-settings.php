@@ -55,7 +55,7 @@
                     <h5 class="font-weight-bold">Project Category</h5>
                     <select class="form-control" name="category">
                     <?php foreach ($industries as $i): ?>
-                        <option value=""><?= $i['display_name']; ?></option>
+                        <option value="<?= $i['display_name']; ?>"><?= $i['display_name']; ?></option>
                     <?php endforeach; ?>
                     </select>
                 </div>

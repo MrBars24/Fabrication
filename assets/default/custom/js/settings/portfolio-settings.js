@@ -84,16 +84,16 @@ $(document).ready(function(){
                             <div class="el-overlay scrl-dwn">
                                     <ul class="el-info">
                                         <li>
-                                            <button class="btn border-white btn-outline image-popup-vertical-fit" id="portfolio-link" data-toggle="modal" data-target-id = "${d.id}" data-target=".modal-view-portfolio">
+                                            <button class="btn border-white btn-outline image-popup-vertical-fit view">
                                                 <i class="fa fa-eye"></i>
                                             </button>
                                         <li>
-                                            <button class="btn border-white btn-outline image-popup-vertical-fit" id="portfolio-edit" data-toggle="modal" data-target-id = "<?= $v['id'] ?>" data-target=".modal-edit-portfolio">
+                                            <button class="btn border-white btn-outline image-popup-vertical-fit edit">
                                                 <i class="icon-pencil"></i>
                                             </button>
                                         </li>
                                         <li>
-                                            <button class="btn border-white btn-outline image-popup-vertical-fit" id="portfolio-delete" data-toggle="modal" data-target-id = "<?= $v['id'] ?>" data-target=".modal-delete-portfolio">
+                                            <button class="btn border-white btn-outline image-popup-vertical-fit delete">
                                                 <i class="icon-trash"></i>
                                             </button>
                                         </li>
