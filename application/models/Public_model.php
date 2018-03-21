@@ -48,6 +48,7 @@ class Public_model extends MX_Model{
     function getSkills(){
         $query = $this->db->select('id, title as text')
                  ->from('skills')
+                 ->where('is_deleted', 0)
                  ->like('title', $_GET['q'],'AFTER')
                  ->get();
         if($query){
@@ -56,9 +57,11 @@ class Public_model extends MX_Model{
         return [];
     }
     function getMySkills($id){
-        $query = $this->db->select('skills_member.*, skills.*')
+        $query = $this->db->select('skills_member.id as smid, skills.id as sid, skills_member.user_id, skills_member.skills_id,skills.title, skills_member.created_at, skills_member.is_deleted')
                  ->from('skills_member')
-                 ->where('user_id', $id)
+                 ->where('skills_member.user_id', $id)
+                 ->where('skills_member.is_deleted', 0)
+                 ->order_by('skills_member.created_at', 'DESC')
                  ->join('skills', 'skills_member.skills_id = skills.id')
                  ->get();
         if($query->num_rows() > 0){
@@ -83,10 +86,16 @@ class Public_model extends MX_Model{
         return $this->db->insert_id();
     }
     function createSkillsInMember($data , $id = ""){
-    
+
         $query = $this->db->where('id', $id)
                 ->insert('skills_member',$data);
 
+        return $query;
+    }
+    function deleteSkills($id){
+        $query = $this->db->where('id', $id)
+                 ->set('is_deleted', 1)
+                 ->update('skills_member');
         return $query;
     }
 }
