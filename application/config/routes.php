@@ -246,6 +246,7 @@ $route['settings/account/public-industries/(:num)']['POST'] = "settings/PublicPr
 
 $route['settings/account/skills/create']['POST'] = "settings/PublicProfile/createSkills";
 $route['settings/account/get-skills']['GET'] = "settings/PublicProfile/getSkills";
+$route['settings/skills/delete/(:num)']['GET'] = "settings/PublicProfile/deleteSkills/$1";
 
 $route['settings/account/location']['POST'] = "settings/Account/updateLocation";
 $route['settings/account/billing']['POST'] = "settings/Account/updateBilling";
@@ -257,7 +258,6 @@ $route['watchlist/delete/(:num)']['POST'] = 'member/Work/removeWishlist/$1';
 // Member
 $route['members']['get'] = 'member/Browse/index';
 $route['members/(:num)']['get'] = 'member/ViewProfile/show/$1';
-$route['members/test/(:num)']['get'] = 'member/ViewProfile/test/$1';
 $route['hire']['get'] = 'member/Hire/index';
 $route['work']['get'] = 'member/Work/index';
 $route['work/list']['GET'] = 'member/Work/getAllJobsPagination';

@@ -68,9 +68,17 @@ $(document).ready(function(){
             success: function(result){
                 toastr.success('Skills Successfully Added', 'Success!');
                 $('#exampleModal').modal('hide');
-                $('#skills-container').append(`
-                    <li>
+                $('#skills-container').prepend(`
+                    <li data-id="${result.id}">
                         <h5 class="font-weight-bold">${result.data}</h5>
+                    </li>
+                `);
+                $('#skills-container-edit').prepend(`
+                    <li class="d-flex justify-content-between align-items-center mb-3" data-id="${result.id}">
+                        <h5 class="font-weight-bold">${result.data}</h5>
+                        <button type="button" class="btn btn-danger btn-delete-skill"  aria-haspopup="true" aria-expanded="false">
+                            <i class="ti-trash"></i>
+                        </button>
                     </li>
                 `);
             },
@@ -79,7 +87,26 @@ $(document).ready(function(){
             }
         });
     });
+    $(document).on("click", ".btn-delete-skill", function(){
+        var id = $(this).parent().data('id');
+        $.ajax({
+            url: "/settings/skills/delete/"+id,
+            dataType: 'json',
+            type: 'get',
+            success: function(data){
+                if(data.success){
+                    toastr.warning('Skills Successfully remove', 'Warning!');
+                    $('li[data-id="'+id+'"]').remove();
+                }else{
+                    alert('Failed');
+                }
 
+            },
+            error: function(){
+
+            }
+        });
+    });
     $(document).on("click", ".cancel-edit-expertise", function(){
         $(this).html('Edit');
         $(this).removeClass('cancel-edit-expertise');

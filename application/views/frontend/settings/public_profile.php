@@ -147,20 +147,22 @@
                             <!-- Expertise -->
                             <div class="card">
                                 <div class="p-4">
-                                    <h3 class="card-title font-weight-bold mb-0 float-left">Expertise and Specialization</h3>
+                                    <h3 class="card-title font-weight-bold mb-0 float-left">Skills and Achievements</h3>
                                 </div>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">
                                         <div class="float-left">
-                                            <h4>Expertise</h4>
+                                            <h4>Skills</h4>
                                         </div>
                                         <div class="float-right">
-                                            <button class="btn btn-success" data-toggle="edit-public-expertise" data-target=".form-control-settings-expertise" >Edit</button>
+                                            <button class="btn btn-success form-control-settings-expertise" data-toggle="modal" data-target="#exampleModal">Add Skills</button>
+                                            <button class="btn btn-success form-control-settings-expertise" data-toggle="modal" data-target="#editSkills">Edit Skills</button>
+                                            <!-- <button class="btn btn-success" data-toggle="edit-public-expertise" data-target=".form-control-settings-expertise" >Edit</button> -->
                                         </div>
                                         <div class="clearfix"></div>
                                         <ul id="skills-container">
                                             <?php foreach($skills as $skill): ?>
-                                                <li>
+                                                <li data-id="<?= $skill->smid ?>">
                                                     <h5 class="font-weight-bold"><?= $skill->title ?></h5>
                                                 </li>
                                             <?php endforeach; ?>
@@ -171,10 +173,11 @@
                                     </li>
                                     <li class="list-group-item">
                                         <div class="float-left">
-                                            <h4>Specialization</h4>
+                                            <h4>Achievements</h4>
                                         </div>
                                         <div class="float-right">
                                             <button class="btn btn-success" data-toggle="edit-public-specialization" data-target=".form-control-settings-specialization">Edit</button>
+
                                         </div>
                                         <div class="clearfix"></div>
                                         <ul>
@@ -209,13 +212,13 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="exampleModalLabel1">New message</h4>
+                <h4 class="modal-title" id="exampleModalLabel1">Add Skills</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
             </div>
             <?= form_open('settings/account/skills/create', array('id'=>'form-skills-create')); ?>
             <div class="modal-body">
                     <div class="form-group">
-                        <label for="recipient-name" class="control-label">Recipient:</label>
+                        <label for="skills" class="control-label">Skills:</label>
                         <select id="e6" class="" name="skills">
                         </select>
                     </div>
@@ -225,6 +228,28 @@
                 <button type="submit" class="btn btn-primary">Save</button>
             </div>
             <?= form_close(); ?>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="editSkills" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" style="display: none; padding-right: 19px;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel1">Edit Skills</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <ul id="skills-container-edit">
+                    <?php foreach($skills as $skill): ?>
+                        <li class="d-flex justify-content-between align-items-center mb-3" data-id="<?= $skill->smid ?>">
+                            <h5 class="font-weight-bold"><?= $skill->title ?></h5>
+                            <button type="button" class="btn btn-danger btn-delete-skill" aria-haspopup="true" aria-expanded="false">
+                                <i class="ti-trash"></i>
+                            </button>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
         </div>
     </div>
 </div>

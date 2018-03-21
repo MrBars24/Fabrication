@@ -20,6 +20,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-8 offset-2">
+            <?php if(auth()): ?>
             <?php if(auth()->my_posts >= auth()->max_post): ?>
                 <div class="ribbon-wrapper card">
                     <div class="ribbon ribbon-danger">Upgrade Membership</div>
@@ -27,7 +28,7 @@
                     <a href="" class="btn btn-success  btn-xs col-2 mt-2">Upgrade Now</a>
                 </div>
             <?php endif; ?>
-
+        <?php endif;?>
         	<div class="card">
                 <div class="card-body">
                     <h1 class="text-dark  card-title"><strong>Post a Job</strong></h1>

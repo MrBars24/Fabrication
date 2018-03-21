@@ -36,16 +36,15 @@
                                     <h4 class="card-title m-t-10"><?= @$user->fullname ?></h4>
                                     <h6 class="card-subtitle text-dark font-weight-bold"><?= @$user->username ?></h6>
                                     <ul class="categories list-style-type-none d-block">
-                                        <li class="d-inline-block"><span class="badge badge-secondary badge-pill mx-1 px-3 py-2 mb-1">Expertise 1</span></li>
-                                        <li class="d-inline-block"><span class="badge badge-secondary badge-pill mx-1 px-3 py-2 mb-1">Expertise 2</span></li>
-                                        <li class="d-inline-block"><span class="badge badge-secondary badge-pill mx-1 px-3 py-2 mb-1">Expertise 3</span></li>
-                                        <li class="d-inline-block"><span class="badge badge-secondary badge-pill mx-1 px-3 py-2 mb-1">Expertise 4</span></li>
+                                        <?php foreach($skills as $skill): ?>
+                                            <li class="d-inline-block"><span class="badge badge-secondary badge-pill mx-1 px-3 py-2 mb-1"><?= $skill->title ?></span></li>
+                                        <?php endforeach; ?>
                                     </ul>
                                     <div class="row text-center justify-content-md-center">
                                         <div class="col-sm-6">
                                             <div class="row">
                                                 <div class="col text-center">
-                                                    <h3 class="font-weight-bold text-info  mb-1">17</h3>
+                                                    <h3 class="font-weight-bold text-info  mb-1"><?= (!isset($user->my_winbid)) ? "0" : $user->my_winbid ?></h3>
                                                     <small>PROJECTS WON</small>
                                                 </div>
                                                 <div class="col text-center">
@@ -57,7 +56,7 @@
                                         <div class="col-sm-6">
                                             <div class="row">
                                                 <div class="col text-center">
-                                                    <h3 class="font-weight-bold text-info mb-1">1</h3>
+                                                    <h3 class="font-weight-bold text-info mb-1"><?= (!isset($user->my_posts)) ? "0" : $user->my_posts ?></h3>
                                                     <small>PROJECTS POSTED</small>
                                                 </div>
                                                 <div class="col text-center">

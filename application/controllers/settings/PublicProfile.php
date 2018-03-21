@@ -44,6 +44,7 @@ class PublicProfile extends MX_Controller {
 		$industry = $this->industry_model->getIndustries();
 		$data = $this->public_model->getPublicProf($id);
 		$skills = $this->public_model->getMySkills($id);
+	
 		$this->template->load_sub('skills', $skills);
 		$this->template->load_sub('industries', $industry);
 		$this->template->load_sub('public_details', $data);
@@ -88,7 +89,7 @@ class PublicProfile extends MX_Controller {
 				'skills_id' => $checkSkill->id
 			);
 			$result = $this->public_model->createSkillsInMember($data ,$checkSkill->id);
-			echo json_encode(array('success'=>True, 'data'=>$checkSkill->title));
+			echo json_encode(array('success'=>True, 'data'=>$checkSkill->title, 'id'=>$checkSkill->id));
 			exit;
 		}else{
 			$skill_id = $this->public_model->createSkills($skills);
@@ -97,7 +98,18 @@ class PublicProfile extends MX_Controller {
 				'skills_id' => $skill_id
 			);
 			$result = $this->public_model->createSkillsInMember($data, "");
-			echo json_encode(array('success'=>True, 'data'=>$skills));
+			echo json_encode(array('success'=>True, 'data'=>$skills, 'id'=>$skill_id));
+			exit;
+		}
+
+	}
+	public function deleteSkills($id){
+		$deleteSkills = $this->public_model->deleteSkills($id);
+		if($deleteSkills){
+			echo json_encode(array('success'=>true));
+			exit;
+		}else{
+			echo json_encode(array('success'=>false));
 			exit;
 		}
 
