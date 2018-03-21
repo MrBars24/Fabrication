@@ -212,13 +212,13 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="exampleModalLabel1">New message</h4>
+                <h4 class="modal-title" id="exampleModalLabel1">Add Skills</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
             </div>
             <?= form_open('settings/account/skills/create', array('id'=>'form-skills-create')); ?>
             <div class="modal-body">
                     <div class="form-group">
-                        <label for="recipient-name" class="control-label">Recipient:</label>
+                        <label for="skills" class="control-label">Skills:</label>
                         <select id="e6" class="" name="skills">
                         </select>
                     </div>
@@ -235,7 +235,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="exampleModalLabel1">New message</h4>
+                <h4 class="modal-title" id="exampleModalLabel1">Edit Skills</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
             </div>
             <div class="modal-body">
