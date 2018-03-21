@@ -20,7 +20,7 @@ class Portfolio_model extends MX_Model{
 
         $where = array("is_deleted"=>0);
         //$q = $this->getIndexDataCount("portfolios",$limit,$offset,'created_at','DESC',$where);
-        $q = $this->getIndexDataCount("portpolio_details",$limit,$offset,'created_at','DESC', $where);
+        $q = $this->getIndexDataCount("portfolios",$limit,$offset,'created_at','DESC', $where);
         return $q;
     }
 
