@@ -19,8 +19,8 @@ class Portfolio_model extends MX_Model{
         }
 
         $where = array("is_deleted"=>0);
-        $q = $this->getIndexDataCount("portfolios",$limit,$offset,'created_at','DESC',$where);
-
+        //$q = $this->getIndexDataCount("portfolios",$limit,$offset,'created_at','DESC',$where);
+        $q = $this->getIndexDataCount("portpolio_details",$limit,$offset,'created_at','DESC', $where);
         return $q;
     }
 
@@ -53,6 +53,18 @@ class Portfolio_model extends MX_Model{
         $this->db->set("is_deleted",1);
         $this->db->set("deleted_at",'NOW()',false);
         return $this->db->update("portfolios");
+    }
+    
+    function createAttached($files){
+        for($i=0; $i<count($files['name']); $i++){
+            $data = array(
+                'filename' => $files['name'][$i],
+                'path' => $files[$i]['file'],
+                'user_id' => $_SESSION['user']->id
+            );
+            $query = $this->db->insert('attachments', $data);
+        }
+        return $query;
     }
 
 
