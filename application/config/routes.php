@@ -257,7 +257,7 @@ $route['watchlist/delete/(:num)']['POST'] = 'member/Work/removeWishlist/$1';
 
 // Member
 $route['members']['get'] = 'member/Browse/index';
-$route['members/members/(:num)']['get'] = 'member/ViewProfile/show/$1';
+$route['members/(:num)']['get'] = 'member/ViewProfile/show/$1';
 $route['hire']['get'] = 'member/Hire/index';
 $route['work']['get'] = 'member/Work/index';
 $route['work/list']['GET'] = 'member/Work/getAllJobsPagination';
