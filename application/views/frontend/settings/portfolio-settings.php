@@ -1,3 +1,11 @@
+<style>
+    .image-delete{
+        opacity:1 !important;
+        top:0 !important;
+    }
+    
+</style>
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
@@ -72,6 +80,8 @@
                      <label id="description-error"></label>
                 </div>
                         <h5 class="font-weight-bold">Images</h5>
+                        <div class="row mb-4 image-container-edit el-element-overlay mt-2">
+                        </div>
                         <div id="drop-file" class="dropzone"></div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-success waves-effect text-left">Save Project</button>
@@ -93,26 +103,25 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             <div class="modal-body">
-                <div class="form-group">
-                    <h5 class="font-weight-bold">Portfolio Title</h5>
-                    <label class="view-name"></label>
-                </div>
-                <div class="form-group">
-                    <h5 class="font-weight-bold">Description</h5>
-                    <label class="view-desc"></label>
-                </div>
-                <div class="row mb-4">
-                    <div class="col-sm-6 col-lg-4">
-                        <img src="https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?w=940&h=650&auto=compress&cs=tinysrgb" alt="" class="img-fluid">
+              <div class="row">
+                  <div class="col-sm-6">
+                       <div class="form-group">
+                            <h5 class="font-weight-bold">Description</h5>
+                            <label class="view-desc"></label>
+                        </div>
+                   </div>
+                   <div class="col-sm-6">
+                       <div class="form-group">
+                            <h5 class="font-weight-bold">Category</h5>
+                            <label class="view-category"></label>
+                        </div>
+                   </div>
+              </div>
+               <div class="form-group">
+                    <h5 class="font-weight-bold">Images</h5>
+                    <div class="row mb-4 image-container-view">
                     </div>
-                    <div class="col-sm-6 col-lg-4">
-                        <img src="https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?w=940&h=650&auto=compress&cs=tinysrgb" alt="" class="img-fluid">
-                    </div>
-                    <div class="col-sm-6 col-lg-4">
-                        <img src="https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?w=940&h=650&auto=compress&cs=tinysrgb" alt="" class="img-fluid">
-                    </div>
                 </div>
-
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger waves-effect text-left" data-dismiss="modal">Close</button>
             </div>

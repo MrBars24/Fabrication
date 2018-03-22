@@ -1,8 +1,9 @@
 Dropzone.autoDiscover = false;
 $(document).ready(function(){
-    
+    var imageDelete = [];
+        
         var myDropzone = new Dropzone("#drop-file", {
-        url: "/settings/portfolio/create",
+        url: $('#form-portfolio-create').attr('action'),
         autoProcessQueue: false,
         maxFiles: 100,
         parallelUploads: 100,
@@ -12,11 +13,20 @@ $(document).ready(function(){
         data: $("#form-portfolio-create").serializeArray(),
         //previewsContainer: '#my-awesome-dropzone',
         init:function(){
-
+            console.log($('#form-portfolio-create').attr('action'));
             var myDropzone = this;
+            
+            
             $(document).on("submit", "#form-portfolio-create", function(e){
                 var serial = $('#form-portfolio-create').serializeArray();
-		          var action = "/settings/portfolio/create";
+                //if(imageDelete.length > 0){
+                    serial.push({
+                    name : 'attachments',
+                    value : imageDelete
+                });
+                    console.log(imageDelete);
+                //}
+                console.log(myDropzone);
                 e.preventDefault();
                 e.stopPropagation();
                 if (myDropzone.getQueuedFiles().length > 0) {
@@ -52,7 +62,7 @@ $(document).ready(function(){
                 <div class="col-sm-4" id="portfolio-id">
                     <div class="el-card-item">
                         <div class="el-card-avatar el-overlay-1 mb-1">
-                                <img src="http://themedesigner.in/demo/admin-press/assets/images/big/img3.jpg" alt="user" class="img-fluid rounded">
+                                <img src="${d.attachments[0].path}" alt="user" class="img-fluid rounded">
                             <div class="el-overlay scrl-dwn">
                                     <ul class="el-info">
                                         <li>
@@ -83,9 +93,11 @@ $(document).ready(function(){
 					if(that.attr('data-action') == "update"){
                         data.index = index;
 						table.dataReplace(data);
+                        myDropzone.removeAllFiles(true);
                         toastr.success('Portfolio updated', 'Success');
 					}else{
 						table.dataPrepend(data);
+                        myDropzone.removeAllFiles(true);
                         toastr.success('Portfolio added', 'Success');
 					}
 
@@ -118,6 +130,8 @@ $(document).ready(function(){
                 formData.append('title', $("input[name=title]").val());
                 formData.append('description', $("textarea[name=description]").val());
                 formData.append('category', $("select[name=category] option:selected").val());
+                formData.append('attachments', imageDelete);
+
             });
         }
     });
@@ -130,11 +144,12 @@ $(document).ready(function(){
 			var container = ``;
 			if(data.length > 0){
 				data.forEach(function(obj,index){
-				container += `
+                    var path = (obj.attachments[0] == undefined) ? "/attached/1521612068Desert.jpg" : obj.attachments[0].path;
+                    container += `
                 <div class="col-sm-4" id="portfolio-id">
                     <div class="el-card-item">
                         <div class="el-card-avatar el-overlay-1 mb-1">
-                                <img src="http://themedesigner.in/demo/admin-press/assets/images/big/img3.jpg" alt="user" class="img-fluid rounded">
+                                <img src="`+ path +`" alt="user" class="img-fluid rounded">
                             <div class="el-overlay scrl-dwn">
                                     <ul class="el-info">
                                         <li>
@@ -177,85 +192,14 @@ $(document).ready(function(){
 		}
 	});
 
-
-/*		$(document).on('submit','#form-portfolio-create',function(e){
-		e.preventDefault();
-		var serial = $('#form-portfolio-create').serializeArray();
-		var action = "/settings/portfolio/create";
-		var that = $(this);
-		if($(this).attr('data-action') == "update"){
-			action = $(this).attr('action');
-		}
-
-		$.ajax({
-			url:action,
-			type:'POST',
-			data : serial,
-			success:function(res){
-				if(res.success){
-					var d = res.data;
-
-					$('#no-results').remove('tr');
-					var data = {
-						data:d,
-						template:`
-                <div class="col-sm-4" id="portfolio-id">
-                    <div class="el-card-item">
-                        <div class="el-card-avatar el-overlay-1 mb-1">
-                                <img src="http://themedesigner.in/demo/admin-press/assets/images/big/img3.jpg" alt="user" class="img-fluid rounded">
-                            <div class="el-overlay scrl-dwn">
-                                    <ul class="el-info">
-                                        <li>
-                                            <button class="btn border-white btn-outline image-popup-vertical-fit view">
-                                                <i class="fa fa-eye"></i>
-                                            </button>
-                                        <li>
-                                            <button class="btn border-white btn-outline image-popup-vertical-fit edit">
-                                                <i class="icon-pencil"></i>
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button class="btn border-white btn-outline image-popup-vertical-fit delete">
-                                                <i class="icon-trash"></i>
-                                            </button>
-                                        </li>
-                                    </ul>
-                                </div>
-                        </div>
-                        <div class="el-card-content text-center">
-                            <h4 class="box-title" id="portfolio-title">${d.project_name}</h4>
-                        </div>
-                    </div>
-                </div>
-						`
-					}
-
-					if(that.attr('data-action') == "update"){
-						data.index = index;
-						table.dataReplace(data);
-                        toastr.success('Portfolio updated', 'Success');
-					}else{
-						table.dataPrepend(data);
-                        toastr.success('Portfolio added', 'Success');
-					}
-
-					index = null;
-					$('.create-modal').modal('toggle');
-				}else{
-					//$('.error-name').text(res.errors.training_name);
-					//$('.error-desc').text(res.errors.description);
-					//$('.error-start').text(res.errors.date_start);
-					//$('.error-end').text(res.errors.date_end);
-				}
-			}
-		});
-	});*/
 	$(document).on('click','.add',function(e,file){
 		$("input[name='title']").val('');
 		$("textarea[name='description']").val('');
         $("select[name= 'category'] option:selected");
         $(".create-modal").find('form').attr('data-action','');
 		$(".modal-title").text('Add Project');
+        $('.image-container-edit').html('');
+        myDropzone.removeAllFiles(true);
 	});
 
 	$(document).on('click','.edit',function(e){
@@ -288,6 +232,17 @@ $(document).ready(function(){
 			}
 		})
 	});
+    
+    $(document).on('click','.delete-image',function(e){
+        $(this).parents('#portfolio-id').find('img').toggleClass('img-delete');
+        index = $(this).parents('#portfolio-id').index();
+        $('.image-container-edit').dataRemove(index);
+
+        var imageFetch =  $(this).parents('#portfolio-id').find('.img-delete').attr('data-id');
+        
+        imageDelete.push(imageFetch);
+        console.log(imageDelete);
+    });
 
 
 	function loadModal(data){
@@ -295,24 +250,67 @@ $(document).ready(function(){
 		$(".create-modal").find('form').attr('data-action','update');
 		$(".create-modal").find('form').attr('action','/settings/portfolio/update/' + data.id);
 		$(".modal-title").text('Update ' + data.project_name);
-
+        action = '/settings/portfolio/update/' + data.id;
 		$("input[name='title']").val(data.project_name);
 		$("textarea[name='description']").val(data.description);
-        var categoryName = $("select[name= 'category'] option").html();
-        /*if (categoryName == data.display_name){
-            console.log(data.display_name);
-            $("select[name= 'category'] option:selected");
-        }*/
-            
-	}
+        $("select[name='category']").val(data.category);
+        
+        myDropzone.options.url = '/settings/portfolio/update/' + data.id;
+        myDropzone.removeAllFiles(true);
+        
+        var imageCount = data.attachments;
+			var container = ``;
+			if(imageCount != null){
+				imageCount.forEach(function(obj,index){
+				container += `
+                <div class="col-sm-4" id="portfolio-id">
+                    <div class="el-card-item">
+                        <div class="el-card-avatar el-overlay-1 mb-1">
+                                <img src="${obj.path}" data-id="${obj.imgid}" alt="user" class="img-fluid rounded">
+                            <div class="el-overlay scrl-dwn">
+                                    <ul class="el-info">
+                                        <li>
+                                            <a class="btn border-white btn-outline image-popup-vertical-fit delete-image">
+                                                <i class="icon-trash"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+					`
+					;
+				});
+			}else{
+				container = `No Image`;
+			}
+        $('.image-container-edit').html(container);
+    }
     
     function viewModal(data){
 		$(".view-modal").modal('show');
 		$(".view-modal").find('form').attr('data-action','update');
-		$(".modal-title").text(data.project_name);
-        
+        $(".modal-title").text(data.project_name);
+
 		$("label.view-name").text(data.project_name);
 		$("label.view-desc").text(data.description);
+        $("label.view-category").text(data.display_name);
+        var imageCount = data.attachments;
+			var container = ``;
+			if(imageCount != null){
+				imageCount.forEach(function(obj,index){
+				container += `
+                <div class="col-sm-6 col-lg-4 image">
+                    <img src="${obj.path}" alt="" class="img-fluid my-3">
+                </div>
+					`
+					;
+				});
+			}else{
+				container = `No Image`;
+			}
+        $('.image-container-view').html(container);
 	}
 });
     
