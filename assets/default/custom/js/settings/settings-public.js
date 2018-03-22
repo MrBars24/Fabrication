@@ -66,6 +66,12 @@ $(document).ready(function(){
             type: 'post',
             dataType: 'json',
             success: function(result){
+                if (result.success == false){
+                    $('.error-message').text(`${result.message}`);
+                    $('#exampleModal').modal('hide');
+                    $('#select2-e6-container').text('');
+                }else{
+                console.log(result);
                 toastr.success('Skills Successfully Added', 'Success!');
                 $('#exampleModal').modal('hide');
                 $('#skills-container').prepend(`
@@ -81,6 +87,8 @@ $(document).ready(function(){
                         </button>
                     </li>
                 `);
+                $('.error-message').text(``);
+                }
             },
             error: function(){
 

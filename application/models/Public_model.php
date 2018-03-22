@@ -46,11 +46,8 @@ class Public_model extends MX_Model{
     }
 
     function getSkills(){
-        $query = $this->db->select('id, title as text')
-                 ->from('skills')
-                 ->where('is_deleted', 0)
-                 ->like('title', $_GET['q'],'AFTER')
-                 ->get();
+        $id = auth()->id;
+        $query = $this->db->query("SELECT * FROM skills WHERE id NOT IN (SELECT skills_id FROM skills_member WHERE user_id = $id AND is_deleted = 0)");
         if($query){
             return $query->result();
         }
@@ -81,16 +78,22 @@ class Public_model extends MX_Model{
         }
     }
     function createSkills($skills){
-        $data = array('title'=>$skills);
-        $query = $this->db->insert('skills',$data);
-        return $this->db->insert_id();
+            $data = array('title'=>$skills);
+            $query = $this->db->insert('skills',$data);
+            if(!$this->db->insert_id()){
+                $error = $this->db->error();
+                $error['success'] = FALSE;
+                echo json_encode($error);
+                exit;
+            }
+            return $this->db->insert_id();
     }
     function createSkillsInMember($data , $id = ""){
 
         $query = $this->db->where('id', $id)
                 ->insert('skills_member',$data);
 
-        return $query;
+        return $this->db->insert_id();
     }
     function deleteSkills($id){
         $query = $this->db->where('id', $id)

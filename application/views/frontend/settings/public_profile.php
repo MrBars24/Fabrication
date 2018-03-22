@@ -148,7 +148,9 @@
                             <div class="card">
                                 <div class="p-4">
                                     <h3 class="card-title font-weight-bold mb-0 float-left">Skills and Achievements</h3>
+
                                 </div>
+                                <p><small class="p-4 error-message text-danger"></small></p>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">
                                         <div class="float-left">
