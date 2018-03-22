@@ -1,4 +1,5 @@
 <!-- Modal -->
+
 <div class="modal fade modal-invite-to-job" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

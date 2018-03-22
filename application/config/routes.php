@@ -189,7 +189,6 @@ $route['settings/portfolio/update/(:num)']['POST'] = 'settings/portfolio/update/
 $route['settings/portfolio/delete/(:num)']['POST'] = 'settings/portfolio/destroy/$1';
 $route['settings/portfolio/list']['GET'] = 'settings/portfolio/fetch';
 
-
 //Proposal
 $route['jobs/proposal/(:num)']['get'] = 'jobs/ViewJob/proposal/$1';
 $route['jobs/submit/proposal']['post'] = 'jobs/Proposal/submit';
@@ -258,6 +257,8 @@ $route['watchlist/delete/(:num)']['POST'] = 'member/Work/removeWishlist/$1';
 // Member
 $route['members']['get'] = 'member/Browse/index';
 $route['members/(:num)']['get'] = 'member/ViewProfile/show/$1';
+$route['members/expert/(:num)']['get'] = 'member/ViewProfile/expert/$1';
+$route['members/fabricator/(:num)']['get'] = 'member/ViewProfile/fabricator/$1';
 $route['hire']['get'] = 'member/Hire/index';
 $route['work']['get'] = 'member/Work/index';
 $route['work/list']['GET'] = 'member/Work/getAllJobsPagination';
@@ -268,6 +269,8 @@ $route['search/(:any)']['get'] = 'member/SearchResult/search/$1';
 // Notifications
 $route['notifications']['get'] = 'notifications/Notification/index';
 
+// ratings
+$route['reviews']['post'] = 'member/Overview/submitReviews';
 // Search
 $route['search/member']['get'] = 'member/Search/result';
 $route['search/jobs']['get'] = 'jobs/Search/result';

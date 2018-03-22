@@ -1,7 +1,7 @@
 <div class="row page-titles">
     <div class="col-md-5 align-self-center">
         <!-- <pre>
-            <?php var_dump($winJob) ?>
+            <?php var_dump($user) ?>
         </pre> -->
     </div>
     <div class="col-md-7 align-self-center">
@@ -91,188 +91,26 @@
                         <div class="card">
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs profile-tab" role="tablist">
-                                <li class="nav-item"> <a class="nav-link active show" data-toggle="tab" href="#home" role="tab" aria-selected="true">Job</a> </li>
+                                <li class="nav-item"> <a class="nav-link active show" data-toggle="tab" href="#overview" role="tab" aria-selected="true">Overview</a> </li>
+                                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#job" role="tab" aria-selected="false">Job</a> </li>
                                 <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#hired" role="tab" aria-selected="false">Hired Job</a> </li>
                                 <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile" role="tab" aria-selected="false">Profile</a> </li>
+                                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#portpolio" role="tab" aria-selected="false">Portpolio</a> </li>
                                 <!-- <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#settings" role="tab" aria-selected="false">Settings</a> </li> -->
                             </ul>
                             <!-- Tab panes -->
                             <div class="tab-content">
-                                <!-- First Tab MYJOB panes -->
-                                <div class="tab-pane active show" id="home" role="tabpanel">
-                                    <div class="card-body p-0">
-                                        <ul class="list-group list-group-flush">
-                                            <?php if($myJob): ?>
-                                                <?php foreach($myJob as $job):?>
-                                                    <li class="list-group-item">
-                                                        <h4 class="font-weight-bold mb-0"><a href="<?php echo base_url("jobs/$job->id") ?>"><?= $job->title ?></a></h4>
-                                                        <small class="text-muted"><?= date_new_format($job->created_at) ?></small>
-                                                        <!-- <h6 class="mt-3">Client's Rating:</h6> <?php $this->load->view('frontend/partials/rating_stars_full') ?> -->
-                                                        <blockquote>
-                                                            <?= $job->description ?>
-                                                        </blockquote>
-                                                        <div class="mt-3">
-                                                            <?php if($job->status == 'open'): ?>
-                                                                <small>Status</small>
-                                                                <h6>Open</h6>
-                                                            <?php else: ?>
-                                                                <small>Status </small>
-                                                                <h6><?= $job->status ?></h6>
-                                                            <?php endif; ?>
-                                                                <!-- <?php $this->load->view('frontend/partials/rating_stars_short') ?>
-                                                                <small><span class="text-muted m-l-5">( <a href="#"  class="text-muted">15 Reviews</a> )</span></small> -->
-                                                        </div>
-                                                    </li>
-                                                <?php endforeach; ?>
-                                            <?php else: ?>
-                                                <li class="list-group-item">
-                                                    <h4 class="font-weight-bold text-center mb-0">No Job History</h4>
-                                                </li>
-                                            <?php endif; ?>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!-- Second Tab Hired panes -->
-                                <div class="tab-pane " id="hired" role="tabpanel">
-                                    <div class="card-body p-0">
-                                        <ul class="list-group list-group-flush">
-                                            <?php if($winJob): ?>
-                                                <?php foreach($winJob as $win):?>
-                                                    <li class="list-group-item">
-                                                        <h4 class="font-weight-bold mb-0"><a href="<?php echo base_url("jobs/$win->job_id") ?>"><?= $win->title ?></a></h4>
-                                                        <small class="text-muted"><?= date_new_format($win->accepted_at) ?></small>
-                                                        <!-- <h6 class="mt-3">Client's Rating:</h6> <?php $this->load->view('frontend/partials/rating_stars_full') ?> -->
-                                                        <blockquote>
-                                                            <?= $win->description ?>
-                                                        </blockquote>
-                                                        <div class="d-flex justify-content-between mt-3">
-                                                            <div class="">
-                                                                <small>Hired by</small>
-                                                                <h6><?= $win->fullname ?></h6>
-                                                                    <!-- <?php $this->load->view('frontend/partials/rating_stars_short') ?> -->
-                                                                    <!-- <small><span class="text-muted m-l-5">( <a href="#"  class="text-muted">15 Reviews</a> )</span></small> -->
-                                                            </div>
-                                                            <div class=" mt-3">
-                                                                <!-- <div class="like-comm">
-                                                                    <a href="javascript:void(0)" class="link m-r-10"><i class="fa fa-gavel text-danger"></i> 1 Bids</a>
+                                <!-- Overview panes -->
+                                <?php $this->load->view('frontend/partials/profile_tab_pane/overview'); ?>
+                                <!-- JOB panes -->
+                                <?php $this->load->view('frontend/partials/profile_tab_pane/job_post'); ?>
+                                <!-- Hired panes -->
+                                <?php $this->load->view('frontend/partials/profile_tab_pane/hired_job'); ?>
+                                <!-- Profile panes -->
+                                <?php $this->load->view('frontend/partials/profile_tab_pane/profile'); ?>
+                                <!-- Portpolio panes -->
+                                <?php $this->load->view('frontend/partials/profile_tab_pane/portpolio'); ?>
 
-                                                                    <a href="/jobs/posted/manage/37" class="text-dark m-r-10" data-toggle="tooltip" title="Manage Job"><i class="mdi mdi-settings"></i> Manage</a>
-                                                                    <a href="/jobs/" class="text-dark" data-toggle="tooltip" title="View Job"><i class="mdi mdi-eye-outline"></i> View Job</a>
-                                                                </div> -->
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                <?php endforeach; ?>
-                                            <?php else: ?>
-                                                <li class="list-group-item">
-                                                    <h4 class="font-weight-bold text-center mb-0">No Winning Job</h4>
-                                                </li>
-                                            <?php endif; ?>
-                                        </ul>
-                                    </div>
-                                 </div>
-                                 <!-- <pre>
-                                <?php var_dump($myJob) ?>
-                            </pre> -->
-
-                                <!--second tab-->
-                                <div class="tab-pane" id="profile" role="tabpanel">
-                                    <div class="card-body">
-                                        <h4 class="card-title">Description</h4>
-                                        <p class="mt-2"><?= @$user->service_description ?></p>
-                                        <h4 class="card-title">Fabricating information</h4>
-                                        <ul class="list-group list-group-flush">
-                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                <h6 class="text-muted mb-0">Industry</h6>
-                                                <h4 class="font-weight-bold mb-0">Mining</h4>
-                                            </li>
-                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                <h6 class="text-muted mb-0">Years Operating</h6>
-                                                <h4 class="font-weight-bold mb-0">25</h4>
-                                            </li>
-                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                <h6 class="text-muted mb-0">Ave. Tones / Month</h6>
-                                                <h4 class="font-weight-bold mb-0">75</h4>
-                                            </li>
-                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                <h6 class="text-muted mb-0">Area serviced</h6>
-                                                <h4 class="font-weight-bold mb-0">Local</h4>
-                                            </li>
-                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                <h6 class="text-muted mb-0">NC and DSTV processing</h6>
-                                                <h4 class="font-weight-bold mb-0">Yes</h4>
-                                            </li>
-                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                <h6 class="text-muted mb-0">Tech. query or RFI system</h6>
-                                                <h4 class="font-weight-bold mb-0">Yes</h4>
-                                            </li>
-                                            <li class="list-group-item">
-                                                <div class="d-flex flex-direction-row justify-content-between align-items-center">
-                                                    <div>
-                                                        <h6 class="mb-2">Largest successful project</h6>
-                                                        <h4 class="font-weight-bold mb-0">Abbatoir and processing plant<br><span class="font-weight-light">approx. 75 tonne</span></h4>
-                                                    </div>
-                                                    <div>
-                                                        <span class="font-weight-bold font-size-2em">$7, 000, 000</span>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!-- <div class="tab-pane" id="settings" role="tabpanel">
-                                    <div class="card-body">
-                                        <form class="form-horizontal form-material">
-                                            <div class="form-group">
-                                                <label class="col-md-12">Full Name</label>
-                                                <div class="col-md-12">
-                                                    <input type="text" placeholder="Johnathan Doe" class="form-control form-control-line">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="example-email" class="col-md-12">Email</label>
-                                                <div class="col-md-12">
-                                                    <input type="email" placeholder="johnathan@admin.com" class="form-control form-control-line" name="example-email" id="example-email">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-md-12">Password</label>
-                                                <div class="col-md-12">
-                                                    <input type="password" value="password" class="form-control form-control-line">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-md-12">Phone No</label>
-                                                <div class="col-md-12">
-                                                    <input type="text" placeholder="123 456 7890" class="form-control form-control-line">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-md-12">Message</label>
-                                                <div class="col-md-12">
-                                                    <textarea rows="5" class="form-control form-control-line"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-sm-12">Select Country</label>
-                                                <div class="col-sm-12">
-                                                    <select class="form-control form-control-line">
-                                                        <option>London</option>
-                                                        <option>India</option>
-                                                        <option>Usa</option>
-                                                        <option>Canada</option>
-                                                        <option>Thailand</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-sm-12">
-                                                    <button class="btn btn-success">Update Profile</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div> -->
                             </div>
                         </div>
                     </div>
