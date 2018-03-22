@@ -21,7 +21,7 @@
     <div class="row">
         <div class="col-8 offset-2">
             <?php if(auth()): ?>
-            <?php if(auth()->my_posts >= auth()->max_post): ?>
+            <?php if($summary->my_posts >= $summary->max_post): ?>
                 <div class="ribbon-wrapper card">
                     <div class="ribbon ribbon-danger">Upgrade Membership</div>
                     <p class="ribbon-content  text-center">You've reach the maximum amount of posting a job. </p>
@@ -29,7 +29,7 @@
                 </div>
             <?php endif; ?>
         <?php endif;?>
-        	<div class="card">
+            <div class="card">
                 <div class="card-body">
                     <h1 class="text-dark  card-title"><strong>Post a Job</strong></h1>
                     <p class="card-subtitle">Turpis facilisi vitae. Interdum potenti quam. Morbi porta blandit luctus vestibulum dictumst consequat aliquam eveniet. Vel fusce ac turpis arcu lectus sit nulla dui lacus porttitor dolor. Amet neque qui.</p>
@@ -93,9 +93,9 @@
                                     </div>
                                     <div class="col-md-12 mt-3">
                                         <h4 class="text-dark font-weight-bold">What is your estimated budget?</h4>
-                                    	<div class="row">
-                                    	<div class="col-md-4">
-                                        	<select name="budget-currency" class="selectpicker form-control" data-style="form-control btn-secondary">
+                                        <div class="row">
+                                        <div class="col-md-4">
+                                            <select name="budget-currency" class="selectpicker form-control" data-style="form-control btn-secondary">
                                                 <option  value="USD">USD</option>
                                                 <option  value="NZD">NZD</option>
                                                 <option  value="AUD">AUD</option>

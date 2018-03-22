@@ -341,4 +341,23 @@ class Job_model extends MX_Model{
         }
         return array();
     }
+
+    /**
+    * 
+    * get post and bids summary
+    * 
+    */
+
+    function getSummary(){
+        $q = $this->db->select('max_bid, max_post, my_bids, my_posts')
+            ->from('user_details')
+            ->where("id",auth()->id)
+            ->get();
+
+        if($q->num_rows() > 0){
+            return $q->row();
+        }
+
+        return [];
+    }
 }

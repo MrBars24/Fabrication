@@ -65,7 +65,7 @@ $(document).ready(function () {
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-3">
                                 <img src="https://thelogocompany.net/wp-content/uploads/2016/10/main_dlugos.jpg" alt="" class="img-fluid">
-                                <a href="/jobs/${obj.id}" class="btn btn-success btn-block" target="_blank">View</a>
+                                <a href="/jobs/${obj.id}" class="btn btn-success btn-block">View</a>
                             </div>
                         </div>
 

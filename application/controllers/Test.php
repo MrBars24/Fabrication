@@ -13,10 +13,14 @@ class Test extends MX_Controller {
 	}
 
 	public function pusher(){
-		$options = array(
+		$this->load->library('pusher');
+		$this->pusher->setMessage('message','test');
+		$this->pusher->push('try');
+		/*$options = array(
 		    'cluster' => 'ap1',
 		    'encrypted' => true
 		);
+		
 		$pusher = new Pusher\Pusher(
 		    'ba4265c88567e3fcd1cd',
 		    '26caebdd4b6b34e7e740',
@@ -25,7 +29,7 @@ class Test extends MX_Controller {
 		);
 
 		$data['message'] = 'hello world';
-		$pusher->trigger('my-channel', 'my-event', $data);
+		$pusher->trigger('my-channel', 'my-event', $data);*/
 	}
 
 }

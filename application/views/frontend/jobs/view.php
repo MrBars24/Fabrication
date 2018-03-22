@@ -1,4 +1,23 @@
+<div class="container">
+    <div class="row page-titles">
+        <div class="col-md-5 align-self-center">
 
+        </div>
+        <div class="col-md-7 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <?php if(get_referer_endpoint() == "work"): ?>
+                    <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="/work">Work</a></li>
+                <?php endif; ?>
+                <li class="breadcrumb-item active">View Job</li>
+            </ol>
+        </div>
+        <div class="">
+            <button class="right-side-toggle waves-effect waves-light btn-inverse btn btn-circle btn-sm pull-right m-l-10"><i class="ti-settings text-white"></i></button>
+        </div>
+    </div>
+</div>
 <div class="container job-view">
     <div class="row">
         <div class="col-sm-8">

@@ -31,6 +31,7 @@ class Work extends MX_Controller {
 		$industries = $this->Industry_model->getIndustries();
 		$budget_filters = $this->Industry_model->getBudgetfilters();
 
+		$this->template->load_sub('summary', $this->job_model->getSummary());
 		$this->template->load_sub('industries', $industries);
 		$this->template->load_sub('budget_filters', $budget_filters);
 		$this->template->load_sub('active_bids', $this->proposal_model->activeBidsCount());

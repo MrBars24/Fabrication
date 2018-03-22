@@ -13,7 +13,8 @@ class Proposal extends MX_Controller {
     function submit(){
 		header("Content-Type:application/json");
 
-		if(auth()->my_bids >= auth()->max_bid){
+		$summary = $this->job_model->getSummary();
+		if($summary->my_bids >= $summary->max_bid){
 			echo json_encode(array(
 				'success' => FALSE,
 				'error' => 'package'

@@ -105,12 +105,12 @@
                         </div>
                         <div class="d-flex justify-content-around">
                             <div class="d-flex flex-column text-center mt-3">
-                                <span><span class="icon-2x font-weight-bold"><?=auth()->my_bids?></span>/<?=auth()->max_bid?></span>
+                                <span><span class="icon-2x font-weight-bold"><?=$summary->my_bids?></span>/<?=$summary->max_bid?></span>
                                 <span class="text-muted">bids<br>remaining</span>
                             </div>
 
                             <div class="d-flex flex-column text-center mt-3">
-                                <span><span class="icon-2x font-weight-bold"><?=auth()->my_posts?></span>/<?=auth()->max_post?></span>
+                                <span><span class="icon-2x font-weight-bold"><?=$summary->my_posts?></span>/<?=$summary->max_post?></span>
                                 <span class="text-muted">post<br>remaining</span>
                             </div>
                         </div>

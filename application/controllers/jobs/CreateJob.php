@@ -43,14 +43,17 @@ class CreateJob extends MX_Controller {
 		$this->load->model('Industry_model');
 		$this->load->model('User_model');
 
+
 		$industries = $this->Industry_model->getIndustries();
 		$this->template->load_sub('industries', $industries);
+		$this->template->load_sub('summary', $this->job_model->getSummary());
         $this->template->load('frontend/jobs/create_job');
 	}
 
 	public function createJob(){
 		header("Content-Type:application/json");
-		if(auth()->my_posts >= auth()->max_post){
+		$summary = $this->job_model->getSummary();
+		if($summary->my_posts >= $summary->max_post){
 			echo json_encode(array(
 				'success' => FALSE,
 				'error' => "account_type",
