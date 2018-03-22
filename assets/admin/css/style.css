@@ -3,3 +3,11 @@
 .pointer{
     cursor: pointer;
 }
+
+.card-group>.card{
+	margin-bottom: 30px;
+}
+
+.progress {
+    height: auto;
+}

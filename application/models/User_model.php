@@ -25,6 +25,12 @@ class User_model extends MX_Model{
         return [];
     }
 
+    function setLoginStamp($id){
+        $this->db->where("id",$id);
+        $this->db->set('last_login','NOW()',FALSE);
+        $this->db->update("users");
+    }
+
     function submitFabricator($data){
         if($this->db->insert("fabricators",$data)){
             return $this->db->insert_id();

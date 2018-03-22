@@ -98,6 +98,7 @@ class Home extends MX_Controller {
 						exit;
 					}
 					else{
+						$this->user_model->setLoginStamp($user->id);
 						$this->session->set_userdata(array("user"=>$user, 'dashboard'=>'work'));
 						return json(array(
 							"success" => 200,

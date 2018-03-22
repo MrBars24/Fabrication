@@ -7,11 +7,20 @@ class Admin extends MX_Controller {
 		parent::__construct();
 		$this->template->set_template("admin");
 		$this->load->model("admin/cms_model");
+		$this->load->model("admin/dashboard_model");
 	}
 
 	public function index()
 	{
 		check_user('admin');
+
+		$sum = $this->dashboard_model->getDashboardSummary();
+		$rjobs = $this->dashboard_model->getRecentJobs();
+		$ruser = $this->dashboard_model->getRecentLoggedIn();
+
+		$this->template->load_sub('summary',$sum);
+		$this->template->load_sub('recent_jobs',$rjobs);
+		$this->template->load_sub('recent_logged',$ruser);
 		$this->template->load("frontend/admin/dashboard");
 	}
 
