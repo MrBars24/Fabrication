@@ -11,7 +11,7 @@ $(document).ready(function(){
             var container = ``;
             if(data.length > 0){
                 data.forEach(function(obj,index){
-                    var path = (obj.attachments[0] == undefined) ? "/attached/placeholder-image.png" : obj.attachments[0].path;
+                    var path = (obj.attachments[0] == undefined) ? "/assets/images/placeholder-image.png" : obj.attachments[0].path;
                     container += `
                 <div class="col-sm-4" id="portfolio-id">
                     <div class="el-card-item">
@@ -98,7 +98,7 @@ $(document).ready(function(){
             success:function(res){
             if(res.success){
                 var d = res.data;
-                var path2 = (d.attachments[0] == undefined) ? "/attached/placeholder-image.png" : d.attachments[0].path;
+                var path2 = (d.attachments[0] == undefined) ? "/assets/images/placeholder-image.png" : d.attachments[0].path;
                 var data = {
                         data:d,
                         template:`
@@ -176,7 +176,7 @@ $(document).ready(function(){
                     $('.create-modal').modal('toggle');
 					var d = response.data;
 					$('#no-results').remove('tr');
-                    var path = (d.attachments[0] == undefined) ? "/attached/placeholder-image.png" : d.attachments[0].path;
+                    var path = (d.attachments[0] == undefined) ? "/assets/images/placeholder-image.png" : d.attachments[0].path;
 					var data = {
 						data:d,
 						template:`
