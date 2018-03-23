@@ -137,7 +137,7 @@ $(document).ready(function(){
                         data.index = index;
                         table.dataReplace(data);
                         myDropzone.removeAllFiles(true);
-                        toastr.success('Portfolio update helllloo success', 'Success');
+                        toastr.success('Portfolio updated', 'Success');
 
                     }else{
                         table.dataPrepend(data);
@@ -215,7 +215,7 @@ $(document).ready(function(){
                         data.index = index;
 						table.dataReplace(data);
                         myDropzone.removeAllFiles(true);
-                        toastr.success('Portfolio updatasdasdka;lskded', 'Success');
+                        toastr.success('Portfolio updated', 'Success');
 
 					}else{
 						table.dataPrepend(data);

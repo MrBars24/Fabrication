@@ -49,7 +49,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="myLargeModalLabel">Add Project</h3>
+                <h3 class="modal-title" id="myLargeModalLabel">Add Portfolio</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             <div class="modal-body">
@@ -57,14 +57,14 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <h5 class="font-weight-bold">Project Title</h5>
-                            <input type="text" id="title-input-error" name="title" class="form-control" placeholder="Project Title">
+                            <h5 class="font-weight-bold">Portfolio Title</h5>
+                            <input type="text" id="title-input-error" name="title" class="form-control" placeholder="Portfolio Title">
                             <label id="title-error"></label>
                         </div>
                     </div>
                     <div class="col-sm-6">
                          <div class="form-group">
-                            <h5 class="font-weight-bold">Project Category</h5>
+                            <h5 class="font-weight-bold">Portfolio Category</h5>
                             <select class="form-control category" name="category">
                             <?php foreach ($industries as $i): ?>
                                 <option value="<?= $i['id']; ?>"><?= $i['display_name']; ?></option>
@@ -75,7 +75,7 @@
                 </div>
                
                 <div class="form-group">
-                    <h5 class="font-weight-bold">Project Description</h5>
+                    <h5 class="font-weight-bold">Portfolio Description</h5>
                     <textarea rows="5" id="description-input-area" name="description" class="form-control"></textarea>
                      <label id="description-error"></label>
                 </div>
@@ -84,7 +84,7 @@
                         </div>
                         <div id="drop-file" class="dropzone"></div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-success waves-effect text-left">Save Project</button>
+                <button type="submit" class="btn btn-success waves-effect text-left">Save Portfolio</button>
                 <button type="button" class="btn btn-danger waves-effect text-left" data-dismiss="modal">Cancel</button>
             </div>
         </div>
@@ -99,7 +99,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="myLargeModalLabel">View Training</h3>
+                <h3 class="modal-title" id="myLargeModalLabel">View Portfolio</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             <div class="modal-body">
