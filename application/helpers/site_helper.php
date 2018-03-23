@@ -5,6 +5,12 @@ function get_current_endpoint(){
 	return $url;
 }
 
+function get_referer_endpoint(){
+	$tmp = parse_url($_SERVER['HTTP_REFERER']);
+	$url = substr($tmp['path'],1);
+	return $url;	
+}
+
 function get_nav($user=null){
 	$CI =& get_instance();
 	if(empty($user) || get_user_type()=="admin"){
@@ -30,12 +36,12 @@ function get_redir_logreg(){
 	}
 }
 
-function dateNewFormat($date, $format="F j, Y"){
+function date_new_format($date, $format="F j, Y"){
 	$new_date = date($format, strtotime($date));
 	return $new_date;
 }
 
-function timeNewFormat($date){
+function time_new_format($date){
 	$start_date = new DateTime($date);
 
 	$since_start = $start_date->diff(new DateTime(date("Y-m-d h:i:s")));

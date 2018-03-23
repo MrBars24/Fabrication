@@ -25,6 +25,12 @@ class User_model extends MX_Model{
         return [];
     }
 
+    function setLoginStamp($id){
+        $this->db->where("id",$id);
+        $this->db->set('last_login','NOW()',FALSE);
+        $this->db->update("users");
+    }
+
     function submitFabricator($data){
         if($this->db->insert("fabricators",$data)){
             return $this->db->insert_id();
@@ -91,7 +97,7 @@ class User_model extends MX_Model{
         $username = $this->input->post('username');
         $password = $pwd;
 
-        $this->db->select('id, email, username, user_type, user_id, firstname, lastname');
+        $this->db->select('id, email, username, user_type, user_id, firstname, lastname, max_bid, max_post, my_bids, my_posts');
 
         if(filter_var($username, FILTER_VALIDATE_EMAIL)){
             $this->db->where('email', $username);
@@ -101,7 +107,7 @@ class User_model extends MX_Model{
         }
 
         $this->db->where('password', $password);
-        $query = $this->db->get('users');
+        $query = $this->db->get('user_details');
         if($query->num_rows() > 0){
             $row = $query->row();
             $row->user_details = $this->getMemberInfo($row->user_id);
@@ -133,6 +139,16 @@ class User_model extends MX_Model{
         }
         return array();
     }
+    function getUserDetails($id){
+        $query = $this->db->select('*')
+             ->where('user_id', $id)
+             ->get('user_details');
+        if($query->num_rows() > 0){
+            return $query->row();
+        }
+        return array();
+
+    }
     // function getFabricatorInfo($id){
     //     $this->db->select('*');
     //     $this->db->where('id', $id);
@@ -142,5 +158,17 @@ class User_model extends MX_Model{
     //     }
     //     return array();
     // }
+    function updateUserSession(){
+        $this->db->select('id, email, username, user_type, user_id, firstname, lastname, max_bid, max_post, my_bids, my_posts');
 
+        $this->db->where("id",auth()->id);
+        $query = $this->db->get('user_details');
+
+        if($query->num_rows() > 0){
+            $row = $query->row();
+            $row->user_details = $this->getMemberInfo($row->user_id);
+
+            $_SESSION['user'] = $row;
+        }
+    }
 }

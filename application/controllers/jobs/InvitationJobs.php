@@ -6,6 +6,7 @@ class InvitationJobs extends MX_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->template->set_template("default");
+	    $this->load->model('invite_model');
 	}
 
 	public function index(){
@@ -15,13 +16,38 @@ class InvitationJobs extends MX_Controller {
         );
         $js = array(
             "assets/plugins/select2/js/select2.min.js",
-            "assets/default/custom/js/jobs.js",
+			"assets/admin/custom/js/bars-datatable.js",
+            "assets/default/custom/js/invite.js"
         );
         $this->template->append_css($css);
         $this->template->append_js($js);
         $this->template->load('frontend/jobs/invitation');
 	}
+	public function inviteMember($id){
+        header("Content-Type:application/json");
+        $data = array(
+            'message' => $this->input->post('message'),
+            'job_id' => $this->input->post('job_id'),
+            'user_id' => $id
+        );
+        $result = $this->invite_model->invite($id, $data);
+        if($result){
+            echo json_encode(array(
+                'success' => TRUE
+            ));
+            exit;
+        }else{
+            echo json_encode(array(
+                'success' => FALSE
+            ));
+            exit;
+        }
+    }
 
-
-
+	public function getAllInvites(){
+		header("Content-Type:application/json");
+		//$fetchInvites = $this->invite_model->fetchInvites($id);
+		$fetchInvites = $this->invite_model->fetchInvites();
+		echo json_encode($fetchInvites);
+	}
 }

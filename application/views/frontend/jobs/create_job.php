@@ -1,7 +1,35 @@
+
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+
+    </div>
+    <div class="col-md-7 align-self-center">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <?php if(get_referer_endpoint() == "hire"): ?>
+                <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="/hire">Hire</a></li>
+            <?php endif; ?>
+            <li class="breadcrumb-item active">Post Job</li>
+        </ol>
+    </div>
+    <div class="">
+        <button class="right-side-toggle waves-effect waves-light btn-inverse btn btn-circle btn-sm pull-right m-l-10"><i class="ti-settings text-white"></i></button>
+    </div>
+</div>
 <div class="container-fluid">
     <div class="row">
         <div class="col-8 offset-2">
-        	<div class="card">
+            <?php if(auth()): ?>
+            <?php if($summary->my_posts >= $summary->max_post): ?>
+                <div class="ribbon-wrapper card">
+                    <div class="ribbon ribbon-danger">Upgrade Membership</div>
+                    <p class="ribbon-content  text-center">You've reach the maximum amount of posting a job. </p>
+                    <a href="" class="btn btn-success  btn-xs col-2 mt-2">Upgrade Now</a>
+                </div>
+            <?php endif; ?>
+        <?php endif;?>
+            <div class="card">
                 <div class="card-body">
                     <h1 class="text-dark  card-title"><strong>Post a Job</strong></h1>
                     <p class="card-subtitle">Turpis facilisi vitae. Interdum potenti quam. Morbi porta blandit luctus vestibulum dictumst consequat aliquam eveniet. Vel fusce ac turpis arcu lectus sit nulla dui lacus porttitor dolor. Amet neque qui.</p>
@@ -30,26 +58,26 @@
                             <div class="help-block"></div></div>
                         </div>
 
-                        <!-- <fieldset class="form-group">
-                            <label class="custom-file d-block">
-                                <input type="file" id="file"  class="form-control" name="attached">
-                                <span class="custom-file-control"></span>
-                            </label>
-                        </fieldset> -->
-
                         <div id="test" class="dropzone"></div>
-
-                        <div clas="form-group">
-                            <h4 class="text-dark font-weight-bold mt-5">Does this project need to be done in a specific location?</h4>
-                            <p>Where do you want this done?</p>
-                            <div class="controls">
-                                <input type="text" name="location" value="" class="form-control">
+                        <div class="row">
+                            <div class="col-6">
+                                <h4 class="text-dark font-weight-bold mt-5">Does this project need to be done in a specific location?</h4>
+                                <p>Where do you want this done?</p>
+                                <div class="controls">
+                                    <input type="text" name="location" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <h4 class="mb-3 text-dark font-weight-bold mt-5">Approx Tonnes</h4>
+                                <p></p>
+                                <div class="controls">
+                                    <input type="number" name="tonnes" value="" class="form-control mt-5">
+                                </div>
                             </div>
                         </div>
 
                         <div class="form-group mt-3">
                             <div class="">
-                                <!-- <h4 class="card-title">Date Range</h4> -->
                                 <div class="row">
                                      <div class="col-md-12">
                                          <div class="example">
@@ -65,9 +93,9 @@
                                     </div>
                                     <div class="col-md-12 mt-3">
                                         <h4 class="text-dark font-weight-bold">What is your estimated budget?</h4>
-                                    	<div class="row">
-                                    	<div class="col-md-4">
-                                        	<select name="budget-currency" class="selectpicker form-control" data-style="form-control btn-secondary">
+                                        <div class="row">
+                                        <div class="col-md-4">
+                                            <select name="budget-currency" class="selectpicker form-control" data-style="form-control btn-secondary">
                                                 <option  value="USD">USD</option>
                                                 <option  value="NZD">NZD</option>
                                                 <option  value="AUD">AUD</option>
@@ -122,4 +150,25 @@
             </div>
         </div>
     </div>
+</div>
+
+
+<div id="modal-job-error" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none; padding-right: 19px;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Package Upgrade</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <h4>You need to upgrade you membership to post another job!</h4>
+            </div>
+            <div class="modal-footer">
+                <a href="/settings/subscription" class="btn btn-success waves-effect">Upgrade Now</a>
+                <button type="button" class="btn btn-info waves-effect" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
 </div>

@@ -5,7 +5,9 @@ class Work extends MX_Controller {
 
 	public function __construct(){
 		parent::__construct();
+		$this->load->model('Industry_model');
 		$this->load->model('job_model');
+		$this->load->model('proposal_model');
 		$this->template->set_template("default");
 	}
 	public function index()
@@ -25,6 +27,15 @@ class Work extends MX_Controller {
 		$var = get_redir_logreg();
 		$this->template->append_css($css);
 		$this->template->append_js($js);
+
+		$industries = $this->Industry_model->getIndustries();
+		$budget_filters = $this->Industry_model->getBudgetfilters();
+
+		$this->template->load_sub('summary', $this->job_model->getSummary());
+		$this->template->load_sub('industries', $industries);
+		$this->template->load_sub('budget_filters', $budget_filters);
+		$this->template->load_sub('active_bids', $this->proposal_model->activeBidsCount());
+		
         $_SESSION['dashboard'] = "hire";
         $this->template->load('frontend/member/work');
 	}

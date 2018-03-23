@@ -2,16 +2,20 @@
     <ul id="sidebarnav">
         <li class="pt-1">
             <a class="has-arrow waves-effect waves-dark" href="<?php echo base_url('/dashboard') ?>" aria-expanded="false">
-                <span class="hide-menu">Dashboard</span>
+                <span class="hide-menu">Dashboard</span><i class="mdi mdi-chevron-down"></i>
             </a>
+            <ul>
+                <li><a href="<?= base_url('work'); ?>">Work</a></li>
+                <li><a href="<?= base_url('hire'); ?>">Hire</a></li>
+            </ul>
         </li>
 
-        <li>
+        <li class="pt-1">
             <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
                 <span class="hide-menu">Job Bank</span><i class="mdi mdi-chevron-down"></i>
             </a>
             <ul>
-                <li><a href="<?= base_url('jobs'); ?>">Browse Jobs </a></li>
+                <!-- <li><a href="<?= base_url('jobs'); ?>">Browse Jobs </a></li> -->
                 <li><a href="<?= base_url('jobs/posted'); ?>">My Posted Job</a></li>
                 <li><a href="<?= base_url('jobs/invitations'); ?>">Job Invitations</a></li>
                 <li><a href="<?= base_url('jobs/bid-history') ?>">My Bids</a></li>

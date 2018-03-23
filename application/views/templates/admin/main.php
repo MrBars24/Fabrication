@@ -8,11 +8,12 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/logo_favicon.png">
     <title><?=APPNAME?></title>
     <link rel="stylesheet" href="/assets/plugins/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/plugins/morrisjs/morris.css">
     <link rel="stylesheet" href="/assets/admin/css/style.css">
+    <link rel="stylesheet" href="/assets/plugins/toastr/build/toastr.min.css">
     <link rel="stylesheet" href="/assets/admin/colors/blue.css">
     <?php if(isset($additional_css)){
         foreach($additional_css as $css){
@@ -364,9 +365,16 @@
                             <span class="hide-menu">JOBS CATEGORY</span></a></li>
                         <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-chart-line"></i>
                             <span class="hide-menu">PROJECTS </span></a></li>
-                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-newspaper"></i><span class="hide-menu">NEWS AND ARTICLES </span></a></li>
+                        <li> <a class="waves-effect waves-dark" href="/admin/news" aria-expanded="false"><i class="mdi mdi-newspaper"></i><span class="hide-menu">NEWS AND ARTICLES </span></a></li>
                         <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-pen"></i><span class="hide-menu">BLOGS </span></a></li>
                         <li> <a class="waves-effect waves-dark" href="/admin/users" aria-expanded="false"><i class="fa fa-users"></i><span class="hide-menu">USERS </span></a></li>
+                        <li> <a class="has-arrow waves-effect waves-dark" href="/admin/settings" aria-expanded="false"><i class="fa fa-gear"></i><span class="hide-menu">SETTINGS </span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="/admin/settings/budget-filter">Budget Range Filter</a></li>
+                                <li><a href="/admin/settings/package-settings">Package Settings</a></li>
+                                <li><a href="/admin/settings/materials-list">List of Materials</a></li>
+                            </ul>
+                        </li>
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Content Menu</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="/admin/pages">Pages Content</a></li>
@@ -599,6 +607,7 @@
     <script src="<?php echo base_url() ?>assets/plugins/raphael/raphael-min.js"></script>
     <script src="<?php echo base_url() ?>assets/plugins/morrisjs/morris.min.js"></script>
     <script src="<?php echo base_url() ?>assets/admin/js/dashboard1.js"></script>
+    <script src="<?php echo base_url() ?>assets/plugins/toastr/build/toastr.min.js"></script>
     <script src="<?php echo base_url() ?>assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
     <?php if(isset($add_js)){
           foreach($add_js as $js){ ?>

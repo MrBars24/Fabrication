@@ -1,5 +1,10 @@
 
-<?php foreach ($portfolios as $v):?>
+<?php
+if (!empty($portfolios)){
+foreach (($portfolios) as $v):
+
+    ?>
+
 <div class="col-sm-4" id="<?= $v['id']; ?>">
     <div class="el-card-item">
         <div class="el-card-avatar el-overlay-1 mb-1">
@@ -28,6 +33,8 @@
         </div>
     </div>
 </div>
-<?php endforeach; ?>
+<?php endforeach; }else{
+    }?>
+
 <?php $this->load->view('frontend/partials/edit_portfolio_modal') ?>
 <?php $this->load->view('frontend/partials/delete_portfolio_modal') ?>

@@ -1,4 +1,7 @@
 $(document).ready(function(){
+
+
+
     $(document).on("submit","#form-exp",function(e){
         e.preventDefault();
         var url = $('#form-exp').attr('action');
@@ -11,6 +14,7 @@ $(document).ready(function(){
             data: data,
             success: function(result){
                 location.href = "/settings";
+
             },
             error: function(){
 

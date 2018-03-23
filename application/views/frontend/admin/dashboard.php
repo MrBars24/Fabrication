@@ -31,12 +31,12 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-12">
-                        <h2 class="m-b-0"><i class="fa fa-briefcase text-info"></i></h2>
-                        <h3 class="">2456 Jobs</h3>
-                        <h6 class="card-subtitle">Posted this week</h6></div>
+                        <h2 class="m-b-0"><i class="mdi mdi-briefcase-check text-info"></i></h2>
+                        <h3 class=""><?=$summary->total_jobs?></h3>
+                        <h6 class="card-subtitle">Total Job Post</h6></div>
                     <div class="col-12">
                         <div class="progress">
-                            <div class="progress-bar bg-info" role="progressbar" style="width: 85%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-info" role="progressbar" style="width: 100%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
                 </div>
@@ -48,12 +48,12 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-12">
-                        <h2 class="m-b-0"><i class="mdi mdi-alert-circle text-success"></i></h2>
-                        <h3 class="">546 Fabricators</h3>
-                        <h6 class="card-subtitle">Registered this week</h6></div>
+                        <h2 class="m-b-0"><i class="fa fa-gavel text-success"></i></h2>
+                        <h3 class=""><?=$summary->total_biddings?></h3>
+                        <h6 class="card-subtitle">Total Biddings</h6></div>
                     <div class="col-12">
                         <div class="progress">
-                            <div class="progress-bar bg-success" role="progressbar" style="width: 40%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 100%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
                 </div>
@@ -65,12 +65,12 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-12">
-                        <h2 class="m-b-0"><i class="mdi mdi-wallet text-purple"></i></h2>
-                        <h3 class="">1024 Experts</h3>
-                        <h6 class="card-subtitle">Registered this week</h6></div>
+                        <h2 class="m-b-0"><i class="fa fa-users text-purple"></i></h2>
+                        <h3 class=""><?=$summary->total_users?></h3>
+                        <h6 class="card-subtitle">Total Active Users</h6></div>
                     <div class="col-12">
                         <div class="progress">
-                            <div class="progress-bar bg-primary" role="progressbar" style="width: 56%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 100%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
                 </div>
@@ -87,7 +87,7 @@
                         <h6 class="card-subtitle">Total Earnings</h6></div>
                     <div class="col-12">
                         <div class="progress">
-                            <div class="progress-bar bg-warning" role="progressbar" style="width: 26%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: 100%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
                 </div>
@@ -107,60 +107,20 @@
                             <thead>
                                 <tr>
                                     <th>Job</th>
-                                    <th>Bidding Type</th>
-                                    <th>Job Expiration</th>
+                                    <th>Status</th>
+                                    <th>Bidding Expiration</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php foreach($recent_jobs as $job): ?>
                                 <tr>
                                     <td>
-                                        <h6>Web Developer</h6>
+                                        <h6><?= $job->title ?></h6>
                                     </td>
-                                    <td><span class="label label-success">e-fab User</span></td>
-                                    <td>Jun. 7, 2017</td>
+                                    <td><span class="label label-<?=($job->status == 'open')?'primary':'danger'?>"><?=ucfirst($job->status)?></span></td>
+                                    <td><?=date_new_format($job->bidding_expire_at)?></td>
                                 </tr>
-                                <tr class="active">
-                                    <td>
-                                        <h6>Web Developer</h6>
-                                    </td>
-                                    <td><span class="label label-info">e-fab User</span></td>
-                                    <td>Jun. 7, 2017</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <h6>Web Developer</h6>
-                                    </td>
-                                    <td><span class="label label-primary">e-fab User</span></td>
-                                    <td>Jun. 7, 2017</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <h6>Web Developer</h6>
-                                    </td>
-                                    <td><span class="label label-danger">e-fab User</span></td>
-                                    <td>Jun. 7, 2017</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <h6>Web Developer</h6>
-                                    </td>
-                                    <td><span class="label label-warning">e-fab User</span></td>
-                                    <td>Jun. 7, 2017</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <h6>Web Developer</h6>
-                                    </td>
-                                    <td><span class="label label-info">e-fab User</span></td>
-                                    <td>Jun. 7, 2017</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <h6>Web Developer</h6>
-                                    </td>
-                                    <td><span class="label label-warning">e-fab User</span></td>
-                                    <td>Jun. 7, 2017</td>
-                                </tr>
+                                <?php endforeach; ?>
                             </tbody>
                         </table>
                     </div>
@@ -174,65 +134,27 @@
             <!-- Column -->
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Recent Fabricators</h4>
+                    <h4 class="card-title">Recent Logged In Users</h4>
                     <div class="table-responsive">
                         <table class="table table-hover earning-box">
                             <thead>
                                 <tr>
                                     <th colspan="2">Name</th>
                                     <th>Job Posted</th>
+                                    <th>Bids</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php foreach($recent_logged as $user): ?>
                                 <tr>
-                                    <td style="width:50px;"><span class="round"><img src="../assets/images/users/8.jpg" alt="user" width="50"></span></td>
+                                    <td style="width:50px;"><span class="round"><img src="/assets/images/No_Image_Available.png" alt="user" width="50"></span></td>
                                     <td>
-                                        <h6>Sunil Joshi</h6><small class="text-muted">Burton</small>
+                                        <h6><?=$user->fullname?></h6><small class="text-muted"><?= date_new_format($user->last_login,'F j, Y h:i A') ?></small>
                                     </td>
-                                    <td>3</td>
+                                    <td><?=$user->my_posts?></td>
+                                    <td><?=$user->my_bids?></td>
                                 </tr>
-                                <tr class="active">
-                                    <td><span class="round"><img src="../assets/images/users/2.jpg" alt="user" width="50"></span></td>
-                                    <td>
-                                        <h6>Andrew</h6><small class="text-muted">Burton</small>
-                                    </td>
-                                    <td>23</td>
-                                </tr>
-                                <tr>
-                                    <td><span class="round round-success"><img src="../assets/images/users/1.jpg" alt="user" width="50"></span></td>
-                                    <td>
-                                        <h6>Bhavesh patel</h6><small class="text-muted">Burton</small>
-                                    </td>
-                                    <td>12</td>
-                                </tr>
-                                <tr>
-                                    <td><span class="round round-primary"><img src="../assets/images/users/4.jpg" alt="user" width="50"></span></td>
-                                    <td>
-                                        <h6>Nirav Joshi</h6><small class="text-muted">Burton</small>
-                                    </td>
-                                    <td>10</td>
-                                </tr>
-                                <tr>
-                                    <td><span class="round round-warning"><img src="../assets/images/users/5.jpg" alt="user" width="50"></span></td>
-                                    <td>
-                                        <h6>Micheal Doe</h6><small class="text-muted">Burton</small>
-                                    </td>
-                                    <td>12</td>
-                                </tr>
-                                <tr>
-                                    <td><span class="round round-danger"><img src="../assets/images/users/1.jpg" alt="user" width="50"></span></td>
-                                    <td>
-                                        <h6>Johnathan</h6><small class="text-muted">Burton</small>
-                                    </td>
-                                    <td>2</td>
-                                </tr>
-                                <tr>
-                                    <td><span class="round round-success">M</span></td>
-                                    <td>
-                                        <h6>Vishal Doe</h6><small class="text-muted">Burton</small>
-                                    </td>
-                                    <td>12</td>
-                                </tr>
+                                <?php endforeach; ?>
                             </tbody>
                         </table>
                     </div>

@@ -51,6 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 */
 //text ROUTES
+$route['pusher'] = 'test/pusher';
 $route['test'] = 'expert/Profile/test';
 
 // home routes
@@ -91,6 +92,36 @@ $route['admin/jobs-category/update/(:num)']['POST'] = 'adm/category/update/$1';
 $route['admin/jobs-category/delete/(:num)']['POST'] = 'adm/category/destroy/$1';
 
 
+//News and Articles
+$route['admin/news']['GET'] = 'adm/news';
+$route['admin/news/create']['POST'] = 'adm/news/store';
+$route['admin/news/update/(:num)']['POST'] = 'adm/news/update/$1';
+$route['admin/news/delete/(:num)']['POST'] = 'adm/news/destroy/$1';
+$route['admin/news/list']['GET'] = 'adm/news/fetch';
+
+//Settings/Budget Filter
+$route['admin/settings/budget-filter']['GET'] = 'adm/budget';
+$route['admin/settings/budget-filter/list']['GET'] = 'adm/budget/fetch';
+$route['admin/settings/budget-filter/create']['POST'] = 'adm/budget/store';
+$route['admin/settings/budget-filter/update/(:num)']['POST'] = 'adm/budget/update/$1';
+$route['admin/settings/budget-filter/delete/(:num)']['POST'] = 'adm/budget/destroy/$1';
+
+//Settings/Package Settings
+$route['admin/settings/package-settings']['GET'] = 'adm/package';
+$route['admin/settings/package-settings/list']['GET'] = 'adm/package/fetch';
+$route['admin/settings/package-settings/create']['POST'] = 'adm/package/store';
+$route['admin/settings/package-settings/default-package/(:num)']['POST'] = 'adm/package/defaultpackage/$1';
+$route['admin/settings/package-settings/update/(:num)']['POST'] = 'adm/package/update/$1';
+$route['admin/settings/package-settings/delete/(:num)']['POST'] = 'adm/package/destroy/$1';
+
+//Settings/Material List
+$route['admin/settings/materials-list']['GET'] = 'adm/materials';
+$route['admin/settings/materials-list/list']['GET'] = 'adm/materials/fetch';
+$route['admin/settings/materials-list/create']['POST'] = 'adm/materials/store';
+$route['admin/settings/materials-list/default-package/(:num)']['POST'] = 'adm/materials/defaultpackage/$1';
+$route['admin/settings/materials-list/update/(:num)']['POST'] = 'adm/materials/update/$1';
+$route['admin/settings/materials-list/delete/(:num)']['POST'] = 'adm/materials/destroy/$1';
+
 //api
 $route['admin/image/assets/list']['GET'] = 'adm/file/getImageAsssets';
 $route['admin/user/list']['GET'] = 'adm/user/getUsers';
@@ -120,7 +151,7 @@ $route['questions-e-fab'] = 'welcome/questionsEfab';
 $route['about'] = 'welcome/about';
 $route['how-it-works/fabricator'] = 'welcome/howFabricator';
 $route['how-it-works/expert'] = 'welcome/howExpert';
-    
+
 //About
 $route['about'] = 'welcome/about';
 
@@ -129,33 +160,47 @@ $route['pricing'] = 'welcome/pricing';
 $route['submit-contact-us'] = 'welcome/submitContactUs';
 
 //Training
-$route['settings/training']['get'] = 'settings/Training/index';
-$route['settings/training/(:num)']['get'] = 'settings/Training/show/$1';
-$route['settings/training/del/(:num)']['POST'] = 'settings/Training/del/$1';
-$route['training/create']['POST'] = 'settings/Training/createTraining';
+$route['settings/training']['GET'] = 'settings/training';
+$route['settings/training/list']['GET'] = 'settings/training/fetch';
+$route['settings/training/create']['POST'] = 'settings/training/store';
+$route['settings/training/update/(:num)']['POST'] = 'settings/training/update/$1';
+$route['settings/training/delete/(:num)']['POST'] = 'settings/training/destroy/$1';
+
 
 // Jobs Create
 $route['jobs/create']['GET'] = 'jobs/CreateJob/index';
 $route['jobs/create']['POST'] = 'jobs/CreateJob/createJob';
+$route['jobs/update/(:num)']['POST'] = 'jobs/UpdateJob/updateJob/$1';
 $route['jobs/get']['GET'] = 'jobs/BrowseJobs/getAllJobs';
 $route['jobs/list']['GET'] = 'jobs/BrowseJobs/getAllJobsPagination';
-// Jobs
-$route['jobs/(:num)']['GET'] = 'jobs/ViewJob/show/$1';
 
-//Job Seeker
-
+// Jobs invite
+$route['jobs/invite/(:num)']['POST'] = 'jobs/InvitationJobs/inviteMember/$1';
+$route['jobs/invite']['GET'] = 'jobs/InvitationJobs/getAllInvites/$1';
 //Portfolio
-$route['portfolio/create']['POST'] = 'portfolio/CreatePortfolio/createPort';
+/*$route['portfolio/create']['POST'] = 'portfolio/CreatePortfolio/createPort';
 $route['portfolio/(:num)']['GET'] = 'settings/Portfolio/showPortfolio/$1';
 $route['portfolio/update/(:num)']['POST'] = 'portfolio/UpdatePortfolio/updatePort/$1';
-$route['portfolio/delete/(:num)']= 'portfolio/DeletePortfolio/deletePort/$1';
+$route['portfolio/delete/(:num)']= 'portfolio/DeletePortfolio/deletePort/$1';*/
+
+$route['settings/portfolio']['GET'] = 'settings/portfolio';
+$route['settings/portfolio/create']['POST'] = 'settings/portfolio/store';
+$route['settings/portfolio/update/(:num)']['POST'] = 'settings/portfolio/update/$1';
+$route['settings/portfolio/delete/(:num)']['POST'] = 'settings/portfolio/destroy/$1';
+$route['settings/portfolio/list']['GET'] = 'settings/portfolio/fetch';
 
 //Proposal
 $route['jobs/proposal/(:num)']['get'] = 'jobs/ViewJob/proposal/$1';
 $route['jobs/submit/proposal']['post'] = 'jobs/Proposal/submit';
+$route['jobs/edit/proposal/(:num)']['post'] = 'jobs/Proposal/editProposal/$1';
+
+//Bid Accecpt
+$route['job/bid/accept/(:num)']['get'] = 'jobs/Proposal/accept/$1';
+$route['job/bid/cancel/(:num)']['get'] = 'jobs/Proposal/cancel/$1';
 //Bid History
 $route['jobs/bid-history']['get'] = 'jobs/ViewBidHistory/index';
-$route['jobs/bid-history']['post'] = 'jobs/ViewBidHistory/index';
+$route['jobs/bid-history']['post'] = 'jobs/ViewBidHistory/postBid';
+$route['jobs/bid-history/list']['get'] = 'jobs/ViewBidHistory/bidHistoryList';
 $route['jobs/bid-history/view/(:num)']['get'] = 'jobs/ViewBidHistory/show/$1';
 
 //Previous Project
@@ -164,9 +209,15 @@ $route['jobs/previous-project/(:num)']['get'] = 'jobs/ViewPreviousProject/show/$
 
 //Job Banks
 $route['jobs']['get'] = 'jobs/BrowseJobs/index';
+$route['jobs/(:num)']['GET'] = 'jobs/ViewJob/show/$1';
+
+$route['jobs/bid-list/(:num)'] = 'jobs/ViewJob/bidderfetch/$1';
+$route['jobs/bid-list/(:num)/(:num)'] = 'jobs/ViewJob/bidderfetchsort/$1/$2';
+
 $route['jobs/latest']['get'] = 'jobs/LatestJobs/index';
 $route['jobs/invitations']['get'] = 'jobs/InvitationJobs/index';
 $route['jobs/my-jobs']['get'] = 'jobs/MyJob/index';
+$route['jobs/my-jobs/list']['get'] = 'jobs/MyJob/myJobsPagination';
 $route['jobs/my-jobs/(:num)']['get'] = 'jobs/Contract/show/$1';
 $route['jobs/posted']['get'] = 'jobs/BrowseJobs/postedJob';
 $route['jobs/posted/manage/(:num)']['get'] = 'jobs/BrowseJobs/postedJobView/$1';
@@ -182,12 +233,20 @@ $route['settings/public']['get'] = 'settings/PublicProfile/index';
 $route['settings/company']['get'] = 'settings/CompanyProfile/index';
 $route['settings/password']['get'] = 'settings/Password/index';
 $route['settings/notification']['get'] = 'settings/Notification/index';
-$route['settings/portfolio']['get'] = 'settings/Portfolio/index';
+//$route['settings/portfolio']['get'] = 'settings/Portfolio/index';
 $route['settings/training']['get'] = 'settings/Training/index';
 
 // Profile Settings Functions
 $route['settings/account/basic']['POST'] = "settings/Account/updateBasic";
+$route['settings/account/public-basic/(:num)']['POST'] = "settings/PublicProfile/updatePublicProfile/$1";
+
 $route['settings/account/industries']['POST'] = "settings/Account/addIndustry";
+$route['settings/account/public-industries/(:num)']['POST'] = "settings/PublicProfile/updatePublicIndustry/$1";
+
+$route['settings/account/skills/create']['POST'] = "settings/PublicProfile/createSkills";
+$route['settings/account/get-skills']['GET'] = "settings/PublicProfile/getSkills";
+$route['settings/skills/delete/(:num)']['GET'] = "settings/PublicProfile/deleteSkills/$1";
+
 $route['settings/account/location']['POST'] = "settings/Account/updateLocation";
 $route['settings/account/billing']['POST'] = "settings/Account/updateBilling";
 
@@ -197,7 +256,9 @@ $route['watchlist/delete/(:num)']['POST'] = 'member/Work/removeWishlist/$1';
 
 // Member
 $route['members']['get'] = 'member/Browse/index';
-$route['members/(:any)']['get'] = 'member/ViewProfile/show/$1';
+$route['members/(:num)']['get'] = 'member/ViewProfile/show/$1';
+$route['members/expert/(:num)']['get'] = 'member/ViewProfile/expert/$1';
+$route['members/fabricator/(:num)']['get'] = 'member/ViewProfile/fabricator/$1';
 $route['hire']['get'] = 'member/Hire/index';
 $route['work']['get'] = 'member/Work/index';
 $route['work/list']['GET'] = 'member/Work/getAllJobsPagination';
@@ -208,6 +269,8 @@ $route['search/(:any)']['get'] = 'member/SearchResult/search/$1';
 // Notifications
 $route['notifications']['get'] = 'notifications/Notification/index';
 
+// ratings
+$route['reviews']['post'] = 'member/Overview/submitReviews';
 // Search
 $route['search/member']['get'] = 'member/Search/result';
 $route['search/jobs']['get'] = 'jobs/Search/result';

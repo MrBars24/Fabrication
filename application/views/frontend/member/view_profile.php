@@ -1,258 +1,183 @@
-<div class="container">
-    <div class="row">
-        <div class="col-sm-4">
-            <img src="http://dev.e-fab/assets/images/users/1.jpg" alt="Avatar" class="img-fluid">
-            <div class="mt-4 text-center">
-                <h5 class="font-weight-bold">@username <i class="fa fa-check text-success"></i></h5>
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <!-- <pre>
+            <?php var_dump($user) ?>
+        </pre> -->
+    </div>
+    <div class="col-md-7 align-self-center">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
 
-                <ul class="categories list-style-type-none d-block">
-                    <li class="d-inline-block"><span class="badge badge-secondary badge-pill mx-1 px-3 py-2 mb-1">Expertise 1</span></li>
-                    <li class="d-inline-block"><span class="badge badge-secondary badge-pill mx-1 px-3 py-2 mb-1">Expertise 2</span></li>
-                    <li class="d-inline-block"><span class="badge badge-secondary badge-pill mx-1 px-3 py-2 mb-1">Expertise 3</span></li>
-                    <li class="d-inline-block"><span class="badge badge-secondary badge-pill mx-1 px-3 py-2 mb-1">Expertise 4</span></li>
-                </ul>
-
-                <button class="btn btn-success btn-block btn-lg">Contact</button>
-                <button class="btn btn-secondary btn-block btn-lg" data-toggle="modal" data-target=".modal-invite-to-job">Invite to Job</button>
-
-                <!-- Affiliations -->
-
-                <div class="card mt-3 text-left">
-                    <div class="card-body">
-                       <h4 class="card-title mb-0">Affiliates</h4>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                <h6 class="font-weight-bold">Affiliate 1</h6>
-                                <small>Lorem ipsum dolor sit amet.</small>
-                            </li>
-                            <li class="list-group-item">
-                                <h6 class="font-weight-bold">Affiliate 1</h6>
-                                <small>Lorem ipsum dolor sit amet.</small>
-                            </li>
-                            <li class="list-group-item">
-                                <h6 class="font-weight-bold">Affiliate 1</h6>
-                                <small>Lorem ipsum dolor sit amet.</small>
-                            </li>
-                            <li class="list-group-item">
-                                <h6 class="font-weight-bold">Affiliate 1</h6>
-                                <small>Lorem ipsum dolor sit amet.</small>
-                            </li>
-                       </ul>
-                </div>
-                
-                <!-- End of Affiliations -->
-
-                <div class="text-left mt-4">
-                  <div class="mb-3">
-                    <h5 class="font-weight-bold mb-1">Languages</h5>
-                    <h6>English <span class="text-muted">- Fluent</span></h6>
-                  </div>
-                  <div class="mb-3">
-                    <h5 class="font-weight-bold mb-1">Member since</h5>
-                    <h6>Sep 2017</h6>
-                  </div>
-                  <div class="mb-3">
-                    <h5 class="font-weight-bold mb-1">Last Project</h5>
-                    <h6>Jan 2018</h6>
-                  </div>
-
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-8">
-            <div class="card position-relative">
-                <div class="card-body">
-                    <div class="dropdown dropdown-profile-view">
-                        <button type="button" class="btn btn-link dropdown-toggle drop-down-toggle-action" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        </button>
-                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(205px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
-                        <a class="dropdown-item" href="#">Report</a>
-                        <a class="dropdown-item" href="#">I dont want to see this</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Separated link</a>
-                        </div>
-                    </div>
-
-                    <h1 class="font-weight-bold mb-0">SM Builders</h1>
-                    <h6 class="text-muted"><i class="fa fa-map-marker"></i> Sydney, Australlia</h6>
-
-                    <!-- Rating Average -->
-                    <div class="">
-                        <small class="text-warning d-flex flex-row">
-                            <span class="m-r-5">4.5</span>
-                            <ul class="d-flex flex-row list-style-type-none mb-0 m-r-5">
-                            <li><a href="#" class="text-warning mr-1"><i class="fa fa-star"></i></a></li>
-                            <li><a href="#" class="text-warning mr-1"><i class="fa fa-star"></i></a></li>
-                            <li><a href="#" class="text-warning mr-1"><i class="fa fa-star"></i></a></li>
-                            <li><a href="#" class="text-warning mr-1"><i class="fa fa-star"></i></a></li>
-                            <li><a href="#" class="text-warning mr-1"><i class="fa fa-star"></i></a></li>
-                        </ul>
-                        <span class="text-muted">(5 Reviews)</span>
-                        </small> 
-                    </div>
-                    <!-- End Rating Average -->
-                    <h4 class="overview font-weight-bold mt-3 mb-3">We've been in the contruction industry since 1980s.</h4>
-                    <h6 class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, doloribus!</h6>
-                    <div class="row mt-4">
-                        <div class="col-sm-6">
-                            <div class="row">
-                                <div class="col text-center">
-                                    <h3 class="font-weight-bold text-info font-size-2em mb-1">17</h3>
-                                    <small>PROJECTS WON</small>
-                                </div>
-                                <div class="col text-center">
-                                    <h3 class="font-weight-bold text-info font-size-2em mb-1">99%</h3>
-                                    <small>SUCCESS RATE</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="row">
-                                <div class="col text-center">
-                                    <h3 class="font-weight-bold text-info font-size-2em mb-1">1</h3>
-                                    <small>PROJECTS POSTED</small>
-                                </div>
-                                <div class="col text-center">
-                                    <h3 class="font-weight-bold text-info font-size-2em mb-1">0%</h3>
-                                    <small>HIRE RATE</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div> 
-                </div>
-            </div>
-            <!-- Card Info main -->
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Description</h4>
-                    <div class="description mt-2">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis dolor molestias ducimus, laboriosam quaerat reiciendis!</p>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
-                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eveniet ea, modi a animi asperiores corrupti deleniti exercitationem dolorem tempora et possimus laboriosam at saepe iusto!</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- End Card Info main -->
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title mb-0">Fabricating information</h4>
-                </div>
-                
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <h6 class="text-muted mb-0">Industry</h6>
-                        <h4 class="font-weight-bold mb-0">Mining</h4>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <h6 class="text-muted mb-0">Years Operating</h6>
-                        <h4 class="font-weight-bold mb-0">25</h4>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <h6 class="text-muted mb-0">Ave. Tones / Month</h6>
-                        <h4 class="font-weight-bold mb-0">75</h4>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <h6 class="text-muted mb-0">Area serviced</h6>
-                        <h4 class="font-weight-bold mb-0">Local</h4>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <h6 class="text-muted mb-0">NC and DSTV processing</h6>
-                        <h4 class="font-weight-bold mb-0">Yes</h4>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <h6 class="text-muted mb-0">Tech. query or RFI system</h6>
-                        <h4 class="font-weight-bold mb-0">Yes</h4>
-                    </li>
-                    <li class="list-group-item bg-success">
-                        <div class="d-flex flex-direction-row justify-content-between align-items-center">
-                            <div>
-                                <h6 class="mb-2">Largest successful project</h6>
-                                <h4 class="font-weight-bold mb-0">Abbatoir and processing plant<br><span class="font-weight-light">approx. 75 tonne</span></h4>
-                            </div>
-                            <div>
-                                <span class="font-weight-bold font-size-2em">$7, 000, 000</span>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-
-            </div>
-            <!-- End Card Info main -->
-
-            <!-- Card Recent Reviews -->
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title mb-0">Job History and Feedbacks</h4>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <?php foreach(range(0,4) as $i):?>
-                            <!-- Job History and Feedback Item -->
-                                <li class="list-group-item">
-                                    <h4 class="font-weight-bold mb-0"><a href="<?php echo base_url('jobs/1') ?>">Job Posting Title</a></h4>
-                                    <small class="text-muted">July - August 2017</small>
-                                    
-                                    <h6 class="mt-3">Client's Rating:</h6> <?php $this->load->view('frontend/partials/rating_stars_full') ?>
-                                    <blockquote>
-                                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Odio quam asperiores expedita aliquid ratione nam.
-                                    </blockquote>
-
-                                    <div class="mt-3">
-                                        <small>Hired by </small>
-                                        <h6><a href="<?php echo base_url('members/1') ?>">John Doe Enterprises</a></h6>
-                                        
-                                        <!-- Rating Average -->
-                                            <?php $this->load->view('frontend/partials/rating_stars_short') ?>
-                                            <small><span class="text-muted m-l-5">( <a href="#"  class="text-muted">15 Reviews</a> )</span></small>
-                                        <!-- End Rating Average -->
-                                    </div>
-                                </li>
-                            <!-- End of Job History and Feedback Item -->
-                    <?php endforeach; ?>
-                </ul>
- 
-            </div>
-            <!-- End Card Recent Reviews -->
-
-            <!-- Card Protfolio -->
-            <div class="card">
-              <div class="card-body">
-                <h4 class="card-title">Portfolio</h4>
-                <h6 class="card-subtitle">Porfolio Lorem ipsum dolor.</h6>
-                <!-- Row Portfolio -->
-                    <?php foreach( array_chunk(range(0,23), 3) as $row): ?>
-                        <div class="row el-element-overlay">
-                            <?php foreach($row as $i):?>
-                                <div class="col-sm-4">
-                                    <?php $this->load->view('frontend/partials/portfolio_item') ?>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                    <?php endforeach; ?>
-                <!-- End of Row Portfolio -->
-              </div>
-            </div>
-            <!-- End of Card Protfolio -->
-
-            <!-- Card Trainings -->
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title mb-0">Trainings</h4>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <h5 class="font-weight-bold">Training About Steel Fabricating</h5>
-                        <h6>Aug</h6>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- End Card Trainings -->
-        </div>
+            <li class="breadcrumb-item active">Profile</li>
+        </ol>
+    </div>
+    <div class="">
+        <button class="right-side-toggle waves-effect waves-light btn-inverse btn btn-circle btn-sm pull-right m-l-10"><i class="ti-settings text-white"></i></button>
     </div>
 </div>
+<div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <!-- Row -->
+                <div class="row">
+                    <!-- Column -->
+                    <div class="col-lg-4 col-xlg-3 col-md-5">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <?php if(auth()->id == $this->uri->segment(2)): ?>
+                                    <?php else: ?>
+                                            <button class="btn btn-success">Contact</button>
+                                            <button class="btn btn-secondary" data-toggle="modal" data-target=".modal-invite-to-job">Invite to Job</button>
+                                    <?php endif;?>
+                                </div>
+                                <center class="m-t-30"> <img src="../assets/images/users/5.jpg" class="img-circle" width="150">
+                                    <h4 class="card-title m-t-10"><?= @$user->fullname ?></h4>
+                                    <h6 class="card-subtitle text-dark font-weight-bold"><?= @$user->username ?></h6>
+                                    <ul class="categories list-style-type-none d-block">
+                                        <?php foreach($skills as $skill): ?>
+                                            <li class="d-inline-block"><span class="badge badge-secondary badge-pill mx-1 px-3 py-2 mb-1"><?= $skill->title ?></span></li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                    <div class="row text-center justify-content-md-center">
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <div class="col text-center">
+                                                    <h3 class="font-weight-bold text-info  mb-1"><?= (!isset($user->my_winbid)) ? "0" : $user->my_winbid ?></h3>
+                                                    <small>PROJECTS WON</small>
+                                                </div>
+                                                <div class="col text-center">
+                                                    <h3 class="font-weight-bold text-info  mb-1">99%</h3>
+                                                    <small>SUCCESS RATE</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <div class="col text-center">
+                                                    <h3 class="font-weight-bold text-info mb-1"><?= (!isset($user->my_posts)) ? "0" : $user->my_posts ?></h3>
+                                                    <small>PROJECTS POSTED</small>
+                                                </div>
+                                                <div class="col text-center">
+                                                    <h3 class="font-weight-bold text-info mb-1">0%</h3>
+                                                    <small>HIRE RATE</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </center>
+                            </div>
+                            <div>
+                                <hr> </div>
+                            <div class="card-body">
+                                <small class="text-muted">Email address </small>
+                                <h6><?= @$user->email ? $user->email : "N/A" ?></h6>
+                                <small class="text-muted p-t-30 db">Phone</small>
+                                <h6><?= @$user->phone ? $user->phone : "N/A" ?></h6>
+                                <small class="text-muted p-t-30 db">Address</small>
+                                <h6><?= @$user->address ? $user->address : "N/A"?></h6>
+                                <small class="text-muted p-t-30 db">Social Profile</small>
+                                <br>
+                                <button class="btn btn-circle btn-secondary"><i class="fa fa-facebook"></i></button>
+                                <button class="btn btn-circle btn-secondary"><i class="fa fa-twitter"></i></button>
+                                <button class="btn btn-circle btn-secondary"><i class="fa fa-youtube"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                    <!-- Column -->
+                    <div class="col-lg-8 col-xlg-9 col-md-7">
+                        <div class="card">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs profile-tab" role="tablist">
+                                <li class="nav-item"> <a class="nav-link active show" data-toggle="tab" href="#overview" role="tab" aria-selected="true">Overview</a> </li>
+                                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#job" role="tab" aria-selected="false">Job</a> </li>
+                                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#hired" role="tab" aria-selected="false">Hired Job</a> </li>
+                                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile" role="tab" aria-selected="false">Profile</a> </li>
+                                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#portpolio" role="tab" aria-selected="false">Portpolio</a> </li>
+                                <!-- <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#settings" role="tab" aria-selected="false">Settings</a> </li> -->
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <!-- Overview panes -->
+                                <?php $this->load->view('frontend/partials/profile_tab_pane/overview'); ?>
+                                <!-- JOB panes -->
+                                <?php $this->load->view('frontend/partials/profile_tab_pane/job_post'); ?>
+                                <!-- Hired panes -->
+                                <?php $this->load->view('frontend/partials/profile_tab_pane/hired_job'); ?>
+                                <!-- Profile panes -->
+                                <?php $this->load->view('frontend/partials/profile_tab_pane/profile'); ?>
+                                <!-- Portpolio panes -->
+                                <?php $this->load->view('frontend/partials/profile_tab_pane/portpolio'); ?>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                </div>
+                <!-- Row -->
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Right sidebar -->
+                <!-- ============================================================== -->
+                <!-- .right-sidebar -->
+                <div class="right-sidebar">
+                    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 100%;"><div class="slimscrollright" style="overflow: hidden; width: auto; height: 100%;">
+                        <div class="rpanel-title"> Service Panel <span><i class="ti-close right-side-toggle"></i></span> </div>
+                        <div class="r-panel-body">
+                            <ul id="themecolors" class="m-t-20">
+                                <li><b>With Light sidebar</b></li>
+                                <li><a href="javascript:void(0)" data-theme="default" class="default-theme">1</a></li>
+                                <li><a href="javascript:void(0)" data-theme="green" class="green-theme">2</a></li>
+                                <li><a href="javascript:void(0)" data-theme="red" class="red-theme">3</a></li>
+                                <li><a href="javascript:void(0)" data-theme="blue" class="blue-theme working">4</a></li>
+                                <li><a href="javascript:void(0)" data-theme="purple" class="purple-theme">5</a></li>
+                                <li><a href="javascript:void(0)" data-theme="megna" class="megna-theme">6</a></li>
+                                <li class="d-block m-t-30"><b>With Dark sidebar</b></li>
+                                <li><a href="javascript:void(0)" data-theme="default-dark" class="default-dark-theme">7</a></li>
+                                <li><a href="javascript:void(0)" data-theme="green-dark" class="green-dark-theme">8</a></li>
+                                <li><a href="javascript:void(0)" data-theme="red-dark" class="red-dark-theme">9</a></li>
+                                <li><a href="javascript:void(0)" data-theme="blue-dark" class="blue-dark-theme">10</a></li>
+                                <li><a href="javascript:void(0)" data-theme="purple-dark" class="purple-dark-theme">11</a></li>
+                                <li><a href="javascript:void(0)" data-theme="megna-dark" class="megna-dark-theme ">12</a></li>
+                            </ul>
+                            <ul class="m-t-20 chatonline">
+                                <li><b>Chat option</b></li>
+                                <li>
+                                    <a href="javascript:void(0)"><img src="../assets/images/users/1.jpg" alt="user-img" class="img-circle"> <span>Varun Dhavan <small class="text-success">online</small></span></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><img src="../assets/images/users/2.jpg" alt="user-img" class="img-circle"> <span>Genelia Deshmukh <small class="text-warning">Away</small></span></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><img src="../assets/images/users/3.jpg" alt="user-img" class="img-circle"> <span>Ritesh Deshmukh <small class="text-danger">Busy</small></span></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><img src="../assets/images/users/4.jpg" alt="user-img" class="img-circle"> <span>Arijit Sinh <small class="text-muted">Offline</small></span></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><img src="../assets/images/users/5.jpg" alt="user-img" class="img-circle"> <span>Govinda Star <small class="text-success">online</small></span></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><img src="../assets/images/users/6.jpg" alt="user-img" class="img-circle"> <span>John Abraham<small class="text-success">online</small></span></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><img src="../assets/images/users/7.jpg" alt="user-img" class="img-circle"> <span>Hritik Roshan<small class="text-success">online</small></span></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><img src="../assets/images/users/8.jpg" alt="user-img" class="img-circle"> <span>Pwandeep rajan <small class="text-success">online</small></span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div><div class="slimScrollBar" style="background: rgb(220, 220, 220); width: 5px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px;"></div><div class="slimScrollRail" style="width: 5px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div></div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Right sidebar -->
+                <!-- ============================================================== -->
+            </div>
 
 
 <!-- View Project Modal -->

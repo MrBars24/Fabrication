@@ -96,3 +96,8 @@ define('email_constant', serialize(array(
   'mailtype'  => 'html',
   'charset'   => 'utf-8'
 )));
+
+const PUSHER_DETAILS = array(
+    'cluster' => 'ap1',
+    'encrypted' => true
+);

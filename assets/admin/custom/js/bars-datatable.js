@@ -14,6 +14,8 @@
 	_processing = false,
 	_type = null,
 	_total = 100,
+	_beforeRequest = null,
+	_successRequest = null,
 	_loaderContainer = '',
 	_loader = `<svg class="circular-static d-flex" viewBox="25 25 50 50">
 		<circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"></circle> 
@@ -30,6 +32,19 @@
 
 		if(option.limit != null){
 			_limit = option.limit;
+		}
+
+		if(option.search != null){
+			_is_search = true;
+			_search = option.search;
+		}
+
+		if(option.onSuccessRequest != null){
+			_successRequest = option.onSuccessRequest;
+		}
+
+		if(option.onBeforeRequest != null){
+			_beforeRequest = option.onBeforeRequest;
 		}
 
 		_pageContainer = option.pageContainer;
@@ -53,6 +68,19 @@
 
 		if(option.threshold != null){
 			_threshold = option.threshold;
+		}
+
+		if(option.onSuccessRequest != null){
+			_successRequest = option.onSuccessRequest;
+		}
+
+		if(option.onBeforeRequest != null){
+			_beforeRequest = option.onBeforeRequest;
+		}
+
+		if(option.search != null){
+			_is_search = true;
+			_search = option.search;
 		}
 
 		if(option.loaderContainer != null){
@@ -89,6 +117,9 @@
 	}
 
 	$.fn.requestData = function(){
+		if(_beforeRequest != null){
+			_beforeRequest();
+		}
 		$.ajax({
 			url:_url,
 			type:"GET",
@@ -109,6 +140,10 @@
 				}else{
 					if(_data_hash != ""){
 						_data = JSON.parse(atob(_data_hash));
+					}
+
+					if(res.data.length <= 0){
+						_data_hash = "";
 					}
 
 					if(_is_search){
@@ -134,6 +169,9 @@
 					setTimeout(function(){
 						_processing = false;
 					},1000);
+				}
+				if(_successRequest != null){
+					_successRequest();
 				}
 			}
 		});
@@ -169,6 +207,13 @@
 		_data_hash = btoa(JSON.stringify(tmp));
 	}
 
+    $.fn.dataAppend = function(t){
+        this.append(t.template);
+        var tmp = JSON.parse(atob(_data_hash));
+        tmp.push(t.data);
+        _data_hash = btoa(JSON.stringify(tmp));
+    }
+
 	$.fn.dataReplace = function(t){
 		var tmp = JSON.parse(atob(_data_hash));
 		tmp[t.index] = t.data;
@@ -176,12 +221,36 @@
 		this.children().eq(t.index).replaceWith(t.template);
 	}
 
-	$.fn.dataRemove = function(index){
+	$.fn.dataReplaceByKey = function(key,value){
 		var tmp = JSON.parse(atob(_data_hash));
-		tmp.splice(index, 1);
+		for (var i = 0; i < tmp.length; i++) {
+			if(value == tmp[i][key]){
+				tmp[i] = value.data;
+				this.children().eq(value.index).replaceWith(value.template);
+			}
+		}
+
 		_data_hash = btoa(JSON.stringify(tmp));
-		this.children().eq(index).remove();	
-		console.log(_data);
+	}
+
+	$.fn.dataRemove = function(index){ 
+  var tmp = JSON.parse(atob(_data_hash)); 
+  tmp.splice(index, 1); 
+  console.log(tmp); 
+  _data_hash = btoa(JSON.stringify(tmp)); 
+  this.children().eq(index).remove();  
+  console.log(_data); 
+ } 
+
+	$.fn.dataRemoveByKey = function(key,value){
+		var tmp = JSON.parse(atob(_data_hash));
+		for (var i = 0; i < tmp.length; i++) {
+			if(value == tmp[i][key]){
+				tmp.splice(i, 1);
+				this.children().eq(i).remove();
+			}
+		}
+		_data_hash = btoa(JSON.stringify(tmp));
 	}
 
 	$(document).on('click','.page-link',function(){
@@ -200,7 +269,10 @@
 	});
 
 	function generatePagination(current,max){
-		if(max == 0) return;
+		if(max == 0){
+			$(_pageContainer).html("");
+			return;
+		}
 		current = parseInt(current);
 		$(_pageContainer).html(``);
 

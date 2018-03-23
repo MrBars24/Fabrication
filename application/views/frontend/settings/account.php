@@ -30,7 +30,7 @@
                                             <div class="col-4">
                                                 <span class="font-weight-bold">Username</span>
                                             </div>
-                                            <div class="col-8">
+                                            <div class="col-8 ">
                                                 <h5 class="text-dark form-control-settings-account-hide" data-value-target="username"><?= $_SESSION['user']->username ?></h5>
                                                 <input type="text" class="form-control form-control-settings-account d-none" name="username" value="<?= $_SESSION['user']->username ?>">
                                             </div>

@@ -4,3 +4,12 @@ application/config/database\.php
 
 attached/*
 application/views/qazwsx\.php
+
+\.idea/
+
+efab\.sublime-workspace
+
+efab\.sublime-project
+
+application/third_party/vendor/
+application/third_party/composer.lock

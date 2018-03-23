@@ -7,11 +7,11 @@
                         <h3 class="box-title m-b-20">Sign In</h3>
                         <div class="form-group ">
                             <div class="col-xs-12">
-                                <input class="form-control" type="text" required="" placeholder="Username" name="username"> </div>
+                                <input class="form-control" type="text" required="" placeholder="Username" name="username" > </div>
                         </div>
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <input class="form-control" type="password" required="" placeholder="Password" name="pwd"> </div>
+                                <input class="form-control" type="password" required="" placeholder="Password" name="pwd" > </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12 font-14">
@@ -38,96 +38,55 @@
                                 <div>Don't have an account? <a href="pages-register.html" class="text-info m-l-5"><b>Sign Up</b></a></div>
                             </div>
                         </div>
-                    </form>
-                    <form class="form-horizontal" id="recoverform" action="index.html">
-                        <div class="form-group ">
-                            <div class="col-xs-12">
-                                <h3>Recover Password</h3>
-                                <p class="text-muted">Enter your Email and instructions will be sent to you! </p>
-                            </div>
-                        </div>
-                        <div class="form-group ">
-                            <div class="col-xs-12">
-                                <input class="form-control" type="text" required="" placeholder="Email">
-                            </div>
-                        </div>
-                        <div class="form-group text-center m-t-20">
-                            <div class="col-xs-12">
-                                <button class="btn btn-primary btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Reset</button>
-                            </div>
-                        </div>
                     <?= form_close(); ?>
                 </div>
             </div>
         </div>
-		<div class="col-7 pl-5">
-			<h3>Register a Fabricator account</h3>
-			<p>Register to post jobs and projects and begin contacting shop detailers right away.</p>
-			<ul>
-			    <li>It's fast and easy
-			      you can be done in 60 seconds</li>
-			    <li>Get responses in hours
-			      and sometimes in minutes</li>
-				<li>e-fab certified Shop Detailers waiting to bid on your jobs.</li>
-			    <li>No startup fees. No commitment.</li>
-			</ul>
-			<h3>Register a Shop Detailer account</h3>
-			<p>Register and complete your profile to gain access to thousands of online jobs and projects.</p>
-			<ul>
-				<li>No registration fee.</li>
-				<li>Free online certifications.</li>
-				<li>Hundreds of new jobs every day.</li>
-			  	<li>Negotiate a price and start work instantly!</li>
-			</ul>
-	        <button class="btn btn-info  text-uppercase waves-effect waves-light" type="submit">Get Started Today</button>
+		<div class="card col-5 offset-1 pl-5">
+			<?= form_open('register/member',array('class'=>'form-material form-horizontal', 'id'=>'form-exp')) ?>
+                <h3 class="font-weight-bold mt-3 font-13"> Your New Account Details </h3>
+                <div class="row p-1">
+                    <div class="col-6 form-group">
+                        <input id="firstname-focus" type="text" class="form-control" placeholder="Firstname" name="firstname">
+                    </div>
+                    <div class="col-6 form-group">
+                        <input type="text" class="form-control" placeholder="Lastname" name="lastname">
+                    </div>
+                    <div class="col-12 form-group">
+                        <input type="text" class="form-control" placeholder="Username" name="username">
+                    </div>
+                    <div class="col-12 form-group">
+                        <input type="text" class="form-control" placeholder="Email Address" name="email">
+                    </div>
+                    <div class="col-6 form-group">
+                        <input type="password" class="form-control" placeholder="Password" name="pwd">
+                    </div>
+                    <div class="col-6 form-group">
+                        <input type="password" class="form-control" placeholder="Re-Type Password" name="rpwd">
+                    </div>
+                </div>
+                <div class="form-group mb-0">
+                    <div class="checkbox checkbox-success">
+                        <input id="chk-terms" type="checkbox" name="terms">
+                        <label for="chk-terms">I accept the Terms and Conditions </label>
+                    </div>
+                </div>
+                <div class="form-group mb-0">
+                    <div class="checkbox checkbox-success">
+                        <input id="chk-offers" type="checkbox">
+                        <label for="chk-offers">I want to receive personalized offers by your site</label>
+                    </div>
+                </div>
+                <div class="form-group mb-0">
+                    <div class="checkbox checkbox-success">
+                        <input id="chk-partners" type="checkbox">
+                        <label for="chk-partners">Allow partners to send me personalized offers and related services</label>
+                    </div>
+                </div>
+				<div class="d-flex justify-content-center">
+	        		<button class="btn btn-info my-2 waves-effect waves-light" type="submit">Get Started Today</button>
+				</div>
+			<?= form_close(); ?>
 		</div>
 	</div>
 </div>
-
-
-
-<div class="login-box card">
-                <div class="card-body">
-                    <form class="form-horizontal form-material" id="loginform" action="index.html">
-                        <h3 class="box-title m-b-20">Sign Up</h3>
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <input class="form-control" type="text" required="" placeholder="Name">
-                            </div>
-                        </div>
-                        <div class="form-group ">
-                            <div class="col-xs-12">
-                                <input class="form-control" type="text" required="" placeholder="Email">
-                            </div>
-                        </div>
-                        <div class="form-group ">
-                            <div class="col-xs-12">
-                                <input class="form-control" type="password" required="" placeholder="Password">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <input class="form-control" type="password" required="" placeholder="Confirm Password">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-md-12">
-                                <div class="checkbox checkbox-success">
-                                    <input id="checkbox-signup" type="checkbox">
-                                    <label for="checkbox-signup"> I agree to all <a href="#">Terms</a></label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group text-center m-t-20">
-                            <div class="col-xs-12">
-                                <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Sign Up</button>
-                            </div>
-                        </div>
-                        <div class="form-group m-b-0">
-                            <div class="col-sm-12 text-center">
-                                <div>Already have an account? <a href="pages-login.html" class="text-info m-l-5"><b>Sign In</b></a></div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>

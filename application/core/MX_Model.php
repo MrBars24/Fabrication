@@ -3,6 +3,7 @@ class MX_Model extends CI_Model{
 
     protected $select = "";
     protected $likes;
+    protected $where;
     protected $pos;
 
     function __construct(){
@@ -16,18 +17,18 @@ class MX_Model extends CI_Model{
      *
      * Function for get data for index page (support pageination)
      *
-     * @param	string	$table    DB table
-     * @param	string	$limit    DB limit
-     * @param	string	$offset   DB offset
-     * @param	string	$orderby  DB order by field. Default is 'timestamp_create'
-     * @param	string	$sort     DB sort by asc or desc. Default is 'desc'
-     * @param	string	$search_sql    DB where condition. NULL if not need. Example "name='Joe' AND status LIKE '%boss%' OR status1 LIKE '%active%" for string. And array('field'=>'value') for array
-     * @param	string	$groupby    DB group by field. NULL if not need
-     * @param	string	$join_db   Table to join or NULL
-     * @param	string	$join_where   Join condition or NULL
-     * @param	string	$join_type   Join type ('LEFT', 'RIGHT', 'OUTER', 'INNER', 'LEFT OUTER', 'RIGHT OUTER') or NULL
-     * @param	string	$sel_field   DB field select. Default is (*)
-     * @return	array
+     * @param   string  $table    DB table
+     * @param   string  $limit    DB limit
+     * @param   string  $offset   DB offset
+     * @param   string  $orderby  DB order by field. Default is 'timestamp_create'
+     * @param   string  $sort     DB sort by asc or desc. Default is 'desc'
+     * @param   string  $search_sql    DB where condition. NULL if not need. Example "name='Joe' AND status LIKE '%boss%' OR status1 LIKE '%active%" for string. And array('field'=>'value') for array
+     * @param   string  $groupby    DB group by field. NULL if not need
+     * @param   string  $join_db   Table to join or NULL
+     * @param   string  $join_where   Join condition or NULL
+     * @param   string  $join_type   Join type ('LEFT', 'RIGHT', 'OUTER', 'INNER', 'LEFT OUTER', 'RIGHT OUTER') or NULL
+     * @param   string  $sel_field   DB field select. Default is (*)
+     * @return  array
      */
 
     public function fields($sql){
@@ -37,6 +38,10 @@ class MX_Model extends CI_Model{
     public function like($like,$position='both'){
         $this->likes = $like;
         $this->pos = $position;
+    }
+
+    public function rawWhere($where){
+        $this->where = $where;
     }
 
     public function find($id){
@@ -77,7 +82,7 @@ class MX_Model extends CI_Model{
     public function getIndexDataCount($table, $limit = 0, $offset = 0, $orderby = '', $sort = '', $search_sql = '', $groupby = '', $join_db = '', $join_where = '', $join_type = '', $sel_field = '*'){
         $q = $this->getData($table, $limit, $offset, $orderby, $sort, $search_sql, $groupby, $join_db, $join_where, $join_type, $sel_field);
 
-        if($limit != 0){
+        if($limit != 0 && $q['total'] > 0){
             $max_page = ceil($q['total'] / $limit);
         }else{
             $max_page = 0;
@@ -108,6 +113,17 @@ class MX_Model extends CI_Model{
             }else{
                 $this->db->where($search_sql);
             }
+        }
+
+        if(!empty($this->where)){
+            if(is_array($this->where)){
+                foreach($this->where as $key => $value){
+                    $this->db->where($key, $value);
+                }
+            }else{
+                $this->db->where($this->where);
+            }
+            $this->where = null;
         }
 
         if(!empty($this->likes)){
@@ -147,10 +163,13 @@ class MX_Model extends CI_Model{
                 );
                 return $tmp;
             }else{
-                return FALSE;
+                return array(
+                    "total" => 0,
+                    "data" => []
+                );
             }
         }else{
-            return FALSE;
+            return [];
         }
         unset($query, $row);
     }
@@ -170,6 +189,16 @@ class MX_Model extends CI_Model{
             } else {
                 /* $search = "name='Joe' AND status LIKE '%boss%' OR status1 LIKE '%active%'") */
                 $this->db->where($search_sql);
+            }
+        }
+
+        if(!empty($this->where)){
+            if(is_array($this->where)){
+                foreach($this->where as $key => $value){
+                    $this->db->where($key, $value);
+                }
+            }else{
+                $this->db->where($this->where);
             }
         }
 

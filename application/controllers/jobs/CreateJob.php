@@ -1,4 +1,4 @@
-	<?php
+<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class CreateJob extends MX_Controller {
@@ -6,6 +6,8 @@ class CreateJob extends MX_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->template->set_template("default");
+		$this->load->model('user_model');
+		$this->load->model('job_model');
 	}
 
 	public function index(){
@@ -20,6 +22,8 @@ class CreateJob extends MX_Controller {
 
         );
         $js = array(
+			"assets/plugins/dropzone-master/dist/dropzone.js",
+			"assets/default/custom/js/create-job.js",
             "assets/plugins/moment/moment.js",
             "assets/plugins/timepicker/bootstrap-timepicker.min.js",
             "assets/plugins/bootstrap-daterangepicker/daterangepicker.js",
@@ -32,21 +36,32 @@ class CreateJob extends MX_Controller {
 			"assets/plugins/select2/dist/js/select2.full.min.js",
 			"assets/plugins/styleswitcher/jQuery.style.switcher.js",
 			"assets/plugins/dropify/dist/js/dropify.min.js",
-			"assets/plugins/dropzone-master/dist/dropzone.js",
-			"assets/default/custom/js/create-job.js"
         );
         $this->template->append_css($css);
 		$this->template->append_js($js);
 
 		$this->load->model('Industry_model');
+		$this->load->model('User_model');
+
 
 		$industries = $this->Industry_model->getIndustries();
 		$this->template->load_sub('industries', $industries);
+		$this->template->load_sub('summary', $this->job_model->getSummary());
         $this->template->load('frontend/jobs/create_job');
 	}
 
 	public function createJob(){
-		$fabricator_id = $_SESSION['user']->id;
+		header("Content-Type:application/json");
+		$summary = $this->job_model->getSummary();
+		if($summary->my_posts >= $summary->max_post){
+			echo json_encode(array(
+				'success' => FALSE,
+				'error' => "account_type",
+				'message' => "You've reach the maximum amount of post."
+			));
+			exit;
+		}
+		$fabricator_id = auth()->id;
         $title = $this->input->post('title');
         $description = $this->input->post('description');
         $slug = $this->slug($title);
@@ -56,10 +71,15 @@ class CreateJob extends MX_Controller {
         $project_end = date("Y-m-d h:i:s", strtotime(substr($this->input->post('project'), -10)));
         $bidding_start = date("Y-m-d ",strtotime(substr($this->input->post('bidding'), 0,10)));
         $bidding_end = date("Y-m-d ",strtotime(substr($this->input->post('bidding'), -10)));
-
+		$approx_tonnes = $this->input->post('tonnes');
+		$location = $this->input->post('location');
+		$project_category = $this->input->post('industry');
         $data = array(
             'fabricator_id' => $fabricator_id,
             'title' => $title,
+            'project_category' => $project_category,
+            'location' => $location,
+            'approx_tonnes' => $approx_tonnes,
             'description' => $description,
             'budget_min' => $budget_min,
             'budget_max' => $budget_max,
@@ -69,6 +89,7 @@ class CreateJob extends MX_Controller {
             'bidding_expire_at' => $bidding_end,
             'slug' => $slug,
         );
+
 		$storeFolder = 'attached';
 		$files = array();
 		if (!empty($_FILES)) {
@@ -85,9 +106,9 @@ class CreateJob extends MX_Controller {
 			          	array_push($files,array("file"=>"/".$targetFile));
 			        }
 		      	}
-				$this->load->model('job_model');
 				$r = $this->job_model->createJob($data);
 				$a = $this->job_model->createAttached($files,$r);
+				$this->user_model->updateUserSession();
 
 				if($r && $a){
 					echo json_encode( array(
@@ -95,21 +116,16 @@ class CreateJob extends MX_Controller {
 					));
 				}
 			}
+		}else{
+			$r = $this->job_model->createJob($data);
+			$this->user_model->updateUserSession();
+
+			echo json_encode( array(
+				'success' => 201
+			));
 		}
-		// $this->load->library('upload', $config);
-        // $config['upload_path']          = './uploads/attached/';
-        // $config['allowed_types']        = '*';
-        // $config['max_size']             = 100;
-	    // $config['max_width']            = 1024;
-	    // $config['max_height']           = 768;
-		// if(!$this->upload->do_upload('userfile')){
-		// 	echo json_encode(array(
-		// 		'success' => false,
-		// 		'error' => $this->upload->display_errors()
-		// 	));
-		// }
-		// else{
-		// }
+
+
 	}
 
 	function slug($text){

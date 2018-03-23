@@ -6,51 +6,105 @@ class Portfolio extends MX_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->template->set_template("default");
-				
-		$js = array(
-			"assets/default/custom/js/settings/settings-training.js"
-		);
-		$this->template->set_additional_js($js);
+        $this->load->model('portfolio_model');
 	}
 
       
 	public function index()
 	{	$js = array(
-			"assets/default/custom/js/settings/settings-portfolio.js",
-			"assets/default/js/toastr.js",
-			"assets/plugins/toast-master/js/jquery.toast.js"
+            "assets/admin/custom/js/bars-datatable.js",
+            "assets/plugins/moment/moment.js",
+			"assets/plugins/toastr/toastr.js",
+            "assets/global.js",
+            "assets/plugins/dropzone-master/dist/dropzone.js",
+            "assets/plugins/dropify/dist/js/dropify.min.js",
+			"assets/default/custom/js/settings/portfolio-settings.js"
 		);
 		$css = array(
+            "assets/plugins/dropzone-master/dist/dropzone.css",
+            "assets/plugins/dropify/dist/css/dropify.min.css",
 			"assets/plugins/toast-master/css/jquery.toast.css" 
 		);
 
 		$this->template->append_js($js);
 		$this->template->append_css($css);
-		$this->load->model('portfolio_model');
-		$data = $this->portfolio_model->getAllPortfolio();
-		
-		$this->template->load_sub('portfolios', $data);
-		$this->template->load('frontend/settings/portfolio');
+		//$data = $this->portfolio_model->getAllPortfolio();
+		$this->load->model('industry_model');
+		$industry = $this->industry_model->getIndustries();
+		//$this->template->load_sub('portfolios', $data);
+		$this->template->load_sub('industries', $industry);
+		$this->template->load('frontend/settings/portfolio-settings');
 		
 		
 	}
-	public function showPortfolio($id){	
-			$this->load->model('portfolio_model');
-			$data = $this->portfolio_model->getPortfolio($id);
-			if($data){
-				return json(
-					array(
-						'success' => 200,
-						'data' => $data
-				),200);
-			}
-			else{
-				return json(
-					array(
-						'success' => FALSE
-					),500);
-			}
+	public function fetch(){
+		header("Content-Type:application/json");
+		$portfolioList = $this->portfolio_model->all();
+		echo json_encode($portfolioList);
+	}
+
+	function store(){
+		 header("Content-Type:application/json");
+            $this->form_validation->set_rules('title', 'Title', 'required');
+            $this->form_validation->set_rules('description', 'Description', 'required');
+
+            if($this->form_validation->run() == FALSE){
+                $error = $this->form_validation->error_array(); 
+                echo json_encode( array(
+                    'success' => FALSE,
+                    'errors' => $error
+                ));
+            }
+        else{
+            $data = array(
+                "project_name" => $this->input->post('title'),
+                "description" => $this->input->post('description'),
+                "category" => $this->input->post('category')
+            );
+
+            if($res = $this->portfolio_model->save($data)){
+                echo json_encode(array("success" => TRUE,"data" => $res));
+            }else{
+                echo json_encode(array("success" => FALSE));
+            }
+	   }
+    }
+
+	function update($id){
+		header("Content-Type:application/json");
+            $this->form_validation->set_rules('title', 'Title', 'required');
+            $this->form_validation->set_rules('description', 'Description', 'required');
+
+            if($this->form_validation->run() == FALSE){
+                $error = $this->form_validation->error_array(); 
+                echo json_encode( array(
+                    'success' => FALSE,
+                    'errors' => $error
+                ));
+            }
+        else{
+		$data = array(
+                "project_name" => $this->input->post('title'),
+                "description" => $this->input->post('description'),
+                "category" => $this->input->post('category')
+            );
+
+		if($res = $this->portfolio_model->update($id,$data)){
+			echo json_encode(array("success" => TRUE, "data" => $res));
+		}else{
+			echo json_encode(array("success" => FALSE));
 		}
+	}
+}
+
+	function destroy($id){
+		header("Content-Type:application/json");
+		if($this->portfolio_model->destroy($id)){
+			echo json_encode(array("success" => TRUE));
+		}else{
+			echo json_encode(array("success" => FALSE));
+		}
+	}
 
 
 

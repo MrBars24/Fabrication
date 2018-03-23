@@ -12,9 +12,6 @@ class Home extends MX_Controller {
 			"assets/plugins/bootstrap/css/bootstrap.min.css",
 			"assets/default/css/style.css",
 			"assets/default/css/colors/blue.css",
-
-
-			
 		);
 
 		$this->template->set_additional_css($css);
@@ -101,6 +98,7 @@ class Home extends MX_Controller {
 						exit;
 					}
 					else{
+						$this->user_model->setLoginStamp($user->id);
 						$this->session->set_userdata(array("user"=>$user, 'dashboard'=>'work'));
 						return json(array(
 							"success" => 200,
@@ -119,10 +117,12 @@ class Home extends MX_Controller {
 			echo json_encode(array(
 				"success"=>true
 			));
+			exit;
 		}else{
 			echo json_encode(array(
 				"success"=>false
 			));
+			exit;
 		}
 	}
 
@@ -138,12 +138,15 @@ class Home extends MX_Controller {
 				"success" => FALSE,
 				"errors" => $errors
 			));
+			exit;
 		}
 		else{
+			$this->load->model('admin/package_model');
+			$package = $this->package_model->getDefault();
 			$firstname = $this->input->post("firstname");
 			$lastname = $this->input->post("lastname");
 			$dataSubmitMember = array(
-				"account_type" => "free",
+				"account_type" => $package->id,
 				"fullname" => "$firstname" . " " . "$lastname",
 			);
 			$id = $this->user_model->submitMember($dataSubmitMember);
@@ -167,7 +170,7 @@ class Home extends MX_Controller {
 					$this->session->set_userdata(array('user' => $row));
 
 					echo json_encode(array(
-						"success" => 201
+						"success" => TRUE
 					));
 					exit;
 				}
@@ -176,7 +179,7 @@ class Home extends MX_Controller {
 			echo json_encode(array(
 				"success" => FALSE
 			));
-
+			exit;
 		}
 	}
 
