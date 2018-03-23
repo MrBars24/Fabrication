@@ -18,12 +18,12 @@
                                             <div class="pricing-header">
                                                 <h4 class="price-lable text-white bg-warning">Popular</h4>
                                                 <h4 class="text-center"><?= $i['package_name']; ?></h4>
-                                                <h2 class="text-center"><span class="price-sign">$</span>44.50</h2>
+                                                <h2 class="text-center"><span class="price-sign">$</span><?= $i['package_price']; ?></h2>
                                                 <p class="uppercase">per month</p>
                                             </div>
                                             <div class="price-table-content">
-                                                <div class="price-row">FREQUENT USE</div>
-                                                <div class="price-row px-3"> View all Attachments + up to 70 Bids</div>
+                                                <div class="price-row"><?= $i['package_desc']; ?></div>
+                                                <div class="price-row px-3"><?= $i['package_include']; ?></div>
                                                 <div class="price-row">
                                                     <button class="btn btn-lg btn-info waves-effect waves-light m-t-20">Sign up</button>
                                                 </div>
