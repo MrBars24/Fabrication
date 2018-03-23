@@ -13,9 +13,14 @@ class Test extends MX_Controller {
 	}
 
 	public function pusher(){
-		$this->load->library('pusher');
+		$this->load->library('fupload');
+		$this->fupload->setFolder('test');
+		$this->fupload->setAcceptedType('image/jpeg');
+		$data = $this->fupload->processUpload('up');
+		print_r($data);
+		/*$this->load->library('pusher');
 		$this->pusher->setMessage('message','test');
-		$this->pusher->push('try');
+		$this->pusher->push('try');*/
 		/*$options = array(
 		    'cluster' => 'ap1',
 		    'encrypted' => true
