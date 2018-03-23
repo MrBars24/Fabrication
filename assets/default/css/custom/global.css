@@ -77,3 +77,23 @@
     width: 100%;
     transform: translate(-50%, -20%);
 }
+
+.content-with-hover-actions {
+    position: relative;
+}
+
+.hover-content {
+    display: none;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.hover-content .inner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.content-with-hover-actions:hover .hover-content {
+    display: block;
+}

@@ -156,7 +156,7 @@ $route['how-it-works/expert'] = 'welcome/howExpert';
 $route['about'] = 'welcome/about';
 
 //Contact Us
-$route['pricing'] = 'welcome/pricing';
+$route['pricing']['GET'] = 'pricing';
 $route['submit-contact-us'] = 'welcome/submitContactUs';
 
 //Training
@@ -240,6 +240,8 @@ $route['settings/training']['get'] = 'settings/Training/index';
 $route['settings/account/basic']['POST'] = "settings/Account/updateBasic";
 $route['settings/account/public-basic/(:num)']['POST'] = "settings/PublicProfile/updatePublicProfile/$1";
 
+$route['settings/account/avatar']['POST'] = "settings/PublicProfile/avatar";
+
 $route['settings/account/industries']['POST'] = "settings/Account/addIndustry";
 $route['settings/account/public-industries/(:num)']['POST'] = "settings/PublicProfile/updatePublicIndustry/$1";
 
@@ -271,6 +273,7 @@ $route['notifications']['get'] = 'notifications/Notification/index';
 
 // ratings
 $route['reviews']['post'] = 'member/Overview/submitReviews';
+$route['reviews/(:num)']['get'] = 'member/Overview/getReviews/$1';
 // Search
 $route['search/member']['get'] = 'member/Search/result';
 $route['search/jobs']['get'] = 'jobs/Search/result';
