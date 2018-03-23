@@ -1,7 +1,63 @@
 Dropzone.autoDiscover = false;
 $(document).ready(function(){
-    var imageDelete = [];
-        
+        var imageDelete = [];
+        var ref = null;
+        var action = '/settings/portfolio/create';
+    var index = null;
+    var table = $("#portfolio-container").initTable({
+        url:"/settings/portfolio/list",
+        pageContainer:".pagination-bars",
+        render:function(data){
+            var container = ``;
+            if(data.length > 0){
+                data.forEach(function(obj,index){
+                    var path = (obj.attachments[0] == undefined) ? "/attached/placeholder-image.png" : obj.attachments[0].path;
+                    container += `
+                <div class="col-sm-4" id="portfolio-id">
+                    <div class="el-card-item">
+                        <div class="el-card-avatar el-overlay-1 mb-1">
+                                <img src="`+ path +`" alt="user" class="img-fluid rounded">
+                            <div class="el-overlay scrl-dwn">
+                                    <ul class="el-info">
+                                        <li>
+                                            <button class="btn border-white btn-outline image-popup-vertical-fit view">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
+                                        <li>
+                                            <button class="btn border-white btn-outline image-popup-vertical-fit edit">
+                                                <i class="icon-pencil"></i>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button class="btn border-white btn-outline image-popup-vertical-fit delete">
+                                                <i class="icon-trash"></i>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                        </div>
+                        <div class="el-card-content text-center">
+                            <h4 class="box-title" id="portfolio-title">${obj.project_name}</h4>
+                        </div>
+                    </div>
+                </div>
+            
+                    `
+                    ;
+                });
+            }else{
+                container = `<tr id="no-results">
+                                <td colspan="5">
+                                    <div id="project-empty-error"  class="py-5">
+                                           <h2   class="text-center text-muted">You haven't add any project yet.</h2>
+                                    </div>
+                                </td>
+                            </tr>`;
+            }
+
+            return container;
+        }
+    });
         var myDropzone = new Dropzone("#drop-file", {
         url: $('#form-portfolio-create').attr('action'),
         autoProcessQueue: false,
@@ -13,21 +69,24 @@ $(document).ready(function(){
         data: $("#form-portfolio-create").serializeArray(),
         //previewsContainer: '#my-awesome-dropzone',
         init:function(){
-            console.log($('#form-portfolio-create').attr('action'));
             var myDropzone = this;
-            
-            
+
             $(document).on("submit", "#form-portfolio-create", function(e){
+                e.preventDefault();
+                index = $(this).parents('#portfolio-id').index();
+                var that = $('#form-portfolio-create');
                 var serial = $('#form-portfolio-create').serializeArray();
-                //if(imageDelete.length > 0){
+                if($(this).attr('data-action') == "update"){
+                    action = $('#form-portfolio-create').attr('action');
+                    index = ref.parents('#portfolio-id').index();
+                }
+                if(imageDelete.length > 0){
                     serial.push({
                     name : 'attachments',
                     value : imageDelete
                 });
-                    console.log(imageDelete);
-                //}
-                console.log(myDropzone);
-                e.preventDefault();
+                }
+                
                 e.stopPropagation();
                 if (myDropzone.getQueuedFiles().length > 0) {
                     myDropzone.processQueue();
@@ -35,7 +94,63 @@ $(document).ready(function(){
             $.ajax({
 			url:action,
 			type:'POST',
-			data : serial
+			data : serial,
+            success:function(res){
+            if(res.success){
+                var d = res.data;
+                var path2 = (d.attachments[0] == undefined) ? "/attached/placeholder-image.png" : d.attachments[0].path;
+                var data = {
+                        data:d,
+                        template:`
+                <div class="col-sm-4" id="portfolio-id">
+                    <div class="el-card-item">
+                        <div class="el-card-avatar el-overlay-1 mb-1">
+                                <img src="`+ path2 +`" alt="user" class="img-fluid rounded">
+                            <div class="el-overlay scrl-dwn">
+                                    <ul class="el-info">
+                                        <li>
+                                            <button class="btn border-white btn-outline image-popup-vertical-fit view">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
+                                        <li>
+                                            <button class="btn border-white btn-outline image-popup-vertical-fit edit">
+                                                <i class="icon-pencil"></i>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button class="btn border-white btn-outline image-popup-vertical-fit delete">
+                                                <i class="icon-trash"></i>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                        </div>
+                        <div class="el-card-content text-center">
+                            <h4 class="box-title" id="portfolio-title">${d.project_name}</h4>
+                        </div>
+                    </div>
+                </div>
+                        `
+                    }
+                    if(that.attr('data-action') == "update"){
+                    $('.create-modal').modal('toggle');
+                        data.index = index;
+                        table.dataReplace(data);
+                        myDropzone.removeAllFiles(true);
+                        toastr.success('Portfolio update helllloo success', 'Success');
+
+                    }else{
+                        table.dataPrepend(data);
+                        myDropzone.removeAllFiles(true);
+                        toastr.success('Portfolio added', 'Success');
+                    }
+
+                    index = null;
+                    ref = null;
+                    $('.create-modal').modal('toggle');
+            }else{
+            alert('failed');}
+        }
 		});
                 }
 
@@ -49,6 +164,11 @@ $(document).ready(function(){
             });
 
             this.on("successmultiple", function(files, response) {
+                 index = $(this).parents('#portfolio-id').index();
+                 if($('#form-portfolio-create').attr('data-action') == "update"){
+                    action = $('#form-portfolio-create').attr('action');
+                    index = ref.parents('#portfolio-id').index();
+                }
                 var that = $('#form-portfolio-create');
                 if(!response.success){
                     $('#modal-job-error').modal('show');
@@ -56,13 +176,14 @@ $(document).ready(function(){
                     $('.create-modal').modal('toggle');
 					var d = response.data;
 					$('#no-results').remove('tr');
+                    var path = (d.attachments[0] == undefined) ? "/attached/placeholder-image.png" : d.attachments[0].path;
 					var data = {
 						data:d,
 						template:`
                 <div class="col-sm-4" id="portfolio-id">
                     <div class="el-card-item">
                         <div class="el-card-avatar el-overlay-1 mb-1">
-                                <img src="${d.attachments[0].path}" alt="user" class="img-fluid rounded">
+                                <img src="`+ path +`" alt="user" class="img-fluid rounded">
                             <div class="el-overlay scrl-dwn">
                                     <ul class="el-info">
                                         <li>
@@ -94,7 +215,8 @@ $(document).ready(function(){
                         data.index = index;
 						table.dataReplace(data);
                         myDropzone.removeAllFiles(true);
-                        toastr.success('Portfolio updated', 'Success');
+                        toastr.success('Portfolio updatasdasdka;lskded', 'Success');
+
 					}else{
 						table.dataPrepend(data);
                         myDropzone.removeAllFiles(true);
@@ -102,13 +224,12 @@ $(document).ready(function(){
 					}
 
 					index = null;
-					
+					ref = null;
 				
                 }
             });
 
             this.on("success", function(file, responseText) {
-                console.log(responseText.success);
                 
 
                 // //console.log(responseText);
@@ -136,74 +257,23 @@ $(document).ready(function(){
         }
     });
     
-	var index = null;
-	var table = $("#portfolio-container").initTable({
-		url:"/settings/portfolio/list",
-		pageContainer:".pagination-bars",
-		render:function(data){
-			var container = ``;
-			if(data.length > 0){
-				data.forEach(function(obj,index){
-                    var path = (obj.attachments[0] == undefined) ? "/attached/1521612068Desert.jpg" : obj.attachments[0].path;
-                    container += `
-                <div class="col-sm-4" id="portfolio-id">
-                    <div class="el-card-item">
-                        <div class="el-card-avatar el-overlay-1 mb-1">
-                                <img src="`+ path +`" alt="user" class="img-fluid rounded">
-                            <div class="el-overlay scrl-dwn">
-                                    <ul class="el-info">
-                                        <li>
-                                            <button class="btn border-white btn-outline image-popup-vertical-fit view">
-                                                <i class="fa fa-eye"></i>
-                                            </button>
-                                        <li>
-                                            <button class="btn border-white btn-outline image-popup-vertical-fit edit">
-                                                <i class="icon-pencil"></i>
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button class="btn border-white btn-outline image-popup-vertical-fit delete">
-                                                <i class="icon-trash"></i>
-                                            </button>
-                                        </li>
-                                    </ul>
-                                </div>
-                        </div>
-                        <div class="el-card-content text-center">
-                            <h4 class="box-title" id="portfolio-title">${obj.project_name}</h4>
-                        </div>
-                    </div>
-                </div>
-			
-					`
-					;
-				});
-			}else{
-				container = `<tr id="no-results">
-								<td colspan="5">
-									<div id="project-empty-error"  class="py-5">
-                                           <h2   class="text-center text-muted">You haven't add any project yet.</h2>
-                                    </div>
-								</td>
-							</tr>`;
-			}
 
-			return container;
-		}
-	});
 
 	$(document).on('click','.add',function(e,file){
 		$("input[name='title']").val('');
 		$("textarea[name='description']").val('');
         $("select[name= 'category'] option:selected");
         $(".create-modal").find('form').attr('data-action','');
+        $(".create-modal").find('form').attr('action','/settings/portfolio/create');
 		$(".modal-title").text('Add Project');
         $('.image-container-edit').html('');
         myDropzone.removeAllFiles(true);
+        myDropzone.options.url = '/settings/portfolio/create';
 	});
 
 	$(document).on('click','.edit',function(e){
 		index = $(this).parents('#portfolio-id').index();
+        ref = $(this);
 		var data = table.fetch(index);
 
 		loadModal(data);
@@ -234,14 +304,13 @@ $(document).ready(function(){
 	});
     
     $(document).on('click','.delete-image',function(e){
-        $(this).parents('#portfolio-id').find('img').toggleClass('img-delete');
-        index = $(this).parents('#portfolio-id').index();
+        $(this).parents('#portfolio-id-modal').find('img').toggleClass('img-delete');
+        index = $(this).parents('#portfolio-id-modal').index();
         $('.image-container-edit').dataRemove(index);
 
-        var imageFetch =  $(this).parents('#portfolio-id').find('.img-delete').attr('data-id');
+        var imageFetch =  $(this).parents('#portfolio-id-modal').find('.img-delete').attr('data-id');
         
         imageDelete.push(imageFetch);
-        console.log(imageDelete);
     });
 
 
@@ -250,7 +319,7 @@ $(document).ready(function(){
 		$(".create-modal").find('form').attr('data-action','update');
 		$(".create-modal").find('form').attr('action','/settings/portfolio/update/' + data.id);
 		$(".modal-title").text('Update ' + data.project_name);
-        action = '/settings/portfolio/update/' + data.id;
+        //action = '/settings/portfolio/update/' + data.id;
 		$("input[name='title']").val(data.project_name);
 		$("textarea[name='description']").val(data.description);
         $("select[name='category']").val(data.category);
@@ -263,7 +332,7 @@ $(document).ready(function(){
 			if(imageCount != null){
 				imageCount.forEach(function(obj,index){
 				container += `
-                <div class="col-sm-4" id="portfolio-id">
+                <div class="col-sm-4" id="portfolio-id-modal">
                     <div class="el-card-item">
                         <div class="el-card-avatar el-overlay-1 mb-1">
                                 <img src="${obj.path}" data-id="${obj.imgid}" alt="user" class="img-fluid rounded">

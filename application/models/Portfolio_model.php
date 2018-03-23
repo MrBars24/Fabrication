@@ -55,7 +55,7 @@ class Portfolio_model extends MX_Model{
 
         if($res){
             $data = $this->findBy("portfolios",$this->db->insert_id()); 
-            //$data->attachments = $this->getAttachment($data->id);    
+            $data->attachments = $this->getAttachment($data->id);    
             return $data;
         }else{
             return FALSE;
@@ -68,6 +68,7 @@ class Portfolio_model extends MX_Model{
 
         if($res){
             $data = $this->findBy("portfolios",$id);
+            $data->attachments = $this->getAttachment($data->id);
             return $data;
         }else{
             return FALSE;

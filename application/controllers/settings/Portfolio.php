@@ -62,48 +62,56 @@ class Portfolio extends MX_Controller {
 		 header("Content-Type:application/json");
             $this->form_validation->set_rules('title', 'Title', 'required');
             $this->form_validation->set_rules('description', 'Description', 'required');
-        if($this->form_validation->run() == FALSE){
-                $error = $this->form_validation->error_array(); 
-                echo json_encode( array(
-                    'success' => FALSE,
-                    'errors' => $error
-                ));
-            }else{
-        $storeFolder = 'attached';
-		$files = array();
-
-			if(is_array($_FILES['myFile'])){
-		      	$files = $_FILES['myFile'];
-
-		     	for($i=0; $i<count($files['name']); $i++){
-			        $tempFile = $_FILES['myFile']['tmp_name'][$i];
-			        $file = time() . $_FILES['myFile']['name'][$i];
-			        $targetPath = $storeFolder .DIRECTORY_SEPARATOR;  //4
-			        $targetFile =  $targetPath. $file;
-
-			        if(move_uploaded_file($tempFile,$targetFile)){
-			          	array_push($files,array("file"=>"/".$targetFile));
-			        }
-		      	}
-			}
-            $data = array(
-                "project_name" => $this->input->post('title'),
-                "description" => $this->input->post('description'),
-                "category" => $this->input->post('category'),
-                "user_id" => $_SESSION['user']->id
-                );
-                $res = $this->portfolio_model->save($data);
-                $id2=$res->id;
-                $a = $this->portfolio_model->createAttached($files, $id2);
-                $res->attachments = $this->portfolio_model->getAttachment($res->id);
-                if($res and $a){
-                    echo json_encode(array("success" => TRUE,"data" => $res));
-                    exit;
+            if($this->form_validation->run() == FALSE){
+                    $error = $this->form_validation->error_array(); 
+                    echo json_encode( array(
+                        'success' => FALSE,
+                        'errors' => $error
+                    ));
                 }else{
-                    echo json_encode(array("success" => FALSE));
-                    exit;
-                }
-    }}
+                    $storeFolder = 'attached';
+                    $files = array();
+                    $data = array(
+                        "project_name" => $this->input->post('title'),
+                        "description" => $this->input->post('description'),
+                        "category" => $this->input->post('category'),
+                        "user_id" => $_SESSION['user']->id
+                        );
+                        if(isset($_FILES['myFile'])){
+                            if(is_array($_FILES['myFile'])){
+                                $files = $_FILES['myFile'];
+
+                                for($i=0; $i<count($files['name']); $i++){
+                                    $tempFile = $_FILES['myFile']['tmp_name'][$i];
+                                    $file = time() . $_FILES['myFile']['name'][$i];
+                                    $targetPath = $storeFolder .DIRECTORY_SEPARATOR;  //4
+                                    $targetFile =  $targetPath. $file;
+
+                                    if(move_uploaded_file($tempFile,$targetFile)){
+                                        array_push($files,array("file"=>"/".$targetFile));
+                                    }
+                                }
+                            }
+                            $res = $this->portfolio_model->save($data);
+                            $id2=$res->id;
+                            $a = $this->portfolio_model->createAttached($files, $id2);
+                            $res->attachments = $this->portfolio_model->getAttachment($res->id);
+                            if($res and $a){
+                                echo json_encode(array("success" => TRUE,"data" => $res));
+                                exit;
+                            }else{
+                                echo json_encode(array("success" => FALSE));
+                                exit;
+                            }
+                        }else{
+                            if($res = $this->portfolio_model->save($data)){
+                                echo json_encode(array("success" => TRUE,"data" => $res));
+                            }else{
+                                echo json_encode(array("success" => FALSE));
+                            }
+            }
+    }
+}
 
 	function update($id){        
         header("Content-Type:application/json");
