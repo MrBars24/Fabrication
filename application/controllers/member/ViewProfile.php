@@ -12,12 +12,15 @@ class ViewProfile extends MX_Controller {
 		$this->load->model('public_model');
 	}
 	public function show($id){
+		check_login();
+
 		$css = array(
 			"/assets/default/css/custom/sections.css"
 		);
 		$js = array(
-			"/assets/default/custom/js/review.js",
-			"/assets/default/custom/js/invite.js",
+			"assets/admin/custom/js/bars-datatable.js",
+			"assets/default/custom/js/review.js",
+			"assets/default/custom/js/invite.js",
 		);
 
 		$this->template->append_css($css);
@@ -29,6 +32,10 @@ class ViewProfile extends MX_Controller {
 		$getJobInfo = $this->job_model->getAllJobInfo($id);
 		$skills = $this->public_model->getMySkills($id);
 		$review = $this->review_model->getReview($id);
+		// echo '<pre>';
+		// var_dump($review);
+		// echo '</pre>';
+		// exit;
 		$this->template->load_sub('skills', $skills);
 		$this->template->load_sub('review', $review);
 		$this->template->load_sub('jobAvailable', $getJobAvailable);

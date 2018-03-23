@@ -67,6 +67,9 @@ class Public_model extends MX_Model{
             return array();
         }
     }
+    function getUserDetails(){
+
+    }
     function checkSkills($skills){
         $query = $this->db->select('*')
                  ->where('id', $skills)

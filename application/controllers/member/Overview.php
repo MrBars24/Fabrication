@@ -7,6 +7,7 @@ class Overview extends MX_Controller {
 		parent::__construct();
 		$this->load->model('job_model');
 		$this->load->model('review_model');
+		$this->load->model('user_model');
 		$this->template->set_template("default");
 	}
 	public function index()
@@ -24,10 +25,12 @@ class Overview extends MX_Controller {
             'review_id' => $id
         );
         $result_data = $this->review_model->createReview($data);
-        if($result_data){
+		$user_details = $this->user_model->getUserDetails(auth()->id);
+		if($result_data){
             echo json_encode(array(
                 'success'=>true,
-                'data'=>$result_data
+                'data'=>$result_data,
+				'user_details'=>$user_details
             ));
             exit;
         }else{
@@ -37,4 +40,12 @@ class Overview extends MX_Controller {
             exit;
         }
     }
+	public function getReviews($id){
+		header("Content-Type:application/json");
+		$review = $this->review_model->getReview($id);
+		//dd($review);
+		if($review){
+			echo json_encode($review);
+		}
+	}
 }

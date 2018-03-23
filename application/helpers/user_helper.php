@@ -1,7 +1,7 @@
-<?php 
+<?php
 function check_login(){
 	if(!isset($_SESSION['user'])){
-		redirect('/login');
+		redirect('/login-register');
 	}
 
 	return $_SESSION['user'];
@@ -10,7 +10,7 @@ function check_login(){
 function check_user($userType){
 	$sess = check_login();
 	if($sess->user_type != $userType){
-		redirect('/login');
+		redirect('/login-register');
 	}
 }
 
