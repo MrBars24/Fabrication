@@ -124,7 +124,7 @@ class User_model extends MX_Model{
     function getMemberInfo($id){
         $this->db->select('*');
         $this->db->where('id', $id);
-        $query = $this->db->get('member');
+        $query = $this->db->get('user_details');
         if($query->num_rows() > 0){
             return $query->row();
         }
@@ -147,7 +147,6 @@ class User_model extends MX_Model{
             return $query->row();
         }
         return array();
-
     }
     // function getFabricatorInfo($id){
     //     $this->db->select('*');
@@ -170,5 +169,16 @@ class User_model extends MX_Model{
 
             $_SESSION['user'] = $row;
         }
+    }
+
+    public function updateAvatar($id, $filename) {
+        $this->db->trans_start();
+        $this->db->where('id', $id);
+        $this->db->update('member', array(
+            'avatar' => $filename
+        ));
+        $this->db->trans_complete();
+
+        return $this->db->trans_status();
     }
 }

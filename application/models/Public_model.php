@@ -53,6 +53,7 @@ class Public_model extends MX_Model{
         }
         return [];
     }
+
     function getMySkills($id){
         $query = $this->db->select('skills_member.id as smid, skills.id as sid, skills_member.user_id, skills_member.skills_id,skills.title, skills_member.created_at, skills_member.is_deleted')
                  ->from('skills_member')
@@ -80,6 +81,7 @@ class Public_model extends MX_Model{
             return [];
         }
     }
+
     function createSkills($skills){
             $data = array('title'=>$skills);
             $query = $this->db->insert('skills',$data);
@@ -91,6 +93,7 @@ class Public_model extends MX_Model{
             }
             return $this->db->insert_id();
     }
+
     function createSkillsInMember($data , $id = ""){
 
         $query = $this->db->where('id', $id)
@@ -98,6 +101,7 @@ class Public_model extends MX_Model{
 
         return $this->db->insert_id();
     }
+    
     function deleteSkills($id){
         $query = $this->db->where('id', $id)
                  ->set('is_deleted', 1)
