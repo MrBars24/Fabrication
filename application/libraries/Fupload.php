@@ -5,6 +5,9 @@ class Fupload{
 	private $store_folder;
 	private $files = array();
 	private $accepted = array();
+	private $crop_width = 80;
+	private $crop_height = 80;
+	const IMAGE_TYPES = array('image/gif','image/jpeg','image/jpg','image/png');
 
 
 	public function __construct(){
@@ -25,14 +28,19 @@ class Fupload{
 	* Process Upload
 	* @params $key --> name of the input file
 	*/
-	public function processUpload($key,$type = 'native'){
+	public function processUpload($key,$generate=FALSE,$type = 'native'){
 		if($type == 'native'){
-			return $this->nativeUpload($key);
+			return $this->nativeUpload($key,$generate);
 		}else{
 			$this->base64Upload();
 		}
 	}
 
+	/**
+	* 
+	* Revert uploaded files
+	* 
+	*/
 	public function revert(){
 		if(!empty($this->file)){
 			if(is_array($this->file)){
@@ -45,6 +53,11 @@ class Fupload{
 		}
 	}
 
+	/**
+	* 
+	* Set file types
+	* @params type --> array or string of accepted types of image
+	*/
 	public function setAcceptedType($type){
 		if(is_array($type)){
 			$this->accepted = array_merge($this->accepted,$type);
@@ -53,11 +66,56 @@ class Fupload{
 		}
 	}
 
+
+	/**
+	* 
+	* create thumbnail
+	*
+	*/
+	private function createThumbnail($key,$filename){
+		$folder = $this->store_folder .DIRECTORY_SEPARATOR.'thumbnails'.DIRECTORY_SEPARATOR;
+
+		if (!file_exists($folder)) {
+		    mkdir($folder, 0777, true);
+		}
+
+		$file = $this->store_folder .DIRECTORY_SEPARATOR. $filename;
+		list( $width,$height,$type ) = getimagesize( $file );
+		$this->calculateScale($width,$height);
+		$thumb = imagecreatetruecolor($this->crop_width,$this->crop_height);
+		
+		switch ($type) {
+            case IMAGETYPE_PNG:
+                $source = imagecreatefrompng($file);
+                $copy = imagecopyresampled($thumb,$source,0,0,0,0,$this->crop_width,$this->crop_height, $width,$height);
+                imagepng($thumb,$folder. 'thumb_' . $filename);
+                break;
+
+            case IMAGETYPE_GIF:
+                $source = imagecreatefromgif($file);
+                $copy = imagecopyresampled($thumb,$source,0,0,0,0,$this->crop_width,$this->crop_height, $width,$height);
+                imagegif($thumb,$folder. 'thumb_' . $filename);
+                break;
+
+            case IMAGETYPE_JPEG:
+                $source = imagecreatefromjpeg($file);
+                $copy = imagecopyresampled($thumb,$source,0,0,0,0,$this->crop_width,$this->crop_height, $width,$height);
+                imagejpeg($thumb,$folder. 'thumb_' . $filename);
+                break;
+
+            default:
+                trigger_error("Invalid Image Type", E_USER_ERROR);
+                break;
+        }
+
+        return "/".$folder. 'thumb_' . $filename;
+	}
+
 	private function base64Upload(){
 
 	}
 
-	private function nativeUpload($key){
+	private function nativeUpload($key,$generate){
 		$this->files = array();
 		if (!empty($_FILES)) {
 			if (!file_exists($this->store_folder)) {
@@ -84,14 +142,21 @@ class Fupload{
 					$size = $_FILES[$key]['size'][$i];
 
 			        if(move_uploaded_file($tempFile,$targetFile)){
+			        	$data = array(
+		          			"path"=>"/".$targetFile,
+		          			"filename"=>$file,
+		          			"extension"=>$ext,
+		          			"size"=>$size,
+		          			"type"=>$type
+		          		);
+
+			        	if($generate && in_array($type, self::IMAGE_TYPES)){
+			        		$path = $this->createThumbnail($key,$file);
+			          		$data['thumbnail'] = $path;
+			          	}
+
 			          	array_push($this->files,
-			          		array(
-			          			"path"=>"/".$targetFile,
-			          			"filename"=>$file,
-			          			"extension"=>$ext,
-			          			"size"=>$size,
-			          			"type"=>$type
-			          		)
+			          		$data
 			          	);
 			        }else{
 			        	$this->revert();
@@ -125,6 +190,10 @@ class Fupload{
           			$this->files["extension"]=$ext;
           			$this->files["size"]=$size;
           			$this->files["type"]=$type;
+          			if($generate && in_array($type, self::IMAGE_TYPES)){
+		        		$path = $this->createThumbnail($key,$file);
+		          		$this->files['thumbnail'] = $path;
+		          	}
 		        }else{
 		        	$this->revert();
 		        	return [];
@@ -135,6 +204,21 @@ class Fupload{
 		}
 
 		return [];
+	}
+
+	private function calculateScale($w,$h){
+		if($w > $h){
+			$tmp = $h / $this->crop_height;
+			$this->crop_width = $w / $tmp;
+		}else{
+			$tmp = $w / $this->crop_width;
+			$this->crop_height = $h / $tmp;
+		}
+	}
+
+	public function setScale($measure){
+		$this->crop_width = $measure;
+		$this->crop_height = $measure;
 	}
 
 }
