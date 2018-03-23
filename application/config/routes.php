@@ -156,7 +156,7 @@ $route['how-it-works/expert'] = 'welcome/howExpert';
 $route['about'] = 'welcome/about';
 
 //Contact Us
-$route['pricing'] = 'welcome/pricing';
+$route['pricing']['GET'] = 'pricing';
 $route['submit-contact-us'] = 'welcome/submitContactUs';
 
 //Training
