@@ -83,8 +83,11 @@
 }
 
 .hover-content {
-    background: rgba(0, 0, 0, 0.5);
     display: none;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.hover-content .inner {
     position: absolute;
     top: 50%;
     left: 50%;

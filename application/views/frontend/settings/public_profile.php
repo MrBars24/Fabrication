@@ -96,22 +96,48 @@
                                             <div class="row mb-2">
                                                 <div class="col-sm-4">
                                                     <div class="content-with-hover-actions">
-                                                        <img src="<?php echo auth()->user_details->avatar ?>" class="img-fluid avatar-preview" alt="Profile Picture">
-                                                        <span class="hover-content">
-                                                            <button type="button" class="btn btn-primary select-file">File</button>
-                                                            <input type="file" class="d-none" id="input-avatar" name="image">
-                                                        </span>
-                                                    </div>
-                                                    <div class="action-buttons mt-2">
-                                                        <button class="btn btn-success">Save</button>
+                                                        <img src="<?php echo auth()->user_details->avatar ?>" class="img-fluid avatar-preview" alt="">
+                                                        <div class="hover-content">
+                                                            <span class="inner">
+                                                                <button type="button" class="btn btn-dark select-file"><i class="fa fa-picture-o"></i></button>
+                                                                <input type="file" class="d-none" id="input-avatar" name="image">
+                                                            </span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        <?echo form_close() ?>
+                                        <?php echo form_close() ?>
                                     </li>
                                 </ul>
+                                    <!-- The Modal -->
+                                    <div class="modal fade" id="modal-crop-avatar">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
 
+                                            <!-- Modal Header -->
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Crop Image</h4>
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            </div>
+
+                                            <!-- Modal body -->
+                                            <div class="modal-body">
+                                                <img src="" class="cropper-image img-fluid">
+                                            </div>
+
+                                            <!-- Modal footer -->
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-success btn-save-avatar">Save</button>
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                            </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
     
+
+
                             <!-- Expertise -->
                             <div class="card">
                                 <div class="p-4">
