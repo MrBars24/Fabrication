@@ -77,17 +77,22 @@
                      <label id="description-error"></label>
                 </div>
                 <div class="form-group">
-                    <h5 class="font-weight-bold">Images</h5>
+                    <div class="col-sm-12">
+                        <h5 class="font-weight-bold">Images</h5>
+                        <div id="test" class="dropzone"></div>
+                        
+                    </div>
                   
                 </div>
                 <div class="row">
                     <div class="col-sm-6">
                         <h5 class="font-weight-bold">Date Started</h5>
-                        <input type="text" name="date_started" class="form-control date-picker-default" placeholder="mm/dd/yyyy">
+                        <input type="date" name="date_started" class="form-control date-picker-default" placeholder="mm/dd/yyyy">
                     </div>
+                    
                     <div class="col-sm-6">
                         <h5 class="font-weight-bold">Date Finished</h5>
-                        <input type="text" name="date_finished" class="form-control date-picker-default" placeholder="mm/dd/yyyy">
+                        <input type="date" name="date_finished" class="form-control date-picker-default" placeholder="mm/dd/yyyy">
                     </div>
                 </div>
                 

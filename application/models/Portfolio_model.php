@@ -18,9 +18,34 @@ class Portfolio_model extends MX_Model{
             $offset = $_GET['page'];
         }
 
-        $where = array("is_deleted"=>0);
-        $q = $this->getIndexDataCount("portfolios",$limit,$offset,'created_at','DESC',$where);
+        $where = array("portfolios.is_deleted"=>0);
+        //$q = $this->getIndexDataCount("portfolios",$limit,$offset,'created_at','DESC',$where);
+        $q = $this->getIndexDataCount("project_category as pc",$limit,$offset,'portfolios.created_at','DESC', $where,'', 'portfolios', 'pc.id = portfolios.category','','pc.id as pid,pc.display_name,portfolios.*');
+        
+        for($i=0; $i < count($q['data']); $i++){
+            $q['data'][$i]->attachments = $this->getAttachment($q['data'][$i]->id);    
+        }
+        
+        
+        return $q;
+    }
+    
+    
+    
+    function all2(){
+        $limit = 0;
+        $offset = 0;
+        if(isset($_GET['limit'])){
+            $limit = $_GET['limit'];
+        }
 
+        if(isset($_GET['page'])){
+            $offset = $_GET['page'];
+        }
+
+        $where = array("is_deleted"=>0,"attachable_type"=>'job');
+        $q = $this->getIndexDataCount("attachments",$limit,$offset,'created_at','DESC',$where);
+        
         return $q;
     }
 
@@ -29,7 +54,8 @@ class Portfolio_model extends MX_Model{
         $res = $this->db->insert("portfolios",$data);
 
         if($res){
-            $data = $this->findBy("portfolios",$this->db->insert_id());
+            $data = $this->findBy("portfolios",$this->db->insert_id()); 
+            $data->attachments = $this->getAttachment($data->id);    
             return $data;
         }else{
             return FALSE;
@@ -42,6 +68,7 @@ class Portfolio_model extends MX_Model{
 
         if($res){
             $data = $this->findBy("portfolios",$id);
+            $data->attachments = $this->getAttachment($data->id);
             return $data;
         }else{
             return FALSE;
@@ -54,7 +81,52 @@ class Portfolio_model extends MX_Model{
         $this->db->set("deleted_at",'NOW()',false);
         return $this->db->update("portfolios");
     }
+    function destroyAttachment($id){
+        $this->db->where("portfolio_id",$id);
+        $this->db->set("is_deleted",1);
+        $this->db->set("deleted_at",'NOW()',false);
+        return $this->db->update("portfolio_attachments");
+    }
+    function deleteAttached($attachId){
+        $id = explode(',',$attachId);
+        $this->db->where_in("id",$id);
+        $this->db->set("is_deleted",1);
+        $this->db->set("deleted_at",'NOW()',false);
+        return $this->db->update("portfolio_attachments");
+    }
+    
+    function createAttached($files, $id2){
+        for($i=0; $i<count($files['name']); $i++){
+            
+            $data = array(
+                'filename' => $files['name'][$i],
+                'path' => $files[$i]['file'],
+                'portfolio_id' => $id2
+            );
+            $query = $this->db->insert('portfolio_attachments', $data);
+        }
+        return $query;
+    }
 
-
+    
+    function getAttachment($id){
+        $this->db->select('filename, path, portfolio_id, id as imgid');
+        $this->db->where('portfolio_id', $id);
+        $this->db->where('is_deleted',0);
+        $query = $this->db->get('portfolio_attachments');
+        if($query->num_rows() > 0){
+            return $query->result();
+        }
+        return array();
+    }
+    /*function getAttachment($id){
+        $this->db->select('filename, path, portfolio_id');
+        $this->db->where_in('portfolio_id', $id);
+        $query = $this->db->get('portfolio_attachments');
+        if($query->num_rows() > 0){
+            return $query->result_array();
+        }
+        return array();
+    }*/
 
 }
