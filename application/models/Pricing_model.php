@@ -17,7 +17,7 @@ class Pricing_model extends MX_Model{
         if($query->num_rows() < 1) {
             return array();
         }
-        return $query->result_array();
+        return $query->result();
     }
 
 }
