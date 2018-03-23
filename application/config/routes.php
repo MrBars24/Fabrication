@@ -240,6 +240,8 @@ $route['settings/training']['get'] = 'settings/Training/index';
 $route['settings/account/basic']['POST'] = "settings/Account/updateBasic";
 $route['settings/account/public-basic/(:num)']['POST'] = "settings/PublicProfile/updatePublicProfile/$1";
 
+$route['settings/account/avatar']['POST'] = "settings/PublicProfile/avatar";
+
 $route['settings/account/industries']['POST'] = "settings/Account/addIndustry";
 $route['settings/account/public-industries/(:num)']['POST'] = "settings/PublicProfile/updatePublicIndustry/$1";
 

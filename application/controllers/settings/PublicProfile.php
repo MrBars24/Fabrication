@@ -23,6 +23,7 @@ class PublicProfile extends MX_Controller {
 			"assets/plugins/select2/dist/css/select2.min.css",
 			"assets/plugins/bootstrap-select/bootstrap-select.min.css",
 			"assets/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css",
+			"assets/plugins/cropper/cropper.min.css"
 		);
 		$js = array(
 			"assets/default/custom/js/settings/settings.js",
@@ -37,6 +38,7 @@ class PublicProfile extends MX_Controller {
 			"assets/plugins/switchery/dist/switchery.min.js",
 			"assets/plugins/multiselect/js/jquery.multi-select.js",
 			"assets/default/custom/js/settings/settings-public.js",
+			"assets/plugins/cropper/cropper.min.js"
 		);
 		$this->template->append_CSS($css);
 		$this->template->append_js($js);
@@ -69,6 +71,36 @@ class PublicProfile extends MX_Controller {
 			));
 		}
 	}
+
+	public function avatar() {
+		$this->load->model('User_model');
+		$this->load->library('Fupload');
+		$this->fupload->setFolder('uploads');
+		$this->fupload->setAcceptedType(['image/jpeg', 'image/png']);
+		$data = $this->fupload->processUpload('file', TRUE);
+
+		$result = $this->User_model->updateAvatar(auth()->id, $data['path']);
+
+		// Update the User Details in Session
+		$userdata = $this->session->userdata('user');
+		$userdata->user_details->avatar = $data['path'];
+		$this->session->set_userdata('user', $userdata);
+
+		if (!$result) {
+			return json(array(
+				'success' => false
+			), 500);
+		}
+
+		return json(array(
+			'success' => true,
+			'data' => array(
+				'image' => $data['path'],
+				'thumbnail' => $data['thumbnail']
+			)
+		));
+	}
+
 	public function getSkills(){
 		$r = $this->public_model->getSkills();
 		echo json_encode(array('results'=>$r));

@@ -197,6 +197,95 @@ $(document).ready(function(){
             }
 
         });
+    });
+
+    updateAvatar();
+
+    function updateAvatar() {
+        // Profile Photo Accepted Formats
+        var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.png)$/;
+        
+        // var $cropperImage = $('#modal-crop-avatar .cropper-image');
+        var $cropperImage = $('#form-upload-avatar .avatar-preview');
+
+        $(document).on('submit', '#form-upload-avatar', saveAvatar);
+
+        $(document).on('click', '#form-upload-avatar .select-file', function() {
+            $(this).next('input[type="file"]').trigger('click');
         });
+
+        $(document).on('change', '#form-upload-avatar input[name="image"]', function() {
+            var $imageInput = $(this);
+
+            if ($imageInput.val()) {
+
+                // Check if valid file
+                if (!regex.test($imageInput.val().toLowerCase())) {
+                    $imageInput.val('');
+                    toastr.error('Invalid File Selected', 'Warning');
+                    return;
+                }
+          
+                if (typeof (FileReader) == "undefined") {
+                    toastr.error('File Reader not Supported', 'Warning');
+                    return;
+                }
+          
+                var reader = new FileReader();
+                reader.onload = avatarImageLoaded;
+                reader.readAsDataURL(this.files[0]);
+              }
+
+        });
+
+        function avatarImageLoaded(e) {
+            $cropperImage.attr('src', e.target.result);
+
+
+            $cropperImage.cropper({
+              aspectRatio: 1 / 1,
+              viewMode: 1,
+              minCropBoxWidth: 200,
+              minCropBoxHeight: 200,
+              center: true,
+              scalable: true,
+              dragMode: 'crop',
+              crop: function(e) {
+              }
+            });
+
+            $cropperImage.on({
+                'zoom.cropper': function (e) {
+                    e.preventDefault();
+                }
+            });
+        }
+
+        function saveAvatar(e) {
+            e.preventDefault();
+
+            $cropperImage.cropper('getCroppedCanvas').toBlob(function (croppedimg) {
+                var formData = new FormData();
+                formData.append('file', croppedimg, $('#form-upload-avatar input[name="image"]').val().split('\\').pop());
+                formData.append('image_name', $('#form-upload-avatar input[name="image"]').val().split('\\').pop());
+          
+                $.ajax({
+                    url: '/settings/account/avatar',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        $cropperImage.cropper('destroy');
+                        toastr.success('Profile Picture Updated', 'Success');
+                        $cropperImage.attr('src', response.data.image);
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        toastr.error('Something went wrong', 'Error');
+                    }
+                });
+            });
+        }
+    }
 
 });
