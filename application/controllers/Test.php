@@ -16,7 +16,7 @@ class Test extends MX_Controller {
 		$this->load->library('fupload');
 		$this->fupload->setFolder('test');
 		$this->fupload->setAcceptedType('image/jpeg');
-		$data = $this->fupload->processUpload('up');
+		$data = $this->fupload->processUpload('up',TRUE);
 		print_r($data);
 		/*$this->load->library('pusher');
 		$this->pusher->setMessage('message','test');
