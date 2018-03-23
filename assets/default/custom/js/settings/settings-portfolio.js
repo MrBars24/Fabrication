@@ -1,12 +1,6 @@
+Dropzone.autoDiscover = false;
 $(document).ready(function() {
-
-             $('#myModal').on('hidden.bs.modal', function () {
-                $("#title-input-error").val('');
-                $("#description-input-area").val('');
-                $("#description-error").html('');
-                $("#title-error").html('');
-            });
-
+    
 $(document).on("submit", "#form-portfolio-create", function(e){
     e.preventDefault();
     var url = $(this).attr('action');
@@ -20,8 +14,8 @@ $(document).on("submit", "#form-portfolio-create", function(e){
                 $('#myModal').modal('hide');
                 $('#form-portfolio-create')[0].reset();
             var text = "You have successfully added your portfolio.";
-            var heading = "Success!!";
-            successtoast(text,heading);
+            var heading = "Success";
+            toastr.success(text, heading);
             $('#project-empty-error').html('');
             $("#portfolio-container").prepend(`<div class="col-sm-4" id="${result.id}">
                 <div class="el-card-item">
@@ -119,6 +113,7 @@ $(document).on("submit", "#form-portfolio-create", function(e){
         dataType: 'json',
         url: '/portfolio/update/'+id,
         success: function (result){
+            toastr.success('You have updated a portfolio', 'Success');
             $('#edit-portfolio').modal('hide');
             $('#form-portfolio-update')[0].reset();
             $("#"+id ).replaceWith(`<div class="col-sm-4" id="${id}">
@@ -207,6 +202,7 @@ $(document).on("submit", "#form-portfolio-create", function(e){
               }
                 $("#delete-portfolio").modal('hide');
                 $("#"+ id).remove();
+                toastr.error('You have deleted a porfolio.', 'Danger');
             }    
         });
     });
@@ -263,4 +259,5 @@ $(document).on("submit", "#form-portfolio-create", function(e){
                 }
         });            
     });
+    
 });
