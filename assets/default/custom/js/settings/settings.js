@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
     $(document).on("click", "[data-toggle=edit-settings-input]", function(){
-        $(this).html('Cancel');
+        $(this).html('Done');
         $(this).addClass('cancel-edit');
         var target = $(this).data('target');
         $(target).removeClass('d-none');

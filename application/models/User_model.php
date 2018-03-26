@@ -41,7 +41,7 @@ class User_model extends MX_Model{
 
     function submitUpdateFabricator($data, $id){
         $this->db->where('id', $id);
-        if($this->db->update('fabricators', $data)){
+        if($this->db->update('member', $data)){
             return TRUE;
         }else{
             return FALSE;
@@ -130,6 +130,7 @@ class User_model extends MX_Model{
         }
         return array();
     }
+    
     function getUserInfo($id){
         $this->db->select('id, email, username, user_type, user_id, firstname, lastname');
         $this->db->where('user_id', $id);

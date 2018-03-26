@@ -15,6 +15,7 @@ class Account extends MX_Controller {
 	}
 
 	public function index(){
+		//dd($_SESSION['user']->user_details);
 		$css = array(
 			"/assets/plugins/toast-master/css/jquery.toast.css",
 		);
@@ -28,11 +29,14 @@ class Account extends MX_Controller {
 		$this->template->append_js($js);
 		$id = $_SESSION['user']->user_id;
 		$this->load->model('User_model');
+		$this->load->library('Country');
 
 		$row = $this->User_model->getMemberInfo($id);
+		$countries = $this->country->get();
 
 		$_SESSION['user']->user_details = $row;
 		$this->template->load_sub('user_details', $row);
+		$this->template->load_sub('countries', $countries);
 		$this->template->load('frontend/settings/account');
 
 	}
@@ -49,11 +53,11 @@ class Account extends MX_Controller {
         $bday = $this->input->post('bday');
 		$user = array(
 			'username' => $username,
-			'email' => $email
-		);
-		$fab = array(
+			'email' => $email,
 			'firstname' => $firstname,
 			'lastname' => $lastname,
+		);
+		$fab = array(
 			'phone' => $phone,
 			'mobile' => $mobile,
 			'bday' => $bday
@@ -64,7 +68,7 @@ class Account extends MX_Controller {
 			$updateFabricator = $this->User_model->submitUpdateFabricator($fab, $id);
 			if($updateFabricator){
 				$row = $this->User_model->getUserInfo($id);
-				$row->user_details = $this->User_model->getFabricatorInfo($id);
+				$row->user_details = $this->User_model->getMemberInfo($id);
 				$this->session->set_userdata(array('user' => $row));
 				echo json_encode(array(
 					"success" => 200,
@@ -120,7 +124,7 @@ class Account extends MX_Controller {
 			'city' => $city,
 			'state' => $state ,
 			'country_id' => $country,
-			'timezone_id' => $timezone
+			// 'timezone_id' => $timezone
 		);
 
 		$r = $this->User_model->submitUpdateFabricator($data, $id);
