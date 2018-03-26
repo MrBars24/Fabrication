@@ -26,7 +26,7 @@
                         <?php }?>
                     <?php endif; ?>
                 </div>
-                <a href="<?php echo base_url('/jobs/create') ?>" class="btn btn-success btn-lg btn-block">Post Job</a>
+                <a href="<?php echo base_url('/jobs/create') ?>" class="btn btn-success btn-lg btn-block hire-12">Post Job</a>
                 <!-- <div class="card mt-3">
                     <div class="card-body">
                         <h4 class="card-title font-weight-bold mb-0">Active Contracts <span class="text-muted">(2)</span></h4>
@@ -74,13 +74,16 @@
                 <div class="card mt-3">
                     <div class="card-body">
                         <h4 class="card-title font-weight-bold mb-0">Recommended Shop Detailers</h4>
-                    </div>
+                    </div></div>
                     <div class="comment-widgets mb-0">
-                        <?php foreach(range(0,5) as $i): ?>
-                            <?php $this->load->view('frontend/partials/member_item') ?>
-                        <?php endforeach; ?>
+                        <div class="row">
+                            <?php foreach(range(0,5) as $i): ?>
+                                <?php $this->load->view('frontend/partials/member_item') ?>
+                            <?php endforeach; ?>
+                        </div>
+                        
                     </div>
-                </div>
+                
             <!-- End of Experts -->
         </div>
     </div>
