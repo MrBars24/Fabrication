@@ -2,13 +2,16 @@
     .ul-star li a{
         color:#99abb4;
     }
-    .ul-star:hover  .ratings_stars {
+  
+    .ul-star li:hover ~ li .ratings_stars {
+        color: #ddd;
+    }
+    
+    .ul-star:hover  li a {
         color: yellow;
     }
-    .ul-star li .ratings_stars:hover,
-    .ul-star li .ratings_stars:hover ~ .ul-star li .ratings_stars{
-        color: black;
-    }
+
+
 </style>
 <div class="tab-pane active show" id="overview" role="tabpanel">
     <div class="card-body">
