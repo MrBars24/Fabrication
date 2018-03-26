@@ -180,6 +180,29 @@
                     <!-- User profile and search -->
                     <!-- ============================================================== -->
                     <ul class="navbar-nav my-lg-0 d-flex align-items-center">
+                        <?php if(isset($_SESSION['user']) and $_SESSION['dashboard'] == 'hire'){ ?>
+                        <div class="btn-group">
+                            <li class="nav-item">
+                                <a class="nav-link dropdown-toggle text-muted text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <i class="fa fa-users"></i>
+                                 Hire</a>
+                                 <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="<?php echo base_url('work') ?>">Work</a>
+                                  </div>
+                            </li>
+                        </div>
+                        <?php }elseif(isset($_SESSION['user']) and $_SESSION['dashboard'] == 'work'){ ?>
+                        <div class="btn-group">
+                            <li class="nav-item">
+                                <a class="nav-link dropdown-toggle text-muted text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <i class="fa fa-user"></i>
+                                 Work</a>
+                                 <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="<?php echo base_url('hire') ?>">Hire</a>
+                                  </div>
+                            </li>
+                        </div>
+                        <?php }?>
+                    </ul>
+                    <ul class="navbar-nav my-lg-0 d-flex align-items-center">
                     <li class="nav-item dropdown show">
                             <a class="nav-link dropdown-toggle text-muted text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <i class="fa fa-bell"></i>
                                 <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>

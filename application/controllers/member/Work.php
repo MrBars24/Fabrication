@@ -36,7 +36,7 @@ class Work extends MX_Controller {
 		$this->template->load_sub('budget_filters', $budget_filters);
 		$this->template->load_sub('active_bids', $this->proposal_model->activeBidsCount());
 		
-        $_SESSION['dashboard'] = "hire";
+        $_SESSION['dashboard'] = "work";
         $this->template->load('frontend/member/work');
 	}
 

@@ -12,7 +12,7 @@
                         <div class="col-sm-12">
                             <div class="profiletimeline my-posted-job">
                                 <!-- Post Job List Item
-                                <?php $this->load->view('frontend/partials/posted_job_item') ?>
+                                <//?php $this->load->view('frontend/partials/posted_job_item') ?>
                                  End of Job List Item -->
                             </div>
                         </div>
