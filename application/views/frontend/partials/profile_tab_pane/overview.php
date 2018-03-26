@@ -1,14 +1,30 @@
 <style>
-    .ul-star li a{
-        color:#99abb4;
-    }
-    .ul-star:hover  .ratings_stars {
-        color: yellow;
-    }
-    .ul-star li .ratings_stars:hover,
-    .ul-star li .ratings_stars:hover ~ .ul-star li .ratings_stars{
-        color: black;
-    }
+.stars-outer{
+    display: inline-block;
+    position: relative;
+    font-family: FontAwesome;
+    margin-left: 1px;
+    letter-spacing: 2px;
+}
+
+.stars-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.stars-outer::before {
+    content: "\f006 \f006 \f006 \f006 \f006";
+    color: #99abb4;
+}
+
+.stars-inner::before {
+    content: "\f005 \f005 \f005 \f005 \f005";
+    color: #f8ce0b;
+}
+/******/
 </style>
 <div class="tab-pane active show" id="overview" role="tabpanel">
     <div class="card-body">
@@ -60,6 +76,7 @@
                         <li class="mr-1"><a href="#" class=" ratings_stars"><i class="fa fa-star"></i></a></li>
                         <li class="mr-1"><a href="#" class=" ratings_stars"><i class="fa fa-star"></i></a></li>
                     </ul>
+
                 </div>
                 <?= form_open("reviews", array('id'=>'form-reviews','class'=>'form-material')); ?>
                     <textarea class="form-control" name="message_review" rows="5" placeholder="Write Review"></textarea>
@@ -72,8 +89,58 @@
             </div>
             <hr>
         <?php endif; ?>
-
         <div class="card-body px-0">
+            <div class="d-flex">
+                <div class="col-3 d-flex flex-column align-items-center">
+                    <h1 class="display-1 font-weight-bold"><?= $star['avarageRating'] ?></h1>
+                    <div class="fa stars-outer">
+                        <div class="fa stars-inner" style="width:<?= $star['percentageRating'] ?>%;">
+                        </div>
+                    </div>
+                    <span><i class="fa fa-user"> <?= $star['countOverAll'] ?></i></span>
+                </div>
+                <div class="col-9">
+
+                    <ul class="list-style-type-none mb-0 ml-1">
+                        <li class="d-flex align-items-center mt-1">
+                            <div class="">
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center ml-1"> 1</div>
+                            <div class="px-1 ml-2   w-100"> - <?= $star['oneStar']; ?></div>
+                        </li>
+                        <li class="d-flex align-items-center mt-1">
+                            <div class="">
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div class=""> 2</div>
+                            <div class="px-1  ml-2   w-100"> - <?= $star['twoStar']; ?></div>
+                        </li>
+                        <li class="d-flex align-items-center mt-1">
+                            <div class="">
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div class="">3</div>
+                            <div class="px-1 ml-2   w-100"> - <?= $star['threeStar']; ?></div>
+                        </li>
+                        <li class="d-flex align-items-center mt-1">
+                            <div class="">
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div class="">4</div>
+                            <div class="px-1 ml-2   w-100"> - <?= $star['fourStar']; ?></div>
+                        </li>
+                        <li class="d-flex align-items-center mt-1">
+                            <div class="">
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div class="">5</div>
+                            <div class="px-1 ml-2   w-100"> - <?= $star['fiveStar']; ?></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
             <div class="profiletimeline" id="review-comment" data-id="<?= $user->id ?>"></div>
             <div class="pagination pagination-review-comment col-12 justify-content-center mb-4"></div>
         </div>
