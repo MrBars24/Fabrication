@@ -1,11 +1,3 @@
-<style>
-    .image-delete{
-        opacity:1 !important;
-        top:0 !important;
-    }
-    
-</style>
-
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
@@ -31,6 +23,10 @@
                                                 
                                                    
                                      </div>
+                                     <nav aria-label="Page navigation example" class="m-t-40">
+                                         <ul class="pagination pagination-bars d-flex justify-content-center">
+                                         </ul>
+                                      </nav>
 
                                    </div>
                                </div>

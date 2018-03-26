@@ -22,7 +22,7 @@ class Hire extends MX_Controller {
         $this->template->append_css($css);
         $this->template->append_js($js);
 
-		$_SESSION['dashboard'] = 'work';
+		$_SESSION['dashboard'] = 'hire';
 
 		$this->template->load_sub("active_jobs",$this->job_model->allOpen(TRUE));
         $this->template->load('frontend/member/hire');

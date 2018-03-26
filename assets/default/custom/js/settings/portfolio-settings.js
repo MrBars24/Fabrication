@@ -49,7 +49,7 @@ $(document).ready(function(){
                 container = `<tr id="no-results">
                                 <td colspan="5">
                                     <div id="project-empty-error"  class="py-5">
-                                           <h2   class="text-center text-muted">You haven't add any project yet.</h2>
+                                           <h2   class="text-center text-muted">You haven't add any portfolio yet.</h2>
                                     </div>
                                 </td>
                             </tr>`;

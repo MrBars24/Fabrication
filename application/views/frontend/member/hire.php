@@ -16,17 +16,17 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-4">
-            <div class="stickyside top-150">
+            <div class="stickyside pt-4">
                 <h1 class="font-weight-bold">Hire</h1>
                 <div> 
                     <?php if(!isset($_SESSION['user'])): ?>
                         <?php else: ?>
-                        <?php if($_SESSION['dashboard'] == 'work'){ ?>
+                        <?php if($_SESSION['dashboard'] == 'hire'){ ?>
                             <span><a class="text-mute" style="padding:10px;" href="<?=  base_url(); ?>work"><i class="mdi mdi-subdirectory-arrow-right"></i>Work </a></span>
                         <?php }?>
                     <?php endif; ?>
                 </div>
-                <a href="<?php echo base_url('/jobs/create') ?>" class="btn btn-success btn-lg btn-block">Post Job</a>
+                <a href="<?php echo base_url('/jobs/create') ?>" class="btn btn-success btn-lg btn-block hire-12">Post Job</a>
                 <!-- <div class="card mt-3">
                     <div class="card-body">
                         <h4 class="card-title font-weight-bold mb-0">Active Contracts <span class="text-muted">(2)</span></h4>
@@ -74,13 +74,16 @@
                 <div class="card mt-3">
                     <div class="card-body">
                         <h4 class="card-title font-weight-bold mb-0">Recommended Shop Detailers</h4>
-                    </div>
+                    </div></div>
                     <div class="comment-widgets mb-0">
-                        <?php foreach(range(0,5) as $i): ?>
-                            <?php $this->load->view('frontend/partials/member_item') ?>
-                        <?php endforeach; ?>
+                        <div class="row">
+                            <?php foreach(range(0,5) as $i): ?>
+                                <?php $this->load->view('frontend/partials/member_item') ?>
+                            <?php endforeach; ?>
+                        </div>
+                        
                     </div>
-                </div>
+                
             <!-- End of Experts -->
         </div>
     </div>

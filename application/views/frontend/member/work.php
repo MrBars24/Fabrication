@@ -20,12 +20,12 @@
                 <h1 class="font-weight-bold">Work</h1>
                 <div>
                     <?php if(isset($_SESSION['user'])): ?>
-                        <?php if($_SESSION['dashboard'] == 'hire'): ?>
+                        <?php if($_SESSION['dashboard'] == 'work'): ?>
                             <span><a class="text-mute" style="padding:10px;" href="<?=  base_url(); ?>hire"><i class="mdi mdi-subdirectory-arrow-right"></i>Hire </a></span>
                         <?php endif; ?>
                     <?php endif; ?>
                 </div>
-                <div class="card">
+                <div class="card mt-2">
                     <div class="card-body">
                         <div class="input-group input-group-sm mb-4 mt-4">
                             <input type="text" class="form-control border border-white" id="search" placeholder="Search for jobs">

@@ -177,6 +177,62 @@
                                     <button class="btn btn-success"  data-toggle="edit-settings-input" data-target=".form-control-settings-billing">Edit</button>
                                 </span>
                             </div>
+                            <button type="button" class="btn btn-success ml-2" data-toggle="edit-settings-input" data-target=".form-control-settings-location">Edit</button>
+                        </span>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="row mb-2">
+                                <div class="col-4">
+                                    <span class="font-weight-bold">Address</span>
+                                </div>
+                                <div class="col-8">
+                                    <h5 class="text-dark form-control-settings-location-hide" data-value-target="address_id"><?= $_SESSION['user']->user_details->address ?></h5>
+                                    <input type="text" class="form-control form-control-settings-location d-none" name="address_id" value="<?= $_SESSION['user']->user_details->address ?>">
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-4">
+                                    <span class="font-weight-bold">City</span>
+                                </div>
+                                <div class="col-8">
+                                    <h5 class="text-dark form-control-settings-location-hide" data-value-target="city_id"><?= $_SESSION['user']->user_details->city ?></h5>
+                                    <input type="text" class="form-control form-control-settings-location d-none" name="city_id" value="<?= $_SESSION['user']->user_details->city ?>">
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-4">
+                                    <span class="font-weight-bold">State</span>
+                                </div>
+                                <div class="col-8">
+                                    <h5 class="text-dark form-control-settings-location-hide" data-value-target="state_id"><?= $_SESSION['user']->user_details->state ?></h5>
+                                    <input type="text" class="form-control form-control-settings-location d-none" name="state_id" value="<?= $_SESSION['user']->user_details->state ?>">
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-4">
+                                    <span class="font-weight-bold">Country</span>
+                                </div>
+                                <div class="col-8">
+                                    <h5 class="text-dark form-control-settings-location-hide" data-value-target="country_id"><?= $_SESSION['user']->user_details->country_id ?></h5>
+                                    <input type="text" class="form-control form-control-settings-location d-none" name="country_id" value="<?= $_SESSION['user']->user_details->country_id ?>">
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-4">
+                                    <span class="font-weight-bold">Timezone</span>
+                                </div>
+                                <div class="col-8">
+                                    <h5 class="text-dark form-control-settings-location-hide" data-value-target="address_id" Asia/Singapore(UTC+8:00)</h5>
+                                    <input type="text" class="form-control form-control-settings-location d-none" name="timezone_id" value="Asia/Singapore(UTC+8:00)">
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            <?= form_close(); ?>
+            
+            <!-- End of Location -->
 
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">
@@ -250,7 +306,8 @@
                         </div>
                          <!-- End of Billing Info -->
                     </div>
-
+                    </div>
+                    <!-- End of Billing Info -->
                     </div>
                 </div>
             </div>
