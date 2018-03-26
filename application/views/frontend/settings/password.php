@@ -10,7 +10,7 @@
                     <div class="col-sm-9  bg-light-part">
                         <div class="card-body">
                             <!-- content here -->
-                            <div class="card">
+                            <?=form_open('/settings/change/password',array("class"=>'card frm-card'))?>
                                 <div class="p-4">
                                     <h3 class="card-title font-weight-bold mb-0  float-left">Password</h3>
                                 </div>
@@ -20,15 +20,15 @@
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <label for="">Current Password</label>
-                                                    <input type="password" class="form-control">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="">New Password</label>
-                                                    <input type="password" class="form-control">
+                                                    <input name="pwd" type="password" class="form-control">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="">Confirm Current Password</label>
-                                                    <input type="password" class="form-control">
+                                                    <input name="cpwd" type="password" class="form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">New Password</label>
+                                                    <input name="npwd" type="password" class="form-control">
                                                 </div>
                                             </div>
                                         </div>
@@ -38,7 +38,7 @@
                                     <input type="submit" class="btn btn-success" value="Save Settings">
                                     </form>
                                 </div>
-                            </div>
+                            <?=form_close()?>
                             <!-- end content here -->
                         </div>
                     </div>

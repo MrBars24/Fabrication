@@ -181,4 +181,17 @@ class User_model extends MX_Model{
 
         return $this->db->trans_status();
     }
+
+    public function changePassword(){
+        $pwd = hash_hmac("sha1", $this->input->post('npwd'), KEYCODE);
+        $old = hash_hmac("sha1", $this->input->post('pwd'), KEYCODE);
+
+        $this->db->where('id',auth()->id);
+        $this->db->where('password',$old);
+        if($this->db->update('users',array('password'=>$pwd))){
+            return TRUE;
+        }
+
+        return FALSE;
+    }
 }

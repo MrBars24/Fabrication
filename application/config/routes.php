@@ -232,6 +232,7 @@ $route['settings/account']['get'] = 'settings/Account/index';
 $route['settings/public']['get'] = 'settings/PublicProfile/index';
 $route['settings/company']['get'] = 'settings/CompanyProfile/index';
 $route['settings/password']['get'] = 'settings/Password/index';
+$route['settings/change/password']['POST'] = 'settings/Password/changePassword';
 $route['settings/notification']['get'] = 'settings/Notification/index';
 //$route['settings/portfolio']['get'] = 'settings/Portfolio/index';
 $route['settings/training']['get'] = 'settings/Training/index';

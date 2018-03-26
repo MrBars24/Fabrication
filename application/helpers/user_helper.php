@@ -7,10 +7,10 @@ function check_login(){
 	return $_SESSION['user'];
 }
 
-function check_user($userType){
+function check_user($userType,$redirect = '/login-register'){
 	$sess = check_login();
 	if($sess->user_type != $userType){
-		redirect('/login-register');
+		redirect($redirect);
 	}
 }
 
