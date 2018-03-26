@@ -32,7 +32,7 @@
                                             <button class="btn btn-secondary" data-toggle="modal" data-target=".modal-invite-to-job">Invite to Job</button>
                                     <?php endif;?>
                                 </div>
-                                <center class="m-t-30"> <img src="../assets/images/users/5.jpg" class="img-circle" width="150">
+                                <center class="m-t-30"> <img src="<?php echo auth()->user_details->avatar ?>" class="img-circle" width="150">
                                     <h4 class="card-title m-t-10"><?= @$user->fullname ?></h4>
                                     <h6 class="card-subtitle text-dark font-weight-bold"><?= @$user->username ?></h6>
                                     <ul class="categories list-style-type-none d-block">
