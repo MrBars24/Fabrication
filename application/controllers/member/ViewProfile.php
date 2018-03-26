@@ -32,10 +32,36 @@ class ViewProfile extends MX_Controller {
 		$getJobInfo = $this->job_model->getAllJobInfo($id);
 		$skills = $this->public_model->getMySkills($id);
 		$review = $this->review_model->getReview($id);
-		// echo '<pre>';
-		// var_dump($review);
-		// echo '</pre>';
-		// exit;
+		$star['overAll'] = 0;
+		$star['countOverAll'] = 0;
+		$star['oneStar'] = 0;
+		$star['twoStar'] = 0;
+		$star['threeStar'] = 0;
+		$star['fourStar'] = 0;
+		$star['fiveStar'] = 0;
+		$star['percentageRating'] = 0;
+		foreach($review['data'] as $rating){
+			$star['overAll'] += $rating->rating;
+			$star['countOverAll']++;
+			if($rating->rating == 1){
+				$star['oneStar'] += 1;
+			}
+			elseif($rating->rating == 2){
+				$star['twoStar'] += 1;
+			}
+			elseif($rating->rating == 3){
+				$star['threeStar'] += 1;
+			}
+			elseif($rating->rating == 4){
+				$star['fourStar'] += 1;
+			}
+			elseif($rating->rating == 5){
+				$star['fiveStar'] += 1;
+			}
+		}
+		$star['avarageRating'] = $star['overAll'] / $star['countOverAll'];
+		$star['percentageRating'] =  (($star['overAll'] / ($star['countOverAll'] * 5)) * 100 );
+		$this->template->load_sub('star', $star);
 		$this->template->load_sub('skills', $skills);
 		$this->template->load_sub('review', $review);
 		$this->template->load_sub('jobAvailable', $getJobAvailable);
