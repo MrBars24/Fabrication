@@ -1,3 +1,4 @@
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
@@ -101,19 +102,19 @@
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <label for="example-email">Firstname</label>
-                                    <input type="email" id="example-email2" name="example-email" class="form-control" placeholder="">
+                                    <input type="email" id="example-email3" name="example-email" class="form-control" placeholder="">
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <label for="example-email">Lastname</label>
-                                    <input type="email" id="example-email2" name="example-email" class="form-control" placeholder="">
+                                    <input type="email" id="example-email4" name="example-email" class="form-control" placeholder="">
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <label for="example-email">Expires on</label>
-                                    <input type="email" id="example-email2" name="example-email" class="form-control" placeholder="">
+                                    <input type="email" id="example-email5" name="example-email" class="form-control" placeholder="">
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <label for="example-email">Securty Code/ CVV</label>
-                                    <input type="email" id="example-email2" name="example-email" class="form-control" placeholder="">
+                                    <input type="email" id="example-email6" name="example-email" class="form-control" placeholder="">
                                 </div>
                                 <button type="button" class="btn btn-info ml-3">Continue</button>
                                 <button type="button" class="btn btn-info ml-3 pull-right">Close</button>
@@ -123,7 +124,7 @@
                             <div class="row p-20">
                                 <div class="col-sm-12">
                                     <div class="col-sm-12 text-center mb-5">
-                                        <img src="/assets/paypal-solo.png" class="img-fluid w-50">
+                                        <div id="paypal-button"></div>
                                     </div>
                                     <button type="button" class="btn btn-info ml-3">Continue</button>
                                     <button type="button" class="btn btn-info ml-3 pull-right" data-dismiss="modal" aria-label="Close">Close</button>

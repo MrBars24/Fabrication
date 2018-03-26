@@ -59,6 +59,9 @@ $route['fabricator'] = 'home/indexFabricators';
 
 // Billing Routes
 $route['subscription'] = 'subscription';
+$route['settings/subscription'] = 'settings/subscription';
+$route['settings/subscribe'] = 'settings/subscription/subscribe';
+$route['settings/subscribe/payment/execute'] = 'settings/subscription/executePayment';
 
 // admin routes
 $route['admin'] = 'admin';
