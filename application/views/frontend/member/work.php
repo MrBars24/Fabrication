@@ -25,7 +25,7 @@
                         <?php endif; ?>
                     <?php endif; ?>
                 </div>
-                <div class="card">
+                <div class="card mt-2">
                     <div class="card-body">
                         <div class="input-group input-group-sm mb-4 mt-4">
                             <input type="text" class="form-control border border-white" id="search" placeholder="Search for jobs">

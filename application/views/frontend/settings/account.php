@@ -156,7 +156,7 @@
                     </ul>
                 </div>
             <?= form_close(); ?>
-            </div>
+            
             <!-- End of Location -->
 
                     <!-- Billing Info -->
@@ -196,6 +196,7 @@
                                 </div>
                             </li>
                         </ul>
+                    </div>
                     </div>
                     <!-- End of Billing Info -->
                     </div>
