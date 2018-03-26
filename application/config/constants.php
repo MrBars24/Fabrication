@@ -86,6 +86,7 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 
 define('APPNAME','E-FAB');
 define('HOST','dev.gradingsystem');
+define('KEYCODE','e-fab');
 
 define('email_constant', serialize(array(
   'protocol' => 'sendmail',
