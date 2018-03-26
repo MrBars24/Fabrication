@@ -1,4 +1,5 @@
 <style>
+<<<<<<< master
 .stars-outer{
     display: inline-block;
     position: relative;
@@ -25,6 +26,21 @@
     color: #f8ce0b;
 }
 /******/
+=======
+    .ul-star li a{
+        color:#99abb4;
+    }
+  
+    .ul-star li:hover ~ li .ratings_stars {
+        color: #ddd;
+    }
+    
+    .ul-star:hover  li a {
+        color: yellow;
+    }
+
+
+>>>>>>> profile rating start effects on hover
 </style>
 <div class="tab-pane active show" id="overview" role="tabpanel">
     <div class="card-body">
