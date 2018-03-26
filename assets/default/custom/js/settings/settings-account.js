@@ -10,9 +10,10 @@ $(document).ready(function(){
             type: 'post',
             dataType: 'json',
             success: function(result){
-                var text = "You have successfully change you're information";
-                var heading = "Success!!";
-                successtoast();
+                // var text = "You have successfully change you're information";
+                // var heading = "Success!!";
+                // successtoast();
+                toastr.success("You have successfully change you're information", "Success!!");
                 $.each(data, function(index, field) {
                     if(field.name == "firstname"){
                         $('#form-basic [data-value-target="fullname"]').text(field.value);
@@ -60,11 +61,16 @@ $(document).ready(function(){
             type: 'post',
             dataType: 'json',
             success: function(result){
-                var text = "You have successfully change you're information";
-                var heading = "Success!!";
-                successtoast();
+                console.log(data);
+                toastr.success("You have successfully change you're information", "Success!!");
                 $.each(data, function(index, field) {
-                    $('#form-location [data-value-target="' + field.name + '"]').text(field.value);
+                    if(field.name == "country_id"){
+                        var country_text = $('#form-location [name="country_id"]').children("option").filter(":selected").text();
+                        $('#form-location [data-value-target="country_id"]').text(country_text);
+                    }
+                    else {
+                        $('#form-location [data-value-target="' + field.name + '"]').text(field.value);
+                    }
                 });
             },
             error: function(result){

@@ -154,10 +154,7 @@ $(document).ready(function () {
             data: data,
             url: '/settings/account/public-basic/' + id,
             success: function (result) {
-
-                var text = "You have successfully added your portfolio.";
-                var heading = "Success!!";
-                successtoast(text, heading);
+                toastr.success("You have successfully updated you basic information", "Success!!");
 
 
                 $('#public-title').html(`${data[0].value}`);
@@ -190,10 +187,7 @@ $(document).ready(function () {
             data: data,
             url: '/settings/account/public-industries/' + id,
             success: function (result) {
-
-                var text = "You have successfully added your portfolio.";
-                var heading = "Success!!";
-                successtoast(text, heading);
+                toastr.success("You have successfully added your portfolio.", "Success!!");
             }
 
         });
