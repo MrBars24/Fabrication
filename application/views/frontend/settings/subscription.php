@@ -52,7 +52,12 @@
                                                 <div class="price-row"><?= $i->package_desc; ?></div>
                                                 <div class="price-row px-3"><?= $i->package_include; ?></div>
                                                 <div class="price-row">
-                                                    <button type="button" class="btn btn-success waves-effect waves-light m-t-20" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Sign Up</button>
+                                                    <?php 
+                                                    if ($i->package_price > $package->package_price){ ?>
+                                                        <button type="button" class="btn btn-success waves-effect waves-light m-t-20" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Sign Up</button>
+                                                    <?php }else{ ?>
+                                                        <div class="my-5"></div>
+                                                    <?php }?>
                                                 </div>
                                             </div>
                                         </div>
