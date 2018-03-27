@@ -7,7 +7,7 @@ $(document).ready(function(){
         pageContainer:".pagination-bars",
 		render:function(data){
 			var container = ``;
-			if(data.length > 0){
+			if(data != null){
 				data.forEach(function(obj,index){
                     container += `
                             <li class="media border-0" data-mybid-id="${index}">
@@ -15,7 +15,7 @@ $(document).ready(function(){
                                 <div class="media-body">
                                     <div class="row">
                                         <div class="col-sm-9">
-                                            <h4 class="mt-0 mb-0 font-weight-bold">${obj.fullname}</h4>
+                                            <h4 class="mt-0 mb-0 font-weight-bold"></h4>
                                             <small class="text-muted time">${moment(obj.created_at).format('MMM D, YYYY')}</small>
 
                                         </div>

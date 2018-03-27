@@ -8,7 +8,6 @@ $(document).ready(function(){
         if(data != undefined){
         console.log(data);
         data.forEach(function(obj,index){
-            console.log(obj);
             container += `<div class="sl-item">
                 <div class="sl-left">
                     <img src="${obj.avatar}" alt="" class="img-circle">

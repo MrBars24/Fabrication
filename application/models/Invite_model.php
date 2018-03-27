@@ -20,7 +20,22 @@ class Invite_model extends MX_Model{
             'job_invitations.user_id'=> $id,
         );
         $q = $this->getIndexDataCount("job_details",$limit,$offset,'job_invitations.created_at','DESC', $search_sql, '', 'job_invitations', 'job_details.id = job_invitations.job_id');
-        return $q;
 
+        for($i=0; $i < count($q['data']); $i++){
+            $q['data'][$i]->category = $this->getCategory($q['data'][$i]->project_category_id);    
+        }
+
+        return $q;
+    }
+    function getCategory($id) {
+        $query = $this->db->select('display_name')
+            ->where('id', $id)
+            ->where('is_deleted', 0)
+            ->get('project_category');
+
+        if($query->num_rows() > 0){
+            return $query->result();
+        }
+        return array();
     }
 }
