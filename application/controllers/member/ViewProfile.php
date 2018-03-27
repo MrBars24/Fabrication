@@ -10,6 +10,7 @@ class ViewProfile extends MX_Controller {
 		$this->load->model('job_model');
 		$this->load->model('review_model');
 		$this->load->model('public_model');
+		$this->load->model('portfolio_model');
 	}
 	public function show($id){
 		check_login();
@@ -32,37 +33,47 @@ class ViewProfile extends MX_Controller {
 		$getJobInfo = $this->job_model->getAllJobInfo($id);
 		$skills = $this->public_model->getMySkills($id);
 		$review = $this->review_model->getReview($id);
-		$star['overAll'] = 0;
-		$star['countOverAll'] = 0;
-		$star['oneStar'] = 0;
-		$star['twoStar'] = 0;
-		$star['threeStar'] = 0;
-		$star['fourStar'] = 0;
-		$star['fiveStar'] = 0;
-		$star['percentageRating'] = 0;
-		foreach($review['data'] as $rating){
-			$star['overAll'] += $rating->rating;
-			$star['countOverAll']++;
-			if($rating->rating == 1){
-				$star['oneStar'] += 1;
+		$getPortfolio = $this->portfolio_model->getPortfolio($id);
+		$getPortfolios = $this->portfolio_model->getPortfolios($id);
+		if(!empty($review['data'])){
+			$star['overAll'] = 0;
+			$star['countOverAll'] = 0;
+			$star['oneStar'] = 0;
+			$star['twoStar'] = 0;
+			$star['threeStar'] = 0;
+			$star['fourStar'] = 0;
+			$star['fiveStar'] = 0;
+			$star['percentageRating'] = 0;
+			foreach($review['data'] as $rating){
+				$star['overAll'] += $rating->rating;
+				$star['countOverAll']++;
+				if($rating->rating == 1){
+					$star['oneStar'] += 1;
+				}
+				elseif($rating->rating == 2){
+					$star['twoStar'] += 1;
+				}
+				elseif($rating->rating == 3){
+					$star['threeStar'] += 1;
+				}
+				elseif($rating->rating == 4){
+					$star['fourStar'] += 1;
+				}
+				elseif($rating->rating == 5){
+					$star['fiveStar'] += 1;
+				}
 			}
-			elseif($rating->rating == 2){
-				$star['twoStar'] += 1;
-			}
-			elseif($rating->rating == 3){
-				$star['threeStar'] += 1;
-			}
-			elseif($rating->rating == 4){
-				$star['fourStar'] += 1;
-			}
-			elseif($rating->rating == 5){
-				$star['fiveStar'] += 1;
-			}
+			$star['avarageRating'] = $star['overAll'] / $star['countOverAll'];
+			$star['percentageRating'] =  (($star['overAll'] / ($star['countOverAll'] * 5)) * 100 );
+			$this->template->load_sub('star', $star);
 		}
-		$star['avarageRating'] = $star['overAll'] / $star['countOverAll'];
-		$star['percentageRating'] =  (($star['overAll'] / ($star['countOverAll'] * 5)) * 100 );
-		$this->template->load_sub('star', $star);
+		if(auth()){
+			$myGetReview = $this->review_model->myGetReview(auth()->id);
+			$this->template->load_sub('myGetReview', $myGetReview);
+		}
 		$this->template->load_sub('skills', $skills);
+		$this->template->load_sub('portfolio', $getPortfolio);
+		$this->template->load_sub('getPortfolios', $getPortfolios);
 		$this->template->load_sub('review', $review);
 		$this->template->load_sub('jobAvailable', $getJobAvailable);
 		$this->template->load_sub('myJob', $getMyJob);
@@ -77,7 +88,6 @@ class ViewProfile extends MX_Controller {
 		$js = array(
 			"/assets/default/custom/js/invite.js"
 		);
-
 		$this->template->append_css($css);
 		$this->template->append_js($js);
 		$getUserDetails = $this->user_model->getUserDetails($id);

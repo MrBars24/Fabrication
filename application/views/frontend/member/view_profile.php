@@ -32,7 +32,7 @@
                                             <button class="btn btn-secondary" data-toggle="modal" data-target=".modal-invite-to-job">Invite to Job</button>
                                     <?php endif;?>
                                 </div>
-                                <center class="m-t-30"> <img src="<?php echo auth()->user_details->avatar ?>" class="img-circle" width="150">
+                                <center class="m-t-30"> <img src="<?php echo $user->avatar ?>" class="img-circle" width="150">
                                     <h4 class="card-title m-t-10"><?= @$user->fullname ?></h4>
                                     <h6 class="card-subtitle text-dark font-weight-bold"><?= @$user->username ?></h6>
                                     <ul class="categories list-style-type-none d-block">
@@ -95,7 +95,7 @@
                                 <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#job" role="tab" aria-selected="false">Job</a> </li>
                                 <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#hired" role="tab" aria-selected="false">Hired Job</a> </li>
                                 <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile" role="tab" aria-selected="false">Profile</a> </li>
-                                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#portpolio" role="tab" aria-selected="false">Portpolio</a> </li>
+                                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#portfolio" role="tab" aria-selected="false">Portfolio</a> </li>
                                 <!-- <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#settings" role="tab" aria-selected="false">Settings</a> </li> -->
                             </ul>
                             <!-- Tab panes -->
