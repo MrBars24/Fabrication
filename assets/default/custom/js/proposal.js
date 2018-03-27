@@ -65,7 +65,6 @@ $(document).ready(function(){
 			if(data.length > 0){
 				data.forEach(function(obj,index){
                     obj.created_at = new Date(obj.created_at);
-                    obj.created_at = moment(obj.created_at).format('MM, DD YYYY - hh:mm A');
                     container += `
                             <li class="media border-0" data-mybid-id="${index}">
                                 <img class="mr-3 rounded-circle" src="http://themedesigner.in/demo/admin-press/assets/images/users/8.jpg" width="64" alt="Generic placeholder image">
@@ -73,7 +72,7 @@ $(document).ready(function(){
                                     <div class="row">
                                         <div class="col-sm-9">
                                             <h4 class="mt-0 mb-0 font-weight-bold">${obj.fullname}</h4>
-                                            <small class="text-muted time">${obj.created_at}</small>
+                                            <small class="text-muted time">${moment(obj.created_at).format('MMM D, YYYY')}</small>
 
                                         </div>
                                         <div class="col-sm-3 text-right">
