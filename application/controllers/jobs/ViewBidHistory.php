@@ -17,7 +17,8 @@ class ViewBidHistory extends MX_Controller {
 			"assets/admin/custom/js/bars-datatable.js",
 			"assets/default/custom/js/bid-history.js",
             "assets/plugins/select2/js/select2.min.js",
-            "assets/default/custom/js/proposal.js",
+            "/assets/plugins/moment/moment.js",
+            "assets/default/custom/js/proposal.js"
         );
         $this->template->append_css($css);
         $this->template->append_js($js);

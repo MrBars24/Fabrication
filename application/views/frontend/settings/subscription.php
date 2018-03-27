@@ -28,7 +28,7 @@
                                                 <h4 class="price-lable text-white bg-warning">Active</h4>
                                                 <h4 class="text-center"><?= $i->package_name; ?></h4>
                                                 <h2 class="text-center"><span class="price-sign">$</span><?= $i->package_price; ?></h2>
-                                                <p class="uppercase">per month</p>
+                                                 <p class="uppercase"><?= ($i->package_name == "Bulk") ? 'per year': 'per month'; ?></p> 
                                             </div>
                                             <div class="price-table-content">
                                                 <div class="price-row"><?= $i->package_desc; ?></div>
@@ -46,13 +46,18 @@
                                             <div class="pricing-header">
                                                 <h4 class="text-center"><?= $i->package_name; ?></h4>
                                                 <h2 class="text-center"><span class="price-sign">$</span><?= $i->package_price; ?></h2>
-                                                <p class="uppercase">per month</p>
+                                                <p class="uppercase"><?= ($i->package_name == "BULK") ? 'per year': 'per month'; ?></p> 
                                             </div>
                                             <div class="price-table-content">
                                                 <div class="price-row"><?= $i->package_desc; ?></div>
                                                 <div class="price-row px-3"><?= $i->package_include; ?></div>
                                                 <div class="price-row">
-                                                    <button type="button" class="btn btn-success waves-effect waves-light m-t-20" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Sign Up</button>
+                                                    <?php 
+                                                    if ($i->package_price > $package->package_price){ ?>
+                                                        <button type="button" class="btn btn-success waves-effect waves-light m-t-20" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Sign Up</button>
+                                                    <?php }else{ ?>
+                                                        <div class="my-5"></div>
+                                                    <?php }?>
                                                 </div>
                                             </div>
                                         </div>
