@@ -63,6 +63,9 @@ $route['settings/subscription'] = 'settings/subscription';
 $route['settings/subscribe'] = 'settings/subscription/subscribe';
 $route['settings/subscribe/payment/execute'] = 'settings/subscription/executePayment';
 
+$route['auth/fb'] = 'test/fb';
+$route['fb/fallback'] = 'home/facebookAuth';
+
 // admin routes
 $route['admin'] = 'admin';
 $route['admin/pages']['GET'] = 'adm/pages';
@@ -133,6 +136,8 @@ $route['admin/job/list']['GET'] = 'adm/jobs/fetch';
 $route['login-register']['GET'] = 'home/login';
 $route['login']['POST'] = 'home/loginCheck';
 $route['logout']['GET'] = 'home/logout';
+$route['facebook/login']['POST'] = 'home/loginFB';
+$route['facebook/signup']['POST'] = 'home/signupFB';
 //$route['register'] = 'home/register';
 // $route['register/detailer']['GET'] = 'home/registerDetailer';
 //$route['register/fabricator']['GET'] = 'home/registerFabricator';

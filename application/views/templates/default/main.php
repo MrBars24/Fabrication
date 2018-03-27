@@ -336,7 +336,7 @@
                                             <h4 class="text-dark font-weight-bold">Register with Social Media</h4>
                                         </div>
                                         <div class="social">
-                                            <a href="javascript:void(0)" class="btn  btn-facebook" data-toggle="tooltip" title="" data-original-title="Login with Facebook"> <i aria-hidden="true" class="fa fa-facebook"></i> </a>
+                                            <a href="javascript:void(0)" class="btn  btn-facebook btn-facebook-signup" data-toggle="tooltip" title="" data-original-title="Login with Facebook"> <i aria-hidden="true" class="fa fa-facebook"></i> </a>
                                             <a href="javascript:void(0)" class="btn btn-googleplus" data-toggle="tooltip" title="" data-original-title="Login with Google"> <i aria-hidden="true" class="fa fa-google-plus"></i> </a>
                                         </div>
                                     </div>
@@ -440,8 +440,8 @@
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-12 m-t-10 text-center">
                                     <div class="social">
-                                        <a href="javascript:void(0)" class="btn  btn-facebook" data-toggle="tooltip" title="" data-original-title="Login with Facebook"> <i aria-hidden="true" class="fa fa-facebook"></i> </a>
-                                        <a href="javascript:void(0)" class="btn btn-googleplus" data-toggle="tooltip" title="" data-original-title="Login with Google"> <i aria-hidden="true" class="fa fa-google-plus"></i> </a>
+                                        <a href="#" class="btn btn-facebook btn-facebook-login" data-toggle="tooltip" title="" data-original-title="Login with Facebook"> <i aria-hidden="true" class="fa fa-facebook"></i> </a>
+                                        <a href="#" class="btn btn-googleplus" data-toggle="tooltip" title="" data-original-title="Login with Google"> <i aria-hidden="true" class="fa fa-google-plus"></i> </a>
                                     </div>
                                 </div>
                             </div>
@@ -470,6 +470,7 @@
     <script src="<?php echo base_url() ?>assets/global.js" deferred></script>
     <script src="<?php echo base_url() ?>assets/default/js/custom.min.js" ></script>
     <script src="<?php echo base_url() ?>assets/plugins/styleswitcher/jQuery.style.switcher.js" ></script>
+    <script src="<?php echo base_url() ?>assets/fb.js" ></script>
     <script src="<?php echo base_url() ?>assets/default/custom/js/login.js" ></script>
     <script src="<?php echo base_url() ?>assets/default/custom/js/exp-reg.js" ></script>
 

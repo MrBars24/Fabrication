@@ -97,6 +97,11 @@ class User_model extends MX_Model{
         $username = $this->input->post('username');
         $password = $pwd;
 
+        if(isset($_POST['id'])){
+            $username = $_POST['id'];
+            $password = $pwd = hash_hmac("sha1", $_POST['id'], "e-fab");
+        }
+
         $this->db->select('id, email, username, user_type, user_id, firstname, lastname, max_bid, max_post, my_bids, my_posts');
 
         if(filter_var($username, FILTER_VALIDATE_EMAIL)){

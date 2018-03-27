@@ -19,7 +19,7 @@ $(document).ready(function(){
                 paymentID: data.paymentID,
                 payerID:   data.payerID
             }).then(function() {
-
+            	
                 // The payment is complete!
                 // You can now show a confirmation message to the customer
             });

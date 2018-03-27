@@ -37,6 +37,41 @@ class Test extends MX_Controller {
 		$pusher->trigger('my-channel', 'my-event', $data);*/
 	}
 
+	public function fb(){
+		$params['app_id'] = "200691950529636";
+		$params['app_secret'] = "dddd53ce04119627a1c86dc3e2c2c6e7";
+		$this->load->library('facebook',$params);
+		$this->facebook->init();
+
+		?>
+		<script>
+		   function receiveMessage(event)
+			{
+			  // event.source is window.opener
+			  // event.data is "hello there!"
+
+			  // Assuming you've verified the origin of the received message (which
+			  // you must do in any case), a convenient idiom for replying to a
+			  // message is to call postMessage on event.source and provide
+			  // event.origin as the targetOrigin.
+			  event.source.postMessage("hi there yourself!  the secret response " +
+			                           "is: rheeeeet!",
+			                           event.origin);
+			}
+
+			window.addEventListener("message", receiveMessage, false);
+		</script>
+		<?php /*if(isset($_REQUEST['code'])){
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, "https://graph.facebook.com/v2.12/oauth/access_token?client_id=200691950529636&redirect_uri=https://dev.efab/auth/fb&client_secret=dddd53ce04119627a1c86dc3e2c2c6e7&code=".$_REQUEST['code']);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			$response = curl_exec($ch);
+			$res = json_decode($response);
+
+			redirect('https://www.facebook.com/connect/login_success.html#access_token=' . $res->access_token);	
+		}*/
+	}
+
 }
 
 

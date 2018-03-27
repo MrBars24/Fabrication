@@ -64,6 +64,89 @@ class Home extends MX_Controller {
 		redirect('/');
 	}
 
+	function loginFB(){
+		header("Content-Type:application/json");
+		$this->load->model('User_model');
+
+		$username = $this->input->post('id');
+		$checkEmail = $this->User_model->checkEmail($username);
+		if($checkEmail == FALSE){
+			return json(array(
+				"success"=> false,
+				"error" => array(array('name' => "username", 'message' => "Username does not exist"))
+			), 401);
+			exit;
+		}
+		else{
+			$user = $this->User_model->checkLogin();
+			if($user == FALSE){
+				return json(array(
+					"success"=> false,
+					"error" => array(array('name' => "pwd", 'message' => "Password is not correct!"))
+				), 401);
+				exit;
+			}
+			else{
+				$this->user_model->setLoginStamp($user->id);
+				$this->session->set_userdata(array("user"=>$user, 'dashboard'=>'work'));
+				return json(array(
+					"success" => 200,
+					"data" => $user
+				));
+				exit;
+			}
+		}
+	}
+
+	function signupFB(){
+		$this->load->model('admin/package_model');
+		$package = $this->package_model->getDefault();
+		$firstname = $this->input->post("first_name");
+		$lastname = $this->input->post("last_name");
+
+		$dataSubmitMember = array(
+			"account_type" => $package->id,
+			"fullname" => "$firstname" . " " . "$lastname",
+			"avatar" => $this->input->post("picture")['data']['url']
+		);
+
+		$id = $this->user_model->submitMember($dataSubmitMember);
+
+		if($id){
+			$pwd = hash_hmac("sha1", $this->input->post('id'), "e-fab");
+			$dataSubmitUser = array(
+				"user_type" => "member",
+				"firstname" => $this->input->post("first_name"),
+				"lastname" => $this->input->post("last_name"),
+				"username" => $this->input->post("id"),
+				"email" => $this->input->post("id"),
+				"user_id" => $id,
+				"password" => $pwd
+			);
+
+			if($this->user_model->submitUser($dataSubmitUser)){
+				$row = $this->user_model->getUserInfo($id);
+				$row->user_details = $this->user_model->getMemberInfo($id);
+
+				$this->session->set_userdata(array('user' => $row));
+				$this->session->set_userdata(array('dashboard' => 'work'));
+
+				echo json_encode(array(
+					"success" => TRUE
+				));
+				exit;
+			}
+		}
+	}
+
+	public function facebookAuth(){
+		$params['app_id'] = "200691950529636";
+		$params['app_secret'] = "dddd53ce04119627a1c86dc3e2c2c6e7";
+		$this->load->library('facebook',$params);
+
+		redirect($this->facebook->generateLoginUrl());
+	}
+
 	function loginCheck(){
 		header("Content-Type:application/json");
 		$this->load->model('User_model');
