@@ -28,7 +28,7 @@
                                                 <h4 class="price-lable text-white bg-warning">Active</h4>
                                                 <h4 class="text-center"><?= $i->package_name; ?></h4>
                                                 <h2 class="text-center"><span class="price-sign">$</span><?= $i->package_price; ?></h2>
-                                                <p class="uppercase">per month</p>
+                                                 <p class="uppercase"><?= ($i->package_name == "Bulk") ? 'per year': 'per month'; ?></p> 
                                             </div>
                                             <div class="price-table-content">
                                                 <div class="price-row"><?= $i->package_desc; ?></div>
@@ -46,7 +46,7 @@
                                             <div class="pricing-header">
                                                 <h4 class="text-center"><?= $i->package_name; ?></h4>
                                                 <h2 class="text-center"><span class="price-sign">$</span><?= $i->package_price; ?></h2>
-                                                <p class="uppercase">per month</p>
+                                                <p class="uppercase"><?= ($i->package_name == "BULK") ? 'per year': 'per month'; ?></p> 
                                             </div>
                                             <div class="price-table-content">
                                                 <div class="price-row"><?= $i->package_desc; ?></div>

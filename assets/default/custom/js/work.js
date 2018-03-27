@@ -28,31 +28,32 @@ $(document).ready(function () {
                         <div class="d-flex justify-content-between">
                             <div>
                                 <h4 class="mb-0"><a href="/jobs/${obj.id}" class="text-dark">${obj.title}</a></h4>
-                                <h6 class="text-muted mt-2">Posted ${moment(obj.created_at).format("MMMM DD, YYYY")}  - ${obj.bids} Bids</h6>
-                                <h6 class="text-muted mt-2">Budget : ${obj.budget_min} - ${obj.budget_max}</h6>
+                                <h6 class="text-muted mt-2 py-1">Budget : ${obj.budget_min} - ${obj.budget_max} Posted ${moment(obj.created_at).format("MMMM DD, YYYY")}</h6>
                             </div>
                             <div>
                                 <button class="${(obj.is_watchlist == 1) ? "bg-danger text-white btn-unbook" : "btn-bookmark"} btn btn-sm btn-circle "><i class="fa fa-bookmark"></i></button>
                                 <button class="btn btn-sm btn-circle "><i class="mdi mdi-send"></i></button>
                             </div>
                         </div>
-
                         <div class="row">
                             <div class="col-sm-12 col-md-6 mr-0 col-lg-9">
+                            <p>${obj.description}</p>
                                 <span class="badge badge-secondary px-2 py-1">${obj.project_category}</span>
                                 <span class="badge badge-secondary px-2 py-1">${obj.approx_tonnes} tons</span>
                                 <h6 class="text-dark mt-3 mb-3">
-                                    <span class="mb-1">Location: ${obj.location}</span>
+                                    <span class="mb-1">Bids: ${obj.bids}</span>
                                 </h6>
-                                <p>${obj.description}</p>
-                                <div>
-                                    <small>Fabricator:</small>
-                                    <div class="d-flex justify-content-between">
-                                         <h6 class="font-weight-bold"><a href="/members/1" class="text-dark">Company Name</a></h6>
-                                    </div>
-
-                                    <!--<div class="d-flex justify-content-start">
-                                        <span class="text-warning">4.5</span>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-3">
+                                <img src="https://thelogocompany.net/wp-content/uploads/2016/10/main_dlugos.jpg" alt="" class="img-fluid">
+                                <a href="/jobs/${obj.id}" class="btn btn-sm btn-success btn-block">View</a>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-3">
+                                    <small>Fabricator:
+                                         <span class="font-weight-bold"><a href="/members/1" class="text-dark">Company Name</a></span></small>
+                                    <div class="d-flex justify-content-start">
+                                        <small><span class="text-warning">4.5</span>
                                         <ul class="d-inline-flex flex-row justify-content-start list-style-type-none mb-0 ml-1">
                                             <li class="mr-1"><a href="#" class="text-warning"><i class="fa fa-star"></i></a></li>
                                             <li class="mr-1"><a href="#" class="text-warning"><i class="fa fa-star"></i></a></li>
@@ -60,14 +61,11 @@ $(document).ready(function () {
                                             <li class="mr-1"><a href="#" class="text-warning"><i class="fa fa-star"></i></a></li>
                                             <li class="mr-1"><a href="#" class="text-warning"><i class="fa fa-star"></i></a></li>
                                         </ul>                            <span class="text-muted ml-1">(12 reviews)</span>
-                                    </div>-->
+                                    </div>
+
+                                    <span class="mb-1"><i class="fa fa-map-marker"></i> ${obj.location}</span>
+                                </small>
                                 </div>
-                            </div>
-                            <div class="col-sm-12 col-md-6 col-lg-3">
-                                <img src="https://thelogocompany.net/wp-content/uploads/2016/10/main_dlugos.jpg" alt="" class="img-fluid">
-                                <a href="/jobs/${obj.id}" class="btn btn-success btn-block">View</a>
-                            </div>
-                        </div>
 
                         <div>
                             <ul class="list-style-type-none d-flex d-row justify-content-between mt-2">
