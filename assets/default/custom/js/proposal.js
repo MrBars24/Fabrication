@@ -15,7 +15,7 @@ $(document).ready(function(){
                                 <div class="media-body">
                                     <div class="row">
                                         <div class="col-sm-9">
-                                            <h4 class="mt-0 mb-0 font-weight-bold"></h4>
+                                            <h4 class="mt-0 mb-0 font-weight-bold">${obj.fullname}</h4>
                                             <small class="text-muted time">${moment(obj.created_at).format('MMM D, YYYY')}</small>
 
                                         </div>
