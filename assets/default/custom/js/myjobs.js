@@ -10,7 +10,7 @@ $(document).ready(function(){
         data.forEach(function(obj,index){
             container += `<div class="sl-item">
                 <div class="sl-left">
-                    <img src="http://themedesigner.in/demo/admin-press/assets/images/users/3.jpg" alt="" class="img-circle">
+                    <img src="${obj.avatar}" alt="" class="img-circle">
                 </div>
                 <div class="sl-right">
                     <big><a href="/jobs/posted/manage/${obj.id}" class="text-primary">${obj.title}</a></big>

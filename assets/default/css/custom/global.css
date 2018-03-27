@@ -97,3 +97,25 @@
 .content-with-hover-actions:hover .hover-content {
     display: block;
 }
+
+
+.layout-content-middle {
+    position: relative;
+}
+.layout-content-middle.overlay .content-wrapper {
+    background: rgba(0, 0, 0, 0.5);
+}
+.layout-content-middle .content-wrapper {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.layout-content-middle .content-wrapper .content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

@@ -20,35 +20,47 @@ class Review_model extends MX_Model{
             return array();
         }
     }
+    function myGetReview($id){
+        $query = $this->db->select('*')
+                 ->where('user_id', $id)
+                 ->where('is_deleted', 0)
+                 ->get('reviews');
+        if($query->num_rows() > 0){
+            return $query->row();
+        }else{
+            return array();
+        }
+    }
+    function updateReview($id, $data){
+        $query = $this->db->where('id', $id)
+                 ->update('reviews', $data);
 
+        $query1 = $this->db->select('*')
+                 ->where('id', $id)
+                 ->get('reviews');
+        return $query1->row();
+    }
     function getReview($id){
 
         $limit = 5;
         $offset = 0;
         $search = "";
-        $search_sql = array(
-            'review_id' => $id,
-            'is_deleted' => 0,
-        );
+            $search_sql = array(
+                'review_id' => $id,
+                'is_deleted' => 0,
+             );
         $q = $this->getIndexDataCount("reviews",$limit,$offset,'created_at','DESC', $search_sql);
 
-
-        // $query = $this->db->select('*')
-        //          ->where('review_id', $id)
-        //          ->where('is_deleted', 0)
-        //          ->order_by('created_at', 'DESC')
-        //          ->get('reviews');
-
-            $reviews = $q;
-            for($i=0; $i<count($reviews['data']);$i++){
-                $reviews['data'][$i]->user_review = "";
-                $reviews['data'][$i]->user_details = "";
-                if($reviews['data'][$i]->review_id == auth()->id){
-                    $reviews['data'][$i]->user_review = $this->checkMyReview($reviews['data'][$i]->user_id);
-                }
-                $reviews['data'][$i]->user_details = $this->getMemberInfo($reviews['data'][$i]->user_id);
+        $reviews = $q;
+        for($i=0; $i<count($reviews['data']);$i++){
+            $reviews['data'][$i]->user_review = "";
+            $reviews['data'][$i]->user_details = "";
+            if($reviews['data'][$i]->review_id == auth()->id){
+                $reviews['data'][$i]->user_review = $this->checkMyReview($reviews['data'][$i]->user_id);
             }
-            return $reviews;
+            $reviews['data'][$i]->user_details = $this->getMemberInfo($reviews['data'][$i]->user_id);
+        }
+        return $reviews;
 
     }
 
@@ -64,8 +76,14 @@ class Review_model extends MX_Model{
             return array();
         }
     }
+    function removeDelete($id){
+        $query = $this->db->where('id', $id)
+                 ->set('is_deleted', 1)
+                 ->update('reviews');
+        return $query;
+    }
     function getMemberInfo($id){
-        $query = $this->db->select('fullname')
+        $query = $this->db->select('fullname,avatar_thumbnail')
                  ->where('user_id', $id)
                  ->get('user_details');
 

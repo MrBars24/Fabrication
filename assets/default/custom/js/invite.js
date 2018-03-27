@@ -8,7 +8,7 @@ $(document).ready(function(){
             var container = ``;
             if (data != null) {
                 data.forEach(function(obj, index) {
-                    console.log(obj);
+                    var category = obj.category[0].display_name;
                     container += `
                     <div class="sl-item">
                         <div class="sl-left">
@@ -19,12 +19,9 @@ $(document).ready(function(){
                             <br>
 
                             <span class="sl-date">
-                                Date recieve: 15 March 2018
+                                Date receive: ${moment(obj.updated_at).format('MMM D, YYYY')}
                             </span>
-                            <p>
-
-                                Hi ,
-                            </p>
+                            <p>${obj.message}</p>
                             <p>
                                 ${obj.description}
                             </p>
@@ -37,7 +34,7 @@ $(document).ready(function(){
                                         </div>
                                         <div class="mb2">
                                             <small class="text-secondary mb-0">STATUS</small>
-                                            <h6 class="text-success font-weight-bold">Invitation</h6>
+                                            <h6 class="text-success font-weight-bold">${obj.status}</h6>
                                         </div>
 
 
@@ -49,13 +46,13 @@ $(document).ready(function(){
                                         </div>
                                         <div class="mb2">
                                             <small class="text-secondary mb-0">FABRICATOR</small>
-                                            <h6 class="text-dark font-weight-bold">Sushant</h6>
+                                            <h6 class="text-dark font-weight-bold">${obj.fullname}</h6>
                                         </div>
                                     </div>
                                 <div class="col">
                                         <div class="mb2">
                                             <small class="text-secondary mb-0">CATEGORY</small>
-                                            <h6 class="text-dark font-weight-bold">Commercial</h6>
+                                            <h6 class="text-dark font-weight-bold">${category}</h6>
                                         </div>
                                         <div class="mb2">
                                             <small class="text-secondary mb-0">DISCIPLINE(S)</small>

@@ -17,6 +17,7 @@ class InvitationJobs extends MX_Controller {
         $js = array(
             "assets/plugins/select2/js/select2.min.js",
 			"assets/admin/custom/js/bars-datatable.js",
+            "/assets/plugins/moment/moment.js",
             "assets/default/custom/js/invite.js"
         );
         $this->template->append_css($css);
@@ -48,6 +49,8 @@ class InvitationJobs extends MX_Controller {
 		header("Content-Type:application/json");
 		//$fetchInvites = $this->invite_model->fetchInvites($id);
 		$fetchInvites = $this->invite_model->fetchInvites();
+        //$fetchData = $fetchInvites['data'];
+        //$categoryInvites = $this->invite_model->getCategory($fetchData[0]->project_category_id);
 		echo json_encode($fetchInvites);
 	}
 }

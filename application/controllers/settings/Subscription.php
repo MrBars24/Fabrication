@@ -18,7 +18,7 @@ class Subscription extends MX_Controller {
 		$pricing = $this->pricing_model->getDefaultPrice();
     	$user = $_SESSION['user']->id;
     	$memberPackage = $this->subscription_model->getMemberSubscription($user);
-    	//$getPackage = $this->subscription_model->getPackage($memberPackage);
+    	$getPackage = $this->subscription_model->getPackage($memberPackage);
 
 
         $this->template->append_js(array(
@@ -26,7 +26,7 @@ class Subscription extends MX_Controller {
         ));
     	$this->template->load_sub('member',$memberPackage);
     	$this->template->load_sub('pricing', $pricing);
-    	//$this->template->load_sub('package', $getPackage);
+    	$this->template->load_sub('package', $getPackage);
         $this->template->load('frontend/settings/subscription');
     }
 
