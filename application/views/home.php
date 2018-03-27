@@ -69,44 +69,30 @@
         </div>
 
         <div class="mt-3">
-            <div class="row">
-                <div class="col-sm-3 text-center">
-                    <div class="card">
-                        <img class="card-img-top img-responsive" src="http://themedesigner.in/demo/admin-press/assets/images/big/img3.jpg" alt="Card image cap">
-                        <div class="card-body">
-                            <h4 class="card-title">Mining</h4>
-                            <h6 class="card-subtitle">Some quick example text to build on the card title and make up the bulk of the card's content.</h6>
+            <?php foreach(array_chunk($top_industries, 4) as $row): ?>
+                <div class="row">
+                    <?php foreach($row as $industry): ?>
+                        <div class="col-sm-3 text-center">
+                            <a href="<?php echo base_url('jobs/category/' . $industry->name) ?>">
+                                <div class="card">
+                                    <div class="layout-content-middle overlay">
+                                        <img class="card-img-top img-responsive" src="http://themedesigner.in/demo/admin-press/assets/images/big/img3.jpg" alt="Card image cap">
+                                        <div class="content-wrapper text-white">
+                                            <span class="content">
+                                                <?php echo $industry->total_jobs ?> JOBS
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <h4 class="card-title"><?php echo $industry->display_name?></h4>
+                                        <h6 class="card-subtitle"><?php echo $industry->description?></h6>
+                                    </div>
+                                </div>
+                            </a>
                         </div>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
-                <div class="col-sm-3 text-center">
-                <div class="card">
-                        <img class="card-img-top img-responsive" src="http://themedesigner.in/demo/admin-press/assets/images/big/img3.jpg" alt="Card image cap">
-                        <div class="card-body">
-                            <h4 class="card-title">Mining</h4>
-                            <h6 class="card-subtitle">Some quick example text to build on the card title and make up the bulk of the card's content.</h6>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-3 text-center">
-                <div class="card">
-                        <img class="card-img-top img-responsive" src="http://themedesigner.in/demo/admin-press/assets/images/big/img3.jpg" alt="Card image cap">
-                        <div class="card-body">
-                            <h4 class="card-title">Mining</h4>
-                            <h6 class="card-subtitle">Some quick example text to build on the card title and make up the bulk of the card's content.</h6>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-3 text-center">
-                <div class="card">
-                        <img class="card-img-top img-responsive" src="http://themedesigner.in/demo/admin-press/assets/images/big/img3.jpg" alt="Card image cap">
-                        <div class="card-body">
-                            <h4 class="card-title">Mining</h4>
-                            <h6 class="card-subtitle">Some quick example text to build on the card title and make up the bulk of the card's content.</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php endforeach; ?>
         </div>
     </div>
 </section>
@@ -153,53 +139,29 @@
                <h4 class="font-weight-bold"><i class="fa fa-list"></i> Last 3 Jobs by Category</h4>
            </div>
            <div class="col-sm-9">
-            <ul class="nav nav-tabs customtab justify-content-end border-bottom-0" role="tablist">
-                    <li class="nav-item"> <a class="nav-link pt-2 p-1 active font-weight-bold" data-toggle="tab" href="#home-tab-all" role="tab" aria-expanded="true"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down">ALL</span></a> </li>
-                    <li class="nav-item"> <a class="nav-link pt-2 p-1 font-weight-bold" data-toggle="tab" href="#home-tab-architectural" role="tab" aria-expanded="false"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down">ARCHITECTURAL</span></a> </li>
-                    <li class="nav-item"> <a class="nav-link pt-2 p-1 font-weight-bold" data-toggle="tab" href="#home-tab-commercial" role="tab" aria-expanded="false"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">COMMERCIAL</span></a> </li>
-                    <li class="nav-item"> <a class="nav-link pt-2 p-1 font-weight-bold" data-toggle="tab" href="#home-tab-industrial" role="tab" aria-expanded="false"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">INDUSTRIAL</span></a> </li>
-                    <li class="nav-item"> <a class="nav-link pt-2 p-1 font-weight-bold" data-toggle="tab" href="#home-tab-mining" role="tab" aria-expanded="false"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">MINING</span></a> </li>
-                    <li class="nav-item"> <a class="nav-link pt-2 p-1 font-weight-bold" data-toggle="tab" href="#home-tab-oilgas" role="tab" aria-expanded="false"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">OIL & GAS</span></a> </li>
-                    <li class="nav-item"> <a class="nav-link pt-2 p-1 font-weight-bold" data-toggle="tab" href="#home-tab-residential" role="tab" aria-expanded="false"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">RESIDENTIAL</span></a> </li>
-                    <li class="nav-item"> <a class="nav-link pt-2 p-1 font-weight-bold" data-toggle="tab" href="#home-tab-other" role="tab" aria-expanded="false"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">OTHER</span></a> </li>
+            <ul class="nav nav-tabs customtab justify-content-end border-bottom-0" id="home-jobs-tabs" role="tablist">
+                    <li class="nav-item"><a class="nav-link pt-2 p-1 font-weight-bold" data-toggle="tab" href="#home-tab-all" data-category="any" role="tab" aria-expanded="true"><span class="hidden-sm-up"><i class="ti-home"></i></span><span class="hidden-xs-down">All</span></a> </li>
+                    <?php foreach($industries as $industry): ?>
+                        <li class="nav-item"><a class="nav-link pt-2 p-1 font-weight-bold " data-toggle="tab" href="#home-tab-<?php echo $industry['id'] ?>" data-category="<?php echo $industry['id'] ?>" role="tab" aria-expanded="false"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down text-capitalize"><?php echo $industry['display_name'] ?></span></a> </li>
+                    <?php endforeach; ?>
                 </ul>
            </div>
        </div>
     </div>
 
     <div class="tab-content">
-        <div class="tab-pane active" id="home-tab-all" role="tabpanel" aria-expanded="true">
-            <ul class="list-group list-group-flush list-group-striped">
-                <?php foreach(range(0, 2) as $i): ?>
-                    <!-- Job Item -->
-                        <li class="list-group-item border-0 py-4">
-                            <div class="container-fluid">
-                                <?php $this->load->view('frontend/partials/job_item_home') ?>
-                            </div>
-                        </li>
-                    <!-- End of Job Item -->
-                <?php endforeach; ?>
+        <div class="tab-pane" id="home-tab-any" role="tabpanel" aria-expanded="true">
+            <ul class="list-group list-group-flush list-group-striped data-content-list">
             </ul>
         </div>
-        <div class="tab-pane" id="home-tab-architectural" role="tabpanel" aria-expanded="false">
-            <ul class="list-group list-group-flush list-group-striped">
-                <?php foreach(range(0, 2) as $i): ?>
-                    <!-- Job Post Item -->
-                        <li class="list-group-item border-0 py-4">
-                            <div class="container-fluid">
-                                <?php $this->load->view('frontend/partials/job_item_home') ?>
-                            </div>
-                        </li>
-                    <!-- End of Job Post Item -->
-                <?php endforeach; ?>
-            </ul>
-        </div>
-        <div class="tab-pane" id="home-tab-commercial" role="tabpanel" aria-expanded="false">3</div>
-        <div class="tab-pane" id="home-tab-industrial" role="tabpanel" aria-expanded="false">2</div>
-        <div class="tab-pane" id="home-tab-mining" role="tabpanel" aria-expanded="false">3</div>
-        <div class="tab-pane" id="home-tab-oilgas" role="tabpanel" aria-expanded="false">2</div>
-        <div class="tab-pane" id="home-tab-residential" role="tabpanel" aria-expanded="false">3</div>
-        <div class="tab-pane" id="home-tab-other" role="tabpanel" aria-expanded="false">2</div>
+
+        <?php foreach($industries as $industry): ?>
+            <div class="tab-pane" id="home-tab-<?php echo $industry['id'] ?>" role="tabpanel" aria-expanded="true">
+                <ul class="list-group list-group-flush list-group-striped data-content-list">
+                </ul>
+            </div>
+        <?php endforeach; ?>
+
     </div>
     <div class="container-fluid pt-5">
         <h4 class="font-weight-bold">There’s more than <a href="#" class="text-success">740</a> jobs opened across <a href="#" class="text-success">23</a> categories</h4>

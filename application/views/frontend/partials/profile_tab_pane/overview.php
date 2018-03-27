@@ -1,28 +1,15 @@
 <style>
-.stars-outer{
-    display: inline-block;
-    position: relative;
-    font-family: FontAwesome;
-    margin-left: 1px;
-    letter-spacing: 2px;
+
+.ul-star li a{
+    color:#99abb4;
 }
 
-.stars-inner {
-  position: absolute;
-  top: 0;
-  left: 0;
-  white-space: nowrap;
-  overflow: hidden;
+.ul-star li:hover ~ li .ratings_stars {
+    color: #ddd;
 }
 
-.stars-outer::before {
-    content: "\f006 \f006 \f006 \f006 \f006";
-    color: #99abb4;
-}
-
-.stars-inner::before {
-    content: "\f005 \f005 \f005 \f005 \f005";
-    color: #f8ce0b;
+.ul-star:hover  li a {
+    color: yellow;
 }
 
 .ul-star .starstar {

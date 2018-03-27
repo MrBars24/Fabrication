@@ -230,7 +230,7 @@ $route['jobs/my-jobs/(:num)']['get'] = 'jobs/Contract/show/$1';
 $route['jobs/posted']['get'] = 'jobs/BrowseJobs/postedJob';
 $route['jobs/posted/manage/(:num)']['get'] = 'jobs/BrowseJobs/postedJobView/$1';
 $route['jobs/posted/contract/(:num)']['get'] = 'jobs/BrowseJobs/hiredWorker/$1';
-
+$route['jobs/recent']['GET'] = 'jobs/BrowseJobs/recentJobsByCategory';
 $route['watch-list']['get'] = 'member/Watchlist';
 $route['watch/list']['GET'] = 'member/Work/fetchWatchlist';
 
