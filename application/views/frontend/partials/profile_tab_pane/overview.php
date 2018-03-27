@@ -38,8 +38,6 @@
     .ul-star:hover  li a {
         color: yellow;
     }
-
-
 >>>>>>> profile rating start effects on hover
 </style>
 <div class="tab-pane active show" id="overview" role="tabpanel">
