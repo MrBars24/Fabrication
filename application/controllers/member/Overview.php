@@ -40,12 +40,47 @@ class Overview extends MX_Controller {
             exit;
         }
     }
+	public function removeReviews($id){
+		header("Content-Type:application/json");
+		$removeDelete = $this->review_model->removeDelete($id);
+		if($removeDelete){
+			echo json_encode(array(
+				'success' => TRUE
+			));
+		}else{
+			echo json_encode(array(
+				'succes' => FALSE
+			));
+		}
+	}
 	public function getReviews($id){
 		header("Content-Type:application/json");
 		$review = $this->review_model->getReview($id);
 		//dd($review);
 		if($review){
 			echo json_encode($review);
+		}
+	}
+	public function updateReview($id){
+		header("Content-Type:application/json");
+		$message_review = $this->input->post('message_review');
+        $rating = $this->input->post('rating');
+		$data = array(
+            'message_review' => $message_review,
+            'rating' => $rating,
+        );
+		$updateReview = $this->review_model->updateReview($id, $data);
+		if($updateReview){
+			echo json_encode(array(
+				'success' => TRUE,
+				'data' => $updateReview
+			));
+			exit;
+		}else{
+			echo json_encode(array(
+				'success' => FALSE
+			));
+			exit;
 		}
 	}
 }

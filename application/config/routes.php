@@ -283,6 +283,8 @@ $route['notifications']['get'] = 'notifications/Notification/index';
 // ratings
 $route['reviews']['post'] = 'member/Overview/submitReviews';
 $route['reviews/(:num)']['get'] = 'member/Overview/getReviews/$1';
+$route['reviews/delete/(:num)']['get'] = 'member/Overview/removeReviews/$1';
+$route['reviews/update/(:num)']['post'] = 'member/Overview/updateReview/$1';
 // Search
 $route['search/member']['get'] = 'member/Search/result';
 $route['search/jobs']['get'] = 'jobs/Search/result';
