@@ -39,6 +39,14 @@ class MyJob extends MX_Controller {
 		$this->load->model('job_model');
 		$this->load->model('user_model');
 		$jobsPagination = $this->job_model->myAllJobs();
+
+        // dd($jobsPagination);
+
+        $jobsPagination['data'] = array_map(function($e) {
+            $e->avatar = auth()->user_details->avatar;
+            return $e;
+        }, $jobsPagination['data']); 
+
 		if($jobsPagination){
 			echo json_encode($jobsPagination);
 		}
