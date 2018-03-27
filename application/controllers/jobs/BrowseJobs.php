@@ -41,8 +41,6 @@ class BrowseJobs extends MX_Controller {
 
 	}
 
-
-
 	public function getAllJobs(){
 		header("Content-Type:application/json");
 		$this->load->model('job_model');
@@ -117,6 +115,12 @@ class BrowseJobs extends MX_Controller {
 		$this->template->append_js($js);
 
 		$this->template->load('frontend/jobs/view_hired');
+	}
+
+	public function recentJobsByCategory() {
+		$this->load->model('job_model');
+		$jobsPagination = $this->job_model->all();
+		return json($jobsPagination);
 	}
 
 }

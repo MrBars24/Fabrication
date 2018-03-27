@@ -20,18 +20,30 @@ class Home extends MX_Controller {
 	public function index()
 	{
 		$css = array(
-			"assets/default/css/custom/global.css",
 			"assets/default/css/custom/sections.css"
 		);
+		$js = array(
+			"assets/default/custom/js/home.js",
+			"assets/admin/custom/js/bars-datatable.js"
+        );
+		$this->template->append_css($css);
+		$this->template->append_js($js);
+
 		if(isset($_SESSION['fabricators'])){
 			unset($_SESSION['fabricators']);
 		}
-		$this->template->append_css($css);
-		$this->template->load("home");
+		$this->load->model('Industry_model');
 
-		//$this->template->load("registrar/test");
-		//$this->isLoggedIn();
+		// Get Industries / Categories
+		$top_industries = $this->Industry_model->getTopIndustries();
+		// Get all Industries
+		$industries = $this->Industry_model->getIndustries();
+
+		$this->template->load_sub('top_industries', $top_industries);
+		$this->template->load_sub('industries', $industries);
+		$this->template->load("home");
 	}
+
 	public function indexFabricators(){
 		$css = array(
 			"assets/default/css/custom/global.css",
