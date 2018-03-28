@@ -91,7 +91,7 @@
                     </div>
 
                     <div class="sl-item">
-                        <div class="sl-left"> <img src="<?= auth()->user_details->avatar_thumbnail ?>" alt="user" class="img-circle"> </div>
+                        <div class="sl-left"> <img src="<?= avatar(); ?>" alt="user" class="img-circle"> </div>
                         <div class="sl-right">
                             <div><a href="#" class="link"><?= auth()->user_details->fullname ?></a> <span class="sl-date"><?= time_new_format($myGetReview->created_at) ?></span>
                                 <p><?= $myGetReview->message_review ?></p>
