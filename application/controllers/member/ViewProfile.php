@@ -13,7 +13,7 @@ class ViewProfile extends MX_Controller {
 		$this->load->model('portfolio_model');
 	}
 	public function show($id){
-		check_login();
+		check_user('member');
 
 		$css = array(
 			"/assets/default/css/custom/sections.css"

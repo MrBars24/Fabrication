@@ -16,6 +16,7 @@ class Notification extends MX_Controller {
       
 	public function index()
 	{	
+		check_user('member');
 		$this->template->load('frontend/settings/notification');
 		
 	}

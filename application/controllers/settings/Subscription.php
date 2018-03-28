@@ -15,6 +15,7 @@ class Subscription extends MX_Controller {
     }
 
     public function index(){
+        check_user('member');
 		$pricing = $this->pricing_model->getDefaultPrice();
     	$user = $_SESSION['user']->id;
     	$memberPackage = $this->subscription_model->getMemberSubscription($user);

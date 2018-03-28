@@ -32,7 +32,7 @@
         <h4 class="card-title text-dark font-weight-bold">Overview</h4>
         <p><?= (auth()->user_details->overview == "") ? "" : auth()->user_details->overview; ?></p>
         <hr>
-        <h4 class="card-title text-dark font-weight-bold">Portpolio</h4>
+        <h4 class="card-title text-dark font-weight-bold">Portfolio</h4>
         <div class="col-12 text-center">
             <?php if(!empty($portfolio)): ?>
                 <h3><?= $portfolio->project_name ?></h3>
@@ -91,7 +91,7 @@
                     </div>
 
                     <div class="sl-item">
-                        <div class="sl-left"> <img src="<?= auth()->user_details->avatar_thumbnail ?>" alt="user" class="img-circle"> </div>
+                        <div class="sl-left"> <img src="<?= avatar(); ?>" alt="user" class="img-circle"> </div>
                         <div class="sl-right">
                             <div><a href="#" class="link"><?= auth()->user_details->fullname ?></a> <span class="sl-date"><?= time_new_format($myGetReview->created_at) ?></span>
                                 <p><?= $myGetReview->message_review ?></p>

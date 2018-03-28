@@ -46,7 +46,9 @@ class CreateJob extends MX_Controller {
 
 		$industries = $this->Industry_model->getIndustries();
 		$this->template->load_sub('industries', $industries);
-		$this->template->load_sub('summary', $this->job_model->getSummary());
+		if(auth() != null){
+			$this->template->load_sub('summary', $this->job_model->getSummary());
+		}
         $this->template->load('frontend/jobs/create_job');
 	}
 

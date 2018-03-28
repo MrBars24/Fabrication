@@ -21,3 +21,9 @@ function auth(){
 
 	return [];
 }
+function avatar(){
+	if(auth()->user_details->avatar == ''){
+		return base_url() . 'assets/images/icon_profile.jpg';
+	}
+	return auth()->user_details->avatar;
+}

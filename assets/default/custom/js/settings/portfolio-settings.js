@@ -11,12 +11,12 @@ $(document).ready(function(){
             var container = ``;
             if(data.length > 0){
                 data.forEach(function(obj,index){
-                    var path = (obj.attachments[0] == undefined) ? "/assets/images/placeholder-image.png" : obj.attachments[0].path;
+                    var path = (obj.attachments[0] == undefined) ? "assets/images/placeholder-image.png" : obj.attachments[0].path;
                     container += `
                 <div class="col-sm-4" id="portfolio-id">
                     <div class="el-card-item">
                         <div class="el-card-avatar el-overlay-1 mb-1">
-                                <img src="`+ path +`" alt="user" class="img-fluid rounded">
+                                <img src="`+ path +`" alt="portfolio image" class="img-fluid rounded">
                             <div class="el-overlay scrl-dwn">
                                     <ul class="el-info">
                                         <li>

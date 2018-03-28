@@ -6,11 +6,11 @@ $(document).ready(function(){
         render:function(data){
         var container = ``;
         if(data != undefined){
-        console.log(data);
         data.forEach(function(obj,index){
+            var avatar = (obj.avatar == null) ? "../assets/images/icon_profile.jpg" : obj.avatar;
             container += `<div class="sl-item">
                 <div class="sl-left">
-                    <img src="${obj.avatar}" alt="" class="img-circle">
+                    <img src="`+ avatar +`" alt="" class="img-circle">
                 </div>
                 <div class="sl-right">
                     <big><a href="/jobs/posted/manage/${obj.id}" class="text-primary">${obj.title}</a></big>

@@ -96,7 +96,7 @@
                                             <div class="row mb-2">
                                                 <div class="col-sm-4">
                                                     <div class="content-with-hover-actions">
-                                                        <img src="<?php echo auth()->user_details->avatar ?>" class="img-fluid avatar-preview" alt="">
+                                                        <img src="<?= avatar(); ?>" class="img-fluid avatar-preview" alt="">
                                                         <div class="hover-content">
                                                             <span class="inner">
                                                                 <button type="button" class="btn btn-dark select-file"><i class="fa fa-picture-o"></i></button>
