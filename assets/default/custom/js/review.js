@@ -5,7 +5,6 @@ $(document).ready(function(){
             url: '/reviews/'+ $('#review-comment').data('id'),
             pageContainer: ".pagination-review-comment",
             render: function(data) {
-
                 var container = ``;
                 if (data.length > 0) {
                     data.forEach(function(obj, index) {

@@ -48,11 +48,10 @@ $(document).ready(function() {
             });
 
             this.on("successmultiple", function(files, response) {
-            
+
             });
 
             this.on("success", function(file, responseText) {
-                console.log(responseText.success);
                 if(!responseText.success){
                     $('#modal-job-error').modal('show');
                 }else{

@@ -34,9 +34,10 @@
                             <div>
                                 <span class="">New York, US</span>
                             </div>
-                            <span class="badge badge-secondary"><?=$jobdata->project_category?></span>
+                            <span class="badge badge-secondary"><?=$jobdata->display_name?></span>
                         </div>
                         <div>
+                            <a href="/jobs/job-discussion/<?= $jobdata->id ?>" class="btn btn-success">Job Discussion</a>
                             <?php if($jobdata->fabricator_id != auth()->id): ?>
                                 <button class="btn default btn-circle <?=($jobdata->is_watchlist==1)? "btn-unbook bg-danger text-white" : "btn-bookmark"?>"><i class="text-white fa fa-bookmark"></i></button>
                             <?php endif; ?>
