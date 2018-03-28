@@ -11,12 +11,15 @@ class Notification extends MX_Controller {
 	public function index(){
 
         $css = array(
-            "assets/default/css/custom/global.css",
-			"assets/default/custom/css/jobs.css"
-        );
+			"assets/default/custom/css/jobs.css",
+		);
+		$js = array(
+			"assets/admin/custom/js/bars-datatable.js"
+		);
+		
         $this->template->append_css($css);
-
-
+        $this->template->append_js($js);
+		$this->template->load_sub('additional_data', array('bodyClass' => 'page-notification'));
         $this->template->load('frontend/notifications/view_all');
 	}
 

@@ -33,14 +33,18 @@ class Home extends MX_Controller {
 			unset($_SESSION['fabricators']);
 		}
 		$this->load->model('Industry_model');
+		$this->load->model('admin/Dashboard_model');
 
 		// Get Industries / Categories
 		$top_industries = $this->Industry_model->getTopIndustries();
 		// Get all Industries
 		$industries = $this->Industry_model->getIndustries();
+		// Get Summary
+		$summary = $this->Dashboard_model->getDashboardSummary();
 
 		$this->template->load_sub('top_industries', $top_industries);
 		$this->template->load_sub('industries', $industries);
+		$this->template->load_sub('summary', $summary);
 		$this->template->load("home");
 	}
 

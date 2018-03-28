@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-require_once(APPPATH."third_party/vendor/autoload.php"); 
+// require_once(APPPATH."third_party/vendor/autoload.php"); 
 class Test extends MX_Controller {
 
 	public function __construct(){
@@ -70,6 +70,13 @@ class Test extends MX_Controller {
 
 			redirect('https://www.facebook.com/connect/login_success.html#access_token=' . $res->access_token);	
 		}*/
+	}
+
+	public function notify() {
+		$this->load->library('Notification');
+		// dd(auth()->id);
+		return json($this->notification->use('bid_accepted')->send(1));
+
 	}
 
 }

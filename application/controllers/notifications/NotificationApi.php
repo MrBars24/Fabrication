@@ -1,18 +1,28 @@
 <?php
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class NotificationApi extends MX_Controller {
 
-	public function __construct(){
+    public function __construct() {
         parent::__construct();
-        $this->load->model('Bid_model');
-	}
+        check_user('member');
+        $this->load->library('Notification');
+    }
 
-	public function getBidsByJobId($job_id){
-        $bids = $this->Bid_model->getBidsByJobId($job_id);
+    public function index() {
+        $notifications = $this->notification->getByUserId(auth()->id);
+        return json(
+            array(
+                'success' => true,
+                'data' => array(
+                    'notifications' => $notifications
+                )
+            )
+        );
+    }
 
-        return json(array(
-            'data' => $bids
-        ));
+    public function getAllPaginated() {
+        
     }
 }

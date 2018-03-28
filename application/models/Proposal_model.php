@@ -175,4 +175,13 @@ class Proposal_model extends MX_Model{
 
         return $q->num_rows();
     }
+    
+	function getById($id) {
+		$res =  $this->db->select('*')
+			->where('id', $id)
+			->where('is_deleted', 0)
+			->get('bids');
+
+		return $res->row();
+	}
 }

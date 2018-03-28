@@ -25,7 +25,7 @@
     } ?>
 </head>
 
-<body class="fix-header card-no-border logo-center">
+<body class="fix-header card-no-border logo-center <?php echo isset($additional_data['bodyClass']) ? $additional_data['bodyClass'] : '' ?>">
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
     <!-- ============================================================== -->
@@ -203,7 +203,7 @@
                         <?php }?>
                     </ul>
                     <ul class="navbar-nav my-lg-0 d-flex align-items-center">
-                    <li class="nav-item dropdown show">
+                    <li class="nav-item dropdown show" id="dropdown-notification">
                             <a class="nav-link dropdown-toggle text-muted text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <i class="fa fa-bell"></i>
                                 <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
                             </a>
@@ -215,30 +215,12 @@
                                             Notifications
                                         </span>
                                         <div class="float-right">
-                                            <a href="#"><i class="fa fa-cog"></i></div></a>
+                                            <a href="<?php base_url('settings/notification') ?>"><i class="fa fa-cog"></i></div></a>
                                         <div class="clearfix"></div>
                                         </div>
                                     </li>
                                     <li>
-                                        <ul class="list-group list-group-flush">
-                                            <li class="list-group-item py-1 px-3">
-                                                <div>
-                                                    You were invited to the job <a href="<?php echo base_url('jobs/1') ?>">[URGENT] Need 10 Engineers</a>
-                                                </div>
-                                                <small class="text-muted">2 hours</small>
-                                            </li>
-                                            <li class="list-group-item py-1 px-3">
-                                                <div>
-                                                    You won the Bidding for the job <a href="<?php echo base_url('jobs/1') ?>">Looking for expert fabricator in New York</a>
-                                                </div>
-                                                <small class="text-muted">1 day</small>
-                                            </li>
-                                            <li class="list-group-item py-1 px-3">
-                                                <div>
-                                                    Your contract <a href="#">Job title here</a> has been eneded
-                                                </div>
-                                                <small class="text-muted">1 day</small>
-                                            </li>
+                                        <ul class="list-group list-group-flush notification-list">
                                         </ul>
                                     </li>
                                     <li>
@@ -473,6 +455,8 @@
     <script src="<?php echo base_url() ?>assets/fb.js" ></script>
     <script src="<?php echo base_url() ?>assets/default/custom/js/login.js" ></script>
     <script src="<?php echo base_url() ?>assets/default/custom/js/exp-reg.js" ></script>
+    <script src="<?php echo base_url() ?>assets/default/custom/js/notification.js" ></script>
+    <script src="<?php echo base_url() ?>assets/plugins/moment/moment.js" ></script>
 
     <?php if(isset($add_js)){
           foreach($add_js as $js){ ?>
