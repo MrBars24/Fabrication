@@ -5,10 +5,11 @@ $(document).ready(function(){
             url: '/reviews/'+ $('#review-comment').data('id'),
             pageContainer: ".pagination-review-comment",
             render: function(data) {
-
+                
                 var container = ``;
                 if (data.length > 0) {
                     data.forEach(function(obj, index) {
+                        var avatar = (obj.user_details.avatar_thumbnail == '') ? "../assets/images/icon_profile.jpg" : obj.user_details.avatar_thumbnail;
                         var ratings = (obj.rating > 0) ? obj.rating : 0;
                         var totalstar = 5 - +ratings;
                         var star = [];
@@ -26,7 +27,7 @@ $(document).ready(function(){
                             `</ul>
                         </div>
                         <div class="sl-item">
-                            <div class="sl-left"> <img src="${obj.user_details.avatar_thumbnail}" alt="user" class="img-circle"> </div>
+                            <div class="sl-left"> <img src="`+ avatar +`" alt="user" class="img-circle"> </div>
                             <div class="sl-right">
                                 <div><a href="#" class="link">${obj.user_details.fullname}</a> <span class="sl-date">${obj.created_at}</span>
                                     <p>${obj.message_review}</p>

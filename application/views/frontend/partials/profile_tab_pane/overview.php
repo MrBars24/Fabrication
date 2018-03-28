@@ -32,7 +32,7 @@
         <h4 class="card-title text-dark font-weight-bold">Overview</h4>
         <p><?= (auth()->user_details->overview == "") ? "" : auth()->user_details->overview; ?></p>
         <hr>
-        <h4 class="card-title text-dark font-weight-bold">Portpolio</h4>
+        <h4 class="card-title text-dark font-weight-bold">Portfolio</h4>
         <div class="col-12 text-center">
             <?php if(!empty($portfolio)): ?>
                 <h3><?= $portfolio->project_name ?></h3>

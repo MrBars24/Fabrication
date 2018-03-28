@@ -94,7 +94,7 @@
                     <div class="card-body">
                         <a href="<?php echo base_url('settings') ?>" class="float-right" data-toggle="tooltip" title="Edit Profile"><i class="mdi mdi-settings"></i></a>
                         <div class="text-center profile-head">
-                            <img src="<?php echo auth()->user_details->avatar ?>" alt="" class="img-fluid">
+                            <img src="<?= (auth()->user_details->avatar == '')? base_url().'assets/images/icon_profile.jpg': auth()->user_details->avatar ?>" alt="" class="img-fluid">
                         </div>
                         <div class="text-center mt-3">
                             <h4 class="font-weight-bold mb-0"><?php echo auth()->user_details->firstname . ' ' . auth()->user_details->lastname?></h4>

@@ -256,12 +256,12 @@
                                 </li>
                         <?php else: ?>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="<?php echo auth()->user_details->avatar ?>" alt="user" class="profile-pic" /></a>
+                                <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="<?= (auth()->user_details->avatar == '')? base_url().'assets/images/icon_profile.jpg': auth()->user_details->avatar ?>" alt="user" class="profile-pic" /></a>
                                 <div class="dropdown-menu dropdown-menu-right scale-up">
                                     <ul class="dropdown-user">
                                         <li>
                                             <div class="dw-user-box">
-                                                <div class="u-img"><img src="<?php echo auth()->user_details->avatar ?>" alt="user"></div>
+                                                <div class="u-img"><img src="<?= (auth()->user_details->avatar == '')? base_url().'assets/images/icon_profile.jpg': auth()->user_details->avatar ?>" alt="user"></div>
                                                 <div class="u-text">
                                                     <h4><?= $_SESSION['user']->firstname ?> <?= $_SESSION['user']->lastname ?></h4>
                                                     <p class="text-muted"><?= $_SESSION['user']->email ?></p><a href="<?= base_url('members/' . $_SESSION['user']->id ); ?>" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
