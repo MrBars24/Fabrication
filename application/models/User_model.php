@@ -2,7 +2,7 @@
 class User_model extends MX_Model{
 
     public $table = "users";
-    private $loginFields = 'id, email, username, user_type, user_id, firstname, lastname, max_bid, max_post, my_bids, my_posts';
+    private $loginFields = 'id, email, username, user_type, user_id, firstname, lastname, max_bid, max_post, my_bids, my_posts, login_type';
 
     function __construct(){
         parent::__construct();
@@ -91,6 +91,29 @@ class User_model extends MX_Model{
             return TRUE;
         }
         return FALSE;
+    }
+
+    function checkSocialLogin($type){
+        $password = hash_hmac("sha1", $_POST['id'], "e-fab");
+
+        $this->db->select($this->loginFields);
+        $this->db->where('login_type',$type);
+        $this->db->where('password', $password);
+        $query = $this->db->get('user_details');
+
+        if($query->num_rows() > 0){
+            $row = $query->row();
+            $row->user_details = $this->getMemberInfo($row->user_id);
+            if($row->user_type == "member"){
+                $row->url_redirect = base_url() . 'work';
+            }
+            else{
+                $row->url_redirect = base_url() . 'admin';
+            }
+            return $row;
+        }
+        return FALSE;
+
     }
 
     function checkLogin(){
@@ -224,6 +247,18 @@ class User_model extends MX_Model{
             }
             return $row;
         }
+        return FALSE;
+    }
+
+    public function checkAccountExists($email){
+        $this->db->where("email",$email);
+        $this->db->where("login_type","google");
+        $q = $this->db->get("users");
+
+        if($q->num_rows() > 0){
+            return TRUE;
+        }
+
         return FALSE;
     }
 }

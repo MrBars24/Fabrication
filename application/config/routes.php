@@ -133,12 +133,14 @@ $route['admin/image/assets/list']['GET'] = 'adm/file/getImageAsssets';
 $route['admin/user/list']['GET'] = 'adm/user/getUsers';
 $route['admin/job/list']['GET'] = 'adm/jobs/fetch';
 
-$route['email/confirmation'] = 'home/confirmation';
 $route['login-register']['GET'] = 'home/login';
 $route['login']['POST'] = 'home/loginCheck';
 $route['logout']['GET'] = 'home/logout';
 $route['facebook/login']['POST'] = 'home/loginFB';
 $route['facebook/signup']['POST'] = 'home/signupFB';
+$route['google/auth']['GET'] = 'home/googleAuth';
+$route['google/auth']['POST'] = 'home/googleAuthSignin';
+$route['oauth2callback']['GET'] = 'home/googleAuthCallback';
 //$route['register'] = 'home/register';
 // $route['register/detailer']['GET'] = 'home/registerDetailer';
 //$route['register/fabricator']['GET'] = 'home/registerFabricator';

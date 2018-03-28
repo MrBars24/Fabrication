@@ -611,7 +611,7 @@
     <script src="<?php echo base_url() ?>assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
     <?php if(isset($add_js)){
           foreach($add_js as $js){ ?>
-            <script src="<?php echo base_url() . $js; ?>" async ></script>
+            <script src="<?php echo base_url() . $js; ?>" async defer></script>
     <?php }
         } 
         if(isset($extra_js)){

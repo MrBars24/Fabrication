@@ -256,12 +256,12 @@
                                 </li>
                         <?php else: ?>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="<?php echo auth()->user_details->avatar ?>" alt="user" class="profile-pic" /></a>
+                                <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="<?= (auth()->user_details->avatar == '')? base_url().'assets/images/icon_profile.jpg': auth()->user_details->avatar ?>" alt="user" class="profile-pic" /></a>
                                 <div class="dropdown-menu dropdown-menu-right scale-up">
                                     <ul class="dropdown-user">
                                         <li>
                                             <div class="dw-user-box">
-                                                <div class="u-img"><img src="<?php echo auth()->user_details->avatar ?>" alt="user"></div>
+                                                <div class="u-img"><img src="<?= (auth()->user_details->avatar == '')? base_url().'assets/images/icon_profile.jpg': auth()->user_details->avatar ?>" alt="user"></div>
                                                 <div class="u-text">
                                                     <h4><?= $_SESSION['user']->firstname ?> <?= $_SESSION['user']->lastname ?></h4>
                                                     <p class="text-muted"><?= $_SESSION['user']->email ?></p><a href="<?= base_url('members/' . $_SESSION['user']->id ); ?>" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
@@ -337,7 +337,7 @@
                                         </div>
                                         <div class="social">
                                             <a href="javascript:void(0)" class="btn  btn-facebook btn-facebook-signup" data-toggle="tooltip" title="" data-original-title="Login with Facebook"> <i aria-hidden="true" class="fa fa-facebook"></i> </a>
-                                            <a href="javascript:void(0)" class="btn btn-googleplus" data-toggle="tooltip" title="" data-original-title="Login with Google"> <i aria-hidden="true" class="fa fa-google-plus"></i> </a>
+                                            <a href="#" class="btn btn-googleplus" data-toggle="tooltip" title="" data-original-title="Login with Google"> <i aria-hidden="true" class="fa fa-google-plus"></i> </a>
                                         </div>
                                     </div>
                                 </div>
@@ -442,6 +442,7 @@
                                     <div class="social">
                                         <a href="#" class="btn btn-facebook btn-facebook-login" data-toggle="tooltip" title="" data-original-title="Login with Facebook"> <i aria-hidden="true" class="fa fa-facebook"></i> </a>
                                         <a href="#" class="btn btn-googleplus" data-toggle="tooltip" title="" data-original-title="Login with Google"> <i aria-hidden="true" class="fa fa-google-plus"></i> </a>
+                                        <!-- <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
                                     </div>
                                 </div>
                             </div>
@@ -458,6 +459,8 @@
     </div>
 
     <!-- Javascript Libraries -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://apis.google.com/js/api:client.js"></script>
     <script src="<?php echo base_url() ?>assets/plugins/jquery/jquery.min.js" deferred></script>
     <script src="<?php echo base_url() ?>assets/plugins/bootstrap/js/popper.min.js" ></script>
     <script src="<?php echo base_url() ?>assets/plugins/bootstrap/js/bootstrap.min.js" ></script>
@@ -476,7 +479,7 @@
 
     <?php if(isset($add_js)){
           foreach($add_js as $js){ ?>
-            <script src="<?php echo base_url() . $js; ?>"></script>
+            <script src="<?= $js; ?>"></script>
     <?php }
         }
         if(isset($extra_js)){

@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    startApp();
 
     $('#login').on('shown.bs.modal', function() {
         $("#username-focus").focus();
@@ -11,13 +12,13 @@ $(document).ready(function() {
         FB.getLoginStatus(function(response) {
             if (response.status === 'connected') {
                 FB.api('/me', function(res) {
-                    fb_auth(res,'login');
+                    fb_auth(res, 'login');
                 }, { 'fields': 'email,name,picture,first_name,last_name,link' });
             } else {
                 FB.login(function(response) {
                     if (response.authResponse) {
                         FB.api('/me', function(response) {
-                            fb_auth(response,'login');
+                            fb_auth(response, 'login');
                         });
                     } else {
                         alert('login cancelled');
@@ -31,13 +32,13 @@ $(document).ready(function() {
         FB.getLoginStatus(function(response) {
             if (response.status === 'connected') {
                 FB.api('/me', function(res) {
-                    fb_auth(res,'signup');
+                    fb_auth(res, 'signup');
                 }, { 'fields': 'email,name,picture,first_name,last_name,link' });
             } else {
                 FB.login(function(response) {
                     if (response.authResponse) {
                         FB.api('/me', function(response) {
-                            fb_auth(response,'signup');
+                            fb_auth(response, 'signup');
                         });
                     } else {
                         alert('login cancelled');
@@ -47,7 +48,7 @@ $(document).ready(function() {
         });
     });
 
-    function fb_auth(res,type) {
+    function fb_auth(res, type) {
         $.ajax({
             type: 'post',
             url: '/facebook/' + type,
@@ -55,9 +56,9 @@ $(document).ready(function() {
             dataType: 'json',
             success: function(result) {
                 if (result.success) {
-                    if(type == 'signup' ){
+                    if (type == 'signup') {
                         location.href = "/settings";
-                    }else{
+                    } else {
                         window.location.href = result.data.url_redirect;
                     }
                 }
@@ -123,3 +124,89 @@ $(document).ready(function() {
 
     });
 });
+
+
+var googleUser = {};
+var startApp = function() {
+    gapi.load('auth2', function() {
+        // Retrieve the singleton for the GoogleAuth library and set up the client.
+        auth2 = gapi.auth2.init({
+            client_id: '985848939646-54lbt7vtmbv05qlj28vgdprifsdcp61i.apps.googleusercontent.com',
+            cookiepolicy: 'single_host_origin',
+            // Request scopes in addition to 'profile' and 'email'
+            //scope: 'additional_scope'
+        });
+        attachSignin(document.querySelectorAll('.btn-googleplus'));
+    });
+};
+
+function attachSignin(element) {
+    //console.log(element);
+    for (e in element) {
+        auth2.attachClickHandler(element[e], {},
+            onSignIn,
+            onSignCancel);
+    }
+}
+
+function onSignIn(googleUser) {
+    var profile = googleUser.getBasicProfile();
+
+    var data = {
+        "id" : profile.getId(),
+        "firstname" : profile.getGivenName(),
+        "lastname" : profile.getFamilyName(),
+        "img" : profile.getImageUrl(),
+        "email" : profile.getEmail(),
+        "fullname" : profile.getName()
+    };
+
+    google_auth(data);
+    //console.log(profile.getGivenName());
+    /*console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+    console.log('Name: ' + profile.getName());
+    console.log('Image URL: ' + profile.getImageUrl());
+    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.*/
+}
+
+function onSignCancel(err) {
+    alert(JSON.stringify(err, undefined, 2));
+}
+
+function google_auth(res) {
+    $.ajax({
+        type: 'post',
+        url: '/google/auth',
+        data: res,
+        dataType: 'json',
+        success: function(result) {
+            if (result.success) {
+                if (result.type == 'signup') {
+                    location.href = "/settings";
+                } else {
+                    window.location.href = result.data.url_redirect;
+                }
+            }
+        },
+        error: function(requestObject, error, errorThrown) {
+            //console.log(requestObject);
+            if (requestObject.status == 401) {
+                $.each(requestObject.responseJSON.error, function(index, error) {
+                    if (error.name == "username") {
+                        var target = $("#form-login input[name=" + error.name + "]").data('target-error-text');
+                        $(target).parent().parent().removeAttr('hidden');
+                        $(target).parent().parent().parent().parent().addClass('error');
+                        $(target).html(error.message);
+                    } else if (error.name == "pwd") {
+                        var target = $("#form-login  input[name=" + error.name + "]").data('target-error-text');
+                        $(target).parent().parent().removeAttr('hidden');
+                        $(target).parent().parent().parent().parent().addClass('error');
+                        $(target).html(error.message);
+                        $('#username-error').parent().parent().parent().parent().removeClass('error');
+                        $('#username-error').parent().parent().attr('hidden', '');
+                    } else {}
+                });
+            }
+        }
+    });
+}

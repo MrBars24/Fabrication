@@ -90,7 +90,7 @@ class Home extends MX_Controller {
 			exit;
 		}
 		else{
-			$user = $this->User_model->checkLogin();
+			$user = $this->User_model->checkSocialLogin('facebook');
 			if($user == FALSE){
 				return json(array(
 					"success"=> false,
@@ -125,7 +125,7 @@ class Home extends MX_Controller {
 		$id = $this->user_model->submitMember($dataSubmitMember);
 
 		if($id){
-			$pwd = hash_hmac("sha1", $this->input->post('id'), "e-fab");
+			$pwd = hash_hmac("sha1", $this->input->post('id'), KEYCODE);
 			$dataSubmitUser = array(
 				"user_type" => "member",
 				"firstname" => $this->input->post("first_name"),
@@ -134,7 +134,8 @@ class Home extends MX_Controller {
 				"email" => $this->input->post("id"),
 				"user_id" => $id,
 				"password" => $pwd,
-				"is_active" => 1
+				"is_active" => 1,
+				"login_type" => 'facebook'
 			);
 
 			if($this->user_model->submitUser($dataSubmitUser)){
@@ -158,25 +159,6 @@ class Home extends MX_Controller {
 		$this->load->library('facebook',$params);
 
 		redirect($this->facebook->generateLoginUrl());
-	}
-
-	function confirmation(){
-		if(!isset($_GET['q'])){
-			exit;
-		}
-
-		$cred = $_GET['q'];
-		$this->load->library('encryption');
-		$tmp = $this->encryption->decrypt($cred);
-		list($id,$email) = explode(":", $tmp);
-		$update = $this->user_model->setActive($id,$email);
-		if($update){
-			$info = $this->user_model->checkLoginConfirmation($id,$email);
-			$this->user_model->setLoginStamp($info->id);
-			$this->session->set_userdata(array("user"=>$info, 'dashboard'=>'work'));
-			echo $info->url_redirect;
-			//redirect($info->url_redirect);
-		}
 	}
 
 	function loginCheck(){
@@ -244,8 +226,6 @@ class Home extends MX_Controller {
 	function submitMember(){
 		header("Content-Type:application/json");
 		$this->load->model('User_model');
-		$this->load->library('encryption');
-
 		$this->form_validation->set_rules('username', 'username', 'required|min_length[8]');
 		$this->form_validation->set_rules('pwd', 'password', 'required|min_length[8]');
 
@@ -269,7 +249,7 @@ class Home extends MX_Controller {
 			$id = $this->user_model->submitMember($dataSubmitMember);
 
 			if($id){
-				$pwd = hash_hmac("sha1", $this->input->post('pwd'), "e-fab");
+				$pwd = hash_hmac("sha1", $this->input->post('pwd'), KEYCODE);
 				$dataSubmitUser = array(
 					"user_type" => "member",
 					"firstname" => $this->input->post("firstname"),
@@ -285,17 +265,6 @@ class Home extends MX_Controller {
 					$row->user_details = $this->User_model->getMemberInfo($id);
 
 					$this->session->set_userdata(array('user' => $row));
-
-					$email = $this->input->post("email");
-					$msg = $this->load->view('email_templates/reg_confirmation',NULL,TRUE);
-					$subject = 'EFAB EMAIL CONFIRMATION';
-
-					$txt = $id.':'.$this->input->post("email");
-					$ciphertext = $this->encryption->encrypt($txt);
-					$url = base_url() . 'email/confirmation?q=' . $ciphertext;
-					$msg = str_replace("[link]", $url, $msg);
-					send_mail($subject,$email,$msg);
-
 
 					echo json_encode(array(
 						"success" => TRUE
@@ -321,6 +290,106 @@ class Home extends MX_Controller {
 	    	$this->template->load_sub("error",TRUE);
 	    	$this->template->load('errors/html/error');
 	    }
+	}
+
+	function googleAuth(){
+		$this->load->library('gmail');
+		$this->gmail->authenticate();
+	}
+
+	function googleAuthCallback(){
+		$code = $_GET['code'];
+		$this->gmail->authorized_mail($code);
+	}
+
+	function googleAuthSignin(){
+		$email = $this->input->post('email');
+		if($this->user_model->checkAccountExists($email)){
+			//do signin
+			$this->googleSignIn();
+		}else{
+			//do sign up
+			$this->googleSignUp();
+		}
+	}
+
+	function googleSignIn(){
+		header("Content-Type:application/json");
+
+		$username = $this->input->post('id');
+		$checkEmail = $this->user_model->checkEmail($username);
+		if($checkEmail == FALSE){
+			return json(array(
+				"success"=> false,
+				"error" => array(array('name' => "username", 'message' => "Username does not exist"))
+			), 401);
+			exit;
+		}
+		else{
+			$user = $this->user_model->checkSocialLogin('google');
+			if($user == FALSE){
+				return json(array(
+					"success"=> false,
+					"error" => array(array('name' => "pwd", 'message' => "Password is not correct!"))
+				), 401);
+				exit;
+			}
+			else{
+				$this->user_model->setLoginStamp($user->id);
+				$this->session->set_userdata(array("user"=>$user, 'dashboard'=>'work'));
+				return json(array(
+					"success" => 200,
+					"data" => $user,
+					"type" => 'signin'
+				));
+				exit;
+			}
+		}
+	}
+
+	function googleSignUp(){
+		header("Content-Type:application/json");
+		$this->load->model('admin/package_model');
+		$package = $this->package_model->getDefault();
+		$firstname = $this->input->post("firstname");
+		$lastname = $this->input->post("lastname");
+
+		$dataSubmitMember = array(
+			"account_type" => $package->id,
+			"fullname" => $this->input->post('fullname'),
+			"avatar" => $this->input->post("img")
+		);
+
+		$id = $this->user_model->submitMember($dataSubmitMember);
+
+		if($id){
+			$pwd = hash_hmac("sha1", $this->input->post('id'), KEYCODE);
+			$dataSubmitUser = array(
+				"user_type" => "member",
+				"firstname" => $this->input->post("firstname"),
+				"lastname" => $this->input->post("lastname"),
+				"username" => $this->input->post("id"),
+				"email" => $this->input->post("email"),
+				"user_id" => $id,
+				"password" => $pwd,
+				"is_active" => 1,
+				"login_type" => 'google'
+			);
+
+			if($this->user_model->submitUser($dataSubmitUser)){
+				$row = $this->user_model->getUserInfo($id);
+				$row->user_details = $this->user_model->getMemberInfo($id);
+
+				$this->session->set_userdata(array('user' => $row));
+				$this->session->set_userdata(array('dashboard' => 'work'));
+
+				echo json_encode(array(
+					"success" => TRUE,
+					"type" => 'signup'
+				));
+				exit;
+			}
+		}
 	}
 
 
