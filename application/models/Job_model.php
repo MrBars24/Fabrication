@@ -266,6 +266,7 @@ class Job_model extends MX_Model{
         $query = $this->db->select("*,IF(expert_watchlist = '$user_id',1,0) as is_watchlist")
         ->from('job_details')
         ->where('id',$id)
+        ->where('is_deleted', 0)
         ->get();
         if($query->num_rows() > 0){
             return $query->row();
@@ -343,9 +344,9 @@ class Job_model extends MX_Model{
     }
 
     /**
-    * 
+    *
     * get post and bids summary
-    * 
+    *
     */
 
     function getSummary(){

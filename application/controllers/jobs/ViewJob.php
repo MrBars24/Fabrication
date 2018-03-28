@@ -18,7 +18,7 @@ class ViewJob extends MX_Controller {
             "/assets/admin/custom/js/bars-datatable.js",
             "/assets/plugins/moment/moment.js",
 			"/assets/default/custom/js/proposal.js",
-            
+
 		);
 		$this->template->append_js($js);
 		$this->template->append_css($css);
@@ -29,8 +29,8 @@ class ViewJob extends MX_Controller {
 		$this->load->model('proposal_model');
 		$this->load->model('user_model');
 		$this->load->model('bid_model');
-
 		$getJob = $this->job_model->getJob($id);
+	
 		$fabricatorDetails = $this->user_model->getMemberInfo($getJob->fabricator_id);
 		$getBids = $this->proposal_model->getBidsByJobId($getJob->id);
 		$getAttachment = $this->proposal_model->getAttachment($getJob->id);
@@ -38,7 +38,7 @@ class ViewJob extends MX_Controller {
 			$awardedUser = $this->user_model->getMemberInfo($getJob->accepted_bid);
 			$this->template->load_sub('awardedUser', $awardedUser);
 		}
-		
+
 		$this->template->load_sub('bids', $getBids);
 		$this->template->load_sub('jobdata', $getJob);
 		$this->template->load_sub('getAttachment', $getAttachment);
@@ -76,22 +76,22 @@ class ViewJob extends MX_Controller {
 
         $this->template->load('frontend/jobs/proposal');
 	}
-    
+
     public function bidderfetch($id){
-    
+
         header("Content-Type:application/json");
         $getJob = $this->job_model->getJob($id);
 		$bidderFetch = $this->proposal_model->getBidsById($getJob->id);
-            
+
         echo json_encode($bidderFetch);
 	}
-    
+
     public function bidderfetchsort($id, $id2){
-    
+
         header("Content-Type:application/json");
         $getJob = $this->job_model->getJob($id);
 		$bidderFetch = $this->proposal_model->getBidsByIdsort($getJob->id, $id2);
-            
+
         echo json_encode($bidderFetch);
 	}
 

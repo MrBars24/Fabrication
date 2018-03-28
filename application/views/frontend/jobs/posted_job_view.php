@@ -10,6 +10,7 @@
 
                             <div>
                                 <a href="#" class="btn btn-sm btn-danger btn-block text-white m-r-10" data-toggle="tooltip" title="Manage Job"><i class="mdi mdi-close-network"></i> Close Bidding</a>
+                                <a href="/jobs/job-discussion/<?= $job->id ?>" class="btn btn-sm btn-info btn-block text-white m-r-10" data-toggle="tooltip" title="Job Discussion"><i class="mdi mdi-close-network"></i> Job Discussion</a>
                                 <a href="javascript:void(0)" class="btn btn-sm btn-info btn-block text-white m-r-10" data-toggle="modal" data-target=".modal-job-edit" title="Edit Information" ><i class="mdi mdi-tooltip-edit"></i>  Edit Information</a>
                             </div>
                         </div>
