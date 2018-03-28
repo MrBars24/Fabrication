@@ -13,7 +13,11 @@ $(document).ready(function(){
             dataType: 'json',
             data: data,
             success: function(result){
-                location.href = "/settings";
+                if(result.success){
+                    location.href = "/settings";
+                }else{
+                    alert("error");
+                }
 
             },
             error: function(){

@@ -34,7 +34,9 @@ class Account extends MX_Controller {
 		$row = $this->User_model->getMemberInfo($id);
 		$countries = $this->country->get();
 
-		$_SESSION['user']->user_details = $row;
+		if(isset($_SESSION['user']->user_details)){
+			$_SESSION['user']->user_details = $row;
+		}
 		$this->template->load_sub('user_details', $row);
 		$this->template->load_sub('countries', $countries);
 		$this->template->load('frontend/settings/account');
