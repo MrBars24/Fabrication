@@ -12,7 +12,8 @@ class Portfolio extends MX_Controller {
 
       
 	public function index()
-	{	$js = array(
+	{	check_user('member');
+        $js = array(
             "assets/plugins/dropzone-master/dist/dropzone.js",
             "assets/admin/custom/js/bars-datatable.js",
             "assets/plugins/moment/moment.js",

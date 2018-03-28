@@ -11,6 +11,7 @@ class Watchlist extends MX_Controller {
 
 	public function index()
 	{
+		check_user('member');
         $css = array(
 			"https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css",
 			"assets/default/custom/css/jobs.css"

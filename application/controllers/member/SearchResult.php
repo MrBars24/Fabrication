@@ -10,6 +10,7 @@ class SearchResult extends MX_Controller {
     
 	public function search($search)
 	{
+		check_user('member');
         $css = array(
 			"/assets/default/css/custom/sections.css",
 			"/assets/default/custom/css/dashboard.css"

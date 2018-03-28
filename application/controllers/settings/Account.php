@@ -15,6 +15,7 @@ class Account extends MX_Controller {
 	}
 
 	public function index(){
+		check_user('member');
 		//dd($_SESSION['user']->user_details);
 		$css = array(
 			"/assets/plugins/toast-master/css/jquery.toast.css",

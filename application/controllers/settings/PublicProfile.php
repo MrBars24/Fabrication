@@ -16,6 +16,7 @@ class PublicProfile extends MX_Controller {
 
 
 	public function index(){
+		check_user('member');
 		$css = array(
 			"/assets/plugins/toast-master/css/jquery.toast.css",
 			"assets/default/custom/css/public-profile.css",

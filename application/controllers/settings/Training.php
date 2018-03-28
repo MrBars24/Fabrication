@@ -9,6 +9,7 @@ class Training extends MX_Controller {
 
 	public function index()
 	{
+		check_user('member');
 		$this->template->append_css(array(
 			"assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css",
 				"assets/admin/custom/js/bars-datatable.css"

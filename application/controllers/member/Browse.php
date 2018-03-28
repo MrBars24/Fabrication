@@ -9,6 +9,7 @@ class Browse extends MX_Controller {
 	}
 	public function index()
 	{
+		check_user('member');
         $css = array(
 			"/assets/default/custom/css/dashboard.css"
 		);

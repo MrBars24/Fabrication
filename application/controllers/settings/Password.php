@@ -17,6 +17,7 @@ class Password extends MX_Controller {
       
 	public function index()
 	{	
+		check_user('member');
 		$this->template->append_js(array(
 			'assets/default/custom/js/settings/change-password.js'
 		));
