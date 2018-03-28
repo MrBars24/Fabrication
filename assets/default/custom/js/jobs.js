@@ -47,7 +47,7 @@ $(document).ready(function() {
                                             <h6 class="text-dark font-weight-bold">${obj.accepted_bid}</h6>
                                         </div>
                                     </div>
-                                    <div class="" style="position:absolute; bottom:20px; transform: translate(90%,0);">
+                                    <div class="" style="position:absolute; bottom:20px; transform: translate(100%,0);">
                                         <a href="/jobs/${obj.id}" class="btn btn-warning text-dark mt-auto py-0"><span class="align-middle">Job Details</span><i class="fa fa-angle-right fa-2x align-middle text-truncate mt-auto"></i></a>
                                     </div>
                             </div>
