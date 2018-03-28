@@ -2,6 +2,7 @@
 class User_model extends MX_Model{
 
     public $table = "users";
+    private $loginFields = 'id, email, username, user_type, user_id, firstname, lastname, max_bid, max_post, my_bids, my_posts';
 
     function __construct(){
         parent::__construct();
@@ -102,7 +103,7 @@ class User_model extends MX_Model{
             $password = $pwd = hash_hmac("sha1", $_POST['id'], "e-fab");
         }
 
-        $this->db->select('id, email, username, user_type, user_id, firstname, lastname, max_bid, max_post, my_bids, my_posts');
+        $this->db->select($this->loginFields);
 
         if(filter_var($username, FILTER_VALIDATE_EMAIL)){
             $this->db->where('email', $username);
@@ -164,7 +165,7 @@ class User_model extends MX_Model{
     //     return array();
     // }
     function updateUserSession(){
-        $this->db->select('id, email, username, user_type, user_id, firstname, lastname, max_bid, max_post, my_bids, my_posts');
+        $this->db->select($this->loginFields);
 
         $this->db->where("id",auth()->id);
         $query = $this->db->get('user_details');
@@ -198,6 +199,31 @@ class User_model extends MX_Model{
             return TRUE;
         }
 
+        return FALSE;
+    }
+
+    public function setActive($id,$email){
+        $this->db->where("user_id",$id);
+        $this->db->where("email",$email);
+        return $this->db->update("users",array("is_active"=>1));
+    }
+
+    function checkLoginConfirmation($id,$email){
+        $this->db->select($this->loginFields);
+        $this->db->where('user_id', $id);
+        $this->db->where('email', $email);
+        $query = $this->db->get('user_details');
+        if($query->num_rows() > 0){
+            $row = $query->row();
+            $row->user_details = $this->getMemberInfo($row->user_id);
+            if($row->user_type == "member"){
+                $row->url_redirect = base_url() . 'work';
+            }
+            else{
+                $row->url_redirect = base_url() . 'admin';
+            }
+            return $row;
+        }
         return FALSE;
     }
 }

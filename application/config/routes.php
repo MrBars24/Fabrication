@@ -133,6 +133,7 @@ $route['admin/image/assets/list']['GET'] = 'adm/file/getImageAsssets';
 $route['admin/user/list']['GET'] = 'adm/user/getUsers';
 $route['admin/job/list']['GET'] = 'adm/jobs/fetch';
 
+$route['email/confirmation'] = 'home/confirmation';
 $route['login-register']['GET'] = 'home/login';
 $route['login']['POST'] = 'home/loginCheck';
 $route['logout']['GET'] = 'home/logout';

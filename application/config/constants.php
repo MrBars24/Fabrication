@@ -98,6 +98,16 @@ define('email_constant', serialize(array(
   'charset'   => 'utf-8'
 )));
 
+const EMAIL_DETAILS = array(
+  'protocol' => 'sendmail',
+  'smtp_host' => 'ssl://smtp.gmail.com',
+  'smtp_port' => 465,
+  'smtp_user' => 'efab@efab.ifltest08.tk',
+  'smtp_pass' => 'ktuN9?&Knkng',
+  'mailtype'  => 'html',
+  'charset'   => 'utf-8'
+);
+
 const PUSHER_DETAILS = array(
     'cluster' => 'ap1',
     'encrypted' => true

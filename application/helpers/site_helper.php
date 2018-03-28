@@ -21,6 +21,22 @@ function get_nav($user=null){
 	$CI->load->view('navigation/'.$file);
 }
 
+function send_mail($subject,$email,$message){
+	$CI =& get_instance();
+	$CI->load->library('email',EMAIL_DETAILS);
+	$CI->email->from(EMAIL_DETAILS['smtp_user'], 'efab');
+	$CI->email->to($email);
+	$CI->email->cc('efab@efab.ifltest08.tk');
+	$CI->email->bcc(EMAIL_DETAILS['smtp_user']);
+	$CI->email->set_mailtype('html');
+	$CI->email->subject($subject);
+	$CI->email->message($message);
+
+	$sendReturn = $CI->email->send();
+
+	return $sendReturn;
+}
+
 function get_user_type(){
 	if(!isset($_SESSION['user'])){
 		return FALSE;

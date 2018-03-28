@@ -133,7 +133,8 @@ class Home extends MX_Controller {
 				"username" => $this->input->post("id"),
 				"email" => $this->input->post("id"),
 				"user_id" => $id,
-				"password" => $pwd
+				"password" => $pwd,
+				"is_active" => 1
 			);
 
 			if($this->user_model->submitUser($dataSubmitUser)){
@@ -157,6 +158,25 @@ class Home extends MX_Controller {
 		$this->load->library('facebook',$params);
 
 		redirect($this->facebook->generateLoginUrl());
+	}
+
+	function confirmation(){
+		if(!isset($_GET['q'])){
+			exit;
+		}
+
+		$cred = $_GET['q'];
+		$this->load->library('encryption');
+		$tmp = $this->encryption->decrypt($cred);
+		list($id,$email) = explode(":", $tmp);
+		$update = $this->user_model->setActive($id,$email);
+		if($update){
+			$info = $this->user_model->checkLoginConfirmation($id,$email);
+			$this->user_model->setLoginStamp($info->id);
+			$this->session->set_userdata(array("user"=>$info, 'dashboard'=>'work'));
+			echo $info->url_redirect;
+			//redirect($info->url_redirect);
+		}
 	}
 
 	function loginCheck(){
@@ -224,6 +244,8 @@ class Home extends MX_Controller {
 	function submitMember(){
 		header("Content-Type:application/json");
 		$this->load->model('User_model');
+		$this->load->library('encryption');
+
 		$this->form_validation->set_rules('username', 'username', 'required|min_length[8]');
 		$this->form_validation->set_rules('pwd', 'password', 'required|min_length[8]');
 
@@ -263,6 +285,17 @@ class Home extends MX_Controller {
 					$row->user_details = $this->User_model->getMemberInfo($id);
 
 					$this->session->set_userdata(array('user' => $row));
+
+					$email = $this->input->post("email");
+					$msg = $this->load->view('email_templates/reg_confirmation',NULL,TRUE);
+					$subject = 'EFAB EMAIL CONFIRMATION';
+
+					$txt = $id.':'.$this->input->post("email");
+					$ciphertext = $this->encryption->encrypt($txt);
+					$url = base_url() . 'email/confirmation?q=' . $ciphertext;
+					$msg = str_replace("[link]", $url, $msg);
+					send_mail($subject,$email,$msg);
+
 
 					echo json_encode(array(
 						"success" => TRUE
