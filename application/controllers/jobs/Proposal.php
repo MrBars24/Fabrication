@@ -58,6 +58,10 @@ class Proposal extends MX_Controller {
 		$this->user_model->updateUserSession();
 		$data['user_details'] = auth();
         if($submitproposal){
+
+			$this->load->library('Notification');
+			$this->notification->use('new_bid')->send($this->job_model->getJob($this->input->post('id'))->fabricator_id);
+
             return json(array(
                 'success' => TRUE,
 				'status' => "created",
@@ -111,9 +115,18 @@ class Proposal extends MX_Controller {
 			'status' => 1,
 			'accepted_at' => date("Y-m-d h:i:sa")
 		);
+
 		$result = $this->proposal_model->acceptBid($id,$data);
+
+		$proposal = $this->proposal_model->getById($id);
+
+		$this->load->library('Notification');
+		$this->notification->use('bid_accepted')->send($proposal->expert_id);
+
 		if($result){
 			redirect("jobs/$result");
 		}
+
 	}
+
 }

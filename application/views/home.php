@@ -107,7 +107,7 @@
             <div class="col-sm px-sm-5 mb-2">
                 <div class="efab-shape mx-auto">
                     <div class="inner-content">
-                        <h2 class="font-weight-bold text-white font-size-4em">196</h2>
+                        <h2 class="font-weight-bold text-white font-size-4em"><?php echo $summary->last_30_days_new_jobs ?></h2>
                         <h6 class="text-white text-capitalize">New Jobs Posted</h6>
                     </div>
                 </div>
@@ -140,7 +140,7 @@
            </div>
            <div class="col-sm-9">
             <ul class="nav nav-tabs customtab justify-content-end border-bottom-0" id="home-jobs-tabs" role="tablist">
-                    <li class="nav-item"><a class="nav-link pt-2 p-1 font-weight-bold" data-toggle="tab" href="#home-tab-all" data-category="any" role="tab" aria-expanded="true"><span class="hidden-sm-up"><i class="ti-home"></i></span><span class="hidden-xs-down">All</span></a> </li>
+                    <li class="nav-item"><a class="nav-link pt-2 p-1 font-weight-bold" data-toggle="tab" href="#home-tab-any" data-category="any" role="tab" aria-expanded="true"><span class="hidden-sm-up"><i class="ti-home"></i></span><span class="hidden-xs-down">All</span></a> </li>
                     <?php foreach($industries as $industry): ?>
                         <li class="nav-item"><a class="nav-link pt-2 p-1 font-weight-bold " data-toggle="tab" href="#home-tab-<?php echo $industry['id'] ?>" data-category="<?php echo $industry['id'] ?>" role="tab" aria-expanded="false"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down text-capitalize"><?php echo $industry['display_name'] ?></span></a> </li>
                     <?php endforeach; ?>

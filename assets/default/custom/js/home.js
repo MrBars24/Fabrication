@@ -84,12 +84,11 @@ $(document).ready(function() {
                     container = `
                     <div class="container d-flex justify-content-center align-items-center" style="height: 100px;">
                         <div class="row h-100 d-flex justify-content-center align-items-center">
-                            <h1 class="text-dark ">No Result</h1>
+                            <h4 class="text-dark ">No Result</h4>
                         </div>
                     </div>
                     `;
                 }
-                console.log(container);
                 return container;
             }
         });

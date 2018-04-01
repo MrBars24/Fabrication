@@ -17,3 +17,9 @@ if ( !function_exists('dd') ) {
        exit;
     }
 }
+
+if ( !function_exists('is_ajax') ) {
+    function is_ajax() {
+       return get_instance()->input->is_ajax_request();
+    }
+}

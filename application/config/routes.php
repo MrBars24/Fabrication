@@ -305,6 +305,7 @@ $route['dashboard/expert']['get'] = 'expert/Dashboard/index';
 
 
 $route['show-session']['GET'] = 'test/showSession';
+$route['notification']['GET'] = 'test/notify';
 
 
 /**
@@ -325,7 +326,8 @@ $route['api/v1/jobs/(:num)/bids']['GET'] = 'bids/BidApi/getBidsByJobId/$1';
 $route['api/v1/(:any)/(:num)/attachments']['GET'] = 'attachments/AttachmentApi/getAttachmentsByMorphedId/$1/$2';
 
 
-
+// Notifications
+$route['api/v1/notifications']['GET'] = 'notifications/NotificationApi/index';
 
 
 
