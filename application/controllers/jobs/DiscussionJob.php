@@ -60,6 +60,7 @@ class DiscussionJob extends MX_Controller {
 			'message' => $this->input->post('message')
 		);
 		$result = $this->jobdiscussion_model->edit($id, $data);
+		
 		if($result){
 			echo json_encode(array(
 				'success' => TRUE,

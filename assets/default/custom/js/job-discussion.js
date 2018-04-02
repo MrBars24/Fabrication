@@ -8,6 +8,15 @@ $(document).ready(function(){
                 var container = ``;
                 if (data.length > 0) {
                     data.forEach(function(obj, index) {
+                        var is_session = (obj.is_session == 1) ? `<div class="btn-group btn-action-discussion">
+                                <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-list"></i>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item btn-edit-discussion" href="javascript:void(0)" data-edit-discussion="${obj.id}">Edit</a>
+                                    <a class="dropdown-item btn-dlt-discussion" href="javascript:void(0)" data-delete-discussion="${obj.id}">Delete</a>
+                                </div>
+                            </div>` : "";
                         container += `
                             <div class="">
                                 <div class="pull-right">
@@ -22,17 +31,7 @@ $(document).ready(function(){
                                                 <p class="msg-container-disc" data-target-message="${obj.id}">${obj.message}</p>
                                                 <!-- <div class="like-comm"> <a href="javascript:void(0)" class="link m-r-10">2 comment</a> <a href="javascript:void(0)" class="link m-r-10"><i class="fa fa-heart text-danger"></i> 5 Love</a> </div> -->
                                             </div>
-                                            <div class="col-1">
-                                                <div class="btn-group btn-action-discussion">
-                                                    <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fa fa-list"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item btn-edit-discussion" href="javascript:void(0)" data-edit-discussion="${obj.id}">Edit</a>
-                                                        <a class="dropdown-item btn-dlt-discussion" href="javascript:void(0)" data-delete-discussion="${obj.id}">Delete</a>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <div class="col-1">`+is_session+`</div>
                                         </div>
                                     </div>
                                 </div>

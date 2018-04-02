@@ -28,11 +28,12 @@ class Jobdiscussion_model extends MX_Model{
     function getMessage($id){
         $limit = 0;
         $offset = 0;
+        $user_id = auth()->id;
         $search_sql = array(
             'job_id' => $id,
             'is_deleted' => 0,
         );
-        $q = $this->getIndexDataCount("job_discussion",$limit,$offset,'created_at','ASC', $search_sql);
+        $q = $this->getIndexDataCount("job_discussion",$limit,$offset,'created_at','ASC', $search_sql, "","","","","*,IF(job_discussion.user_id = '$user_id',1,0) as is_session");
 
         for($i=0; $i<count($q['data']); $i++){
             $q['data'][$i]->user_details = "";
