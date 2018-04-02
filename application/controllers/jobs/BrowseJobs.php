@@ -15,9 +15,9 @@ class BrowseJobs extends MX_Controller {
 			"assets/default/custom/css/jobs.css"
         );
         $js = array(
-            "assets/plugins/select2/js/select2.min.js",
-            "assets/default/custom/js/jobs.js",
-			"assets/admin/custom/js/bars-datatable.js"
+            "/assets/plugins/select2/js/select2.min.js",
+            "/assets/default/custom/js/jobs.js",
+			"/assets/admin/custom/js/bars-datatable.js"
         );
         $this->template->append_css($css);
 		$this->template->append_js($js);

@@ -15,8 +15,8 @@ class Contract extends MX_Controller {
 			"/assets/default/css/custom/sections.css"
         );
         $js = array(
-            "assets/plugins/select2/js/select2.min.js",
-            "assets/default/custom/js/jobs.js",
+            "/assets/plugins/select2/js/select2.min.js",
+            "/assets/default/custom/js/jobs.js",
         );
         $this->template->append_css($css);
         $this->template->append_js($js);

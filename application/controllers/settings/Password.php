@@ -19,7 +19,7 @@ class Password extends MX_Controller {
 	{	
 		check_user('member');
 		$this->template->append_js(array(
-			'assets/default/custom/js/settings/change-password.js'
+			'/assets/default/custom/js/settings/change-password.js'
 		));
 		$this->template->load('frontend/settings/password');
 		

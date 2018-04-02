@@ -18,9 +18,9 @@ class DiscussionJob extends MX_Controller {
 			"assets/default/css/custom/global.css",
         );
         $js = array(
-			"assets/default/custom/js/job-discussion.js",
-			"assets/admin/custom/js/bars-datatable.js",
-			"assets/plugins/moment/moment.js",
+			"/assets/default/custom/js/job-discussion.js",
+			"/assets/admin/custom/js/bars-datatable.js",
+			"/assets/plugins/moment/moment.js",
         );
 		$this->template->append_js($js);
 		$this->template->append_css($css);

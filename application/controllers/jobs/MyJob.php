@@ -14,8 +14,8 @@ class MyJob extends MX_Controller {
         "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css",
         );
         $js = array(
-            "assets/plugins/select2/js/select2.min.js",
-            "assets/default/custom/js/jobs.js",
+            "/assets/plugins/select2/js/select2.min.js",
+            "/assets/default/custom/js/jobs.js",
         );
         $this->template->append_css($css);
         $this->template->append_js($js);
@@ -28,8 +28,8 @@ class MyJob extends MX_Controller {
         "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css",
         );
         $js = array(
-            "assets/plugins/select2/js/select2.min.js",
-            "assets/default/custom/js/jobs.js",
+            "/assets/plugins/select2/js/select2.min.js",
+            "/assets/default/custom/js/jobs.js",
         );
         $this->template->append_css($css);
         $this->template->append_js($js);

@@ -19,11 +19,11 @@ class Work extends MX_Controller {
 		);
 
         $js = array(
-        	"assets/plugins/jstz/dist/jstz.min.js",
-            "assets/plugins/moment/moment.js",
-            "assets/plugins/select2/js/select2.min.js",
-			"assets/admin/custom/js/bars-datatable.js",
-            "assets/default/custom/js/work.js"
+        	"/assets/plugins/jstz/dist/jstz.min.js",
+            "/assets/plugins/moment/moment.js",
+            "/assets/plugins/select2/js/select2.min.js",
+			"/assets/admin/custom/js/bars-datatable.js",
+            "/assets/default/custom/js/work.js"
         );
 		$var = get_redir_logreg();
 		$this->template->append_css($css);

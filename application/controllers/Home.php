@@ -23,8 +23,8 @@ class Home extends MX_Controller {
 			"assets/default/css/custom/sections.css"
 		);
 		$js = array(
-			"assets/default/custom/js/home.js",
-			"assets/admin/custom/js/bars-datatable.js"
+			"/assets/default/custom/js/home.js",
+			"/assets/admin/custom/js/bars-datatable.js"
         );
 		$this->template->append_css($css);
 		$this->template->append_js($js);

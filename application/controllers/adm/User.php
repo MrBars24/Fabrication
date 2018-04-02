@@ -13,8 +13,8 @@ class User extends Admin {
 	{
 		$this->template->append_js(
 			array(
-				"assets/admin/custom/js/bars-datatable.js",
-				"assets/admin/custom/js/users.js"
+				"/assets/admin/custom/js/bars-datatable.js",
+				"/assets/admin/custom/js/users.js"
 			)
 		);
 

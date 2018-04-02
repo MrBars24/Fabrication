@@ -19,9 +19,9 @@ class ViewProfile extends MX_Controller {
 			"/assets/default/css/custom/sections.css"
 		);
 		$js = array(
-			"assets/admin/custom/js/bars-datatable.js",
-			"assets/default/custom/js/review.js",
-			"assets/default/custom/js/invite.js",
+			"/assets/admin/custom/js/bars-datatable.js",
+			"/assets/default/custom/js/review.js",
+			"/assets/default/custom/js/invite.js",
 		);
 
 		$this->template->append_css($css);

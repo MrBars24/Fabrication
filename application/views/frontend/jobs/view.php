@@ -34,7 +34,7 @@
                             <div>
                                 <span class="">New York, US</span>
                             </div>
-                            <span class="badge badge-secondary"><?=$jobdata->display_name?></span>
+                            <span class="badge badge-secondary"><?=$jobdata->project_category?></span>
                         </div>
                         <div>
                             <a href="/jobs/job-discussion/<?= $jobdata->id ?>" class="btn btn-success">Job Discussion</a>

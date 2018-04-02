@@ -17,10 +17,11 @@ class Training extends MX_Controller {
 
 		$this->template->append_js(
 			array(
-				"assets/admin/js/mask.js",
-				"assets/plugins/moment/moment.js",
-				"assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js",
-				"assets/admin/custom/js/bars-datatable.js",		"assets/default/custom/js/settings/settings-training.js"
+				"/assets/admin/js/mask.js",
+				"/assets/plugins/moment/moment.js",
+				"/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js",
+				"/assets/admin/custom/js/bars-datatable.js",
+				"/assets/default/custom/js/settings/settings-training.js"
 
 			)
 		);

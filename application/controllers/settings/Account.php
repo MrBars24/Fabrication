@@ -21,10 +21,10 @@ class Account extends MX_Controller {
 			"/assets/plugins/toast-master/css/jquery.toast.css",
 		);
 		$js = array(
-			"assets/default/custom/js/settings/settings.js",
-			"assets/default/custom/js/settings/settings-account.js",
-			"assets/plugins/toast-master/js/jquery.toast.js",
-			"assets/default/js/toastr.js"
+			"/assets/default/custom/js/settings/settings.js",
+			"/assets/default/custom/js/settings/settings-account.js",
+			"/assets/plugins/toast-master/js/jquery.toast.js",
+			"/assets/default/js/toastr.js"
 		);
 		$this->template->append_CSS($css);
 		$this->template->append_js($js);

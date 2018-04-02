@@ -12,9 +12,9 @@ class File extends Admin {
 	{
 		$this->template->append_js(
 			array(
-				"assets/plugins/cropper/cropper.min.js",
-				"assets/admin/custom/js/bars-datatable.js",
-				"assets/admin/custom/js/image-upload.js"
+				"/assets/plugins/cropper/cropper.min.js",
+				"/assets/admin/custom/js/bars-datatable.js",
+				"/assets/admin/custom/js/image-upload.js"
 			)
 		);
 

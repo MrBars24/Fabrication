@@ -12,7 +12,7 @@ class Pages extends Admin {
 	{
 		$this->template->append_js(
 			array(
-				"assets/admin/custom/js/pages-create.js"
+				"/assets/admin/custom/js/pages-create.js"
 			)
 		);
 		$pages = $this->cms_model->getPageList();

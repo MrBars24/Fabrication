@@ -27,19 +27,19 @@ class PublicProfile extends MX_Controller {
 			"assets/plugins/cropper/cropper.min.css"
 		);
 		$js = array(
-			"assets/default/custom/js/settings/settings.js",
-			"assets/plugins/toast-master/js/jquery.toast.js",
-			"assets/default/js/toastr.js",
-			"assets/plugins/moment/moment.js",
-			"assets/default/custom/js/bootstrap-tagsinput.min.js",
-			"assets/admin/custom/js/bars-datatable.js",
-			"assets/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js",
-			"assets/plugins/bootstrap-select/bootstrap-select.min.js",
-			"assets/plugins/select2/dist/js/select2.full.min.js",
-			"assets/plugins/switchery/dist/switchery.min.js",
-			"assets/plugins/multiselect/js/jquery.multi-select.js",
-			"assets/default/custom/js/settings/settings-public.js",
-			"assets/plugins/cropper/cropper.min.js"
+			"/assets/default/custom/js/settings/settings.js",
+			"/assets/plugins/toast-master/js/jquery.toast.js",
+			"/assets/default/js/toastr.js",
+			"/assets/plugins/moment/moment.js",
+			"/assets/default/custom/js/bootstrap-tagsinput.min.js",
+			"/assets/admin/custom/js/bars-datatable.js",
+			"/assets/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js",
+			"/assets/plugins/bootstrap-select/bootstrap-select.min.js",
+			"/assets/plugins/select2/dist/js/select2.full.min.js",
+			"/assets/plugins/switchery/dist/switchery.min.js",
+			"/assets/plugins/multiselect/js/jquery.multi-select.js",
+			"/assets/default/custom/js/settings/settings-public.js",
+			"/assets/plugins/cropper/cropper.min.js"
 		);
 		$this->template->append_CSS($css);
 		$this->template->append_js($js);

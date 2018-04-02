@@ -14,12 +14,12 @@ class Portfolio extends MX_Controller {
 	public function index()
 	{	check_user('member');
         $js = array(
-            "assets/plugins/dropzone-master/dist/dropzone.js",
-            "assets/admin/custom/js/bars-datatable.js",
-            "assets/plugins/moment/moment.js",
-			"assets/plugins/toastr/toastr.js",
-            "assets/global.js",
-			"assets/default/custom/js/settings/portfolio-settings.js"
+            "/assets/plugins/dropzone-master/dist/dropzone.js",
+            "/assets/admin/custom/js/bars-datatable.js",
+            "/assets/plugins/moment/moment.js",
+			"/assets/plugins/toastr/toastr.js",
+            "/assets/global.js",
+			"/assets/default/custom/js/settings/portfolio-settings.js"
 		);
 		$css = array(
             "assets/plugins/dropzone-master/dist/dropzone.css",

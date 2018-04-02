@@ -22,20 +22,20 @@ class CreateJob extends MX_Controller {
 
         );
         $js = array(
-			"assets/plugins/dropzone-master/dist/dropzone.js",
-			"assets/default/custom/js/create-job.js",
-            "assets/plugins/moment/moment.js",
-            "assets/plugins/timepicker/bootstrap-timepicker.min.js",
-            "assets/plugins/bootstrap-daterangepicker/daterangepicker.js",
-			"assets/plugins/bootstrap-select/bootstrap-select.min.js",
-            "assets/admin/js/post-job.js",
-			"assets/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js",
-			"assets/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js",
-			"assets/plugins/multiselect/js/jquery.multi-select.js",
-			"assets/plugins/switchery/dist/switchery.min.js",
-			"assets/plugins/select2/dist/js/select2.full.min.js",
-			"assets/plugins/styleswitcher/jQuery.style.switcher.js",
-			"assets/plugins/dropify/dist/js/dropify.min.js",
+			"/assets/plugins/dropzone-master/dist/dropzone.js",
+			"/assets/default/custom/js/create-job.js",
+            "/assets/plugins/moment/moment.js",
+            "/assets/plugins/timepicker/bootstrap-timepicker.min.js",
+            "/assets/plugins/bootstrap-daterangepicker/daterangepicker.js",
+			"/assets/plugins/bootstrap-select/bootstrap-select.min.js",
+            "/assets/admin/js/post-job.js",
+			"/assets/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js",
+			"/assets/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js",
+			"/assets/plugins/multiselect/js/jquery.multi-select.js",
+			"/assets/plugins/switchery/dist/switchery.min.js",
+			"/assets/plugins/select2/dist/js/select2.full.min.js",
+			"/assets/plugins/styleswitcher/jQuery.style.switcher.js",
+			"/assets/plugins/dropify/dist/js/dropify.min.js",
         );
         $this->template->append_css($css);
 		$this->template->append_js($js);
