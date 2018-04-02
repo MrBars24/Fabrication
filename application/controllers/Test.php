@@ -74,9 +74,7 @@ class Test extends MX_Controller {
 
 	public function notify() {
 		$this->load->library('Notification');
-		// dd(auth()->id);
-		return json($this->notification->use('bid_accepted')->send(1));
-
+		return json($this->notification->use('bid_accepted')->send(1, 1234));
 	}
 
 }

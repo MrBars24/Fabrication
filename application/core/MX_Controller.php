@@ -17,6 +17,17 @@ class MX_Controller extends CI_Controller{
 
     function isloggedin(){
         if(!$this->session->userdata('id')){
+            if (is_ajax()) {
+                $CI = &get_instance();
+        
+                $CI->output->set_content_type('application/json')
+                    ->set_status_header(401);
+
+                echo json_encode(array(
+                    "message"=>"Access Forbidden"
+                ));
+                exit;
+            }
             redirect('login');
         }
     }

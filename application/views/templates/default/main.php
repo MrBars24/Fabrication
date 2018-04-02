@@ -25,6 +25,7 @@
     } ?>
 </head>
 
+
 <body class="fix-header card-no-border logo-center <?php echo isset($additional_data['bodyClass']) ? $additional_data['bodyClass'] : '' ?>">
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
@@ -161,38 +162,15 @@
                         <?php }?>
                     </ul>
                     <ul class="navbar-nav my-lg-0 d-flex align-items-center">
-                    <li class="nav-item dropdown show" id="dropdown-notification">
-                            <a class="nav-link dropdown-toggle text-muted text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <i class="fa fa-bell"></i>
-                                <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right mailbox animated slideInDown">
-                                <ul>
-                                    <li>
-                                        <div class="drop-title">
-                                        <span class="float-left">
-                                            Notifications
-                                        </span>
-                                        <div class="float-right">
-                                            <a href="<?php base_url('settings/notification') ?>"><i class="fa fa-cog"></i></div></a>
-                                        <div class="clearfix"></div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <ul class="list-group list-group-flush notification-list">
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="nav-link text-center" href="#"> <strong>Check all notifications</strong> <i class="fa fa-angle-right"></i> </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
+                        <?php if(isset($_SESSION['user'])): ?>
+                            <?php $this->load->view('frontend/partials/header/notification')?>
+                        <?php endif; ?>
                         <?php if(!isset($_SESSION['user'])): ?>
                                 <li class="nav-item mx-1">
-                                    <a href="javascript:void(0)" class="m-t-10 text-white" data-toggle="modal" data-target="#login" >Login</a>
+                                    <a href="#" class="m-t-10 text-white" data-toggle="modal" data-target="#login" >Login</a>
                                 </li>
                                 <li class="nav-item mx-3">
-                                    <a href="javascript:void(0)" class="btn btn-success text-white" data-toggle="modal" data-target="#signupModal" data-whatever="@getbootstrap">Signup</a>
+                                    <a href="#" class="btn btn-success text-white" data-toggle="modal" data-target="#signupModal" data-whatever="@getbootstrap">Signup</a>
                                 </li>
                         <?php else: ?>
                             <li class="nav-item dropdown">

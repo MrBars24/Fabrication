@@ -14,7 +14,7 @@ class Notification_model extends CI_model {
         return $id;
     }
 
-    public function get($id = NULL, $memberId = NULL) {
+    public function get($id = NULL, $memberId = NULL, $withHidden = FALSE) {
         $query = $this->db->select('*')
             ->from('notifications');
 
@@ -28,6 +28,12 @@ class Notification_model extends CI_model {
             $query = $query->where('user_id', $memberId);
         }
         
+        
+        // Include hidden
+        if ( !$withHidden ) {
+            $query = $query->where('hidden_at IS NULL', NULL, FALSE);
+        }
+
         $query = $query->order_by('created_at', 'DESC');
 
         return $query->get()->result();
@@ -37,6 +43,7 @@ class Notification_model extends CI_model {
         return $this->db->update('notifications', array('read_at' => date("Y-m-d H:i:s")));
     }
     public function update($id, $data) {
+        $this->db->where('id', $id);
         return $this->db->update('notifications', $data);
     }
     public function delete() {
@@ -50,6 +57,13 @@ class Notification_model extends CI_model {
             ->get();
         return $query->result_array();
     }
+    public function getNewCount($userId) {
+        $query = $this->db->select('COUNT(*) as count')
+        ->from('notifications')
+        ->where('read_at', NULL)
+        ->where('user_id', $userId)
+        ->get();
 
-    
+        return $query->row()->count;
+    }
 }
