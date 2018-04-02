@@ -1,6 +1,6 @@
 <?php
 
-class JobDiscussion_model extends MX_Model{
+class Jobdiscussion_model extends MX_Model{
 
     function __construct(){
         parent::__construct();
@@ -28,10 +28,12 @@ class JobDiscussion_model extends MX_Model{
     function getMessage($id){
         $limit = 0;
         $offset = 0;
+        $user_id = auth()->id;
         $search_sql = array(
             'job_id' => $id,
+            'is_deleted' => 0,
         );
-        $q = $this->getIndexDataCount("job_discussion",$limit,$offset,'created_at','ASC', $search_sql);
+        $q = $this->getIndexDataCount("job_discussion",$limit,$offset,'created_at','ASC', $search_sql, "","","","","*,IF(job_discussion.user_id = '$user_id',1,0) as is_session");
 
         for($i=0; $i<count($q['data']); $i++){
             $q['data'][$i]->user_details = "";
@@ -48,6 +50,25 @@ class JobDiscussion_model extends MX_Model{
             return $query->row();
         }else{
             return array();
+        }
+    }
+
+    function delete($id, $data){
+        $query = $this->db->where('id', $id)
+                 ->update('job_discussion', $data);
+        return $query;
+    }
+
+    function edit($id, $data){
+        $query = $this->db->where('id', $id)
+                 ->update('job_discussion', $data);
+        if($query){
+            $query1 = $this->db->select('*')
+                     ->where('id', $id)
+                     ->get('job_discussion');
+            return $query1->row();
+        }else{
+
         }
     }
 }

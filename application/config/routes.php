@@ -217,6 +217,8 @@ $route['jobs/bid-history/view/(:num)']['get'] = 'jobs/ViewBidHistory/show/$1';
 $route['jobs/job-discussion/message/(:num)']['get'] = 'jobs/DiscussionJob/getMessage/$1';
 $route['jobs/job-discussion/(:num)']['get'] = 'jobs/DiscussionJob/index/$1';
 $route['jobs/job-discussion/submit/(:num)']['post'] = 'jobs/DiscussionJob/submit/$1';
+$route['jobs/job-discussion/delete/(:num)']['get'] = 'jobs/DiscussionJob/delete/$1';
+$route['jobs/job-discussion/edit/(:num)']['post'] = 'jobs/DiscussionJob/edit/$1';
 //Previous Project
 $route['jobs/previous-project']['get'] = 'jobs/ViewPreviousProject/index';
 $route['jobs/previous-project/(:num)']['get'] = 'jobs/ViewPreviousProject/show/$1';
