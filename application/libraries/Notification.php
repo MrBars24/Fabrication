@@ -6,6 +6,7 @@ class Notification {
     private $CI;
     private $notification;
     private $notification_asdasdsa;
+    private $notification_data;
 
     public function __construct() {
         $this->CI = get_instance();
@@ -19,8 +20,8 @@ class Notification {
     }
     
     // Get notifications by User Id
-    public function getByUserId($userId) {
-        $notifications = $this->CI->Notification_model->get(NULL, $userId);
+    public function getByUserId($userId, $withHidden = FALSE) {
+        $notifications = $this->CI->Notification_model->get(NULL, $userId, $withHidden);
         return $notifications;
     }
     
@@ -39,20 +40,47 @@ class Notification {
         return $this->CI->Notification_model->readAll($userId);
     }   
     
-        public function use($notification_asdasdsa) {
-            $this->notification_asdasdsa = $notification_asdasdsa;
-            return $this;
+    public function use($notification_asdasdsa) {
+        $this->notification_asdasdsa = $notification_asdasdsa;
+        return $this;
+    }
+
+    public function send($userId, $params = NULL) {
+        // Handle here depending on notification settings
+        $this->CI->load->config('notifications');
+        $className = $this->CI->config->item('notifications')[$this->notification_asdasdsa]['class'];
+        $notification = $this->CI->load->notification($className, $params);
+        $notification->setTemplate($this->notification_asdasdsa);
+        return $notification->dispatch($userId);
+    }
+
+    public function format($template, $data) {
+        $this->notification_data = $data;
+        $this->CI->load->config('notifications');
+        if (!array_key_exists ($template, $this->CI->config->item('notifications'))) {
+            return null;
         }
-    
-        public function send($userId, $options = NULL) {
-            // Handle here depending on notification settings
-            $this->CI->load->config('notifications');
-    
-            $notificationFactory = new NotificationFactory;
-            $notification = $notificationFactory->make($this->CI->config->item('notifications')[$this->notification_asdasdsa]['class']);
-            $notification->setTemplate($this->notification_asdasdsa);
-            return $notification->dispatch($userId);
+
+        $template = $this->CI->config->item('notifications')[$template]['template'] ;
+
+        $test = array(
+            '::job_link::' => '<a href="/jobs/' . $this->getDataItem('job_id') .'">job</a>',
+            '::contract_link::' => '<a href="/jobs/' . $this->getDataItem('contract_id') .'">job</a>'
+        );
+        return str_replace(
+            array_keys($test),
+            array_values($test),
+            $template
+        );
+
+    }
+
+    public function getDataItem($key) {
+        if(isset($this->notification_data->{$key})) {
+            return $this->notification_data->{$key};
         }
+        return null;
+    }
 }
 
 
@@ -61,10 +89,12 @@ class Notification {
 interface Notificatable {
     function dispatch($receiver_id);
     function via();
+    function toArray();
+    function toDatabase();
 }
 
 abstract class Efab_Notification implements Notificatable {
-    protected $templates;
+    protected $template_key;
     protected $via = ['database'];
     private $CI;
 
@@ -74,7 +104,7 @@ abstract class Efab_Notification implements Notificatable {
 
     public function setTemplate($template) {
         $this->CI->load->config('notifications');
-        $this->templates = $this->CI->config->item('notifications')[$template]['template'];
+        $this->template_key = $template;
     }
 
     public function dispatch($receiver_id) {
@@ -82,22 +112,21 @@ abstract class Efab_Notification implements Notificatable {
             $this->CI->load->model('Notification_model');
             return $this->CI->Notification_model->create(array(
                 'user_id' => $receiver_id,
-                'template' => $this->templates,
-                'message' => 'Another Notification'
+                'template' => $this->template_key,
+                'data' => json_encode($this->toDatabase())
             ));
         }
     }
     public function via() {
         return array();
     }
-}
-
-class NotificationFactory {
-    public function make($class) {
-        // dd($class);
-        return new $class;
+    public function toArray() {
+        return array();
     }
-} 
+    public function toDatabase() {
+        return array();
+    }
+}
 
 
 // Exceptions
@@ -105,28 +134,3 @@ class InvalidNotificationTemplateException extends Exception {
 
 }
 
-
-// 
-//  Notifications
-//  -class for each notification type
-
-
-class BidAcceptedNotification extends Efab_Notification {
-    public function via() {
-        return ['database'];
-    }
-
-    public function toMail() {
-
-    }
-}
-
-class NewBidNotification extends Efab_Notification {
-    public function via() {
-        return ['database'];
-    }
-
-    public function toMail() {
-
-    }
-}

@@ -60,7 +60,7 @@ class Proposal extends MX_Controller {
         if($submitproposal){
 
 			$this->load->library('Notification');
-			$this->notification->use('new_bid')->send($this->job_model->getJob($this->input->post('id'))->fabricator_id);
+			$this->notification->use('new_bid')->send($this->job_model->getJob($this->input->post('id'))->fabricator_id, $this->input->post('id'));
 
             return json(array(
                 'success' => TRUE,
@@ -121,7 +121,7 @@ class Proposal extends MX_Controller {
 		$proposal = $this->proposal_model->getById($id);
 
 		$this->load->library('Notification');
-		$this->notification->use('bid_accepted')->send($proposal->expert_id);
+		$this->notification->use('bid_accepted')->send($proposal->expert_id, $id);
 
 		if($result){
 			redirect("jobs/$result");

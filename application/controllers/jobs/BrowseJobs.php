@@ -34,7 +34,6 @@ class BrowseJobs extends MX_Controller {
 		$this->load->model('job_model');
 		$this->load->model('user_model');
 		$jobsPagination = $this->job_model->all();
-
 		if($jobsPagination){
 			echo json_encode($jobsPagination);
 		}

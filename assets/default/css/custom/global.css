@@ -119,3 +119,27 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+.notification-list {
+    max-height: 300px;
+    overflow-y: scroll;
+}
+.notification-item {
+    position: relative;
+}
+.notification-item.new {
+    background-color: #e7f0f9;
+}
+.notification-item .notification-status-action {
+    position: absolute;
+    /* top:50%; */
+    right: 10px;
+    bottom:5px;
+    /* transform: translate(0, -50%); */
+    /* display: flex; */
+    /* flex-direction: column; */
+}
+
+.notification-item .notification-status-action .btn {
+    padding: 0;
+}

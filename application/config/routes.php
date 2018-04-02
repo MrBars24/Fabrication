@@ -328,6 +328,7 @@ $route['api/v1/(:any)/(:num)/attachments']['GET'] = 'attachments/AttachmentApi/g
 
 // Notifications
 $route['api/v1/notifications']['GET'] = 'notifications/NotificationApi/index';
+$route['api/v1/notifications/(:num)']['POST'] = 'notifications/NotificationApi/update/$1';
 
 
 
