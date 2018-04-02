@@ -57,9 +57,9 @@ class BrowseJobs extends MX_Controller {
 			"assets/default/custom/css/jobs.css"
 		);
 		$js = array(
-			"assets/plugins/select2/js/select2.min.js",
-			"assets/default/custom/js/myjobs.js",
-			"assets/admin/custom/js/bars-datatable.js"
+			"/assets/plugins/select2/js/select2.min.js",
+			"/assets/default/custom/js/myjobs.js",
+			"/assets/admin/custom/js/bars-datatable.js"
 		);
 		$this->template->append_css($css);
 		$this->template->append_js($js);
@@ -80,12 +80,12 @@ class BrowseJobs extends MX_Controller {
 			"assets/plugins/dropify/dist/css/dropify.min.css",
         );
         $js = array(
-			"assets/plugins/dropzone-master/dist/dropzone.js",
-			"assets/default/custom/js/update-job.js",
-			"assets/plugins/moment/moment.js",
-            "assets/admin/custom/js/bars-datatable.js",
-            "assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js",
-            "assets/admin/js/mask.js",
+			"/assets/plugins/dropzone-master/dist/dropzone.js",
+			"/assets/default/custom/js/update-job.js",
+			"/assets/plugins/moment/moment.js",
+            "/assets/admin/custom/js/bars-datatable.js",
+            "/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js",
+            "/assets/admin/js/mask.js",
         );
         $this->template->append_css($css);
 		$this->template->append_js($js);
@@ -108,8 +108,8 @@ class BrowseJobs extends MX_Controller {
 			"assets/default/custom/css/jobs.css"
         );
         $js = array(
-            "assets/plugins/select2/js/select2.min.js",
-            "assets/default/custom/js/jobs.js",
+            "/assets/plugins/select2/js/select2.min.js",
+            "/assets/default/custom/js/jobs.js",
         );
         $this->template->append_css($css);
 		$this->template->append_js($js);
