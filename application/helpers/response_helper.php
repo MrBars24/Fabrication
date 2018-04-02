@@ -3,7 +3,7 @@
 if ( !function_exists('json') ) {
     function json($data, $status = 200) {
         $CI = &get_instance();
-        
+
         return $CI->output
             ->set_content_type('application/json')
             ->set_status_header($status)
@@ -13,7 +13,9 @@ if ( !function_exists('json') ) {
 
 if ( !function_exists('dd') ) {
     function dd($data) {
-       echo var_dump($data);
+        echo '<pre>';
+        echo var_dump($data);
+        echo '</pre>';
        exit;
     }
 }

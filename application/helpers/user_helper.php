@@ -21,9 +21,16 @@ function auth(){
 
 	return [];
 }
-function avatar(){
+function avatar($avatar = ''){
 	if(auth()->user_details->avatar == ''){
 		return base_url() . 'assets/images/icon_profile.jpg';
 	}
 	return auth()->user_details->avatar;
+}
+
+function print_image($img){
+	if(!empty($img)){
+		return $img;
+	}
+	return base_url() . 'assets/images/icon_profile.jpg';
 }
