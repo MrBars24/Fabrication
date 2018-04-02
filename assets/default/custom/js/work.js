@@ -32,7 +32,7 @@ $(document).ready(function () {
                             </div>
                             <div>
                                 <button class="${(obj.is_watchlist == 1) ? "bg-danger text-white btn-unbook" : "btn-bookmark"} btn btn-sm btn-circle "><i class="fa fa-bookmark"></i></button>
-                                <button class="btn btn-sm btn-circle "><i class="mdi mdi-send"></i></button>
+                                <button class="btn btn-sm btn-circle frward"><i class="mdi mdi-send"></i></button>
                             </div>
                         </div>
                         <div class="row">
@@ -107,6 +107,10 @@ $(document).ready(function () {
                 }
             }
         })
+    });
+
+    $(document).on('click','.frward',function(){
+        $('.frward-modal').modal('show');
     });
 
     $(document).on('click','.btn-unbook',function(){
