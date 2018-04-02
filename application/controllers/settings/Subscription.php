@@ -7,6 +7,7 @@ class Subscription extends MX_Controller {
         $this->template->set_template("default");
         $this->load->model("pricing_model");
         $this->load->model("subscription_model");
+        $this->load->library('encryption');
 		
 		$js = array(
 			//"assets/default/custom/js/settings/settings-training.js"
@@ -23,7 +24,7 @@ class Subscription extends MX_Controller {
 
 
         $this->template->append_js(array(
-            'assets/default/custom/js/settings/subscription.js'
+            '/assets/default/custom/js/settings/subscription.js'
         ));
     	$this->template->load_sub('member',$memberPackage);
     	$this->template->load_sub('pricing', $pricing);
@@ -42,8 +43,31 @@ class Subscription extends MX_Controller {
             'cancel_url' => 'https://example.com/your_cancel_url.html'
         ));
 
+        $hash = base64_decode($this->input->post('id'));
+        $id = $this->encryption->decrypt(
+            $hash,
+            array(
+                'cipher' => 'blowfish',
+                'mode' => 'cbc',
+                'key' => session_id(),
+                'hmac_digest' => 'sha256',
+                'hmac_key' => KEYCODE
+            )
+        );
+
+        $details = $this->subscription_model->getDetails($id);
+
         $trans = new Ptransaction();
-        $trans->setAmount('4.00');
+        $trans->addItem(
+            array(
+                "description" => $details->package_name,
+                "quantity" => 1,
+                "price" => $details->package_price,
+                "currency" => "USD"
+            )
+        );
+        $trans->setDescription("Package upgrade");
+        $trans->setAmount($details->package_price);
         $trans->setCurrency('USD');
 
         $this->paypal->setTransaction($trans);
@@ -53,8 +77,66 @@ class Subscription extends MX_Controller {
 
     public function executePayment(){
         $this->load->library('paypal');
+
+        $hash = base64_decode($this->input->post('id'));
+        $id = $this->encryption->decrypt(
+            $hash,
+            array(
+                'cipher' => 'blowfish',
+                'mode' => 'cbc',
+                'key' => session_id(),
+                'hmac_digest' => 'sha256',
+                'hmac_key' => KEYCODE
+            )
+        );
+
+        $details = $this->subscription_model->getDetails($id);
+
         $ex = $this->paypal->executePayment();
-        echo $ex;
+        $res = json_decode($ex);
+        if(isset($res->id)){
+            $this->saveTransaction($details,$ex);
+            json(array("success"=>TRUE));
+        }else{
+            json(array("success"=>FALSE));
+        }
+        //echo $ex;
+    }
+
+    public function saveTransaction($details,$ex){
+        $res = json_decode($ex);
+
+        $data = array(
+            "user_id" => auth()->id,
+            "paypal_payment_id" => $res->id,
+            "intent" => $res->intent,
+            "state" => $res->state,
+            "payer_payment_method" => $res->payer->payment_method,
+            "payer_status" => $res->payer->status,
+            "payer_id" => $res->payer->payer_info->payer_id,
+            "payer_info_email" => $res->payer->payer_info->email,
+            "payer_info_firstname" => $res->payer->payer_info->first_name,
+            "payer_info_lastname" => $res->payer->payer_info->last_name,
+            "payer_country_code" => $res->payer->payer_info->country_code,
+            "shipping_recipient_name" => $res->payer->payer_info->shipping_address->recipient_name,
+            "shipping_address_line_1" => $res->payer->payer_info->shipping_address->line1,
+            "shipping_address_city" => $res->payer->payer_info->shipping_address->city,
+            "shipping_address_state" => $res->payer->payer_info->shipping_address->state,
+            "shipping_address_postal_code" => $res->payer->payer_info->shipping_address->postal_code,
+            "shipping_address_country_code" => $res->payer->payer_info->shipping_address->country_code,
+            "shipping_address_line_1" => $res->payer->payer_info->shipping_address->line1,
+            "paypal_create_time" => $res->create_time,
+            "total_price" => $res->transactions[0]->amount->total
+        );
+
+        $trans = array(
+            "paypal_payment_id" => $res->id,
+            "amount_total" => $res->transactions[0]->amount->total,
+            "amount_currency" => $res->transactions[0]->amount->currency,
+            "status" => $res->transactions[0]->related_resources[0]->sale->state
+        );
+
+        $this->subscription_model->savePayment($details,$data,$trans);
     }
 }
 

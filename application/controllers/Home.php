@@ -230,6 +230,8 @@ class Home extends MX_Controller {
 	function submitMember(){
 		header("Content-Type:application/json");
 		$this->load->model('User_model');
+		$this->load->library('encryption'); 
+		
 		$this->form_validation->set_rules('username', 'username', 'required|min_length[8]');
 		$this->form_validation->set_rules('pwd', 'password', 'required|min_length[8]');
 
@@ -269,6 +271,16 @@ class Home extends MX_Controller {
 					$row->user_details = $this->User_model->getMemberInfo($id);
 
 					$this->session->set_userdata(array('user' => $row));
+
+					$email = $this->input->post("email"); 
+			        $msg = $this->load->view('email_templates/reg_confirmation',NULL,TRUE); 
+			        $subject = 'EFAB EMAIL CONFIRMATION'; 
+			 
+			        $txt = $id.':'.$this->input->post("email"); 
+			        $ciphertext = $this->encryption->encrypt($txt); 
+			        $url = base_url() . 'email/confirmation?q=' . $ciphertext; 
+			        $msg = str_replace("[link]", $url, $msg); 
+			        send_mail($subject,$email,$msg); 
 
 					echo json_encode(array(
 						"success" => TRUE

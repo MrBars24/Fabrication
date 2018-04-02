@@ -21,49 +21,68 @@
                                         $packageId = $i->id;
                             if($default == $packageId){
                             ?>
-                                <div class="col-md-3 col-xs-12 col-sm-6 no-padding">
-                                    <div class="pricing-box featured-plan">
-                                        <div class="pricing-body">
-                                            <div class="pricing-header">
-                                                <h4 class="price-lable text-white bg-warning">Active</h4>
-                                                <h4 class="text-center"><?= $i->package_name; ?></h4>
-                                                <h2 class="text-center"><span class="price-sign">$</span><?= $i->package_price; ?></h2>
-                                                 <p class="uppercase"><?= ($i->package_name == "Bulk") ? 'per year': 'per month'; ?></p> 
-                                            </div>
-                                            <div class="price-table-content">
-                                                <div class="price-row"><?= $i->package_desc; ?></div>
-                                                <div class="price-row px-3"><?= $i->package_include; ?></div>
-                                                <div class="price-row mb-5">
+                                        <div class="col-md-3 col-xs-12 col-sm-6 no-padding">
+                                            <div class="pricing-box featured-plan">
+                                                <div class="pricing-body">
+                                                    <div class="pricing-header">
+                                                        <h4 class="price-lable text-white bg-warning">Active</h4>
+                                                        <h4 class="text-center"><?= $i->package_name; ?></h4>
+                                                        <h2 class="text-center"><span class="price-sign">$</span><?= $i->package_price; ?></h2>
+                                                        <p class="uppercase">
+                                                            <?= ($i->package_name == "Bulk") ? 'per year': 'per month'; ?>
+                                                        </p>
+                                                    </div>
+                                                    <div class="price-table-content">
+                                                        <div class="price-row">
+                                                            <?= $i->package_desc; ?>
+                                                        </div>
+                                                        <div class="price-row px-3">
+                                                            <?= $i->package_include; ?>
+                                                        </div>
+                                                        <div class="price-row mb-5">
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <?php }else{?>
-                                <div class="col-md-3 col-xs-12 col-sm-6 no-padding">
-                                    <div class="pricing-box">
-                                        <div class="pricing-body b-l">
-                                            <div class="pricing-header">
-                                                <h4 class="text-center"><?= $i->package_name; ?></h4>
-                                                <h2 class="text-center"><span class="price-sign">$</span><?= $i->package_price; ?></h2>
-                                                <p class="uppercase"><?= ($i->package_name == "BULK") ? 'per year': 'per month'; ?></p> 
-                                            </div>
-                                            <div class="price-table-content">
-                                                <div class="price-row"><?= $i->package_desc; ?></div>
-                                                <div class="price-row px-3"><?= $i->package_include; ?></div>
-                                                <div class="price-row">
-                                                    <?php 
+                                        <?php }else{?>
+                                        <div class="col-md-3 col-xs-12 col-sm-6 no-padding">
+                                            <div class="pricing-box">
+                                                <div class="pricing-body b-l">
+                                                    <div class="pricing-header">
+                                                        <h4 class="text-center"><?= $i->package_name; ?></h4>
+                                                        <h2 class="text-center"><span class="price-sign">$</span><?= $i->package_price; ?></h2>
+                                                        <p class="uppercase">
+                                                            <?= ($i->package_name == "BULK") ? 'per year': 'per month'; ?>
+                                                        </p>
+                                                    </div>
+                                                    <div class="price-table-content">
+                                                        <div class="price-row">
+                                                            <?= $i->package_desc; ?>
+                                                        </div>
+                                                        <div class="price-row px-3">
+                                                            <?= $i->package_include; ?>
+                                                        </div>
+                                                        <div class="price-row">
+                                                            <?php 
                                                     if ($i->package_price > $package->package_price){ ?>
-                                                        <button type="button" class="btn btn-success waves-effect waves-light m-t-20" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Sign Up</button>
-                                                    <?php }else{ ?>
-                                                        <div class="my-5"></div>
-                                                    <?php }?>
+                                                            <button type="button" class="btn btn-success btn-signup waves-effect waves-light m-t-20" data-id="<?=
+                                                            base64_encode($this->encryption->encrypt($i->id,array(
+                                                                    'cipher' => 'blowfish',
+                                                                    'mode' => 'cbc',
+                                                                    'key' => session_id(),
+                                                                    'hmac_digest' => 'sha256',
+                                                                    'hmac_key' => KEYCODE
+                                                            ))); ?>">Sign Up</button>
+                                                            <?php }else{ ?>
+                                                            <div class="my-5"></div>
+                                                            <?php }?>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            <?php }endforeach; ?>
+                                        <?php }endforeach; ?>
                                     </div>
                                 </div>
                             </div>
@@ -75,12 +94,8 @@
         </div>
     </div>
 </div>
-
-
-
-
-
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" style="display: none; padding-right: 17px;">
+    <input type="hidden" name="xhash" id="xhash">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">

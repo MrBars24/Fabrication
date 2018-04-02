@@ -1,6 +1,6 @@
 $(document).ready(function(){
-	var CREATE_PAYMENT_URL  = 'http://dev.e-fab/settings/subscribe';
-    var EXECUTE_PAYMENT_URL = 'http://dev.e-fab/settings/subscribe/payment/execute';
+	var CREATE_PAYMENT_URL  = 'https://dev.efab/settings/subscribe';
+    var EXECUTE_PAYMENT_URL = 'https://dev.efab/settings/subscribe/payment/execute';
 
     paypal.Button.render({
 
@@ -9,7 +9,9 @@ $(document).ready(function(){
         commit: true, // Show a 'Pay Now' button
 
         payment: function() {
-        	return paypal.request.post(CREATE_PAYMENT_URL).then(function(data) {
+        	return paypal.request.post(CREATE_PAYMENT_URL,{
+                id : $("#xhash").val()
+            }).then(function(data) {
                 return data.id;
             });
         },
@@ -17,9 +19,12 @@ $(document).ready(function(){
         onAuthorize: function(data) {
             return paypal.request.post(EXECUTE_PAYMENT_URL, {
                 paymentID: data.paymentID,
-                payerID:   data.payerID
-            }).then(function() {
-            	
+                payerID:   data.payerID,
+                id : $("#xhash").val()
+            }).then(function(data) {
+            	if(data.success){
+                    location.reload();
+                }
                 // The payment is complete!
                 // You can now show a confirmation message to the customer
             });
@@ -27,4 +32,10 @@ $(document).ready(function(){
         }
 
     }, '#paypal-button');
+
+    $(document).on("click",".btn-signup",function(){
+        var h = $(this).attr("data-id");
+        $("#exampleModal").modal();
+        $("#xhash").val(h);
+    })
 });
