@@ -136,3 +136,84 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade frward-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" style="display: none;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title font-weight-bold" id="exampleModalLabel1">Refer Projects to Friends</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    </div>
+                    <?= form_open('', array('id'=> '')); ?>
+                        <div class="modal-body">
+                            <h3 class="box-title m-b-5"></h3>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <label for="">Option 1: Copy the project URL to your email or IM and send to your friends, family and business</label>
+                                    <input class="form-control form-control-sm" type="text" data-target-error-text="#error" required="" name="">
+                                    <div class="help-block" hidden>
+                                        <ul role="alert">
+                                            <li id="error"></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                                <div class="col-xs-12">
+                                    <label for="">Option 2: Forward the project using email</label>
+                                </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                        <div class="col-xs-12">
+                                            <label for="">Your Email:</label>
+                                            <input class="form-control form-control-sm" type="email" required="" name="">
+                                            <div class="help-block" hidden>
+                                                <ul role="alert">
+                                                    <li id="error"></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                </div>
+                                <div class="col-sm-6">
+                                        <div class="col-xs-12">
+                                            <label for="">Your Name:</label>
+                                            <input class="form-control form-control-sm" type="text" required="" name="">
+                                            <div class="help-block" hidden>
+                                                <ul role="alert">
+                                                    <li id="error"></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12 mt-3">
+                                    <label for="">Email Addresses:</label>
+                                    <textarea class="form-control" rows="2" type="textarea" required="" name=""></textarea>
+                                    <div class="help-block" hidden>
+                                        <ul role="alert">
+                                            <li id="error"></li>
+                                        </ul>
+                                    </div>
+                                    <small>Separate addresses with a comma. Maximum 10 email addresses</small> 
+                                </div>
+                            </div>
+                                <div class="col-xs-12 mt-3">
+                                    <label for="">Personal Message:</label>
+                                    <textarea class="form-control" rows="2" type="textarea" required="" name=""></textarea>
+                                    <div class="help-block" hidden>
+                                        <ul role="alert">
+                                            <li id="error"></li>
+                                        </ul>
+                                    </div>
+                                    <small>1000 characters left</small> 
+                                </div>
+                            <div class="form-group text-center mt-3">
+                                <div class="col-xs-12">
+                                    <button class="btn btn-info  btn-block text-uppercase waves-effect waves-light" type="submit">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    <?= form_close(); ?>
+                </div>
+            </div>
+        </div>
