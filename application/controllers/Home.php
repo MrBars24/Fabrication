@@ -9,9 +9,9 @@ class Home extends MX_Controller {
 		$this->load->model("user_model");
 
 		$css = array(
-			"assets/plugins/bootstrap/css/bootstrap.min.css",
-			"assets/default/css/style.css",
-			"assets/default/css/colors/blue.css",
+			"/assets/plugins/bootstrap/css/bootstrap.min.css",
+			"/assets/default/css/style.css",
+			"/assets/default/css/colors/blue.css",
 		);
 
 		$this->template->set_additional_css($css);
@@ -20,11 +20,11 @@ class Home extends MX_Controller {
 	public function index()
 	{
 		$css = array(
-			"assets/default/css/custom/sections.css"
+			"/assets/default/css/custom/sections.css"
 		);
 		$js = array(
-			"assets/default/custom/js/home.js",
-			"assets/admin/custom/js/bars-datatable.js"
+			"/assets/default/custom/js/home.js",
+			"/assets/admin/custom/js/bars-datatable.js"
         );
 		$this->template->append_css($css);
 		$this->template->append_js($js);
@@ -50,8 +50,8 @@ class Home extends MX_Controller {
 
 	public function indexFabricators(){
 		$css = array(
-			"assets/default/css/custom/global.css",
-			"assets/default/css/custom/sections.css"
+			"/assets/default/css/custom/global.css",
+			"/assets/default/css/custom/sections.css"
 		);
 		$this->template->append_css($css);
 		$this->session->set_userdata('fabricators', 'fabricators');

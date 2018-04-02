@@ -1,6 +1,6 @@
 <?php
 
-class JobDiscussion_model extends MX_Model{
+class Jobdiscussion_model extends MX_Model{
 
     function __construct(){
         parent::__construct();
@@ -30,6 +30,7 @@ class JobDiscussion_model extends MX_Model{
         $offset = 0;
         $search_sql = array(
             'job_id' => $id,
+            'is_deleted' => 0,
         );
         $q = $this->getIndexDataCount("job_discussion",$limit,$offset,'created_at','ASC', $search_sql);
 
@@ -48,6 +49,25 @@ class JobDiscussion_model extends MX_Model{
             return $query->row();
         }else{
             return array();
+        }
+    }
+
+    function delete($id, $data){
+        $query = $this->db->where('id', $id)
+                 ->update('job_discussion', $data);
+        return $query;
+    }
+
+    function edit($id, $data){
+        $query = $this->db->where('id', $id)
+                 ->update('job_discussion', $data);
+        if($query){
+            $query1 = $this->db->select('*')
+                     ->where('id', $id)
+                     ->get('job_discussion');
+            return $query1->row();
+        }else{
+
         }
     }
 }

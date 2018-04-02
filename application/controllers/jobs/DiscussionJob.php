@@ -15,18 +15,18 @@ class DiscussionJob extends MX_Controller {
 		check_login();
 		$css = array(
             "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css",
-			"assets/default/css/custom/global.css",
+			"/assets/default/css/custom/global.css",
         );
         $js = array(
-			"assets/default/custom/js/job-discussion.js",
-			"assets/admin/custom/js/bars-datatable.js",
-			"assets/plugins/moment/moment.js",
+			"/assets/default/custom/js/job-discussion.js",
+			"/assets/admin/custom/js/bars-datatable.js",
+			"/assets/plugins/moment/moment.js",
         );
 		$this->template->append_js($js);
 		$this->template->append_css($css);
 
 		$getJob = $this->job_model->getJob($id);
-		$this->template->load_sub('job', $getJob); 
+		$this->template->load_sub('job', $getJob);
         $this->template->load('frontend/jobs/job_discussion');
 	}
 	public function getMessage($id){
@@ -51,6 +51,41 @@ class DiscussionJob extends MX_Controller {
 		}else{
 			echo json_encode(array(
 				'success' => FALSE,
+			));
+			exit;
+		}
+	}
+	public function edit($id){
+		$data = array(
+			'message' => $this->input->post('message')
+		);
+		$result = $this->jobdiscussion_model->edit($id, $data);
+		if($result){
+			echo json_encode(array(
+				'success' => TRUE,
+				'data' => $result
+			));
+			exit;
+		}else{
+			echo json_encode(array(
+				'success' => FALSE
+			));
+			exit;
+		}
+	}
+	public function delete($id){
+		$data = array(
+			'is_deleted' => 1,
+		);
+		$result = $this->jobdiscussion_model->delete($id, $data);
+		if($result){
+			echo json_encode(array(
+				'success' => TRUE
+			));
+			exit;
+		}else{
+			echo json_encode(array(
+				'success' => FALSE
 			));
 			exit;
 		}

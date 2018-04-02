@@ -443,23 +443,23 @@
     <!-- Javascript Libraries -->
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://apis.google.com/js/api:client.js"></script>
-    <script src="<?php echo base_url() ?>assets/plugins/jquery/jquery.min.js" deferred></script>
-    <script src="<?php echo base_url() ?>assets/plugins/bootstrap/js/popper.min.js" ></script>
-    <script src="<?php echo base_url() ?>assets/plugins/bootstrap/js/bootstrap.min.js" ></script>
-    <script src="<?php echo base_url() ?>assets/default/js/jquery.slimscroll.js" ></script>
-    <script src="<?php echo base_url() ?>assets/default/js/waves.js" ></script>
-    <script src="<?php echo base_url() ?>assets/default/js/sidebarmenu.js" ></script>
-    <script src="<?php echo base_url() ?>assets/plugins/sticky-kit-master/dist/sticky-kit.min.js" ></script>
-    <script src="<?php echo base_url() ?>assets/plugins/sparkline/jquery.sparkline.min.js" ></script>
-    <script src="<?php echo base_url() ?>assets/plugins/toastr/build/toastr.min.js" ></script>
-    <script src="<?php echo base_url() ?>assets/global.js" deferred></script>
-    <script src="<?php echo base_url() ?>assets/default/js/custom.min.js" ></script>
-    <script src="<?php echo base_url() ?>assets/plugins/styleswitcher/jQuery.style.switcher.js" ></script>
-    <script src="<?php echo base_url() ?>assets/fb.js" ></script>
-    <script src="<?php echo base_url() ?>assets/default/custom/js/login.js" ></script>
-    <script src="<?php echo base_url() ?>assets/default/custom/js/exp-reg.js" ></script>
-    <script src="<?php echo base_url() ?>assets/default/custom/js/notification.js" ></script>
-    <script src="<?php echo base_url() ?>assets/plugins/moment/moment.js" ></script>
+    <script src="/assets/plugins/jquery/jquery.min.js" deferred></script>
+    <script src="/assets/plugins/bootstrap/js/popper.min.js" ></script>
+    <script src="/assets/plugins/bootstrap/js/bootstrap.min.js" ></script>
+    <script src="/assets/default/js/jquery.slimscroll.js" ></script>
+    <script src="/assets/default/js/waves.js" ></script>
+    <script src="/assets/default/js/sidebarmenu.js" ></script>
+    <script src="/assets/plugins/sticky-kit-master/dist/sticky-kit.min.js" ></script>
+    <script src="/assets/plugins/sparkline/jquery.sparkline.min.js" ></script>
+    <script src="/assets/plugins/toastr/build/toastr.min.js" ></script>
+    <script src="/assets/global.js" deferred></script>
+    <script src="/assets/default/js/custom.min.js" ></script>
+    <script src="/assets/plugins/styleswitcher/jQuery.style.switcher.js" ></script>
+    <script src="/assets/fb.js" ></script>
+    <script src="/assets/default/custom/js/login.js" ></script>
+    <script src="/assets/default/custom/js/exp-reg.js" ></script>
+    <script src="/assets/default/custom/js/notification.js" ></script>
+    <script src="/assets/plugins/moment/moment.js" ></script>
 
     <?php if(isset($add_js)){
           foreach($add_js as $js){ ?>
