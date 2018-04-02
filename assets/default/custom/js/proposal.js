@@ -1,7 +1,7 @@
 $(document).ready(function(){
     var id = get_segment(2);
     var index = null;
-    var url = "/jobs/bid-list/" + id; 
+    var url = "/jobs/bid-list/" + id;
 	var table = $("#bid-container").initTable({
 		url: url,
         pageContainer:".pagination-bars",
@@ -9,9 +9,10 @@ $(document).ready(function(){
 			var container = ``;
 			if(data != null){
 				data.forEach(function(obj,index){
+                    console.log(obj);
                     container += `
                             <li class="media border-0" data-mybid-id="${index}">
-                                <img class="mr-3 rounded-circle" src="http://themedesigner.in/demo/admin-press/assets/images/users/8.jpg" width="64" alt="Generic placeholder image">
+                                <img class="mr-3 rounded-circle" src="${obj.avatar}" width="64" alt="Generic placeholder image">
                                 <div class="media-body">
                                     <div class="row">
                                         <div class="col-sm-9">
@@ -41,33 +42,30 @@ $(document).ready(function(){
 			return container;
 		}
 	});
-    
+
      $(document).on('change','.bidding-filter', function(e){
         var bidFilter = $('.bidding-filter option:selected').text();
         e.preventDefault();
         if(bidFilter == 'Recent'){
-            console.log(1);
-            var url = "/jobs/bid-list/" + id+ "/" + 1; 
+            var url = "/jobs/bid-list/" + id+ "/" + 1;
         }else if(bidFilter == 'Lowest First'){
-            console.log(2);
-            var url = "/jobs/bid-list/" + id+ "/" + 2; 
-            
+            var url = "/jobs/bid-list/" + id+ "/" + 2;
         }else if(bidFilter == 'Highest First'){
-            console.log(3);
-            var url = "/jobs/bid-list/" + id+ "/" + 3; 
+            var url = "/jobs/bid-list/" + id+ "/" + 3;
         }
-         
+
         var table = $("#bid-container").initTable({
 		url: url,
         pageContainer:".pagination-bars",
 		render:function(data){
+            console.log(data);
 			var container = ``;
 			if(data.length > 0){
 				data.forEach(function(obj,index){
                     obj.created_at = new Date(obj.created_at);
                     container += `
                             <li class="media border-0" data-mybid-id="${index}">
-                                <img class="mr-3 rounded-circle" src="http://themedesigner.in/demo/admin-press/assets/images/users/8.jpg" width="64" alt="Generic placeholder image">
+                                <img class="mr-3 rounded-circle" src="${obj.avatar}" width="64" alt="Generic placeholder image">
                                 <div class="media-body">
                                     <div class="row">
                                         <div class="col-sm-9">
@@ -91,8 +89,8 @@ $(document).ready(function(){
 		}
 	});
 });
-    
-    
+
+
     $(document).on('submit', '#form-proposal-submit', function(e){
         e.preventDefault();
         var url = $(this).attr('action');
@@ -222,8 +220,8 @@ $(document).ready(function(){
             }
         });
     });
-    
-   
+
+
 
 
 

@@ -37,7 +37,7 @@ class Proposal_model extends MX_Model{
     }
 
     public function getBidsByJobId($job_id){
-        $query = $this->db->select('bids.*, member.fullname')
+        $query = $this->db->select('bids.*, member.fullname, member.avatar_thumbnail')
             ->join('bids', 'bids.expert_id = member.id')
             ->where('bids.is_deleted', 0)
             ->where('bids.job_id', $job_id)
@@ -48,7 +48,7 @@ class Proposal_model extends MX_Model{
         }
         return $query->result();
     }
-    
+
     public function getBidsById($job_id){
         $limit = 5;
          $offset = 0;
@@ -58,9 +58,9 @@ class Proposal_model extends MX_Model{
                  'bids.is_deleted' => 0,
                  'bids.job_id' => $job_id
              );
-             
-         $q = $this->getIndexDataCount("member",$limit,$offset,'bids.created_at','DESC', $search_sql, '', 'bids', "bids.expert_id = member.id", '', 'bids.*, member.fullname');
-    
+
+         $q = $this->getIndexDataCount("member",$limit,$offset,'bids.created_at','DESC', $search_sql, '', 'bids', "bids.expert_id = member.id", '', 'bids.*, member.fullname, member.avatar');
+
          return $q;
     }
 }
@@ -68,7 +68,7 @@ class Proposal_model extends MX_Model{
         $limit = 5;
          $offset = 0;
          $search = "";
-        
+
          if(isset($id2) AND $id2 == '1'){
              $orderby = 'bids.created_at';
              $sort = 'DESC';
@@ -81,18 +81,18 @@ class Proposal_model extends MX_Model{
              $orderby = 'bids.amount';
              $sort = 'DESC';
          }
-        
+
          if(isset(auth()->id)){
          $search_sql = array(
                  'bids.is_deleted' => 0,
                  'bids.job_id' => $job_id
              );
          }
-         $q = $this->getIndexDataCount("member",$limit,$offset,$orderby,$sort, $search_sql, '', 'bids', "bids.expert_id = member.id", '', 'bids.*, member.fullname');
-    
+         $q = $this->getIndexDataCount("member",$limit,$offset,$orderby,$sort, $search_sql, '', 'bids', "bids.expert_id = member.id", '', 'bids.*, member.fullname, member.avatar');
+
          return $q;
     }
-        
+
 
      function getBidAll($id){
          $limit = 5;
@@ -106,7 +106,7 @@ class Proposal_model extends MX_Model{
          $q = $this->getIndexDataCount("bids",$limit,$offset,'bids.created_at','DESC', $search_sql, '', 'jobs', "bids.job_id =  $id");
          return $q;
      }
-    
+
     public function acceptBid($id,$data){
         $expert_id = $this->db->select('expert_id, job_id')->where('id', $id)->get('bids')->row();
         $this->db->where('id', $id)->update('bids', $data);
@@ -175,7 +175,7 @@ class Proposal_model extends MX_Model{
 
         return $q->num_rows();
     }
-    
+
 	function getById($id) {
 		$res =  $this->db->select('*')
 			->where('id', $id)

@@ -12,7 +12,7 @@ class Industry_model extends CI_Model{
             ->where('is_deleted', 0)
             ->order_by('display_name', 'ASC')
             ->get();
-        
+
         if($query->num_rows() < 1) {
             return array();
         }
@@ -25,7 +25,7 @@ class Industry_model extends CI_Model{
             ->where('is_deleted', 0)
             ->order_by('min_budget', 'ASC')
             ->get();
-        
+
         if($query->num_rows() < 1) {
             return array();
         }
@@ -38,7 +38,7 @@ class Industry_model extends CI_Model{
     //         ->where('is_deleted', 0)
     //         ->order_by('id', 'ASC')
     //         ->get();
-        
+
     //     if($query->num_rows() < 1) {
     //         return array();
     //     }
@@ -52,7 +52,7 @@ class Industry_model extends CI_Model{
     //         ->where('id', $id)
     //         ->order_by('id' , 'ASC')
     //         ->get();
-        
+
     //     if($query->num_rows() < 1) {
     //         return array();
     //     }
@@ -74,7 +74,7 @@ class Industry_model extends CI_Model{
                 ->where('is_deleted', 0)
                 ->group_by('project_category')
                 ->get_compiled_select();
-                
+
         // dd($innerQuery);
 
         $this->db->reset_query();
@@ -88,7 +88,7 @@ class Industry_model extends CI_Model{
                 ->order_by('total_jobs', 'DESC')
                 ->limit((int)$limit)
                 ->get();
-        
+
         if ($topJobsQuery->num_rows() > 0 ) {
             return $topJobsQuery->result();
         }
