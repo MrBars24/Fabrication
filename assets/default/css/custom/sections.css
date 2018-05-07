@@ -25,7 +25,7 @@
 }
 
 .home-numbers {
-    background-image: url('/assets/images/bg_home_numbers.png'); 
+    background-image: url('/assets/images/bg_home_numbers.png');
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -65,47 +65,4 @@
     right: 0;
     top: 0;
     z-index: 10;
-}
-
-/*Dashboard page*/
-.dash-center-wrapper {
-    width: 70px;
-    height: 70px;
-    background: #5c4ac7;
-    position: absolute;
-    left: -34px;
-    top: 50%;
-    margin-top: -20px;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    border-radius: 20px;
-    -ms-transform: rotate(45deg);
-    -webkit-transform: rotate(45deg);
-    transform: rotate(45deg);
-}
-.dash-center-wrapper p {
-    color: #ffffff;
-    font-weight: bold;
-    -ms-transform: rotate(-45deg);
-    -webkit-transform: rotate(-45deg);
-    transform: rotate(-45deg);
-    margin-top: 23px;
-    text-align: center;
-}
-/*Hire page*/
-.hire-candidate-status {
-    position: absolute;
-    width: 22px;
-    height: 22px;
-    background-color: #53b427;
-    border: 4px solid #ffffff;
-    border-radius: 100%;
-    transform: translate(-300%, 100%);
-}
-.hire-avatar{
-    height: 100%; 
-    width: 60%;
-}
-.hire-12{
-    margin-top: 12px;
 }

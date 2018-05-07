@@ -18,6 +18,7 @@ class ViewJob extends MX_Controller {
             "/assets/admin/custom/js/bars-datatable.js",
             "/assets/plugins/moment/moment.js",
 			"/assets/default/custom/js/proposal.js",
+			"/assets/js/validation.js"
 
 		);
 		$this->template->append_js($js);
@@ -32,9 +33,11 @@ class ViewJob extends MX_Controller {
 		$getJob = $this->job_model->getJob($id);
 
 		$fabricatorDetails = $this->user_model->getMemberInfo($getJob->fabricator_id);
+		$fabricatorDetails->work_type = $this->user_model->getWorkType($fabricatorDetails->id);
+
 		$getBids = $this->proposal_model->getBidsByJobId($getJob->id);
 		$getAttachment = $this->proposal_model->getAttachment($getJob->id);
-		if($getJob->status == "close"){
+		if($getJob->status == "awarded"){
 			$awardedUser = $this->user_model->getMemberInfo($getJob->accepted_bid);
 			$this->template->load_sub('awardedUser', $awardedUser);
 		}
@@ -42,6 +45,9 @@ class ViewJob extends MX_Controller {
 		$this->template->load_sub('jobdata', $getJob);
 		$this->template->load_sub('getAttachment', $getAttachment);
 		$this->template->load_sub('fabricatordata', $fabricatorDetails);
+		if(isset($_SESSION['url_redirect'])){
+			$this->session->unset_userdata('url_redirect');
+		}
 
 		// echo '<pre>';
 		// var_dump($awardedUser);
@@ -81,7 +87,6 @@ class ViewJob extends MX_Controller {
         header("Content-Type:application/json");
         $getJob = $this->job_model->getJob($id);
 		$bidderFetch = $this->proposal_model->getBidsById($getJob->id);
-
         echo json_encode($bidderFetch);
 	}
 

@@ -608,10 +608,11 @@
     <script src="<?php echo base_url() ?>assets/plugins/morrisjs/morris.min.js"></script>
     <script src="<?php echo base_url() ?>assets/admin/js/dashboard1.js"></script>
     <script src="<?php echo base_url() ?>assets/plugins/toastr/build/toastr.min.js"></script>
+	<script src="/assets/global.js" deferred></script>
     <script src="<?php echo base_url() ?>assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
     <?php if(isset($add_js)){
           foreach($add_js as $js){ ?>
-            <script src="<?php echo base_url() . $js; ?>" async defer></script>
+            <script src="<?php echo base_url() . $js; ?>"></script>
     <?php }
         } 
         if(isset($extra_js)){

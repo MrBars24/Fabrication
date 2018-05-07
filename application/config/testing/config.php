@@ -1,4 +1,4 @@
-<?php
+<?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*
@@ -23,8 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-//date_default_timezone_set('Europe/Berlin');
-$config['base_url'] = 'http://localhost:8000/';
+$config['base_url'] = 'http://efab-prod.tk/';
 
 /*
 |--------------------------------------------------------------------------
@@ -325,7 +324,7 @@ $config['cache_query_string'] = FALSE;
 | https://codeigniter.com/user_guide/libraries/encryption.html
 |
 */
-$config['encryption_key'] = '';
+$config['encryption_key'] = 'EFAB2018';
 
 /*
 |--------------------------------------------------------------------------
@@ -522,6 +521,7 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
 
 /*function __autoload($class)
 {

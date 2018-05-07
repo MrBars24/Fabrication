@@ -5,12 +5,9 @@
     <div class="col-md-7 align-self-center">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item"><a href="/job">Job</a></li>
+            <li class="breadcrumb-item"><a href="/jobs/<?= $job->id ?>">Job</a></li>
             <li class="breadcrumb-item active">Job Discussion</li>
         </ol>
-    </div>
-    <div class="">
-        <button class="right-side-toggle waves-effect waves-light btn-inverse btn btn-circle btn-sm pull-right m-l-10"><i class="ti-settings text-white"></i></button>
     </div>
 </div>
 <div class="container-fluid">
@@ -32,9 +29,10 @@
                         <div class="col-12">
                         <?= form_open("jobs/job-discussion/submit/$id", array('id'=>'form-send-discussion', 'class'=>'')); ?>
                             <p class="mb-0">Does this project need clarification? Ask your question here.</p>
-                            <textarea class="form-control w-100 mt-2" rows="7" name="message" placeholder="Message here...."></textarea>
+                            <textarea required class="form-control w-100 mt-2" rows="7" name="message" placeholder="Message here...."></textarea>
                             <div class="col-sm-12">
-                                <button type="submit" class="btn btn-primary pull-right">Submit Discussion</button>
+                                <button type="submit" class="btn btn-primary float-right">Submit Discussion</button>
+                                <a href="/jobs/<?= $id ?>" class="btn btn-success float-right mr-2">Back to Job</a>
                             </div>
                         <?= form_close(); ?>
                         </div>

@@ -87,7 +87,7 @@ class MX_Model extends CI_Model{
         }else{
             $max_page = 0;
         }
-
+        $q['count'] = $q['total'];
         $q['total'] = $max_page;
         return $q;
     }

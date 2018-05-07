@@ -2,8 +2,8 @@
     <div class="card-body">
         <h4 class="card-title">Description</h4>
         <p class="mt-2"><?= @$user->service_description ?></p>
-        <h4 class="card-title">Fabricating information</h4>
-        <ul class="list-group list-group-flush">
+        <!--<h4 class="card-title">Fabricating information</h4>
+         <ul class="list-group list-group-flush">
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <h6 class="text-muted mb-0">Industry</h6>
                 <h4 class="font-weight-bold mb-0">Mining</h4>
@@ -39,6 +39,6 @@
                     </div>
                 </div>
             </li>
-        </ul>
+        </ul> -->
     </div>
 </div>

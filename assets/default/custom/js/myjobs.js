@@ -1,12 +1,19 @@
 $(document).ready(function(){
-
+	var search = null;
+	if(get_segment(3)=='active'){
+		search = {
+			status : 'open'
+		};
+	}
     var table = $(".my-posted-job").initTable({
-        url: '/jobs/my-jobs/list',
+        url: '/jobs/posted/list',
         pageContainer: ".pagination-myjobs-bars",
+		search:search,
         render:function(data){
         var container = ``;
-        if(data != undefined){
+        if(data.length > 0){
         data.forEach(function(obj,index){
+			var ago = compute_ago(obj.created_at);
             var avatar = (obj.avatar == null) ? "../assets/images/icon_profile.jpg" : obj.avatar;
             container += `<div class="sl-item">
                 <div class="sl-left">
@@ -17,7 +24,7 @@ $(document).ready(function(){
                     <br>
 
                     <span class="sl-date">
-                        ${obj.created_at}
+                        ${ago}
                     </span>
 
                     <p>
@@ -26,7 +33,7 @@ $(document).ready(function(){
                     <div class="like-comm">
                         <a href="javascript:void(0)" class="link m-r-10"><i class="fa fa-gavel text-danger"></i> ${obj.bids} Bids</a>
                         <a href="/jobs/posted/manage/${obj.id}" class="text-dark m-r-10" data-toggle="tooltip" title="Manage Job"><i class="mdi mdi-settings"></i> Manage</a>
-                        <a href="/jobs" class="text-dark" data-toggle="tooltip" title="View Job"><i class="mdi mdi-eye-outline"></i> View Job</a>
+                        <a href="/jobs/${obj.id}" class="text-dark" data-toggle="tooltip" title="View Job"><i class="mdi mdi-eye-outline"></i> View Job</a>
                     </div>
                 </div>
             </div>`;
@@ -34,9 +41,11 @@ $(document).ready(function(){
             }
             else{
                 container += `
-                <div class="container d-flex justify-content-center align-items-center" style="height: 100px;">
-                    <div class="row h-100 d-flex justify-content-center align-items-center">
-                        <h1 class="text-dark ">NO POST</h1>
+                <div class="container d-flex justify-content-center align-items-center">
+                    <div class="d-flex justify-content-center flex-column align-items-center py-4">
+                        <h3 class="text-muted">You haven't posted any job yet</h3>
+                        <p class="text-muted">Start Bidding to Win Jobs</p>
+                        <a href="/jobs/create" class="btn btn-success btn-lg">Post a Job</a>
                     </div>
                 </div>
                 `;

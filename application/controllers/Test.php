@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-// require_once(APPPATH."third_party/vendor/autoload.php"); 
+// require_once(APPPATH."third_party/vendor/autoload.php");
 class Test extends MX_Controller {
 
 	public function __construct(){
@@ -9,8 +9,19 @@ class Test extends MX_Controller {
 
 	public function showSession()
 	{
+		echo '<pre>';
 		print_r($_SESSION);
+		echo '</pre>';
 	}
+	
+	public function timezone(){
+        echo '<pre>';
+        echo date('Y-m-d h:i:s');
+        echo "<br>";
+        echo date_default_timezone_get();
+        echo '</pre>';
+        //echo "Timezones";
+    }
 
 	public function pusher(){
 		$this->load->library('fupload');
@@ -25,7 +36,7 @@ class Test extends MX_Controller {
 		    'cluster' => 'ap1',
 		    'encrypted' => true
 		);
-		
+
 		$pusher = new Pusher\Pusher(
 		    'ba4265c88567e3fcd1cd',
 		    '26caebdd4b6b34e7e740',
@@ -68,16 +79,48 @@ class Test extends MX_Controller {
 			$response = curl_exec($ch);
 			$res = json_decode($response);
 
-			redirect('https://www.facebook.com/connect/login_success.html#access_token=' . $res->access_token);	
+			redirect('https://www.facebook.com/connect/login_success.html#access_token=' . $res->access_token);
 		}*/
 	}
 
 	public function notify() {
+		// $this->load->library('Notification');
+		// return json($this->notification->use('bid_accepted')->send(1, 1234));
+		// 	$email = 'leonardo.iformatlogic@gmail.com';
+		// $msg = $this->load->view('email_templates/reg_confirmation',NULL,TRUE);
+		// $subject = 'EFAB EMAIL CONFIRMATION';
+		//
+		// $txt = $id.':'.$email;
+		// $this->load->library('encryption');
+		// $ciphertext = $this->encryption->encrypt($txt);
+		// $url = base_url() . 'email/confirmation?q=' . rawurlencode($ciphertext);
+		// $msg = str_replace("[link]", $url, $msg);
+		// $res = send_mail($subject,$email,$msg);
+
+		//
+		// $email = 'leonardo.iformatlogic@gmail.com';
+		// $msg = $this->load->view('email_templates/reset_pass',NULL,TRUE);
+		// $subject = 'EFAB RESET PASSWORD';
+		//
+		// $txt = $id.':'.$email;
+		// $this->load->library('encryption');
+		// $ciphertext = $this->encryption->encrypt($txt);
+		// $url = base_url() . 'email/confirmation?q=' . rawurlencode($ciphertext);
+		// $msg = str_replace("[link]", $url, $msg);
+		// $res = send_mail($subject,$email,$msg);
+
+
+
 		$this->load->library('Notification');
-		return json($this->notification->use('bid_accepted')->send(1, 1234));
+		$this->notification->use('new_job_invite')->send(582, array(
+				'job_id' => 164
+			)
+		);
+	}
+
+	function fixMember(){
+		$this->load->model('user_model');
+		$this->user_model->generateMembershipHistory();
 	}
 
 }
-
-
-    

@@ -6,21 +6,24 @@ class Account extends MX_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->template->set_template("default");
-				
+
 		$js = array(
 			"assets/default/custom/js/settings/settings-training.js"
 		);
 		$this->template->set_additional_js($js);
-		
+
 	}
 
 	public function index(){
 		check_user('member');
 		//dd($_SESSION['user']->user_details);
 		$css = array(
+			"/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css",
 			"/assets/plugins/toast-master/css/jquery.toast.css",
 		);
 		$js = array(
+			"/assets/plugins/moment/moment.js",
+			"/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js",
 			"/assets/default/custom/js/settings/settings.js",
 			"/assets/default/custom/js/settings/settings-account.js",
 			"/assets/plugins/toast-master/js/jquery.toast.js",
@@ -40,6 +43,7 @@ class Account extends MX_Controller {
 		}
 		$this->template->load_sub('user_details', $row);
 		$this->template->load_sub('countries', $countries);
+		
 		$this->template->load('frontend/settings/account');
 
 	}
@@ -75,6 +79,7 @@ class Account extends MX_Controller {
 				$this->session->set_userdata(array('user' => $row));
 				echo json_encode(array(
 					"success" => 200,
+					"data" => $row
 				));
 				exit;
 			}

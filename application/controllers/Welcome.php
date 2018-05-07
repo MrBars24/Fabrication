@@ -52,45 +52,6 @@ class Welcome extends CI_Controller {
 		$this->template->load('pricing');
 	}
 
-	public function submitContactUs(){
-		$emailSettings = array(
-		  'protocol' => 'sendmail',
-		  'smtp_host' => 'ssl://smtp.gmail.com',
-		  'smtp_port' => 465,
-		  'smtp_user' => 'efab@efab.ifltest08.tk',
-		  'smtp_pass' => 'ktuN9?&Knkng',
-		  'mailtype'  => 'html',
-		  'charset'   => 'utf-8'
-		);
-		$cS = $this->input->post('contactSubject');
-		$cM = $this->input->post('contactMessage');
-		$cE = $this->input->post('contactEmail');
-
-		$this->load->library('email',$emailSettings);
-
-		// $this->email->initialize($emailSettings);
-		$this->email->from($emailSettings['smtp_user'], 'efab');
-		$this->email->to($cE);
-		$this->email->cc('efab@efab.ifltest08.tk');
-		$this->email->bcc($emailSettings['smtp_user']);
-		$this->email->set_mailtype('html');
-		$this->email->subject($cS);
-		$this->email->message($cM);
-
-		$sendReturn = $this->email->send();
-		/* if($sendReturn){
-		   //Success email Sent
-		   echo json_encode($this->email->print_debugger());
-		   exit;
-		}else{
-		   //Email Failed To Send
-		   echo json_encode($this->email->print_debugger());
-		   exit;
-		} */
-		//echo json_encode($sendReturn);
-		//exit;
-		redirect($_SERVER['HTTP_REFERER']);
-	}
 	public function postJob() {
 		$css = array(
     		"assets/images/favicon.png",
@@ -108,7 +69,7 @@ class Welcome extends CI_Controller {
 		$this->template->load('post_job');
 	}
 
-	public function watchList() { 
+	public function watchList() {
         $css = array(
 			"https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css",
 			"assets/default/css/custom/global.css",
@@ -120,17 +81,17 @@ class Welcome extends CI_Controller {
         );
         $this->template->append_css($css);
         $this->template->append_js($js);
-		$this->template->load("watch_list"); 
-	} 
-	 
-	public function about() { 
-	    $this->template->load("about"); 
+		$this->template->load("watch_list");
+	}
+
+	public function about() {
+	    $this->template->load("about");
 	}
 
 	public function howFabricator() {
 		$this->template->load("how_fabricator");
 	}
-	 
+
 	public function howExpert() {
 		$this->template->load("how_expert");
 	}

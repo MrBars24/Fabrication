@@ -101,10 +101,13 @@
 	function registerScrollEvent(){
 		$(document).scroll(function(){
 			if(_processing) return;
+			if($(window).scrollTop() + $(window).height() < 1400) return; 
 			if(_page >= _total) return;
+			
 			
 			if ($(window).scrollTop() + $(window).height() > $(document).height() - _threshold){
 				_page = _page + 1;
+				//console.log('hmm');
 				_processing = true;
 				if(_loaderContainer == ''){
 					_ref.after(_loader);
@@ -120,6 +123,8 @@
 		if(_beforeRequest != null){
 			_beforeRequest();
 		}
+		//if(_processing) return;
+		
 		$.ajax({
 			url:_url,
 			type:"GET",
@@ -132,14 +137,14 @@
 				//console.log(res);
 				if(_type == "pagination"){
 					_data = res.data;
-					_data_hash = btoa(JSON.stringify(_data));
+					_data_hash = btoa(unescape(encodeURIComponent(JSON.stringify(_data))));
 					var template = _options.render(res.data);
 					_processing = false;
 					generatePagination(_page,res.total);
 					_ref.html(template);
 				}else{
 					if(_data_hash != ""){
-						_data = JSON.parse(atob(_data_hash));
+						_data = JSON.parse(unescape(encodeURIComponent(atob(_data_hash))));
 					}
 
 					if(res.data.length <= 0){
@@ -148,13 +153,14 @@
 
 					if(_is_search){
 						_data = res.data;
-						_data_hash = btoa(JSON.stringify(_data));
+						_data_hash = btoa(unescape(encodeURIComponent(JSON.stringify(_data))));
 						var template = _options.render(res.data);
 						_total = res.total;
-						_ref.html(template);
+						_ref.append(template);
+						_is_search = false;
 					}else{
 						_data = _data.concat(res.data);
-						_data_hash = btoa(JSON.stringify(_data));
+						_data_hash = btoa(unescape(encodeURIComponent(JSON.stringify(_data))));
 						var template = _options.render(res.data);
 						_total = res.total;
 						_ref.append(template);
@@ -180,12 +186,15 @@
 
 	$.fn.search = function(search){
 		_search = search;
+		_page = 1;
 		_is_search = true;
+		_ref.html(``);
 		$.fn.requestData();
 	}
 
 	$.fn.fetch = function(index){
 		var tmp = JSON.parse(atob(_data_hash));
+		//console.log(tmp);
 		return tmp[index];
 	}
 

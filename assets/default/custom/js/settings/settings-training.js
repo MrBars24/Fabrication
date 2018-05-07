@@ -8,7 +8,7 @@ $(document).ready(function(){
 			var container = ``;
 			if(data.length > 0){
 				data.forEach(function(obj,index){
-                
+
 					container += `
 				<div id="training-id" class="list-group list-group-flush col-12">
                     <div class="list-group-item pb-4">
@@ -16,13 +16,13 @@ $(document).ready(function(){
                         <h6 class="text-muted"><small><span class="font-weight-bold">From</span> ${moment(obj.date_start).format('MMM D, YYYY')}</small> <small><span class="font-weight-bold">To</span> ${moment(obj.date_end).format('MMM D, YYYY')}</small></h6>
                         <h6>${obj.description}</h6>
 
-                        <a href="#" class="btn btn-success view"><span class="align-middle">View</span><i class="icon-eye align-middle ml-2"></i></a>
+                        <a href="#" class="btn btn-success view"><span class="align-middle">View</span><i class="fa fa-eye ml-2"></i></a>
 
-                        <a href="#" class="btn btn-warning edit"><span class="align-middle">Edit</span><i class="icon-pencil align-middle ml-2"></i></a>
+                        <a href="#" class="btn btn-warning edit"><span class="align-middle">Edit</span><i class="fa fa-pencil-square-o ml-2"></i></a>
 
-                        <a href="#" class="btn btn-deleted btn-danger text-white delete"><span class="align-middle">Delete</span><i class="icon-trash align-middle ml-2"></i></a>
-            
-                    </div>      
+                        <a href="#" class="btn btn-deleted btn-danger text-white delete"><span class="align-middle">Delete</span><i class="fa fa-trash-o ml-2"></i></a>
+
+                    </div>
                 </div>
 					`
 					;
@@ -67,12 +67,12 @@ $(document).ready(function(){
                         <h6 class="text-muted"><small><span class="font-weight-bold">From</span> ${d.date_start}</small> <small><span class="font-weight-bold">To</span> ${d.date_end}</small></h6>
                         <h6>${d.description}</h6>
 
-                        <a href="#" class="btn btn-success view"><span class="align-middle">View</span><i class="icon-eye align-middle ml-2"></i></a>
+                        <a href="#" class="btn btn-success view"><span class="align-middle">View</span><i class="fa fa-eye ml-2"></i></a>
 
-                        <a href="#" class="btn btn-warning edit"><span class="align-middle">Edit</span><i class="icon-pencil align-middle ml-2"></i></a>
+                        <a href="#" class="btn btn-warning edit"><span class="align-middle">Edit</span><i class="fa fa-pencil-square-o ml-2"></i></a>
 
-                        <a href="#" class="btn btn-deleted btn-danger text-white delete"><span class="align-middle">Delete</span><i class="icon-trash align-middle ml-2"></i></a>
-                    </div>      
+                        <a href="#" class="btn btn-deleted btn-danger text-white delete"><span class="align-middle">Delete</span><i class="fa fa-trash-o ml-2"></i></a>
+                    </div>
                 </div>
 						`
 					}
@@ -152,21 +152,32 @@ $(document).ready(function(){
 
 		$("input[name='training_name']").val(data.training_name);
 		$("textarea[name='description']").val(data.description);
+
+		data.date_start = reformatDate(data.date_start);
+        data.date_end = reformatDate(data.date_end);
+
 		$("input[name='date_start']").val(data.date_start);
 		$("input[name='date_end']").val(data.date_end);
         console.log(data.date_end);
 	}
-    
+
+	function reformatDate(str){
+		str = str.replace(" 00:00:00","");
+        str = str.replace("/","-");
+
+        return str;
+	}
+
     function viewModal(data){
 		$(".view-modal").modal('show');
 		$(".view-modal").find('form').attr('data-action','update');
 		$(".modal-title").text('Training Information');
-        
+
 		$("label.view-name").text(data.training_name);
 		$("label.view-desc").text(data.description);
 		$("label.view-start").html(data.date_start);
 		$("label.view-end").html(data.date_end);
 	}
-    
+
 
 });

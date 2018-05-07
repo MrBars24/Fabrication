@@ -17,6 +17,7 @@ $(document).ready(function() {
                 var container = ``;
                 if (data.length > 0) {
                     data.forEach(function(obj, index) {
+						var dt = format_date(obj.bidding_expire_at);
                         container += `
                             <li class="list-group-item border-0 py-4">
                                 <div class="container-fluid">
@@ -31,7 +32,7 @@ $(document).ready(function() {
                                                 <div class="col">
                                                     <div class="mb2">
                                                         <small class="text-secondary mb-0">DATE POSTED</small>
-                                                        <h6 class="text-dark font-weight-bold">28 July 2017</h6>
+                                                        <h6 class="text-dark font-weight-bold">${moment(obj.created_at).format('MMM D, YYYY')}</h6>
                                                     </div>
                                                     <div class="mb2">
                                                         <small class="text-secondary mb-0">BUDGET</small>
@@ -39,7 +40,7 @@ $(document).ready(function() {
                                                     </div>
                                                     <div class="mb2">
                                                         <small class="text-secondary mb-0">APPROX. TONNES</small>
-                                                        <h6 class="text-dark font-weight-bold">${obj.approx_tonnes}t</h6>
+                                                        <h6 class="text-dark font-weight-bold">${(obj.approx_tonnes == 0) ? "Not sure" : obj.approx_tonnes + "t"}</h6>
                                                     </div>
                                                 </div>
                                                 <div class="col">
@@ -51,15 +52,11 @@ $(document).ready(function() {
                                                         <small class="text-secondary mb-0">CATEGORY</small>
                                                         <h6 class="text-dark font-weight-bold">${obj.project_category}</h6>
                                                     </div>
-                                                    <div class="mb2">
-                                                        <small class="text-secondary mb-0">DISCIPLINE(S)</small>
-                                                        <h6 class="text-dark font-weight-bold">Structural</h6>
-                                                    </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="mb2">
                                                         <small class="text-secondary mb-0">BIDDING CLOSES</small>
-                                                        <h6 class="text-success font-weight-bold"><i class="fa fa-clock"></i> ${obj.bidding_expire_at}</h6>
+                                                        <h6 class="text-success font-weight-bold"><i class="fa fa-clock"></i> ${dt}</h6>
                                                     </div>
                                                     <div class="mb2">
                                                         <small class="text-secondary mb-0">BIDS</small>

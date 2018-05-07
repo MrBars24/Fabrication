@@ -69,7 +69,7 @@
         </div>
     </div>
     <div class="bg-success py-3">
-        <div class="container-fluid">
+        <div class="container-fluid pb-0">
             <div class="row">
                 <div class="col-sm-8">
                     <small class="text-white mb-0" >Use of this website constitutes acceptance of Terms of Service. We care about your Privacy.

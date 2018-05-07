@@ -8,7 +8,20 @@ function get_current_endpoint(){
 function get_referer_endpoint(){
 	$tmp = parse_url($_SERVER['HTTP_REFERER']);
 	$url = substr($tmp['path'],1);
-	return $url;	
+	return $url;
+}
+
+function count_not_in_chain_string($str,$find){
+	$ss = str_split($str);
+	$count = 0;
+	foreach($ss as $s){
+		if($s == $find) break;
+		if($find != $s){
+			$count+=1;
+		}
+	}
+	
+	return $count;
 }
 
 function get_nav($user=null){
@@ -26,7 +39,7 @@ function send_mail($subject,$email,$message){
 	$CI->load->library('email',EMAIL_DETAILS);
 	$CI->email->from(EMAIL_DETAILS['smtp_user'], 'efab');
 	$CI->email->to($email);
-	$CI->email->cc('efab@efab.ifltest08.tk');
+	$CI->email->cc('efab@efab-prod.tk');
 	$CI->email->bcc(EMAIL_DETAILS['smtp_user']);
 	$CI->email->set_mailtype('html');
 	$CI->email->subject($subject);
@@ -60,7 +73,7 @@ function date_new_format($date, $format="F j, Y"){
 function time_new_format($date){
 	$start_date = new DateTime($date);
 
-	$since_start = $start_date->diff(new DateTime(date("Y-m-d h:i:s")));
+	$since_start = $start_date->diff(new DateTime(date("Y-m-d H:i:s")));
 
 	if($since_start->y != 0){
 		return $since_start->y . " years" . $since_start->m . " months" . $since_start->d . " days " . $since_start->h . "hours and " . $since_start->i . "minutes ago";

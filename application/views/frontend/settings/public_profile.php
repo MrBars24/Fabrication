@@ -1,9 +1,7 @@
-<style>
-
-.select2-container{
-    width: 100% !important;
-}
-
+ <style>
+	.select2-container{
+	    width: 100% !important;
+	}
 </style>
 <div class="container-fluid">
     <div class="row">
@@ -41,6 +39,32 @@
                                                 <!-- <small class="text-muted">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Porro, iste.</small> -->
                                                 </div>
                                             </div>
+											<div class="row mb-2"  >
+												<div class="col-4">
+													<span class="font-weight-bold">Work Type</span>
+                                                </div>
+                                                <div class="col-8 tst form-control-settings-account-hide">
+                                                    <?php foreach($work_type as $works): ?>
+                                                        <?php if($works->isUserWork == 1):?>
+                                                            <span class="<?= $works->id; ?>"><?= $works->value; ?></span>
+                                                        <?php endif; ?>
+                                                    <?php endforeach;?>
+                                                </div>
+												<div class="col-8 form-control-settings-account d-none" id="work-type-container">
+                                                    <select class="work-type" name="work_type[]" multiple>
+                                                        <?php foreach($work_type as $works): ?>
+                                                            <?php if($works->isUserWork == 1):?>
+                                                                <option value="<?= $works->id ?>" selected><?= $works->label ?></option>
+                                                            <?php endif; ?>
+														<?php endforeach;?>
+                                                        <?php foreach($work_type as $works): ?>
+                                                            <?php if($works->isUserWork != 1):?>
+                                                                <option value="<?= $works->id ?>"><?= $works->label ?></option>
+                                                            <?php endif; ?>
+														<?php endforeach;?>
+                                                    </select>
+												</div>
+											</div>
 
                                             <div class="row mb-2">
                                                 <div class="col-4">
@@ -135,24 +159,23 @@
                                         </div>
                                     </div>
                             </div>
-    
+
 
 
                             <!-- Expertise -->
                             <div class="card">
                                 <div class="p-4">
-                                    <h3 class="card-title font-weight-bold mb-0 float-left">Skills and Achievements</h3>
+                                    <h3 class="card-title font-weight-bold mb-0 float-left">Expertise and Achievements</h3>
 
                                 </div>
                                 <p><small class="p-4 error-message text-danger"></small></p>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">
                                         <div class="float-left">
-                                            <h4>Skills</h4>
+                                            <h4>Expertise</h4>
                                         </div>
                                         <div class="float-right">
-                                            <button class="btn btn-success form-control-settings-expertise" data-toggle="modal" data-target="#exampleModal">Add Skills</button>
-                                            <button class="btn btn-success form-control-settings-expertise" data-toggle="modal" data-target="#editSkills">Edit Skills</button>
+                                            <button class="btn btn-success form-control-settings-expertise" data-toggle="modal" data-target="#exampleModal">Edit Expertise</button>
                                             <!-- <button class="btn btn-success" data-toggle="edit-public-expertise" data-target=".form-control-settings-expertise" >Edit</button> -->
                                         </div>
                                         <div class="clearfix"></div>
@@ -169,30 +192,24 @@
                                     </li>
                                     <li class="list-group-item">
                                         <div class="float-left">
-                                            <h4>Achievements</h4>
+                                            <h4>Awards</h4>
                                         </div>
                                         <div class="float-right">
-                                            <button class="btn btn-success" data-toggle="edit-public-specialization" data-target=".form-control-settings-specialization">Edit</button>
-
+                                            <button class="btn btn-success form-control-settings-expertise" data-toggle="modal" data-target="#addAwardModal">Add Award</button>
+                                            <button class="btn btn-success form-control-settings-expertise" data-toggle="modal" data-target="#editAwardModal">Edit Awards</button>
                                         </div>
                                         <div class="clearfix"></div>
-                                        <ul>
-                                            <li>
-                                                <h5 class="font-weight-bold">Specialization 1</h5>
-                                                <h6 class="text-muted">Specialization Description</h6>
+                                        <ul id="awards-container">
+											<?php foreach($awards as $a): ?>
+											<li data-id="<?= $a->id ?>">
+                                                <h5 class="font-weight-bold"><?=$a->award_name?></h5>
+                                                <h6 class="text-muted"><?=$a->year_taken?></h6>
                                             </li>
-                                            <li>
-                                                <h5 class="font-weight-bold">Specialization 1</h5>
-                                                <h6 class="text-muted">Specialization Description</h6>
-                                            </li>
-                                            <li>
-                                                <h5 class="font-weight-bold">Specialization 1</h5>
-                                                <h6 class="text-muted">Specialization Description</h6>
-                                            </li>
+											<?php endforeach; ?>
                                         </ul>
-                                        <div class="text-center py-2">
+                                        <!--<div class="text-center py-2">
                                             <button class="btn btn-circle btn-success btn-lg form-control-settings-specialization d-none" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i></button>
-                                        </div>
+                                        </div>-->
                                     </li>
                                 </ul>
                             </div>
@@ -215,7 +232,10 @@
             <div class="modal-body">
                     <div class="form-group">
                         <label for="skills" class="control-label">Skills:</label>
-                        <select id="e6" class="" name="skills">
+                        <select id="e6" class="" name="skills[]" multiple>
+							<?php foreach($skills as $skill):?>
+								<option value="<?= $skill->skills_id ?>" selected><?= $skill->title ?></option>
+							<?php endforeach;?>
                         </select>
                     </div>
             </div>
@@ -240,6 +260,60 @@
                         <li class="d-flex justify-content-between align-items-center mb-3" data-id="<?= $skill->smid ?>">
                             <h5 class="font-weight-bold"><?= $skill->title ?></h5>
                             <button type="button" class="btn btn-danger btn-delete-skill" aria-haspopup="true" aria-expanded="false">
+                                <i class="ti-trash"></i>
+                            </button>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="addAwardModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" style="display: none; padding-right: 19px;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel1">Add Award</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <?= form_open('settings/account/award/create', array('id'=>'form-award-create')); ?>
+            <div class="modal-body">
+                    <div class="form-group">
+                        <label for="award" class="control-label">Award:</label>
+                        <input type="text" name="award" class="form-control"/>
+                    </div>
+					<div class="form-group">
+						<label for="awardyear" class="control-label">Year Taken:</label>
+						<select name="awardyear" class="form-control">
+						<?php for($i=2010;$i<=date('Y');$i++): ?>
+							<option value="<?=$i?>"><?=$i?></option>
+						<?php endfor; ?>
+						</select>
+					</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+            <?= form_close(); ?>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="editAwardModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" style="display: none; padding-right: 19px;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel1">Edit Awards</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <ul id="awards-container-edit">
+                    <?php foreach($awards as $a): ?>
+                        <li class="d-flex justify-content-between align-items-center mb-3" data-id="<?= $a->id ?>">
+                            <h5 class="font-weight-bold"><?= $a->award_name ?></h5>
+                            <button type="button" class="btn btn-danger btn-delete-award" aria-haspopup="true" aria-expanded="false">
                                 <i class="ti-trash"></i>
                             </button>
                         </li>

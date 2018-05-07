@@ -3,45 +3,46 @@ $(document).ready(function(){
         var imageDelete = [];
         var ref = null;
         var action = '/settings/portfolio/create';
-    var index = null;
-    var table = $("#portfolio-container").initTable({
-        url:"/settings/portfolio/list",
+        var index = null;
+        var table = $("#portfolio-container").initTable({
+        url:"/settings/portfolio/get",
         pageContainer:".pagination-bars",
         render:function(data){
             var container = ``;
             if(data.length > 0){
                 data.forEach(function(obj,index){
-                    var path = (obj.attachments[0] == undefined) ? "assets/images/placeholder-image.png" : obj.attachments[0].path;
+                    console.log(obj);
+                    var path = obj.attachments[0].path;
                     container += `
-                <div class="col-sm-4" id="portfolio-id">
-                    <div class="el-card-item">
-                        <div class="el-card-avatar el-overlay-1 mb-1">
-                                <img src="`+ path +`" alt="portfolio image" class="img-fluid rounded">
-                            <div class="el-overlay scrl-dwn">
-                                    <ul class="el-info">
-                                        <li>
-                                            <button class="btn border-white btn-outline image-popup-vertical-fit view">
-                                                <i class="fa fa-eye"></i>
-                                            </button>
-                                        <li>
-                                            <button class="btn border-white btn-outline image-popup-vertical-fit edit">
-                                                <i class="icon-pencil"></i>
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button class="btn border-white btn-outline image-popup-vertical-fit delete">
-                                                <i class="icon-trash"></i>
-                                            </button>
-                                        </li>
-                                    </ul>
-                                </div>
-                        </div>
-                        <div class="el-card-content text-center">
-                            <h4 class="box-title" id="portfolio-title">${obj.project_name}</h4>
+                    <div class="col-sm-4" id="portfolio-id">
+                        <div class="el-card-item">
+                            <div class="el-card-avatar el-overlay-1 mb-1">
+                                    <img src="`+ path +`" alt="portfolio image" class="img-fluid rounded">
+                                <div class="el-overlay scrl-dwn">
+                                        <ul class="el-info">
+                                            <li>
+                                                <button class="btn border-white btn-outline image-popup-vertical-fit view">
+                                                    <i class="fa fa-eye"></i>
+                                                </button>
+                                            <li>
+                                                <button class="btn border-white btn-outline image-popup-vertical-fit edit">
+                                                    <i class="fa fa-pencil"></i>
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button class="btn border-white btn-outline image-popup-vertical-fit delete">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                            </div>
+                            <div class="el-card-content text-center">
+                                <h4 class="box-title" id="portfolio-title">${obj.project_name}</h4>
+                                <p>${obj.description}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            
                     `
                     ;
                 });
@@ -58,6 +59,7 @@ $(document).ready(function(){
             return container;
         }
     });
+
         var myDropzone = new Dropzone("#drop-file", {
         url: $('#form-portfolio-create').attr('action'),
         autoProcessQueue: false,
@@ -86,7 +88,7 @@ $(document).ready(function(){
                     value : imageDelete
                 });
                 }
-                
+
                 e.stopPropagation();
                 if (myDropzone.getQueuedFiles().length > 0) {
                     myDropzone.processQueue();
@@ -98,7 +100,7 @@ $(document).ready(function(){
             success:function(res){
             if(res.success){
                 var d = res.data;
-                var path2 = (d.attachments[0] == undefined) ? "/assets/images/placeholder-image.png" : d.attachments[0].path;
+                var path2 = d.attachments[0].path;
                 var data = {
                         data:d,
                         template:`
@@ -114,12 +116,12 @@ $(document).ready(function(){
                                             </button>
                                         <li>
                                             <button class="btn border-white btn-outline image-popup-vertical-fit edit">
-                                                <i class="icon-pencil"></i>
+                                                <i class="fa fa-pencil"></i>
                                             </button>
                                         </li>
                                         <li>
                                             <button class="btn border-white btn-outline image-popup-vertical-fit delete">
-                                                <i class="icon-trash"></i>
+                                                <i class="fa fa-trash"></i>
                                             </button>
                                         </li>
                                     </ul>
@@ -176,7 +178,7 @@ $(document).ready(function(){
                     $('.create-modal').modal('toggle');
 					var d = response.data;
 					$('#no-results').remove('tr');
-                    var path = (d.attachments[0] == undefined) ? "/assets/images/placeholder-image.png" : d.attachments[0].path;
+                    var path = d.attachments[0].path;
 					var data = {
 						data:d,
 						template:`
@@ -186,18 +188,18 @@ $(document).ready(function(){
                                 <img src="`+ path +`" alt="user" class="img-fluid rounded">
                             <div class="el-overlay scrl-dwn">
                                     <ul class="el-info">
-                                        <li>
+                                         <li>
                                             <button class="btn border-white btn-outline image-popup-vertical-fit view">
                                                 <i class="fa fa-eye"></i>
                                             </button>
                                         <li>
                                             <button class="btn border-white btn-outline image-popup-vertical-fit edit">
-                                                <i class="icon-pencil"></i>
+                                                <i class="fa fa-pencil-square-o"></i>
                                             </button>
                                         </li>
                                         <li>
                                             <button class="btn border-white btn-outline image-popup-vertical-fit delete">
-                                                <i class="icon-trash"></i>
+                                                <i class="fa fa-trash-o"></i>
                                             </button>
                                         </li>
                                     </ul>
@@ -210,7 +212,7 @@ $(document).ready(function(){
                 </div>
 						`
 					}
-                    
+
 					if(that.attr('data-action') == "update"){
                         data.index = index;
 						table.dataReplace(data);
@@ -225,12 +227,12 @@ $(document).ready(function(){
 
 					index = null;
 					ref = null;
-				
+
                 }
             });
 
             this.on("success", function(file, responseText) {
-                
+
 
                 // //console.log(responseText);
                 // if(responseText.success=="true"){
@@ -256,7 +258,7 @@ $(document).ready(function(){
             });
         }
     });
-    
+
 
 
 	$(document).on('click','.add',function(e,file){
@@ -302,14 +304,14 @@ $(document).ready(function(){
 			}
 		})
 	});
-    
+
     $(document).on('click','.delete-image',function(e){
         $(this).parents('#portfolio-id-modal').find('img').toggleClass('img-delete');
         index = $(this).parents('#portfolio-id-modal').index();
         $('.image-container-edit').dataRemove(index);
 
         var imageFetch =  $(this).parents('#portfolio-id-modal').find('.img-delete').attr('data-id');
-        
+
         imageDelete.push(imageFetch);
     });
 
@@ -323,10 +325,10 @@ $(document).ready(function(){
 		$("input[name='title']").val(data.project_name);
 		$("textarea[name='description']").val(data.description);
         $("select[name='category']").val(data.category);
-        
+
         myDropzone.options.url = '/settings/portfolio/update/' + data.id;
         myDropzone.removeAllFiles(true);
-        
+
         var imageCount = data.attachments;
 			var container = ``;
 			if(imageCount != null){
@@ -356,7 +358,7 @@ $(document).ready(function(){
 			}
         $('.image-container-edit').html(container);
     }
-    
+
     function viewModal(data){
 		$(".view-modal").modal('show');
 		$(".view-modal").find('form').attr('data-action','update');
@@ -382,4 +384,3 @@ $(document).ready(function(){
         $('.image-container-view').html(container);
 	}
 });
-    

@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-require_once(APPPATH."controllers/Admin.php"); 
+require_once(APPPATH."controllers/Admin.php");
 class Settings extends Admin {
 
 	public function __construct(){
@@ -9,12 +9,9 @@ class Settings extends Admin {
 
 	public function saveSettings(){
 		header("Content-Type:application/json");
-		
-		$post = $this->input->post();
 
-		$data = array(
-			"site_name"=>$post['site_name']
-		);
+		$post = $this->input->post();
+		$data = $post;
 		if ($_FILES['site_logo']['size'] > 0) {
 			$this->uploadSiteImage($post);
 			$data['site_logo'] = $post['site_logo'];
@@ -51,7 +48,7 @@ class Settings extends Admin {
 			$ext = pathinfo($path, PATHINFO_EXTENSION);
 
 			if(in_array($ext, $allowed)){
-				$file = "logo.".$ext; 
+				$file = "logo.".$ext;
 				$targetPath = $storeFolder .DIRECTORY_SEPARATOR;
 				$targetFile =  $targetPath. $file;
 

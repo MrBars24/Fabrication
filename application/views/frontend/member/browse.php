@@ -3,73 +3,42 @@
     <div class="row">
         <div class="col-sm-4">
             <div class="card">
-                <div class="card-body">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search for Detailers">
+                <div class="card-body card-search">
+                    <div class="input-group input-group-sm mb-4 mt-4">
+                        <input type="text" class="form-control" name="text-search" placeholder="Search for Detailers">
+                        <span class="input-group-append">
+                            <button class="btn btn-warning text-white" id="btnsearch">Search</button>
+                        </span>
                     </div>
+
                     <div class="form-group">
-                        <select name="" class="form-control">
-                            <option value="" disabled selected>Select Industry</option>
+                        <label class="">Category</label>
+                        <select class="form-control" name="category">
+                            <option value="any">Any</option>
+                            <?php foreach($industries as $i): ?>
+                                <option value="<?= $i['id'] ?>"><?= $i['display_name'] ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="form-group">
-                        <select name="" class="form-control">
-                            <option value="" disabled selected>Select Expertise</option>
+                        <label class="">Country</label>
+                        <select name="country" class="form-control input-sm" name="country">
+                            <option value="any">Any</option>
+                            <?php foreach($countries as $country): ?>
+                                <option value="<?= $country->id ?>"><?= $country->printable_name ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <select name="" class="form-control">
-                            <option value="" disabled selected>Select Country</option>
-                        </select>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <select name="" class="form-control">
-                                    <option value="" disabled selected>State</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="City">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <select name="" class="form-control">
-                            <option value="" disabled selected>Select Min Rating</option>
-                        </select>
-                    </div>
-                    <button class="btn btn-success">Search</button>
 
                 </div>
             </div>
         </div>
         <div class="col-sm-8">
-            <div class="card">
-                <ul class="list-group list-group-flush">
-                    <?php foreach(range(0, 6) as $i): ?>
-                        <li class="list-group-item">
-                            <?php $this->load->view('frontend/partials/member_item') ?>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-                <div class="card-body">
-                    <nav aria-label="Page navigation example" class="mt-3">
-                        <ul class="pagination">
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#" tabindex="-1">Previous</a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">Next</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
+            <div class="comment-widgets mb-0">
+
+                <div class="d-flex row pagination-members-container"></div>
+                <div class="container loader-container"></div>
+
             </div>
         </div>
     </div>

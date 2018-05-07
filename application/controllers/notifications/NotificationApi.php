@@ -31,24 +31,36 @@ class NotificationApi extends MX_Controller {
     }
 
     public function getAllPaginated() {
-        
+
     }
 
     public function update($id) {
         $status = $this->input->post('status');
 
-        if ($status == 'read_all') {
+        $data = $this->formatData($status);
+        $this->Notification_model->update($id, $data);
 
-        }
-        else {
-            $data = $this->formatData($status);
-            $this->Notification_model->update($id, $data);
+        return json(array(
+            'success' => true,
+            'data' => array(
+              'unread_notifications' => newNotificationCount()
+            )
+        ));
+    }
+
+    public function readAll() {
+        $result = $this->Notification_model->readAll(auth()->id);
+
+        if ($result) {
+          return json(array(
+              'success' => true
+          ));
         }
 
         return json(array(
             'success' => true
-        ));
-  
+        ), 500);
+
     }
 
     public function formatData($status) {

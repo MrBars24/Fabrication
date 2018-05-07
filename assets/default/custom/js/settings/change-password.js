@@ -10,13 +10,16 @@ $(document).ready(function(){
 			data:serial,
 			type:'POST',
 			success:function(res){
-				if(res.success){
+				if(res.status){
+				    $(".list-group-flush input").val("");
 					toastr.success(res.message);
-				}
+				}else{
+                    toastr.error(res.message);
+                }
 			},
 			error:function(xhr){
 				if(xhr.status==400){
-					toastr.warning(xhr.responseJSON.message);
+					toastr.warning(JSON.parse(xhr.responseText).message);
 				}
 			}
 		});

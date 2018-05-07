@@ -1,28 +1,19 @@
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
 
-<!--
-
-<section id="jobs-header">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="float-left"><i class="mdi mdi-mouse-variant" style="font-size:80px;"></i></div>
-                <div class="float-none" style="margin:20px 0 0 10px;">
-                    <h2 style="line-height:90%;">Job Bank Accross the World<br>
-                        <span style="font-size:.6em;line-height:90%;">Quick search jobs and send quotation. <a href="#">Read Our FAQ</a></span>
-                    </h2>
-                </div>
-            </div>
-            <div class="col-lg-4">
-
-            </div>
-        </div>
     </div>
-</section>
--->
+    <div class="col-md-7 align-self-center">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/dashboard">Search</a></li>
+            <li class="breadcrumb-item active">Jobs</li>
+        </ol>
+    </div>
+</div>
 <section class="">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                 <div class="stickyside">
                     <div class="card card-body">
                         <div class="input-group input-group-sm mb-4 mt-4">
@@ -42,12 +33,7 @@
                         </div>
                         <div class="form-group">
                             <label class="">Budget</label>
-                            <select class="custom-select col-12 filter-budget" id="budget">
-                                <option value="any" selected>Any</option>
-                                <?php foreach($budget_filters as $i): ?>
-                                    <option value="<?= $i['min_budget'] ?>-<?= $i['max_budget'] ?>">between <?=  number_format($i['min_budget']); ?> & <?= number_format($i['max_budget']); ?></option>
-                                <?php endforeach; ?>
-                            </select>
+                            <?php $this->load->view('widgets/budget-input') ?>
                         </div>
                         <div class="col-sm-4 pt-2">
                                 <div class="mt-0">
@@ -66,9 +52,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                <div class="row pagination-jobs-container col-12" id="final-result"></div>
-                <div class="pagination pagination-bid-history-bars col-12 justify-content-center mb-4"></div>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                <div class="row pagination-jobs-container" id="final-result"></div>
+                <div class="container loader-container"></div>
             </div>
         </div>
     </div>

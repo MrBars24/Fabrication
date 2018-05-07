@@ -1,5 +1,7 @@
 $(document).ready(function(){
 
+	//$('input[name="bday"]').bootstrapMaterialDatePicker({ format : 'YYYY-MM-DD', time:false })
+
     $(document).on("click", "[data-toggle=edit-settings-input]", function(){
         $(this).html('Done');
         $(this).addClass('cancel-edit');

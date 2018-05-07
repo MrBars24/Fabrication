@@ -1,7 +1,7 @@
 <?php
 
 class BidAcceptedNotification extends Efab_Notification {
-    
+
     private $job_id;
 
     public function __construct($job_id) {
@@ -10,7 +10,7 @@ class BidAcceptedNotification extends Efab_Notification {
     }
 
     public function via() {
-        return ['database'];
+        return ['database', 'socket'];
     }
 
     public function toMail() {
@@ -19,8 +19,15 @@ class BidAcceptedNotification extends Efab_Notification {
 
     public function toDatabase() {
         return array(
-            'name' => 'Leo',
+            'name' => 'Test',
             'job_id' => $this->job_id
         );
+    }
+
+    public function toArray() {
+      return array(
+        'job_id' => $this->job_id,
+        'notification' => $this->notification_row
+      );
     }
 }

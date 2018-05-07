@@ -66,6 +66,9 @@ $route['settings/subscribe/payment/execute'] = 'settings/subscription/executePay
 $route['auth/fb'] = 'test/fb';
 $route['fb/fallback'] = 'home/facebookAuth';
 
+$route['watch/jobs'] = 'Watcher/watchJobs';
+$route['work/invite'] = 'jobs/InvitationJobs/sendEmailInvitation';
+
 // admin routes
 $route['admin'] = 'admin';
 $route['admin/pages']['GET'] = 'adm/pages';
@@ -133,6 +136,13 @@ $route['admin/image/assets/list']['GET'] = 'adm/file/getImageAsssets';
 $route['admin/user/list']['GET'] = 'adm/user/getUsers';
 $route['admin/job/list']['GET'] = 'adm/jobs/fetch';
 
+
+$route['forgot-password']['GET'] = 'home/forgot';
+$route['forgot-password/activate']['GET'] = 'home/forgotActivate';
+$route['forgot-password/send']['POST'] = 'home/forgotSend';
+$route['forgot-password/confirm']['POST'] = 'home/forgotConfirm';
+
+$route['email/confirmation'] = 'home/confirmation';
 $route['login-register']['GET'] = 'home/login';
 $route['login']['POST'] = 'home/loginCheck';
 $route['logout']['GET'] = 'home/logout';
@@ -147,7 +157,8 @@ $route['oauth2callback']['GET'] = 'home/googleAuthCallback';
 // $route['register/detailer']['POST'] = 'home/submitDetailer';
 // $route['register/fabricator']['POST'] = 'home/submitFabricator';
 $route['register/member']['POST'] = 'home/submitMember';
-
+$route['register/verification']['GET'] = 'home/memberVerification';
+$route['register/verify']['GET'] = 'home/memberVerify';
 $route['test/admin'] = 'adm/user';
 
 //e-fab
@@ -168,7 +179,7 @@ $route['about'] = 'welcome/about';
 
 //Contact Us
 $route['pricing']['GET'] = 'pricing';
-$route['submit-contact-us'] = 'welcome/submitContactUs';
+$route['submit-contact-us']['POST'] = 'site/Contact/submitContactUs';
 
 //Training
 $route['settings/training']['GET'] = 'settings/training';
@@ -177,13 +188,16 @@ $route['settings/training/create']['POST'] = 'settings/training/store';
 $route['settings/training/update/(:num)']['POST'] = 'settings/training/update/$1';
 $route['settings/training/delete/(:num)']['POST'] = 'settings/training/destroy/$1';
 
+$route['jobs/test']['get'] = 'jobs/CreateJob/newJob';
 
 // Jobs Create
 $route['jobs/create']['GET'] = 'jobs/CreateJob/index';
-$route['jobs/create']['POST'] = 'jobs/CreateJob/createJob';
+$route['jobs/create-job']['POST'] = 'jobs/CreateJob/createJob';
 $route['jobs/update/(:num)']['POST'] = 'jobs/UpdateJob/updateJob/$1';
+$route['jobs/update/(:num)']['GET'] = 'jobs/UpdateJob/index/$1';
 $route['jobs/get']['GET'] = 'jobs/BrowseJobs/getAllJobs';
 $route['jobs/list']['GET'] = 'jobs/BrowseJobs/getAllJobsPagination';
+$route['job/bid/close/(:num)']['GET'] = 'jobs/CloseJobs/closeJob/$1';
 
 // Jobs invite
 $route['jobs/invite/(:num)']['POST'] = 'jobs/InvitationJobs/inviteMember/$1';
@@ -199,6 +213,7 @@ $route['settings/portfolio/create']['POST'] = 'settings/portfolio/store';
 $route['settings/portfolio/update/(:num)']['POST'] = 'settings/portfolio/update/$1';
 $route['settings/portfolio/delete/(:num)']['POST'] = 'settings/portfolio/destroy/$1';
 $route['settings/portfolio/list']['GET'] = 'settings/portfolio/fetch';
+$route['settings/portfolio/get']['GET'] = 'settings/portfolio/getMyPortpolio';
 
 //Proposal
 $route['jobs/proposal/(:num)']['get'] = 'jobs/ViewJob/proposal/$1';
@@ -206,8 +221,11 @@ $route['jobs/submit/proposal']['post'] = 'jobs/Proposal/submit';
 $route['jobs/edit/proposal/(:num)']['post'] = 'jobs/Proposal/editProposal/$1';
 
 //Bid Accecpt
-$route['job/bid/accept/(:num)']['get'] = 'jobs/Proposal/accept/$1';
+$route['job/bid/accept/(:num)/(:num)']['get'] = 'jobs/Proposal/accept/$1/$2';
+$route['job/bid/finish/(:num)']['get'] = 'jobs/Proposal/finish/$1';
 $route['job/bid/cancel/(:num)']['get'] = 'jobs/Proposal/cancel/$1';
+$route['job/bid/decline/(:num)']['get'] = 'jobs/Proposal/decline/$1';
+
 //Bid History
 $route['jobs/bid-history']['get'] = 'jobs/ViewBidHistory/index';
 $route['jobs/bid-history']['post'] = 'jobs/ViewBidHistory/postBid';
@@ -219,23 +237,27 @@ $route['jobs/job-discussion/(:num)']['get'] = 'jobs/DiscussionJob/index/$1';
 $route['jobs/job-discussion/submit/(:num)']['post'] = 'jobs/DiscussionJob/submit/$1';
 $route['jobs/job-discussion/delete/(:num)']['get'] = 'jobs/DiscussionJob/delete/$1';
 $route['jobs/job-discussion/edit/(:num)']['post'] = 'jobs/DiscussionJob/edit/$1';
+
 //Previous Project
-$route['jobs/previous-project']['get'] = 'jobs/ViewPreviousProject/index';
-$route['jobs/previous-project/(:num)']['get'] = 'jobs/ViewPreviousProject/show/$1';
+$route['jobs/previous-project']['get'] = 'jobs/PreviousProject/index';
+$route['jobs/previous-project/list']['get'] = 'jobs/PreviousProject/previousProjectsPagination';
+$route['jobs/previous-project/(:num)']['get'] = 'jobs/PreviousProject/show/$1';
 
 //Job Banks
 $route['jobs']['get'] = 'jobs/BrowseJobs/index';
 $route['jobs/(:num)']['GET'] = 'jobs/ViewJob/show/$1';
 
-$route['jobs/bid-list/(:num)'] = 'jobs/ViewJob/bidderfetch/$1';
 $route['jobs/bid-list/(:num)/(:num)'] = 'jobs/ViewJob/bidderfetchsort/$1/$2';
+$route['jobs/bid-list/(:num)']['GET'] = 'jobs/ViewJob/bidderfetch/$1';
 
 $route['jobs/latest']['get'] = 'jobs/LatestJobs/index';
 $route['jobs/invitations']['get'] = 'jobs/InvitationJobs/index';
 $route['jobs/my-jobs']['get'] = 'jobs/MyJob/index';
-$route['jobs/my-jobs/list']['get'] = 'jobs/MyJob/myJobsPagination';
+$route['jobs/my-jobs/list']['get'] = 'jobs/MyJob/wonJobs';
 $route['jobs/my-jobs/(:num)']['get'] = 'jobs/Contract/show/$1';
 $route['jobs/posted']['get'] = 'jobs/BrowseJobs/postedJob';
+$route['jobs/posted/(active)']['get'] = 'jobs/BrowseJobs/postedJob/$1';
+$route['jobs/posted/list']['get'] = 'jobs/myJob/myJobsPagination';
 $route['jobs/posted/manage/(:num)']['get'] = 'jobs/BrowseJobs/postedJobView/$1';
 $route['jobs/posted/contract/(:num)']['get'] = 'jobs/BrowseJobs/hiredWorker/$1';
 $route['jobs/recent']['GET'] = 'jobs/BrowseJobs/recentJobsByCategory';
@@ -252,18 +274,22 @@ $route['settings/change/password']['POST'] = 'settings/Password/changePassword';
 $route['settings/notification']['get'] = 'settings/Notification/index';
 //$route['settings/portfolio']['get'] = 'settings/Portfolio/index';
 $route['settings/training']['get'] = 'settings/Training/index';
-
 // Profile Settings Functions
 $route['settings/account/basic']['POST'] = "settings/Account/updateBasic";
 $route['settings/account/public-basic/(:num)']['POST'] = "settings/PublicProfile/updatePublicProfile/$1";
+$route['settings/public/get-worktype']['GET'] = 'settings/PublicProfile/getWorkTypes';
 
 $route['settings/account/avatar']['POST'] = "settings/PublicProfile/avatar";
 
 $route['settings/account/industries']['POST'] = "settings/Account/addIndustry";
 $route['settings/account/public-industries/(:num)']['POST'] = "settings/PublicProfile/updatePublicIndustry/$1";
 
+$route['settings/account/award/create']['POST'] = "settings/PublicProfile/createAward";
+$route['settings/award/delete/(:num)']['POST'] = "settings/PublicProfile/deleteAward/$1";
+
 $route['settings/account/skills/create']['POST'] = "settings/PublicProfile/createSkills";
 $route['settings/account/get-skills']['GET'] = "settings/PublicProfile/getSkills";
+$route['settings/account/get-skills-job']['GET'] = "settings/PublicProfile/getSkillsJob";
 $route['settings/skills/delete/(:num)']['GET'] = "settings/PublicProfile/deleteSkills/$1";
 
 $route['settings/account/location']['POST'] = "settings/Account/updateLocation";
@@ -279,11 +305,12 @@ $route['members/(:num)']['get'] = 'member/ViewProfile/show/$1';
 $route['members/expert/(:num)']['get'] = 'member/ViewProfile/expert/$1';
 $route['members/fabricator/(:num)']['get'] = 'member/ViewProfile/fabricator/$1';
 $route['hire']['get'] = 'member/Hire/index';
+$route['hire/list']['get'] = 'member/Hire/getAllMemberPagination';
 $route['work']['get'] = 'member/Work/index';
 $route['work/list']['GET'] = 'member/Work/getAllJobsPagination';
 $route['dashboard']['get'] = 'member/Dashboard/index';
-$route['search/(:any)']['post'] = 'member/SearchResult/search/$1';
-$route['search/(:any)']['get'] = 'member/SearchResult/search/$1';
+// $route['search']['post'] = 'search/Search/searchAll';
+$route['search/all']['get'] = 'search/Search/searchAll';
 
 // Notifications
 $route['notifications']['get'] = 'notifications/Notification/index';
@@ -331,7 +358,7 @@ $route['api/v1/(:any)/(:num)/attachments']['GET'] = 'attachments/AttachmentApi/g
 // Notifications
 $route['api/v1/notifications']['GET'] = 'notifications/NotificationApi/index';
 $route['api/v1/notifications/(:num)']['POST'] = 'notifications/NotificationApi/update/$1';
-
+$route['api/v1/notifications/all/read']['POST'] = 'notifications/NotificationApi/readAll';
 
 
 

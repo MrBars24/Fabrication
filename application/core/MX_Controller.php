@@ -10,8 +10,17 @@ class MX_Controller extends CI_Controller{
         $this->template->set_additional_css(array());
 		$this->template->set_additional_js(array());
 
-        $this->load->driver('cache');
-        $config = $this->cache->file->get('sconfig');
+		if(file_exists("application/cache/sconfig")){
+			$this->load->driver('cache');
+			$config = $this->cache->file->get('sconfig');
+		}else{
+			$this->load->model('admin/cms_model');
+			$this->load->driver('cache');
+			$settings = $this->cms_model->getSettings();
+			$this->cache->file->save('sconfig', $settings , 5000);
+			$config = $this->cache->file->get('sconfig'); 
+		}
+        
         $this->template->load_sub('config',$config);
     }
 

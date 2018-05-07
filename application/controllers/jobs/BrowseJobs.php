@@ -17,7 +17,8 @@ class BrowseJobs extends MX_Controller {
         $js = array(
             "/assets/plugins/select2/js/select2.min.js",
             "/assets/default/custom/js/jobs.js",
-			"/assets/admin/custom/js/bars-datatable.js"
+			"/assets/plugins/jquery-ellipse/jquery.ellipsis.min.js",
+			"/assets/admin/custom/js/bars-dtable.js"
         );
         $this->template->append_css($css);
 		$this->template->append_js($js);
@@ -49,7 +50,7 @@ class BrowseJobs extends MX_Controller {
 		),200);
 	}
 
-	public function postedJob() {
+	public function postedJob($status = null) {
 		$css = array(
 			"https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css",
 			"assets/default/css/custom/global.css",
@@ -63,13 +64,16 @@ class BrowseJobs extends MX_Controller {
 		$this->template->append_css($css);
 		$this->template->append_js($js);
 		$this->load->model('job_model');
-		$myjob = $this->job_model->getMyJobs();
+		if($status == 'active'){
+			$myjob = $this->job_model->allOpen(TRUE);
+		}else{
+			$myjob = $this->job_model->getMyJobs();
+		}
 		$this->template->load_sub('jobs', $myjob);
-
 		$this->template->load('frontend/jobs/posted_jobs');
 	}
 
-	public function postedJobView($id) {
+		public function postedJobView($id) {
         $css = array(
 			"assets/default/css/custom/global.css",
 			"assets/plugins/dropzone-master/dist/dropzone.css",
@@ -85,15 +89,25 @@ class BrowseJobs extends MX_Controller {
             "/assets/admin/custom/js/bars-datatable.js",
             "/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js",
             "/assets/admin/js/mask.js",
+			"/assets/default/custom/js/proposal.js"
         );
         $this->template->append_css($css);
 		$this->template->append_js($js);
 		$this->load->model('job_model');
 		$this->load->model('proposal_model');
-		$job = $this->job_model->getAllJobInfo($id);
+		$this->load->model('user_model');
+		$this->load->model('industry_model');
+		$job = $this->job_model->getJob($id);
 		$bid = $this->proposal_model->getBidsByJobId($id);
 		$getAttachment = $this->proposal_model->getAttachment($job->id);
 		$this->template->load_Sub('getAttachment', $getAttachment);
+		if($job->status == "awarded"){
+			$awardedUser = $this->user_model->getMemberInfo($job->accepted_bid);
+			$awardedUser->bid = $this->proposal_model->getBidsByJobId($id);
+
+			$this->template->load_sub('awardedUser', $awardedUser);
+		}
+		$industries = $this->industry_model->getIndustries();
 		$this->template->load_Sub('job', $job);
 		$this->template->load_Sub('bid', $bid);
 

@@ -1,10 +1,24 @@
-<div class="container">
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+    </div>
+    <div class="col-md-7 align-self-center">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/hire">Dashboard</a></li>
+            <li class="breadcrumb-item active">Posted Jobs</li>
+        </ol>
+    </div>
+</div>
+<div class="container-fluid">
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-3">
+          <?php $this->load->view('frontend/partials/job_bank_sidebar')?>
+        </div>
+        <div class="col-sm-9">
             <div class="card">
                 <div class="card-header">
-                    <h1>Job Posted</h1>
-                    <a href="<?= base_url('jobs/create'); ?>" class="text-primary " ><i class="mdi mdi-tooltip-edit"></i> Compose new job </a>
+                    <h1 class="float-left">Job Posted</h1>
+                    <a href="<?= base_url('jobs/create'); ?>" class="btn btn-success float-right" ><i class="fa fa-plus"></i> Post a Job </a>
+                    <div class="clearfix"></div>
                 </div>
                 <div class="card-body">
 
@@ -18,13 +32,13 @@
                         </div>
                     </div>
 
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <ul class="pagination pagination-myjobs-bars">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <ul class="pagination pagination-myjobs-bars">
 
-                                    </ul>
-                                </div>
-                            </div>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -10,7 +10,7 @@ class Portfolio extends MX_Controller {
         $this->load->model('industry_model');
 	}
 
-      
+
 	public function index()
 	{	check_user('member');
         $js = array(
@@ -23,7 +23,7 @@ class Portfolio extends MX_Controller {
 		);
 		$css = array(
             "assets/plugins/dropzone-master/dist/dropzone.css",
-			"assets/plugins/toast-master/css/jquery.toast.css" 
+			"assets/plugins/toast-master/css/jquery.toast.css"
 		);
 
 		$this->template->append_js($js);
@@ -33,8 +33,14 @@ class Portfolio extends MX_Controller {
 		//$this->template->load_sub('portfolios', $data);
 		$this->template->load_sub('industries', $industry);
 		$this->template->load('frontend/settings/portfolio-settings');
-		
-		
+
+
+	}
+
+	public function getMyPortpolio(){
+		header("Content-Type:application/json");
+		$getMyPortpolio = $this->portfolio_model->getMyPortpolio();
+		echo json_encode($getMyPortpolio);
 	}
 	public function fetch(){
 		header("Content-Type:application/json");
@@ -64,7 +70,7 @@ class Portfolio extends MX_Controller {
             $this->form_validation->set_rules('title', 'Title', 'required');
             $this->form_validation->set_rules('description', 'Description', 'required');
             if($this->form_validation->run() == FALSE){
-                    $error = $this->form_validation->error_array(); 
+                    $error = $this->form_validation->error_array();
                     echo json_encode( array(
                         'success' => FALSE,
                         'errors' => $error
@@ -114,12 +120,12 @@ class Portfolio extends MX_Controller {
     }
 }
 
-	function update($id){        
+	function update($id){
         header("Content-Type:application/json");
             $this->form_validation->set_rules('title', 'Title', 'required');
             $this->form_validation->set_rules('description', 'Description', 'required');
         if($this->form_validation->run() == FALSE){
-                $error = $this->form_validation->error_array(); 
+                $error = $this->form_validation->error_array();
                 echo json_encode( array(
                     'success' => FALSE,
                     'errors' => $error
@@ -163,7 +169,7 @@ class Portfolio extends MX_Controller {
                 }
             }else{
                 $b = $this->portfolio_model->deleteAttached($attachId);
-                $res = $this->portfolio_model->update($id,$data);    
+                $res = $this->portfolio_model->update($id,$data);
                 if($res){
                     echo json_encode(array("success" => TRUE,"data" => $res));
                     exit;
@@ -171,7 +177,7 @@ class Portfolio extends MX_Controller {
                     echo json_encode(array("success" => FALSE));
                     exit;
                 }
-            }   
+            }
     }
 }
 

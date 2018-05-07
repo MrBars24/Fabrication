@@ -1,20 +1,34 @@
 $(document).ready(function () {
-
+    $('.work-type').select2({
+        dropdownParent: $("#work-type-container"),
+    });
+    $("#e6").select2({
+        dropdownParent: $("#exampleModal"),
+        tags: true,
+        ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
+            url: "/settings/account/get-skills-job",
+            dataType: 'json',
+            quietMillis: 250,
+        },
+    });
     $(document).on("click", "[data-toggle=edit-public-profile]", function () {
-        $(this).html('Cancel');
+		$(this).html('Cancel');
         $(this).addClass('cancel-edit');
         var target = $(this).data('target');
         $(target).removeClass('d-none');
         $(target + '-hide').addClass('d-none');
     });
 
-
-    $(document).on("click", ".cancel-edit", function () {
-        $(this).html('Edit');
-        $(this).removeClass('cancel-edit');
-        var target = $(this).data('target');
+	function clear_public_profile(elem){
+		$(elem).html('Edit');
+        $(elem).removeClass('cancel-edit');
+        var target = $(elem).data('target');
         $(target).addClass('d-none');
         $(target + '-hide').removeClass('d-none');
+	}
+
+    $(document).on("click", ".cancel-edit", function () {
+		clear_public_profile(this);
     });
 
     $(document).on("click", "[data-toggle=edit-public-expertise]", function () {
@@ -24,6 +38,8 @@ $(document).ready(function () {
         $(target).removeClass('d-none');
         $(target + '-hide').addClass('d-none');
     });
+
+	$("#work-type").select2({ containerCssClass : "form-control" });
 
     // $('.js-data-example-ajax').select2({
     //   ajax: {
@@ -46,15 +62,7 @@ $(document).ready(function () {
     //     }
     // });
 
-    $("#e6").select2({
-        dropdownParent: $("#exampleModal"),
-        tags: true,
-        ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
-            url: "/settings/account/get-skills",
-            dataType: 'json',
-            quietMillis: 250,
-        },
-    });
+
 
     $(document).on("submit", "#form-skills-create", function (e) {
         e.preventDefault();
@@ -66,20 +74,75 @@ $(document).ready(function () {
             type: 'post',
             dataType: 'json',
             success: function (result) {
+				console.log(result);
+				//window.location.reload();
+
+				$('#exampleModal').modal('hide');
+				toastr.success('Skills Successfully Added', 'Success!');
+				var container = '';
+				$.each(result.data, function(i, l){
+					container +=
+					`<li data-id="`+l.id+`">
+						<h5 class="font-weight-bold">`+l.title+`</h5>
+					</li>`
+				});
+				$('#skills-container').html(container);
+
+                // if (result.success == false) {
+                //     $('.error-message').text(`${result.message}`);
+                //     $('#exampleModal').modal('hide');
+                //     $('#select2-e6-container').text('');
+                // } else {
+                //     toastr.success('Skills Successfully Added', 'Success!');
+                //     $('#exampleModal').modal('hide');
+                //     $('#skills-container').prepend(`
+                //     <li data-id="${result.id}">
+                //         <h5 class="font-weight-bold">${result.data}</h5>
+                //     </li>
+                // `);
+                //     $('#skills-container-edit').prepend(`
+                //     <li class="d-flex justify-content-between align-items-center mb-3" data-id="${result.id}">
+                //         <h5 class="font-weight-bold">${result.data}</h5>
+                //         <button type="button" class="btn btn-danger btn-delete-skill"  aria-haspopup="true" aria-expanded="false">
+                //             <i class="ti-trash"></i>
+                //         </button>
+                //     </li>
+                // `);
+                //     $('.error-message').text(``);
+                // }
+            },
+            error: function () {
+
+            }
+        });
+    });
+
+	$(document).on("submit", "#form-award-create", function (e) {
+        e.preventDefault();
+        var data = $(this).serializeArray();
+        var url = $(this).attr('action');
+
+        $.ajax({
+            data: data,
+            url: url,
+            type: 'post',
+            dataType: 'json',
+            success: function (result) {
                 if (result.success == false) {
                     $('.error-message').text(`${result.message}`);
-                    $('#exampleModal').modal('hide');
+                    $('#addAwardModal').modal('hide');
                     $('#select2-e6-container').text('');
                 } else {
                     console.log(result);
-                    toastr.success('Skills Successfully Added', 'Success!');
-                    $('#exampleModal').modal('hide');
-                    $('#skills-container').prepend(`
-                    <li data-id="${result.id}">
-                        <h5 class="font-weight-bold">${result.data}</h5>
-                    </li>
+                    toastr.success('Award Successfully Added', 'Success!');
+                    $('#addAwardModal').modal('hide');
+                    $('#awards-container').prepend(`
+					<li data-id="${result.data.id}">
+						<h5 class="font-weight-bold">${result.data.award_name}</h5>
+						<h6 class="text-muted">${result.data.year_taken}</h6>
+					</li>
                 `);
-                    $('#skills-container-edit').prepend(`
+                    $('#awards-container-edit').prepend(`
                     <li class="d-flex justify-content-between align-items-center mb-3" data-id="${result.id}">
                         <h5 class="font-weight-bold">${result.data}</h5>
                         <button type="button" class="btn btn-danger btn-delete-skill"  aria-haspopup="true" aria-expanded="false">
@@ -95,6 +158,7 @@ $(document).ready(function () {
             }
         });
     });
+
     $(document).on("click", ".btn-delete-skill", function () {
         var id = $(this).parent().data('id');
         $.ajax({
@@ -115,6 +179,30 @@ $(document).ready(function () {
             }
         });
     });
+
+	$(document).on("click", ".btn-delete-award", function () {
+        var id = $(this).parent().data('id');
+        $.ajax({
+            url: "/settings/award/delete/" + id,
+            dataType: 'json',
+            type: 'post',
+            success: function (data) {
+                if (data.success) {
+                    toastr.warning('Award Successfully remove');
+					$('#awards-container > li[data-id="' + id + '"]').remove();
+					$('#awards-container-edit > li[data-id="' + id + '"]').remove();
+                } else {
+                    alert('Failed');
+                }
+
+            },
+            error: function () {
+
+            }
+        });
+    });
+
+
     $(document).on("click", ".cancel-edit-expertise", function () {
         $(this).html('Edit');
         $(this).removeClass('cancel-edit-expertise');
@@ -154,18 +242,38 @@ $(document).ready(function () {
             data: data,
             url: '/settings/account/public-basic/' + id,
             success: function (result) {
-                toastr.success("You have successfully updated you basic information", "Success!!");
+				if(result.success){
+					toastr.success("You have successfully updated you basic information", "Success!!");
 
 
-                $('#public-title').html(`${data[0].value}`);
-                $('#public-overview').html(`${data[2].value}`);
-                $('#public-service').html(`${data[3].value}`);
-                var multikeywords = $('#keywords').val();
-                var splitmulti = multikeywords.split(",");
-                $('.public-keywords').remove();
-                $.each(splitmulti, function (index, field) {
-                    $('#public-keywords-div').append(`<span class="public-keywords badge badge-secondary badge-pill mx-1 px-3 py-2 mb-1">` + field + `</span>`);
-                });
+					$('#public-title').html(result.data.title);
+					$('#public-overview').html(result.data.overview);
+					$('#public-service').html(result.data.service_description);
+
+					$("#work-type").val('').trigger('change');
+					$(".tst").empty();
+					$("#public-keywords-div").empty();
+
+					for(var i=0; i<result.data.work_types.length ; i++){
+						if(result.data.work_types[i].isUserWork == 1){
+							$(".tst").append(`<span class="public-keywords ml-1">${result.data.work_types[i].text}</span>`);
+							var newOption = new Option(result.data.work_types[i].text, result.data.work_types[i].id, true, true);
+							$('#work-type').append(newOption).trigger('change');
+						}
+
+					}
+
+					var splitmulti = result.data.keywords.split(",");
+					$.each(splitmulti, function (index, field) {
+						$('#public-keywords-div').append(`<span class="public-keywords badge badge-secondary badge-pill mx-1 px-3 py-2 mb-1">` + field + `</span>`);
+					});
+
+					var target = $('.cancel-edit').attr('data-target');
+					$('.cancel-edit').html('Edit');
+					$('.cancel-edit').removeClass('cancel-edit');
+					$(target).addClass('d-none');
+					$(target + '-hide').removeClass('d-none');
+				}
             }
         });
     });

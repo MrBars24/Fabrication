@@ -8,13 +8,13 @@ class Home extends MX_Controller {
 		$this->template->set_template("default");
 		$this->load->model("user_model");
 
-		$css = array(
-			"/assets/plugins/bootstrap/css/bootstrap.min.css",
-			"/assets/default/css/style.css",
-			"/assets/default/css/colors/blue.css",
-		);
-
-		$this->template->set_additional_css($css);
+		// $css = array(
+		// 	"/assets/plugins/bootstrap/css/bootstrap.min.css",
+		// 	"/assets/default/css/style.css",
+		// 	"/assets/default/css/colors/blue.css",
+		// );
+		//
+		// $this->template->set_additional_css($css);
 	}
 
 	public function index()
@@ -24,7 +24,8 @@ class Home extends MX_Controller {
 		);
 		$js = array(
 			"/assets/default/custom/js/home.js",
-			"/assets/admin/custom/js/bars-datatable.js"
+			"/assets/admin/custom/js/bars-datatable.js",
+			"/assets/admin/custom/js/bs-modal-loader.js",
         );
 		$this->template->append_css($css);
 		$this->template->append_js($js);
@@ -32,7 +33,12 @@ class Home extends MX_Controller {
 		if(isset($_SESSION['fabricators'])){
 			unset($_SESSION['fabricators']);
 		}
+		if(isset($_SESSION['url_redirect'])){
+			$this->session->unset_userdata('url_redirect');
+		}
 		$this->load->model('Industry_model');
+		$this->load->model('portfolio_model');
+		$this->load->model('review_model');
 		$this->load->model('admin/Dashboard_model');
 
 		// Get Industries / Categories
@@ -41,13 +47,48 @@ class Home extends MX_Controller {
 		$industries = $this->Industry_model->getIndustries();
 		// Get Summary
 		$summary = $this->Dashboard_model->getDashboardSummary();
+		// Get Last  3 Acitve members
+		$client = $this->user_model->getLatestActive();
 
+		$clients = array_map(function($e){
+			$e->portpolio_count = $this->portfolio_model->portpolioCount($e->id);
+			$review = $this->review_model->getReview($e->id);
+			$e->star = star_review($review);
+			return $e;
+		}, $client);
 		$this->template->load_sub('top_industries', $top_industries);
+		$this->template->load_sub('top_members', $clients);
 		$this->template->load_sub('industries', $industries);
 		$this->template->load_sub('summary', $summary);
+
 		$this->template->load("home");
 	}
-
+	public function memberVerification(){
+		// dd($_SESSION);
+		if(isset($_SESSION['email']) && isset($_SESSION['id'])){
+			$this->load->library('encryption');
+			$msg = $this->load->view('email_templates/reg_confirmation',NULL,TRUE);
+			$subject = 'EFAB EMAIL CONFIRMATION';
+			$id = $_SESSION['id'];
+			$email = $_SESSION['email'];
+			$text = $id.':'.$email;
+			$ciphertext = $this->encryption->encrypt($text);
+			$url = base_url() . 'email/confirmation?q=' . rawurlencode($ciphertext);
+			$msg = str_replace("[link]", $url, $msg );
+			$res = send_mail($subject,$email,$msg);
+			if($res){
+				session_destroy();
+				redirect('register/verify');
+			}else{
+				redirect('404_override');
+			}
+		}else{
+			redirect('404_override');
+		}
+	}
+	public function memberVerify(){
+		$this->template->load("register_activition");
+	}
 	public function indexFabricators(){
 		$css = array(
 			"/assets/default/css/custom/global.css",
@@ -58,12 +99,12 @@ class Home extends MX_Controller {
 		$this->template->load("home_fabricators");
 	}
 	public function login(){
-		//$this->template->set_template("default","login");
 		$js = array(
 
 		);
 		$this->template->append_js($js);
 		$this->load->helper('form');
+		$this->template->load_sub('bodyClass', 'login-dedicated');
 		$this->template->load("login");
 	}
 	public function register(){
@@ -199,13 +240,23 @@ class Home extends MX_Controller {
 						exit;
 					}
 					else{
-						$this->user_model->setLoginStamp($user->id);
-						$this->session->set_userdata(array("user"=>$user, 'dashboard'=>'work'));
-						return json(array(
-							"success" => 200,
-							"data" => $user
-						));
-						exit;
+						$activate = $this->User_model->checkActivate($user->email);
+
+						if($activate){
+							$this->user_model->setLoginStamp($user->id);
+							$this->session->set_userdata(array("user"=>$user, 'dashboard'=>'work'));
+							return json(array(
+								"success" => 200,
+								"data" => $user
+							), 200);
+							exit;
+						}else{
+							return json(array(
+								"success" => false,
+								"error" => array(array("name" => "activate"))
+							), 401);
+							exit;
+						}
 					}
 				}
 		}
@@ -230,10 +281,21 @@ class Home extends MX_Controller {
 	function submitMember(){
 		header("Content-Type:application/json");
 		$this->load->model('User_model');
-		$this->load->library('encryption'); 
-		
-		$this->form_validation->set_rules('username', 'username', 'required|min_length[8]');
-		$this->form_validation->set_rules('pwd', 'password', 'required|min_length[8]');
+		$this->load->library('encryption');
+		$this->form_validation->set_rules('firstname', 'Firstname', 'required');
+		$this->form_validation->set_rules('lastname', 'Lastname', 'required');
+		$this->form_validation->set_rules('username', 'Username', 'required|min_length[8]|is_unique[users.username]', array(
+			'required'      => 'You have not provided %s.',
+		    'is_unique'     => 'User is already taken.'
+		));
+		$this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]', array(
+		    'is_unique'     => 'Email is already taken.',
+		));
+		$this->form_validation->set_rules('pwd', 'Password', 'required|min_length[8]');
+		$this->form_validation->set_rules('terms', 'Terms and Conditions', 'required', array(
+			'required' => 'You must agree to our Terms and Conditions'
+		));
+		$this->form_validation->set_rules('rpwd', 'Password Confirmation', 'required|matches[pwd]');
 
 		if($this->form_validation->run() == FALSE){
 			$errors = $this->form_validation->error_array();
@@ -248,10 +310,12 @@ class Home extends MX_Controller {
 			$package = $this->package_model->getDefault();
 			$firstname = $this->input->post("firstname");
 			$lastname = $this->input->post("lastname");
+
 			$dataSubmitMember = array(
 				"account_type" => $package->id,
 				"fullname" => "$firstname" . " " . "$lastname",
 			);
+
 			$id = $this->user_model->submitMember($dataSubmitMember);
 
 			if($id){
@@ -270,25 +334,22 @@ class Home extends MX_Controller {
 					$row = $this->User_model->getUserInfo($id);
 					$row->user_details = $this->User_model->getMemberInfo($id);
 
-					$this->session->set_userdata(array('user' => $row));
+					//$this->session->set_userdata(array('user' => $row));
+					$sendEmail = array();
+					$sendEmail['email'] = $this->input->post('email');
+					$sendEmail['id'] = $id;
+					$sendEmail['fullname'] = "$firstname" . " " . "$lastname";
 
-					$email = $this->input->post("email"); 
-			        $msg = $this->load->view('email_templates/reg_confirmation',NULL,TRUE); 
-			        $subject = 'EFAB EMAIL CONFIRMATION'; 
-			 
-			        $txt = $id.':'.$this->input->post("email"); 
-			        $ciphertext = $this->encryption->encrypt($txt); 
-			        $url = base_url() . 'email/confirmation?q=' . $ciphertext; 
-			        $msg = str_replace("[link]", $url, $msg); 
-			        send_mail($subject,$email,$msg); 
+					$this->session->set_userdata($sendEmail);
+					//echo $email;
 
+					//var_dump($res);
 					echo json_encode(array(
 						"success" => TRUE
 					));
 					exit;
 				}
 			}
-
 			echo json_encode(array(
 				"success" => FALSE
 			));
@@ -407,6 +468,99 @@ class Home extends MX_Controller {
 			}
 		}
 	}
+
+	function forgot(){
+		$this->template->append_js(array(
+			"/assets/default/custom/js/forgot.js"
+		));
+		$this->template->load("forgot-password");
+	}
+
+	function forgotActivate(){
+		//$this->load->library('encryption');
+		$this->template->append_js(array(
+			"/assets/default/custom/js/forgot.js"
+		));
+
+		if(!isset($_GET['q'])){
+			redirect('404_override');
+		}
+
+		//$q = $_GET['q'];
+		//echo $this->encryption->decrypt($q);
+		//list($id,$email) = explode(':',$this->encryption->decrypt($q));
+		//echo $email;
+		//exit;
+		$this->template->load("reset-password");
+	}
+
+	function forgotSend(){
+		$this->load->library('encryption');
+		$email = $this->input->post('email');
+		$exist = $this->user_model->getUser($email);
+
+		if(!empty($exist)){
+			$template = $this->load->view('email_templates/reset_pass',NULL,TRUE);
+
+			$txt = $exist->id.':'.$this->input->post("email");
+
+			$ciphertext = $this->encryption->encrypt($txt);
+
+
+			$url = base_url() . 'forgot-password/activate?q=' . $ciphertext;
+			$template = str_replace("[link]",$url,$template);
+			send_mail("RESET PASSWORD",$email,$template);
+
+			$this->user_model->addResetToken($exist->id,$ciphertext);
+
+			json(array(
+				"success" => TRUE
+			));
+		}else{
+			json(array(
+				"success" => FALSE
+			));
+		}
+	}
+
+	function forgotConfirm(){
+		$this->load->library('encryption');
+		$q = $_POST['q'];
+		//echo $q;
+		$temp = $this->encryption->decrypt($q);
+		list($id,$email) = explode(':',$temp);
+		$count = $this->user_model->resetPassword($id,$q);
+		if($count >= 1){
+			json(array(
+				"success" => TRUE
+			));
+		}else{
+			json(array(
+				"success" => FALSE
+			));
+		}
+	}
+
+	function confirmation(){
+		if(!isset($_GET['q'])){
+		  exit;
+		}
+		$cred = rawurldecode($_GET['q']);
+		$this->load->library('encryption');
+		$tmp = $this->encryption->decrypt($cred);
+
+		list($id,$email) = explode(":", $tmp);
+
+		$update = $this->user_model->setActive($id,$email);
+		if($update){
+		  $info = $this->user_model->checkLoginConfirmation($id,$email);
+		  $this->user_model->setLoginStamp($info->id);
+		  $this->session->set_userdata(array("user"=>$info, 'dashboard'=>'work'));
+		  // echo $info->url_redirect;
+		  session_destroy();
+		  redirect('/login-register');
+		}
+	  }
 
 
 }

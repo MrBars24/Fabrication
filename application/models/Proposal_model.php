@@ -9,8 +9,9 @@ class Proposal_model extends MX_Model{
 
     function submitProposal($data){
         $query = $this->db->insert('bids', $data);
-        return $query;
+        return $this->db->insert_id();
     }
+
     function getAttachment($id){
         $query = $this->db->select('*')
                  ->where('is_deleted', 0)
@@ -37,12 +38,12 @@ class Proposal_model extends MX_Model{
     }
 
     public function getBidsByJobId($job_id){
-        $query = $this->db->select('bids.*, member.fullname, member.avatar_thumbnail')
+        $query = $this->db->select('bids.*, member.fullname, member.avatar_thumbnail, member.avatar')
             ->join('bids', 'bids.expert_id = member.id')
-            ->where('bids.is_deleted', 0)
+            ->where('bids.declined_at IS null', null, false)
             ->where('bids.job_id', $job_id)
+            ->where('bids.is_deleted', 0)
             ->get('member');
-
         if ($query->num_rows() < 1) {
             return array();
         }
@@ -55,15 +56,21 @@ class Proposal_model extends MX_Model{
          $search = "";
          if(isset(auth()->id)){
          $search_sql = array(
+                 'bids.declined_at ' => null,
                  'bids.is_deleted' => 0,
                  'bids.job_id' => $job_id
              );
-
+         }else{
+             $search_sql = array(
+                     'bids.declined_at ' => null,
+                     'bids.is_deleted' => 0
+                 );
+         }
          $q = $this->getIndexDataCount("member",$limit,$offset,'bids.created_at','DESC', $search_sql, '', 'bids', "bids.expert_id = member.id", '', 'bids.*, member.fullname, member.avatar');
 
          return $q;
     }
-}
+
     public function getBidsByIdsort($job_id, $id2){
         $limit = 5;
          $offset = 0;
@@ -86,6 +93,10 @@ class Proposal_model extends MX_Model{
          $search_sql = array(
                  'bids.is_deleted' => 0,
                  'bids.job_id' => $job_id
+             );
+         }else{
+             $search_sql = array(
+                  'bids.is_deleted' => 0,
              );
          }
          $q = $this->getIndexDataCount("member",$limit,$offset,$orderby,$sort, $search_sql, '', 'bids', "bids.expert_id = member.id", '', 'bids.*, member.fullname, member.avatar');
@@ -128,6 +139,7 @@ class Proposal_model extends MX_Model{
     public function updateBid($job_id, $id, $data){
         $query = $this->db->where('job_id', $job_id)
                  ->where('expert_id', $id)
+                 ->set('declined_at', null)
                  ->update('bids', $data);
         if($query){
             $query1 = $this->db->select('id')
@@ -146,7 +158,14 @@ class Proposal_model extends MX_Model{
     }
 
     public function cancelBid($id, $data){
+        $this->db->set("membership_hash","NULL",false);
         $query = $this->db->where('id', $id)
+                 ->update('bids', $data);
+        return $query;
+    }
+
+    public function declineBid($job_id, $data) {
+        $query = $this->db->where('id', $job_id)
                  ->update('bids', $data);
         return $query;
     }
@@ -154,9 +173,12 @@ class Proposal_model extends MX_Model{
     public function activeBids(){
         $q = $this->db->select("*")
             ->from('bids')
-            ->join('jobs','bids.job_id=jobs.id')
-            ->where('expert_id',auth()->user_id)
-            ->order_by('created_at','DESC')
+            ->join('jobs','jobs.id = bids.job_id')
+            ->where('bids.expert_id', auth()->user_id)
+            ->where('bids.is_deleted', 0)
+            ->where('bids.accepted_at', NULL)
+            ->where('bids.declined_at', NULL)
+            ->order_by('bids.created_at','DESC')
             ->get();
 
         if($q->num_rows() > 0){

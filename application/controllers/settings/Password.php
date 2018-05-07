@@ -30,27 +30,25 @@ class Password extends MX_Controller {
 		$confirm = $this->input->post('cpwd');
 		$newpass = $this->input->post('npwd');
 
-		if($pwd != $confirm){
+		if($newpass != $confirm){
 			json(array(
 				'status'=>FALSE,
 				'message' => 'Password and password confirmation does not match'
-			),400);
-
-			exit;
-		}
-
-		$res = $this->user_model->changePassword();
-		if($res){
-			json(array(
-				'status'=>TRUE,
-				'message' => 'Password successfully been changed'
-			));
-		}else{
-			json(array(
-				'status'=>TRUE,
-				'message' => 'Password failed to be changed'
-			));
-		}
+                ),400);
+        }else {
+            $res = $this->user_model->changePassword();
+            if ($res) {
+                json(array(
+                    'status' => TRUE,
+                    'message' => 'Password successfully been changed'
+                ));
+            } else {
+                json(array(
+                    'status' => FALSE,
+                    'message' => 'Password failed to be changed'
+                ));
+            }
+        }
 
 	}
 

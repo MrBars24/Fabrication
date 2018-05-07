@@ -20,9 +20,10 @@ class Review_model extends MX_Model{
             return array();
         }
     }
-    function myGetReview($id){
+    function myGetReview($id, $review_id){
         $query = $this->db->select('*')
                  ->where('user_id', $id)
+                 ->where('review_id',$review_id)
                  ->where('is_deleted', 0)
                  ->get('reviews');
         if($query->num_rows() > 0){

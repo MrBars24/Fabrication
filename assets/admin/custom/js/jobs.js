@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	var index = null;
 
-	$('#psdate,#pedate,#bsdate,#bedate').bootstrapMaterialDatePicker({ format : 'YYYY-MM-DD', time:false });
+	$('#psdate,#pedate,#bsdate,#bedate').bootstrapMaterialDatePicker({ format : 'YYYY-MM-DD', time:false, minDate : new Date() });
 
 	var table = $(".job-container").initTable({
 		url:"/admin/job/list",
@@ -24,6 +24,13 @@ $(document).ready(function(){
 			});
 
 			return container;
+		},
+		onBeforeRequest : function(){
+			var loader = call_loader();
+			$('.card').append(loader);
+		},
+		onSuccessRequest : function(){
+			$('.loader-container').remove();
 		}
 	});
 

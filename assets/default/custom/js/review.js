@@ -5,11 +5,11 @@ $(document).ready(function(){
             url: '/reviews/'+ $('#review-comment').data('id'),
             pageContainer: ".pagination-review-comment",
             render: function(data) {
-                
+
                 var container = ``;
                 if (data.length > 0) {
                     data.forEach(function(obj, index) {
-                        var avatar = (obj.user_details.avatar_thumbnail == '') ? "../assets/images/icon_profile.jpg" : obj.user_details.avatar_thumbnail;
+                        var avatar = (obj.user_details.avatar_thumbnail == '' || obj.user_details.avatar_thumbnail == null || obj.user_details.avatar_thumbnail == undefined) ? "/assets/images/icon_profile.jpg" : obj.user_details.avatar_thumbnail;
                         var ratings = (obj.rating > 0) ? obj.rating : 0;
                         var totalstar = 5 - +ratings;
                         var star = [];

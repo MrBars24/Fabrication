@@ -6,27 +6,100 @@ class Job_model extends MX_Model{
         parent::__construct();
         $this->load->database();
     }
+    function createSkills($skills){
+		$data = array('title'=>$skills);
+		$query = $this->db->insert('skills',$data);
+		if(!$this->db->insert_id()){
+			$error = $this->db->error();
+			$error['success'] = FALSE;
+			echo json_encode($error);
+			exit;
+		}
+		return $this->db->insert_id();
+    }
+    // /*Create Skillss for jobs*/
 
+    function removedSkills($id){
+        $query = $this->db->where('job_id', $id)
+                          ->delete('jobs_expertise');
+        return $query;
+    }
+    function removedMaterial($id){
+        $query = $this->db->where('job_id', $id)
+                         ->delete('jobs_materials');
+        return $query;
+    }
+	 function createSkillsJob(){
+		$expertise = array_unique($this->input->post('expertise'));
+        if($expertise){
+            $expertise = array_map(function($ex) {
+                $skill = json_decode($ex);
+                    if($skill->isNew):
+                        $skill_id = $this->createSkills($skill->keystring);
+                        $skill->new_id = $skill_id;
+                    else:
+                        $skill->new_id = $skill->keystring;
+                    endif;
+                return $skill;
+            }, array_unique($expertise));
+            return $expertise;
+        }
+	}
 
+    function createSkillsToJob($id, $job_id){
 
+        foreach($id as $skill_id):
+
+            $data = array(
+                'job_id' => $job_id,
+                'skill_id' => $skill_id->new_id
+            );
+            $this->db->insert('jobs_expertise', $data);
+        endforeach;
+        return TRUE;
+    }
     function createJob($data){
-
         $query = $this->db->insert('jobs', $data);
         $id = $this->db->insert_id();
         return $id;
     }
+    function createMaterial($job_id, $materials){
+
+        if($materials){
+            foreach($materials as $material){
+                $data = array(
+                    'job_id' => $job_id,
+                    'material_id' => $material
+                );
+                $this->db->insert('jobs_materials', $data);
+            }
+        }
+        return TRUE;
+    }
 
     function UpdateJob($id, $data){
+		$this->db->set('bidding_expire_at','NOW()',false);
         $query = $this->db->where('id', $id)
             ->update('jobs', $data);
         return $query;
     }
+	function closeBid($id, $data){
+		$this->db->set("bidding_expire_at","NOW()",false);
+		$query = $this->db->where('id', $id)
+		->update('jobs', $data);
+
+		if($query){
+			return $this->db->where('id',$id)->get('jobs')->row()->bidding_expire_at;
+		}
+
+		return FALSE;
+	}
     function createAttached($files, $attachable_id){
         for($i=0; $i<count($files['name']); $i++){
             $data = array(
                 'filename' => $files['name'][$i],
                 'path' => $files[$i]['file'],
-                'user_id' => $_SESSION['user']->id,
+                'user_id' => auth()->id,
                 'attachable_type' => "job",
                 'job_id' => $attachable_id
             );
@@ -50,7 +123,6 @@ class Job_model extends MX_Model{
      */
 
     function allWatch(){
-
         $limit = 0;
         $offset = 0;
         $search = "";
@@ -68,29 +140,41 @@ class Job_model extends MX_Model{
         }
 
         $where = array(
-            "expert_watchlist" => auth()->id
+            "watchlists.expert_id" => auth()->id
         );
 
-        $q = $this->getIndexDataCount("job_details",$limit,$offset,'created_at','DESC',$where);
-        $q['draw'] = (int)$offset;
+        $q = $this->getIndexDataCount("job_details",$limit,$offset,'watchlists.created_at','DESC',$where,
+		'',
+		'watchlists',
+		'job_details.id = watchlists.job_id',
+		'INNER',
+		'*,watchlists.expert_id AS expert_watchlist');
+        //$q['draw'] = (int)$offset;
         return $q;
     }
+
+    function finishJob($id){
+        $data = array(
+            'finished_at' => date("Y-m-d h:i:sa"),
+            'status' => 'finished'
+        );
+        $query = $this->db->where('id', $id)
+                 ->update('jobs', $data);
+        return $query;
+    }
+	
+	function clean($string) {
+	   $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
+
+	   return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
+	}
 
     function all(){
          $limit = 0;
          $offset = 0;
          $search = "";
 
-         if(isset(auth()->id)){
-             $search_sql = array(
-                 'fabricator_id !=' => auth()->id,
-                 'is_deleted' => 0
-             );
-         }else{
-            $search_sql = array(
-                'is_deleted' => 0
-            );
-         }
+         $search_sql = array('is_deleted' => 0);
          if(isset($_GET['limit'])){
              $limit = $_GET['limit'];
          }
@@ -101,6 +185,7 @@ class Job_model extends MX_Model{
 
         if(isset($_GET['search']['string'])){
             $search = $_GET['search']['string'];
+			$search = $this->clean($search);
             $search_sql['title LIKE'] = "%$search%";
         }
 
@@ -116,7 +201,7 @@ class Job_model extends MX_Model{
                 list($min,$max) = explode("-", $_GET['search']['budget']);
 
                 $search = $_GET['search']['budget'];
-                $this->rawWhere("(budget_min >= $min AND budget_min <= $max) OR (budget_max >= $min AND budget_max <= $max)");
+                $this->rawWhere("((budget_min >= $min AND budget_min <= $max) OR (budget_max >= $min AND budget_max <= $max))");
             }
         }
 
@@ -128,6 +213,13 @@ class Job_model extends MX_Model{
         }
 
          @$id = auth()->id;
+
+		 if(isset(auth()->id)){
+			$selection = "*,isWatchlist(id,$id) as is_watchlist";
+		 }else{
+			$selection = "*";
+		 }
+
          $q = $this->getIndexDataCount("job_details",
                 $limit,
                 $offset,
@@ -137,16 +229,25 @@ class Job_model extends MX_Model{
                 '',
                 '',
                 '',
-                '',"*,IF(expert_watchlist = '$id',1,0) as is_watchlist");
+                '',$selection);
          //$q = $this->getIndexDataCount("jobs",$limit,$offset,'created_at','DESC',);
-         $q['draw'] = (int)$offset;
+         //$q['draw'] = (int)$offset;
          return $q;
     }
 
 
     function myAllJobs(){
-         $limit = 5;
+		$limit = 0;
          $offset = 0;
+		
+         if(isset($_GET['limit'])){
+             $limit = $_GET['limit'];
+         }
+		 
+		 if(isset($_GET['page'])){
+             $offset = $_GET['page'];
+         }
+		 
          $search = "";
          if(isset(auth()->id)){
              $search_sql = array(
@@ -154,6 +255,13 @@ class Job_model extends MX_Model{
                  'is_deleted' => 0
              );
          }
+		 
+		 if(isset($_GET['search']['status'])){
+            $search = $_GET['search']['status'];
+			$search_sql['status'] = $search;
+        }
+		 
+		 
          $q = $this->getIndexDataCount("job_details",$limit,$offset,'created_at','DESC', $search_sql);
          return $q;
         //  if(isset($_GET['limit'])){
@@ -187,16 +295,19 @@ class Job_model extends MX_Model{
         if($isMe){
             $search_sql = array(
                 'fabricator_id' => $_SESSION['user']->id,
-                'is_deleted' => 0
+                'is_deleted' => 0,
+                'status' => "open"
             );
         }else{
             $search_sql = array(
                 'fabricator_id !=' => $_SESSION['user']->id,
-                'is_deleted' => 0
+                'is_deleted' => 0,
+                'status' => "open"
             );
         }
 
         $this->db->where($search_sql);
+		$this->db->order_by('created_at','DESC');
         $q = $this->db->get("job_details");
 
         if($q->num_rows() > 0){
@@ -263,18 +374,54 @@ class Job_model extends MX_Model{
     }
     function getJob($id){
         $user_id = auth()->id;
-        $query = $this->db->select("*,IF(expert_watchlist = '$user_id',1,0) as is_watchlist")
-        ->from('job_details')
-        ->where('id',$id)
-        ->where('is_deleted', 0)
-        ->get();
+		
+		if(empty($user_id)) redirect('/');
+		
+        $query = $this->db->select("*,isWatchlist($id,$user_id) as is_watchlist")
+				->from('job_details')
+				->where('id',$id)
+				->where('is_deleted', 0)
+				->get();
         if($query->num_rows() > 0){
-            return $query->row();
+
+			$row = $query->unbuffered_row();
+			$row->materials = $this->getJobMaterials($row->id);
+			$row->expertise = $this->getJobExpertise($row->id);
+
+            return $row;
         }
         else {
             return false;
         }
     }
+
+	function getJobMaterials($id){
+		$q = $this->db->select('a.id,a.material_name')
+			->from('materials_list a')
+			->join('jobs_materials b','a.id = b.material_id')
+			->where('b.job_id',$id)
+			->get();
+		if($q->num_rows() > 0){
+			return $q->result();
+		}
+
+		return [];
+	}
+
+	function getJobExpertise($id){
+		$q = $this->db->select('a.id,a.title')
+			->from('skills a')
+			->join('jobs_expertise b','a.id = b.skill_id')
+			->where('b.job_id',$id)
+			->get();
+
+		if($q->num_rows() > 0){
+			return $q->result();
+		}
+
+		return [];
+	}
+
     function getAllJobInfo($id){
         $query = $this->db->select('*')
                 ->from('job_details')
@@ -322,7 +469,7 @@ class Job_model extends MX_Model{
         $query = $this->db->select('jobs.*, bids.*, member.fullname, member.id')
                  ->from('jobs')
                  ->join('bids', 'jobs.id = bids.job_id')
-                 ->join('member','member.id = jobs.accepted_bid')
+                 ->join('member','member.id = jobs.fabricator_id')
                  ->where('bids.expert_id', $id)
                  ->where('bids.status', 1)
                  ->get();
@@ -331,11 +478,140 @@ class Job_model extends MX_Model{
         }
         return array();
     }
+
+    function jobsWonActive($user_id) {
+      $query = $this->db->select('jobs.*, bids.*, member.fullname, member.id')
+               ->from('jobs')
+               ->join('bids', 'jobs.id = bids.job_id')
+               ->join('member','member.id = jobs.accepted_bid')
+               ->where('bids.expert_id', $user_id)
+               ->where('bids.status', 1)
+               ->where('jobs.finished_at IS NULL', NULL, FALSE)
+               ->get();
+      if($query->num_rows() > 0){
+          return $query->result();
+      }
+      return array();
+    }
+    function getJobForBid($id){
+        $query = $this->db->select('*')
+                          ->where('id', $id)
+                          ->get('jobs');
+        if($query->num_rows() > 0){
+            return $query->row();
+        }else{
+            return array();
+        }
+    }
+    function jobsWonActivePaginate($user_id) {
+      $jobs_won_ids = array_map(function($e) {
+        return $e->job_id;
+      }, $this->jobsWonActive($user_id));
+
+      if (count($jobs_won_ids) == 0) {
+        return array('data' => array(), 'total' => 0);
+      }
+
+      $limit = 0;
+      $offset = 0;
+
+      if(isset($_GET['limit'])){
+          $limit = $_GET['limit'];
+      }
+      if(isset($_GET['page'])){
+          $offset = $_GET['page'];
+      }
+
+      $q = $this->getIndexDataCount("job_details",
+           $limit,
+           $offset,
+           'created_at',
+           'DESC',
+           'id IN ' .' (' . implode(',', $jobs_won_ids) .')',
+           '',
+           '',
+           '',
+           '',
+           '*');
+
+      return $q;
+    }
+
+    // Previous Jobs
+
+    public function previousJobs($user_id) {
+      $query = $this->db->select('bids.*')
+               ->from('jobs')
+               ->join('bids', 'jobs.id = bids.job_id')
+               ->join('member','member.id = jobs.accepted_bid')
+               ->where('bids.expert_id', $user_id)
+               ->where('bids.status', 1)
+               ->where('jobs.finished_at IS NOT NULL', NULL, FALSE)
+               ->order_by('bids.accepted_at', 'desc')
+               ->get();
+      if($query->num_rows() > 0){
+          return $query->result_array();
+      }
+      return array();
+    }
+
+    public function previousJobsPaginate($user_id) {
+      $previous_jobs = $this->previousJobs($user_id);
+
+      if (count($previous_jobs) == 0) {
+        return array('data' => array(), 'total' => 0);
+      }
+
+      $previous_jobs_id = array_column($previous_jobs, 'job_id');
+
+      $previous_jobs = array_map(function($e) {
+        $data = [];
+        $data['job_id'] = $e['job_id'];
+
+        $data['bid'] =$e;
+        return $data;
+      }, $previous_jobs);
+
+
+      $limit = 0;
+      $offset = 0;
+
+      if(isset($_GET['limit'])){
+          $limit = $_GET['limit'];
+      }
+      if(isset($_GET['page'])){
+          $offset = $_GET['page'];
+      }
+
+      $jobs_paginated = $this->getIndexDataCount("job_details",
+           $limit,
+           $offset,
+           'created_at',
+           'DESC',
+           'id IN ' .' (' . implode(',', $previous_jobs_id) .')',
+           '',
+           '',
+           '',
+           '',
+           '*');
+
+      $jobs_paginated['data'] = array_map(function($e) use ( &$previous_jobs) {
+          foreach($previous_jobs as $job) {
+            if($e->id == $job['job_id']) {
+              $e->bid_info = $job['bid'];
+              break;
+            }
+          }
+          return $e;
+      }, $jobs_paginated['data']);
+      return $jobs_paginated;
+    }
+
+
     function getJobAvailable($id){
         $query = $this->db->select('jobs.title, jobs.id')
                  ->where('fabricator_id', $id)
                  ->where('status', "open")
-                 ->where('is_deleted', 0)
                  ->get('jobs');
         if($query->num_rows() > 0){
             return $query->result();

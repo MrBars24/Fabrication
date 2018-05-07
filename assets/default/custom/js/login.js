@@ -66,7 +66,8 @@ $(document).ready(function() {
             error: function(requestObject, error, errorThrown) {
                 //console.log(requestObject);
                 if (requestObject.status == 401) {
-                    $.each(requestObject.responseJSON.error, function(index, error) {
+                    var req = JSON.parse(requestObject.responseText);
+                    $.each(req.responseJSON.error, function(index, error) {
                         if (error.name == "username") {
                             var target = $("#form-login input[name=" + error.name + "]").data('target-error-text');
                             $(target).parent().parent().removeAttr('hidden');
@@ -90,6 +91,10 @@ $(document).ready(function() {
         e.preventDefault();
         var url = $(this).attr('action');
         var data = $(this).serializeArray();
+        var $form = $(this);
+
+        var $alert = $form.find('.alert-login-message');
+        $alert.html('');
         $.ajax({
             type: 'post',
             url: url,
@@ -97,13 +102,15 @@ $(document).ready(function() {
             dataType: 'json',
             success: function(result) {
                 if (result.success == 200) {
-                    window.location.href = result.data.url_redirect;
+                  // Put the logged user info on local storage
+                  localStorage.setItem('auth_user', JSON.stringify(result.data.user_details));
+                  window.location.href = result.data.url_redirect;
                 }
             },
             error: function(requestObject, error, errorThrown) {
-                //console.log(requestObject);
                 if (requestObject.status == 401) {
-                    $.each(requestObject.responseJSON.error, function(index, error) {
+                    var req = JSON.parse(requestObject.responseText);
+                    $.each(req.error, function(index, error) {
                         if (error.name == "username") {
                             var target = $("#form-login input[name=" + error.name + "]").data('target-error-text');
                             $(target).parent().parent().removeAttr('hidden');
@@ -116,7 +123,19 @@ $(document).ready(function() {
                             $(target).html(error.message);
                             $('#username-error').parent().parent().parent().parent().removeClass('error');
                             $('#username-error').parent().parent().attr('hidden', '');
-                        } else {}
+                        } else if(error.name == "activate"){
+                            $alert.html(`
+                                <div class="col-10 offset-1">
+                                <div class="alert alert-danger fade in alert-dismissible show">
+                                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true" style="font-size:20px">×</span>
+                                  </button>
+                                  <h4>Oops!</h4>
+                                  <p>You need to verify your account first!</p>
+                                </div>
+                            </div>`);
+                        }
+                        else {}
                     });
                 }
             }
@@ -136,17 +155,22 @@ var startApp = function() {
             // Request scopes in addition to 'profile' and 'email'
             //scope: 'additional_scope'
         });
-        attachSignin(document.querySelectorAll('.btn-googleplus'));
+
+		if(document.querySelectorAll('.btn-googleplus').length > 0){
+			attachSignin(document.querySelectorAll('.btn-googleplus'));
+		}
     });
 };
 
 function attachSignin(element) {
     //console.log(element);
-    for (e in element) {
-        auth2.attachClickHandler(element[e], {},
-            onSignIn,
-            onSignCancel);
-    }
+	if(element.length > 0){
+		for (e in element) {
+			auth2.attachClickHandler(element[e], {},
+				onSignIn,
+				onSignCancel);
+		}
+	}
 }
 
 function onSignIn(googleUser) {
@@ -191,7 +215,8 @@ function google_auth(res) {
         error: function(requestObject, error, errorThrown) {
             //console.log(requestObject);
             if (requestObject.status == 401) {
-                $.each(requestObject.responseJSON.error, function(index, error) {
+                var req = JSON.parse(requestObject.responseText);
+                $.each(req.responseJSON.error, function(index, error) {
                     if (error.name == "username") {
                         var target = $("#form-login input[name=" + error.name + "]").data('target-error-text');
                         $(target).parent().parent().removeAttr('hidden');

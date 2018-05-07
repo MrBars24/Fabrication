@@ -30,7 +30,28 @@ class Portfolio_model extends MX_Model{
         return $q;
     }
 
+    function getMyPortpolio(){
+        $limit = 0;
+        $offset = 0;
+        if(isset($_GET['limit'])){
+            $limit = $_GET['limit'];
+        }
 
+        if(isset($_GET['page'])){
+            $offset = $_GET['page'];
+        }
+
+        $where = array("portfolios.is_deleted"=>0,"user_id" => auth()->id);
+        //$q = $this->getIndexDataCount("portfolios",$limit,$offset,'created_at','DESC',$where);
+        $q = $this->getIndexDataCount("project_category as pc",$limit,$offset,'portfolios.created_at','DESC', $where,'', 'portfolios', 'pc.id = portfolios.category','','pc.id as pid,pc.display_name,portfolios.*');
+
+        for($i=0; $i < count($q['data']); $i++){
+            $q['data'][$i]->attachments = $this->getAttachment($q['data'][$i]->id);
+        }
+
+
+        return $q;
+    }
 
     function all2(){
         $limit = 0;
@@ -120,6 +141,16 @@ class Portfolio_model extends MX_Model{
             $portpolio->attachments = "";
             $portpolio->attachments = $this->getAttachment($portpolio->id);
             return $portpolio;
+        }else{
+            return array();
+        }
+    }
+    function portpolioCount($id){
+        $this->db->select('count(*) as portfolio_count');
+        $this->db->where('user_id', $id);
+        $query = $this->db->get('portfolios');
+        if($query->num_rows() > 0){
+            return $query->row()->portfolio_count;
         }else{
             return array();
         }

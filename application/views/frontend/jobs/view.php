@@ -1,3 +1,4 @@
+
 <div class="container">
     <div class="row page-titles">
         <div class="col-md-5 align-self-center">
@@ -25,9 +26,6 @@
             <small class="text-muted">Posted <?=date_new_format($jobdata->created_at)?></small>
         </div>
     </div>
-    <!-- <pre>
-        <?php var_dump($jobdata) ?>
-    </pre> -->
     <div class="row mt-2">
         <div class="col-sm-8">
             <div class="card">
@@ -76,8 +74,36 @@
                         </div>
                         <div class="col">
                             <ul class="p-0 list-style-type-none">
-                                <li class="">Discipline: <span class="font-weight-bold">Structural</span></li>
-                                <li class="">Materials: <span class="font-weight-bold">Steel, Wood, Concrete</span></li>
+                                <li class="">Discipline:
+									<span class="font-weight-bold">
+										<?php
+											if(count($jobdata->expertise) != 0){
+											$skills = array();
+											foreach($jobdata->expertise AS $skill):
+												$skills[] = $skill->title;
+											endforeach;
+											echo implode(", ", $skills);
+											}else{
+												echo "any";
+											}
+										?>
+									</span>
+								</li>
+                                <li class="">Materials:
+									<span class="font-weight-bold">
+										<?php
+											if(count($jobdata->materials) != 0){
+											$materials = array();
+											foreach($jobdata->materials as $material):
+												$materials[] = $material->material_name;
+											endforeach;
+											echo implode(", ", $materials);
+											}else{
+												echo "any";
+											}
+										?>
+									</span>
+								</li>
                             </ul>
                         </div>
                     </div>
@@ -132,51 +158,66 @@
         <div class="col-sm-4">
 <!--            data-toggle="modal" data-target=".modal-bid-now"-->
             <!-- <a class="btn btn-success btn-lg btn-block" href="<?= base_url('jobs/proposal/'); ?><?= $fabricatordata->id ?>" target="_blank">Bid Now</a> -->
+
             <?php if($jobdata->fabricator_id == auth()->id): ?>
                 <a href="/jobs/posted/manage/<?=$jobdata->id?>" class="text-white btn btn-success btn-lg btn-block">Manage Job</a>
-                <?php if($jobdata->status == "close"): ?>
+            <?php else: ?>
+
+            <?php endif; ?>
+
+            <?php if($jobdata->status == "close"): ?>
                 <div class="card mt-4">
                     <div class="card-body">
-                        <h4 class="card-title mb-0">AWARDED TO:</h4>
+                        <h4 class="card-title mb-0">The job is no longer available</h4>
+                    </div>
+                </div>
+            <?php elseif($jobdata->status == "awarded"): ?>
+
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h4 class="card-title mb-0">AWARDED TO: <?= $awardedUser->fullname ?></h4>
                     </div>
                      <hr class="m-0">
                     <div class="comment-widgets mb-0 mt-3">
                         <div class="comment-text w-100 py-0">
-                            <div class="d-flex justify-content-between">
-                                <h4 class="font-weight-bold mb-0"><a href="#"><?= $awardedUser->fullname ?></a></h4>
+                            <div class="row">
+                                <div class="col-4">
+                                    <img src="<?= $awardedUser->avatar ?>" alt="" class="img-fluid rounded-circle">
+                                </div>
+                                <div class="col-8 pl-0">
+                                    <h3 class="text-truncate font-weight-bold mb-0"><?= $awardedUser->fullname ?></h3>
+                                    <!-- <small class="text-muted">Client Verified</small> -->
+                                </div>
                             </div>
                             <!-- <h6>Date Hired:  ?></h6> -->
-                            <div class="comment-footer">
+                            <!-- <div class="comment-footer">
                                 <span class="label label-info">Autocad 2010</span>
                                 <span class="label label-info">Autocad 2015</span>
-                            </div>
+                            </div> -->
                             <br>
-                            <h6>Rate: $ 33.5 /hr</h6>
-                            <h6>Work Hour: 140 hrs</h6>
-
+                            <!-- <h6>Rate: $ 33.5 /hr</h6>
+                            <h6>Work Hour: 140 hrs</h6> -->
                         </div>
                         <hr>
                     </div>
                 </div>
-                <?php endif; ?>
-            <?php else: ?>
-                <?php if($jobdata->status == "open"):
-                        $token = FALSE;
-                    ?>
+            <?php   elseif($jobdata->status == "open"):
+                        $token = FALSE; ?>
 
                     <?php foreach($bids as $bid): ?>
                         <?php $token = FALSE; ?>
                         <?php if($bid->expert_id == auth()->id): ?>
-                            <?php
-                                $token = TRUE;
-                                break;
-                             ?>
+                            <?php   $token = TRUE;
+                                    break; ?>
                         <?php endif; ?>
                     <?php endforeach; ?>
+
                     <?php if($token == FALSE): ?>
-                        <div class="card" id="card-bid-status">
-                            <a class="text-white btn btn-success btn-lg btn-block" data-toggle="modal" data-target=".modal-bid-now">Bid Now</a>
-                        </div>
+                        <?php if($jobdata->fabricator_id != auth()->id): ?>
+                            <div class="card" id="card-bid-status">
+                                <a class="text-white btn btn-success btn-lg btn-block" data-toggle="modal" data-target=".modal-bid-now">Bid Now</a>
+                            </div>
+                        <?php endif; ?>
                     <?php else: ?>
                         <div class="card" id="card-bid-status">
                             <div class="d-flex justify-content-center align-items-center card-body flex-column">
@@ -190,35 +231,6 @@
                             </div>
                         </div>
                     <?php endif; ?>
-                <?php else: ?>
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title mb-0">AWARDED TO:</h4>
-                        </div>
-                         <hr class="m-0">
-                        <div class="comment-widgets mb-0 mt-3">
-                            <div class="comment-text w-100 py-0">
-                                <div class="d-flex justify-content-between">
-                                    <h4 class="font-weight-bold mb-0"><a href="#"><?= $awardedUser->fullname ?></a></h4>
-
-                                    <span>
-                                        <a href="#" class="text-info mdi mdi-email"></a>
-                                    </span>
-                                </div>
-                                <!-- <h6>Date Hired:  ?></h6> -->
-                                <div class="comment-footer">
-                                    <span class="label label-info">Autocad 2010</span>
-                                    <span class="label label-info">Autocad 2015</span>
-                                </div>
-                                <br>
-                                <h6>Rate: $ 33.5 /hr</h6>
-                                <h6>Work Hour: 140 hrs</h6>
-
-                            </div>
-                            <hr>
-                        </div>
-                    </div>
-                <?php endif; ?>
             <?php endif; ?>
             <!-- Fabricator Snapshot -->
             <div class="card mt-4">
@@ -252,8 +264,9 @@
 
                         <small class="text-muted">Industry</small>
                         <div>
-                            <span class="badge badge-secondary py-2 px-3">Mining</span>
-                            <span class="badge badge-secondary py-2 px-4">Commercial</span>
+                            <?php foreach($fabricatordata->work_type as $industry): ?>
+                                <span class="badge badge-secondary py-2 px-3 mt-1"><?= $industry->category ?></span>
+                            <?php endforeach; ?>
                         </div>
 
                         <div class="d-flex flex-row justify-content-between mt-3">
@@ -261,10 +274,10 @@
                                 <small class="text-muted">Jobs Posted</small>
                                 <h4><?= @$fabricatordata->my_posts ?></h4>
                             </div>
-                            <div>
+                            <!-- <div>
                                 <small class="text-muted">Hire Rate</small>
                                 <h4>100%</h4>
-                            </div>
+                            </div> -->
                             <div>
                                 <small class="text-muted">Member Since</small>
                                 <h4><?= date_new_format($fabricatordata->created_at); ?></h4>
@@ -277,7 +290,6 @@
         </div>
     </div>
 </div>
-
 <!-- Modal -->
 <div class="modal fade modal-bid-now" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -288,12 +300,13 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             <div class="modal-body">
-                <input type="hidden" name="id" value="<?= $jobdata->id ?>" >
+                <input type="hidden" id="job_id" name="id" value="<?= $jobdata->id ?>" >
                 <h5 class="font-weight-bold">Bid</h5>
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <input type="text" name="budget" class="form-control form-control-lg" placeholder="Amount">
+                            <input type="number" name="budget" min="1" class="form-control form-control-lg budget_number" placeholder="Amount">
+                            <div class="help-block field-budget d-none"><ul role="alert"><li>Bid needs to be range on a client's budget<!-- data-validator-required-message to override --></li></ul></div>
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -317,46 +330,49 @@
     <!-- /.modal-dialog -->
 </div>
 
-<div class="modal fade modal-view-bid" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <?php foreach($bids as $bid): ?>
-            <?php if($bid->expert_id == auth()->id): ?>
-                <?= form_open("jobs/edit/proposal/$bid->id", array('id' => 'form-edit-proposal')); ?>
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 class="modal-title" id="myLargeModalLabel">Proposal</h3>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    </div>
-                    <div class="modal-body">
-                        <input type="hidden" name="id" value="<?= $jobdata->id ?>" >
-                        <h5 class="font-weight-bold">Bid</h5>
-                        <div class="row">
-                            <div class="col-sm-6">
+
+<div class="modal-bid-edit-container">
+    <?php foreach($bids as $bid): ?>
+        <?php if($bid->expert_id == auth()->id): ?>
+            <div class="modal fade modal-view-bid" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <?= form_open("jobs/edit/proposal/$bid->id", array('id' => 'form-edit-proposal')); ?>
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title" id="myLargeModalLabel">Proposal</h3>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="hidden" name="id" value="<?= $jobdata->id ?>" >
+                                <h5 class="font-weight-bold">Bid</h5>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <input type="number" name="budget"  min="1" class="form-control form-control-lg" placeholder="Amount" value="<?= $bid->amount ?>">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <small class="text-muted">Client's Budget</small>
+                                        <h4 class="font-weight-bold text-success m-0">$<?= $jobdata->budget_min ?> - $<?= $jobdata->budget_max ?></h4>
+                                    </div>
+                                </div>
                                 <div class="form-group">
-                                    <input type="number" name="budget" class="form-control form-control-lg" placeholder="Amount" value="<?= $bid->amount ?>">
+                                    <h5 class="font-weight-bold">Additional Information</h5>
+                                    <textarea class="form-control" rows="5" name="cover_letter"><?= $bid->cover_letter ?></textarea>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <small class="text-muted">Client's Budget</small>
-                                <h4 class="font-weight-bold text-success m-0">$<?= $jobdata->budget_min ?> - $<?= $jobdata->budget_max ?></h4>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger waves-effect text-left" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-success waves-effect text-left">Save Changes</button>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <h5 class="font-weight-bold">Additional Information</h5>
-                            <textarea class="form-control" rows="5" name="cover_letter"><?= $bid->cover_letter ?></textarea>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger waves-effect text-left" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success waves-effect text-left">Save Changes</button>
-                    </div>
+                    <?= form_close(); ?>
+                    <!-- /.modal-content -->
                 </div>
-                <?= form_close(); ?>
-            <?php endif; ?>
-        <?php endforeach; ?>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
+                <!-- /.modal-dialog -->
+            </div>
+        <?php endif; ?>
+    <?php endforeach; ?>
 </div>
 
 

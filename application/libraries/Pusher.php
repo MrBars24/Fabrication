@@ -1,5 +1,5 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
-require_once(APPPATH."third_party/vendor/autoload.php"); 
+require_once(APPPATH."third_party/vendor/autoload.php");
 class Pusher{
 
 	private $pusher;
@@ -18,6 +18,11 @@ class Pusher{
 
 	function setMessage($key,$data){
 		$this->data[$key] = $data;
+	}
+
+	// override constructor not working so I added this temporily hehehe
+	function setChannel($channel){
+		$this->channel = $channel;
 	}
 
 	function push($event){

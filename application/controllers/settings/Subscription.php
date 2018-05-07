@@ -32,10 +32,16 @@ class Subscription extends MX_Controller {
         $this->template->load('frontend/settings/subscription');
     }
 
+    public function unsubscribe(){
+        $this->subscription_model->unsubscribe();
+        header("Location:/settings/subscription");
+    }
+
     public function subscribe($id = 10){
         $this->load->library('paypal');
 
-        $this->paypal->setToken('AfnUbNlXkt2ecJAFcpWMGoo5EqBaOiJp9LTdwgVE-jTQC3Y3V2-8XKduDlXK6-ipB8zON3ZRY1TIva9Y','ECVVfISD1uGNhw3qt6uxiIevMSEUTqfKQ-k9ziUbye8Whg48Pz4MzwA3arV1i4e4Eo_g4_u_O9uAEvz-');
+        //$this->paypal->setToken('AfnUbNlXkt2ecJAFcpWMGoo5EqBaOiJp9LTdwgVE-jTQC3Y3V2-8XKduDlXK6-ipB8zON3ZRY1TIva9Y','ECVVfISD1uGNhw3qt6uxiIevMSEUTqfKQ-k9ziUbye8Whg48Pz4MzwA3arV1i4e4Eo_g4_u_O9uAEvz-');
+		$this->paypal->setToken('AfofnI9gBxzzrWE0cMolKYpjVe9lSopVCEXFb3PMUv9c8zvDjy-K10OnjVdSu43m1ToLoHjn19DGXTFd','EFZpgmpvyUgHajsdp5GPyNbA9q8WC_GtvsdEZmltbbyPo0eyBN51qDHzWH4Dwyx8hTnQOfjOaPjbBsOF');
         
         $this->paypal->setPayer('paypal');
         $this->paypal->setRedirectUrls(array(
@@ -54,7 +60,7 @@ class Subscription extends MX_Controller {
                 'hmac_key' => KEYCODE
             )
         );
-
+		
         $details = $this->subscription_model->getDetails($id);
 
         $trans = new Ptransaction();
@@ -106,6 +112,7 @@ class Subscription extends MX_Controller {
     public function saveTransaction($details,$ex){
         $res = json_decode($ex);
 
+		
         $data = array(
             "user_id" => auth()->id,
             "paypal_payment_id" => $res->id,

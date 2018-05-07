@@ -1,5 +1,7 @@
 $(document).ready(function(){
 	var index = null;
+	var radioSelect = null;
+	
 	var table = $(".package-container").initTable({
 		url:"/admin/settings/package-settings/list",
 		onBeforeRequest:function(){
@@ -15,48 +17,50 @@ $(document).ready(function(){
 					if(obj.is_default == 1){
 							var defaultChecked = `checked`;
 							var defaultText = `Setted as default`;
+							var dlete = ``;
 						}else{
 							var defaultChecked = '';
 							var defaultText = `Set as default`;
+							var dlete = `<a class="pointer delete"><i class="text-danger fa fa-trash mb-3 ml-2"></i></a>`;
 						}
 					container += `
-				<div class="col-lg-4 package-item float-left">
-		            <div class="card">
-		                <div class="card-body">
-			                <div class="d-flex justify-content-between">
-			                	<div class="m-b-10">
-				                <small class="text-center font-weight-bold radio-text">${defaultText}</small>
-	                                <label class="pointer custom-control custom-radio">
-	                                    <input id="radio" name="is_default" value="" type="radio" class="radio custom-control-input" ${defaultChecked}>
-	                                    <span class="custom-control-label"></span>
-	                                </label>
-	                            </div>
-			                	<div>
-			                		<a class="pointer edit"><i class="text-warning fa fa-pencil mb-3"></i></a>
-				                	<a class="pointer delete"><i class="text-danger fa fa-trash mb-3 ml-2"></i></a>
-			                	</div>
-	                        </div>
-		                	<div class="b-all">
-	                            <div class="pricing-header mt-3 mb-2">
-	                                <h4 class="package-name pointer text-center px-3">${obj.package_name}</h4>
+						<div class="col-lg-4 package-item float-left">
+							<div class="card">
+								<div class="card-body">
+									<div class="d-flex justify-content-between">
+										<div class="m-b-10">
+										<small class="text-center font-weight-bold radio-text">${defaultText}</small>
+											<label class="pointer custom-control custom-radio">
+												<input id="radio" name="is_default" value="" type="radio" class="radio custom-control-input" ${defaultChecked}>
+												<span class="custom-control-label"></span>
+											</label>
+										</div>
+										<div class="controls">
+											<a class="pointer edit"><i class="text-warning fa fa-pencil mb-3"></i></a>
+											${dlete}
+										</div>
+									</div>
+									<div class="b-all">
+										<div class="pricing-header mt-3 mb-2">
+											<h4 class="package-name pointer text-center px-3">${obj.package_name}</h4>
 
-	                                <h1 class="package-price pointer text-center px-3"><span class="price-sign">$</span>${obj.package_price}</h1>
-	                                <p class="text-center uppercase"><small class="font-weight-bold">per month</small></p>
-	                            </div>
-	                            <div class="price-table-content mb-3">
-	                                <div class="package-desc pointer text-center p-20 px-3 b-t b-b">${obj.package_desc}</div>
-	                                <div class="package-include pointer text-center p-20 px-3  b-t b-b">${obj.package_include}</div>
-		                                <div class="text-center font-weight-bold mt-3">Package Includes</div>
-				                                <div class="bid-number pointer text-center px-3">${obj.bid_number} number of bids</div>
-				                                <div class="post-number pointer text-center px-3">${obj.post_number} number of post</div>
-			                    </div>
-	                                <div class="submit-edit pointer text-center mb-3"></div>
-                            	</div>
-                           
-                          </div>
-		                </div>
-		            </div>
-	        	</div><!--End of column-->
+											<h1 class="package-price pointer text-center px-3"><span class="price-sign">$</span>${obj.package_price}</h1>
+											<p class="text-center uppercase"><small class="font-weight-bold">per month</small></p>
+										</div>
+										<div class="price-table-content mb-3">
+											<div class="package-desc pointer text-center p-20 px-3 b-t b-b">${obj.package_desc}</div>
+											<div class="package-include pointer text-center p-20 px-3  b-t b-b">${obj.package_include}</div>
+												<div class="text-center font-weight-bold mt-3">Package Includes</div>
+														<div class="bid-number pointer text-center px-3">${obj.bid_number} number of bids</div>
+														<div class="post-number pointer text-center px-3">${obj.post_number} number of post</div>
+										</div>
+											<div class="submit-edit pointer text-center mb-3"></div>
+										</div>
+								   
+								  </div>
+								</div>
+							</div>
+						</div><!--End of column-->
 					`
 					;
 				});
@@ -68,6 +72,10 @@ $(document).ready(function(){
 							</tr>`;
 			}
 			
+			setTimeout(function(){
+				radioSelect = $('#radio:checked');				
+			},100)
+			
 			return container;
 		}
 	});
@@ -75,6 +83,11 @@ $(document).ready(function(){
 		$(document).on('change','#radio',function(e){
 			e.preventDefault();
 			var radioItem = $(this).parents('.package-item');
+			
+			radioSelect.parents('.package-item').find('.controls').append(`<a class="pointer delete"><i class="text-danger fa fa-trash mb-3 ml-2"></i></a>`);
+			radioItem.find('.delete').remove();
+			radioSelect = $(this);
+			
 			index = $(this).parents('.package-item').index();
 			var data = table.fetch(index);
 			radioItem.find('.radio').attr('checked', 'checked');

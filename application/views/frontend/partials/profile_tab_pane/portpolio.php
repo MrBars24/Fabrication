@@ -22,13 +22,14 @@
                             </div>
                             <div class="el-card-content text-center">
                                 <h4 class="box-title" id="portfolio-title"><?= $portpolios->project_name ?></h4>
+                                <p><?= $portpolios->description ?></p>
                             </div>
                         </div>
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
                 <div class="col-12">
-                    <h3 class="text-dark font-weight-bold">No portpolio</h3>
+                    <h3 class="text-dark font-weight-bold">No portfolio</h3>
                 </div>
             <?php endif; ?>
         </div>

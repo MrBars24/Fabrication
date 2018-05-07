@@ -11,6 +11,8 @@ class ViewProfile extends MX_Controller {
 		$this->load->model('review_model');
 		$this->load->model('public_model');
 		$this->load->model('portfolio_model');
+		$this->load->model('proposal_model');
+		$this->load->model('training_model');
 	}
 	public function show($id){
 		check_user('member');
@@ -20,65 +22,45 @@ class ViewProfile extends MX_Controller {
 		);
 		$js = array(
 			"/assets/admin/custom/js/bars-datatable.js",
+			"/assets/admin/custom/js/bs-modal-loader.js",
 			"/assets/default/custom/js/review.js",
 			"/assets/default/custom/js/invite.js",
 		);
-
 		$this->template->append_css($css);
 		$this->template->append_js($js);
 		$getUserDetails = $this->user_model->getUserDetails($id);
 		$getMyJob = $this->job_model->getAllJobsInfo($id);
 		$getWinJob = $this->job_model->getWinJob($id);
-		$getJobAvailable = $this->job_model->getJobAvailable($id);
+		$getJobAvailable = $this->job_model->getJobAvailable(auth()->id);
+
 		$getJobInfo = $this->job_model->getAllJobInfo($id);
 		$skills = $this->public_model->getMySkills($id);
 		$review = $this->review_model->getReview($id);
 		$getPortfolio = $this->portfolio_model->getPortfolio($id);
 		$getPortfolios = $this->portfolio_model->getPortfolios($id);
+		$trainingList = $this->training_model->all();
+		$getPrevious = $this->job_model->previousJobsPaginate($id);
+
 		if(!empty($review['data'])){
-			$star['overAll'] = 0;
-			$star['countOverAll'] = 0;
-			$star['oneStar'] = 0;
-			$star['twoStar'] = 0;
-			$star['threeStar'] = 0;
-			$star['fourStar'] = 0;
-			$star['fiveStar'] = 0;
-			$star['percentageRating'] = 0;
-			foreach($review['data'] as $rating){
-				$star['overAll'] += $rating->rating;
-				$star['countOverAll']++;
-				if($rating->rating == 1){
-					$star['oneStar'] += 1;
-				}
-				elseif($rating->rating == 2){
-					$star['twoStar'] += 1;
-				}
-				elseif($rating->rating == 3){
-					$star['threeStar'] += 1;
-				}
-				elseif($rating->rating == 4){
-					$star['fourStar'] += 1;
-				}
-				elseif($rating->rating == 5){
-					$star['fiveStar'] += 1;
-				}
-			}
-			$star['avarageRating'] = $star['overAll'] / $star['countOverAll'];
-			$star['percentageRating'] =  (($star['overAll'] / ($star['countOverAll'] * 5)) * 100 );
+			$star = star_review($review);
 			$this->template->load_sub('star', $star);
 		}
-		if(auth()){
-			$myGetReview = $this->review_model->myGetReview(auth()->id);
+
+		$myGetReview = $this->review_model->myGetReview(auth()->id, $id);
+		if($myGetReview){
 			$this->template->load_sub('myGetReview', $myGetReview);
 		}
 		$this->template->load_sub('skills', $skills);
+		$this->template->load_sub('trainings', $trainingList);
 		$this->template->load_sub('portfolio', $getPortfolio);
 		$this->template->load_sub('getPortfolios', $getPortfolios);
 		$this->template->load_sub('review', $review);
 		$this->template->load_sub('jobAvailable', $getJobAvailable);
 		$this->template->load_sub('myJob', $getMyJob);
 		$this->template->load_sub('winJob', $getWinJob);
+		$this->template->load_sub('previousJobs', $getPrevious);
 		$this->template->load_sub('user', $getUserDetails);
+
         $this->template->load('frontend/member/view_profile');
 	}
 	public function expert($id){

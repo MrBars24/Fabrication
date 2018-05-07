@@ -11,35 +11,35 @@ class Notification {
     public function __construct() {
         $this->CI = get_instance();
         $this->CI->load->model('Notification_model');
-    } 
-    
+    }
+
     // Get Notification row by Id
     public function findById($id) {
         $notifications = $this->CI->Notification_model->get($id);
         return $notifications;
     }
-    
+
     // Get notifications by User Id
     public function getByUserId($userId, $withHidden = FALSE) {
         $notifications = $this->CI->Notification_model->get(NULL, $userId, $withHidden);
         return $notifications;
     }
-    
+
     // Mark as Hidden
     public function hide($id) {
         return $this->CI->Notification_model->update($id, array('hidden_at' => date("Y-m-d H:i:s")));
     }
-    
+
     // Mark as Read
     public function read($id) {
         return $this->CI->Notification_model->update($id, array('read_at' => date("Y-m-d H:i:s")));
     }
-    
+
     // Read All
     public function readAll($userId) {
         return $this->CI->Notification_model->readAll($userId);
-    }   
-    
+    }
+
     public function use($notification_asdasdsa) {
         $this->notification_asdasdsa = $notification_asdasdsa;
         return $this;
@@ -97,9 +97,10 @@ abstract class Efab_Notification implements Notificatable {
     protected $template_key;
     protected $via = ['database'];
     private $CI;
+    protected $notification_row;
 
     public function __construct() {
-        $this->CI = get_instance();
+      $this->CI = get_instance();
     }
 
     public function setTemplate($template) {
@@ -109,20 +110,50 @@ abstract class Efab_Notification implements Notificatable {
 
     public function dispatch($receiver_id) {
         if ( in_array('database', $this->via())) {
-            $this->CI->load->model('Notification_model');
-            return $this->CI->Notification_model->create(array(
-                'user_id' => $receiver_id,
-                'template' => $this->template_key,
-                'data' => json_encode($this->toDatabase())
-            ));
+          $this->CI->load->model('Notification_model');
+
+          $notification_id = $this->CI->Notification_model->create(array(
+            'user_id' => $receiver_id,
+            'template' => $this->template_key,
+            'data' => json_encode($this->toDatabase())
+          ));
+
+          $this->notification_row = $this->CI->Notification_model->get($notification_id, NULL, TRUE);
+
+          // dd($this->notification_row);
+        }
+        if ( in_array('socket', $this->via())) {
+          $this->CI->load->library('pusher');
+          $this->CI->pusher->setChannel("member_$receiver_id");
+          //$this->format($e->template, json_decode($e->data));
+            $this->CI->load->config('notifications');
+            $template = $this->CI->config->item('notifications')[$this->template_key]['template'] ;
+
+            $test = array(
+                '::job_link::' => '<a href="/jobs/' . $this->toArray()->job_id .'">job</a>'
+            );
+            $tmp = str_replace(
+                array_keys($test),
+                array_values($test),
+                $template
+            );
+
+            $d = $this->toArray()['notification'];
+            $d->content = $tmp;
+
+            $this->CI->pusher->setMessage('message',$d);
+          $this->CI->pusher->push('new_notification');
         }
     }
+
     public function via() {
         return array();
     }
+
     public function toArray() {
         return array();
     }
+
     public function toDatabase() {
         return array();
     }
@@ -133,4 +164,3 @@ abstract class Efab_Notification implements Notificatable {
 class InvalidNotificationTemplateException extends Exception {
 
 }
-

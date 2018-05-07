@@ -24,7 +24,30 @@
 .ul-star .starstar:hover ~ .starstar {
   color: #6c757d;
 }
+.stars-outer{
+    display: inline-block;
+    position: relative;
+    font-family: FontAwesome;
+    letter-spacing: 3px;
+}
 
+.stars-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+    letter-spacing: 3px;
+    overflow: hidden;
+}
+
+.stars-outer::before {
+  content: "\f006 \f006 \f006 \f006 \f006";
+}
+
+.stars-inner::before {
+  content: "\f005 \f005 \f005 \f005 \f005";
+  color: #ffb22b;
+}
 /******/
 </style>
 <div class="tab-pane active show" id="overview" role="tabpanel">
@@ -32,23 +55,7 @@
         <h4 class="card-title text-dark font-weight-bold">Overview</h4>
         <p><?= (auth()->user_details->overview == "") ? "" : auth()->user_details->overview; ?></p>
         <hr>
-        <h4 class="card-title text-dark font-weight-bold">Portfolio</h4>
-        <div class="col-12 text-center">
-            <?php if(!empty($portfolio)): ?>
-                <h3><?= $portfolio->project_name ?></h3>
-                <p><?= $portfolio->description ?></p>
-                <div class="d-flex flex-row">
-                    <?php foreach($portfolio->attachments as $attachments): ?>
-                        <div class="col-4">
-                            <img class="img-fluid" src="<?= $attachments->path ?>">
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            <?php else: ?>
-                <!-- <h3>No portfolio post</h3> -->
-            <?php endif; ?>
-        </div>
-        <hr>
+
         <h4 class="card-title text-dark font-weight-bold mt-2">Service Description</h4>
         <p><?= @auth()->user_details->overview; ?></p>
         <hr>
@@ -106,18 +113,17 @@
                 </div>
             <?php endif; ?>
         <?php endif; ?>
-        <div class="card-body px-0">
+        <div class="card-body px-0 pt-0">
             <div class="d-flex">
                 <div class="col-3 d-flex flex-column align-items-center">
-                    <h1 class="display-1 font-weight-bold"><?= (isset($star['avarageRating'])) ? $star['avarageRating'] : "0" ?></h1>
+                    <h1 class="display-1 font-weight-bold"><?= (isset($star['avarageRating'])) ? substr($star['avarageRating'], 0,3) : "0" ?></h1>
                     <div class="fa stars-outer">
                         <div class="fa stars-inner" style="width:<?= (isset($star['percentageRating'])) ? $star['percentageRating'] : "0" ?>%;">
                         </div>
                     </div>
                     <span><i class="fa fa-user"> <?= (isset($star['countOverAll'])) ? $star['countOverAll'] : "0" ?></i></span>
                 </div>
-                <div class="col-9">
-
+                <div class="col-3">
                     <ul class="list-style-type-none mb-0 ml-1">
                         <li class="d-flex align-items-center mt-1">
                             <div class="">
@@ -159,11 +165,8 @@
             </div>
             <hr>
             <div class="profiletimeline" id="review-comment" data-id="<?= @$user->id ?>"></div>
-            <div class="pagination pagination-review-comment col-12 justify-content-center mb-4"></div>
+            <!-- <div class="pagination pagination-review-comment col-12 justify-content-center mb-4"></div> -->
         </div>
-
-
-
     </div>
 </div>
 
@@ -188,7 +191,6 @@
                                 <li class="mr-1"><a href="#" class="text-muted ratings_stars"><i class="fa fa-star"></i></a></li>
                             <?php endfor; ?>
                         </ul>
-
                     </div>
                     <div class="pull-right my-2">
                         <span class="text-warning">Ratings</span>
@@ -201,7 +203,7 @@
                         </ul>
                     </div>
                     <textarea class="form-control" name="message_review" rows="5" placeholder="Write Review"><?= @$myGetReview->message_review ?></textarea>
-                    <input type="hidden" name="rating" value="">
+                    <input type="hidden" name="rating" value="<?= $myGetReview->rating ?>">
                     <input type="hidden" name="review_id" value="<?= $user->id ?>">
                 </div>
                 <div class="modal-footer">

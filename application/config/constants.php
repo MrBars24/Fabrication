@@ -98,12 +98,24 @@ define('email_constant', serialize(array(
   'charset'   => 'utf-8'
 )));
 
-const EMAIL_DETAILS = array(
+/* const EMAIL_DETAILS = array(
   'protocol' => 'sendmail',
   'smtp_host' => 'ssl://smtp.gmail.com',
   'smtp_port' => 465,
-  'smtp_user' => 'efab@efab.ifltest08.tk',
-  'smtp_pass' => 'ktuN9?&Knkng',
+  //'smtp_user' => 'efab@efab.ifltest08.tk',
+  'smtp_user' => 'efab@ifltest08.tk',
+  //'smtp_pass' => 'ktuN9?&Knkng',
+  'smtp_pass' => 'Ay[8f?R}Hiof',
+  'mailtype'  => 'html',
+  'charset'   => 'utf-8'
+); */
+
+const EMAIL_DETAILS = array(
+  'protocol' => 'sendmail',
+  'smtp_host' => 'ssl://smtp.gmail.com',
+  'smtp_port' => 443,
+  'smtp_user' => 'efab@efab-prod.tk',
+  'smtp_pass' => 'hL7n]3TSL{$Z',
   'mailtype'  => 'html',
   'charset'   => 'utf-8'
 );

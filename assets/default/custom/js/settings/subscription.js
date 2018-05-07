@@ -1,6 +1,6 @@
 $(document).ready(function(){
-	var CREATE_PAYMENT_URL  = 'https://dev.efab/settings/subscribe';
-    var EXECUTE_PAYMENT_URL = 'https://dev.efab/settings/subscribe/payment/execute';
+	var CREATE_PAYMENT_URL  = '/settings/subscribe';
+    var EXECUTE_PAYMENT_URL = '/settings/subscribe/payment/execute';
 
     paypal.Button.render({
 
@@ -38,4 +38,12 @@ $(document).ready(function(){
         $("#exampleModal").modal();
         $("#xhash").val(h);
     })
+
+    $(document).on("click",".btn-end",function(){
+        $(".modal-end").modal();
+    });
+
+    $(document).on("click",".btn-yes",function(){
+       location.href = "/subscription/end";
+    });
 });

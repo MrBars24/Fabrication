@@ -1,102 +1,108 @@
-<div class="container-fluid">
-    <div class="row">
-        
-        <!-- Filter -->
-        <div class="col-sm-3">
-            
-            <div class="card">
-                <div class="card-header">
-                     <h3 class="text-dark"> <big><i class="mdi mdi-search-web" ></i></big> Filter Search</h3> 
-                </div>
-                <div class="card">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <a href="#"> 
-                                <small>Jobs </small> <span class="badge badge-danger pull-right">19</span>
-                            </a>
-                        </li> 
-                        <li class="list-group-item">
-                            <a href="#"> 
-                                <small>Fubrication </small> <span class="badge badge-danger pull-right">5</span>
-                            </a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#"> 
-                                <small>Experts</small> <span class="badge badge-danger pull-right">33</span>
-                            </a>
-                        </li>
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
 
-                    </ul>
-                </div>
-                <div class="card-header">
-                     <h3 class="text-dark"> <big><i class="mdi mdi-search-web" ></i></big> Filter Budget</h3> 
-                </div>
-                <div class="card">
-                    <ul class="list-group list-group-flush text-dark">
-                        <li class="list-group-item">
-                            <input type="radio" id="opt1" class="radio-col-black with-gap" checked name="budget" value="5000">
-                            <label for="opt1">$5,000</label>
-                        </li> 
-                        <li class="list-group-item">
-                            <input type="radio" id="opt2" class="radio-col-black with-gap" name="budget" value="10000">
-                            <label for="opt2">$10,000</label>
-                        </li>
-                        <li class="list-group-item">
-                            <input type="radio" id="opt3" class="radio-col-black with-gap" name="budget" value="15000">
-                            <label for="opt3">$15,000</label>
-                        </li>
-                        <li class="list-group-item">
-                            <input type="radio" id="opt4" class="radio-col-black with-gap" name="budget" value="20000">
-                            <label for="opt4">Up to $20,000</label>
-                        </li>
-
-                    </ul>
-                </div>
-            </div>
-            
-            
-            
-        </div>
-        <!-- Search result -->
-        <div class="col-sm-9">
-            
-            <div class="container">
-                <div class="card">
-                    <div class="card-header">
-                        <h3><i class="mdi mdi-worker"></i> Jobs</h3>
-                    </div>
-                    <div class="card-body">
-                        <section>
-                            <ul class="list-group list-group-flush list-group-parent">
-                                <?php foreach(range(0, 2) as $i): ?>
-                                    <li class="mt-3">
-                                        <?php $this->load->view('frontend/partials/job_item') ?>
-                                    </li>
-                                <?php endforeach; ?>
-                            </ul>
-                        </section>
-                    
-                    </div>
-                    <div class="card-footer">
-                        <div class="row">
-
-                            <!--  -->
-                            <div class="col-sm-12 text-center">
-                                <div>
-                                    <a href="" class="text-dark">SEE ALL</a>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-        
-        </div>
+    </div>
+    <div class="col-md-7 align-self-center">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/dashboard">Search</a></li>
+            <li class="breadcrumb-item active">Members</li>
+        </ol>
     </div>
 </div>
+<div class="container-fluid">
 
+  <div class="row">
+    <div class="col-sm-4 order-2">
+      <!-- Categories -->
+      <div class="card">
+        <div class="card-body">
+          <h3>Categories</h3>
+          <ul>
+            <?php foreach($industries as $industry): ?>
+              <li><a href="#"><?php echo $industry['display_name'] ?></a></li>
+            <?php endforeach;?>
+          </ul>
+        </div>
+      </div>
+      <!-- End of Categories -->
+      <!-- Categories -->
+      <div class="card">
+        <div class="card-body">
+          <h3>Featured Experts</h3>
+          <ul>
+            <li><a href="#">John Doe</a></li>
+            <li><a href="#">Juan Dela Cruz</a></li>
+            <li><a href="#">Stephen Awesome</a></li>
+            <li><a href="#">Meister John</a></li>
+            <li><a href="#">Axl Rose</a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- End of Categories -->
+    </div>
+    <div class="col-sm-8 order-1">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-6">
+              <ul class="list-style-type-none list-separated-horizontal">
+                <!--<li>
+                  <a href="#">All</a>
+                </li>
+                <li>
+                  <a href="#">Experts</a>
+                </li>
+                <li>
+                  <a href="#">Company</a>
+                </li>-->
+                <li>
+                  <span class="text-muted text-count">15 Results</span>
+                </li>
+              </ul>
+            </div>
+            <div class="col-sm-6">
+              <form id="form-search-all">
+                <div class="input-group search-form">
+                    <input type="text" name="search_text" class="form-control border" placeholder="Search for Jobs, Fabricator, Experts">
+                    <span class="input-group-append">
+                      <button type="submit" class="btn-text-search btn btn-success input-group-addon text-white">
+                        <i class="fa fa-search"></i>
+                      </button>
+                    </span>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
 
+      <div class="card">
+        <div class="card-body">
+          <!-- Jobs -->
+          <div>
+            <h3 class="pull-left">Jobs</h3>
+            <a href="/jobs" class="pull-right jobs-see-all">See All</a>
+            <div class="clearfix"></div>
 
+            <div class="search-all-jobs-container"></div>
+
+          </div>
+          <!-- End of Jobs -->
+
+          <!-- Members -->
+          <div>
+            <h3 class="pull-left">Experts</h3>
+            <a href="/members" class="pull-right members-see-all">See All</a>
+            <div class="clearfix"></div>
+          </div>
+
+          <div class="search-all-members-container"></div>
+
+          <!-- End of Members -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

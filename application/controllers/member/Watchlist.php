@@ -18,6 +18,7 @@ class Watchlist extends MX_Controller {
         );
 
         $js = array(
+            "/assets/plugins/jquery-ellipse/jquery.ellipsis.min.js",
         	"/assets/admin/custom/js/bars-datatable.js",
             "/assets/default/custom/js/watchlist.js",
             "/assets/plugins/select2/js/select2.min.js"

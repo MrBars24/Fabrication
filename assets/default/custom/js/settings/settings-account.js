@@ -13,18 +13,34 @@ $(document).ready(function(){
                 // var text = "You have successfully change you're information";
                 // var heading = "Success!!";
                 // successtoast();
-                toastr.success("You have successfully change you're information", "Success!!");
-                $.each(data, function(index, field) {
-                    if(field.name == "firstname"){
-                        $('#form-basic [data-value-target="fullname"]').text(field.value);
-                    }
-                    else if(field.name == "lastname"){
-                        $('#form-basic [data-value-target="fullname"]').text($('#form-basic [data-value-target="fullname"]').text() + " " + field.value);
-                    }
-                    else{
-                        $('#form-basic [data-value-target="' + field.name + '"]').text(field.value);
-                    }
-                });
+				if(result.success == 200){
+					toastr.success("You have successfully change you're information", "Success!!");
+					$.each(data, function(index, field) {
+						if(field.name == "firstname"){
+							$('#form-basic [data-value-target="fullname"]').text(result.data.firstname + ' ' + result.data.lastname);
+						}
+						else if(field.name == "lastname"){
+							$('#form-basic [data-value-target="fullname"]').text(result.data.firstname + ' ' + result.data.lastname);
+						}
+						else if(field.name == "email"){
+							$('#form-basic [data-value-target="' + field.name + '"]').text(result.data.email);
+						}
+						else if(field.name == "username"){
+							$('#form-basic [data-value-target="' + field.name + '"]').text(result.data.username);
+						}
+						else if(field.name == "phone"){
+							$('#form-basic [data-value-target="' + field.name + '"]').text(result.data.phone);
+						}
+						else if(field.name == "mobile"){
+							$('#form-basic [data-value-target="' + field.name + '"]').text(result.data.mobile);
+						}
+						else if(field.name == "bday"){
+							$('#form-basic [data-value-target="' + field.name + '"]').text(result.data.bday);
+						}
+					});
+						
+					$(".cancel-edit").click();
+				}
 
             },
             error: function(){
@@ -72,6 +88,7 @@ $(document).ready(function(){
                         $('#form-location [data-value-target="' + field.name + '"]').text(field.value);
                     }
                 });
+				$(".cancel-edit").click();
             },
             error: function(result){
                 console.log(result);

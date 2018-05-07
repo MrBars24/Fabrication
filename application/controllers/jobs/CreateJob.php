@@ -11,51 +11,82 @@ class CreateJob extends MX_Controller {
 	}
 
 	public function index(){
+		check_login();
         $css = array(
-            "assets/images/favicon.png",
-            "assets/plugins/bootstrap-select/bootstrap-select.min.css",
-            "assets/plugins/timepicker/bootstrap-timepicker.min.css",
-            "assets/plugins/bootstrap-daterangepicker/daterangepicker.css",
+			"assets/plugins/multiselect/css/multi-select.css",
+			"assets/plugins/select2/dist/css/select2.min.css",
+			"assets/plugins/bootstrap-select/bootstrap-select.min.css",
 			"assets/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css",
-			"assets/plugins/dropify/dist/css/dropify.min.css",
-			"assets/plugins/dropzone-master/dist/dropzone.css"
-
+            "/assets/images/favicon.png",
+            "/assets/plugins/bootstrap-select/bootstrap-select.min.css",
+            "/assets/plugins/timepicker/bootstrap-timepicker.min.css",
+            "/assets/plugins/bootstrap-daterangepicker/daterangepicker.css",
+			"/assets/plugins/dropify/dist/css/dropify.min.css",
+			"/assets/plugins/dropzone-master/dist/dropzone.css",
+			"/assets/plugins/wizard/steps.css",
+			"/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css"
         );
         $js = array(
-			"/assets/plugins/dropzone-master/dist/dropzone.js",
-			"/assets/default/custom/js/create-job.js",
-            "/assets/plugins/moment/moment.js",
-            "/assets/plugins/timepicker/bootstrap-timepicker.min.js",
-            "/assets/plugins/bootstrap-daterangepicker/daterangepicker.js",
-			"/assets/plugins/bootstrap-select/bootstrap-select.min.js",
-            "/assets/admin/js/post-job.js",
+			"/assets/plugins/moment/moment.js",
+			"/assets/default/custom/js/bootstrap-tagsinput.min.js",
 			"/assets/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js",
 			"/assets/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js",
-			"/assets/plugins/multiselect/js/jquery.multi-select.js",
-			"/assets/plugins/switchery/dist/switchery.min.js",
+			"/assets/plugins/bootstrap-select/bootstrap-select.min.js",
 			"/assets/plugins/select2/dist/js/select2.full.min.js",
+			"/assets/plugins/wizard/jquery.steps.min.js",
+			"/assets/plugins/wizard/jquery.validate.min.js",
 			"/assets/plugins/styleswitcher/jQuery.style.switcher.js",
-			"/assets/plugins/dropify/dist/js/dropify.min.js",
+			"/assets/plugins/switchery/dist/switchery.min.js",
+			"/assets/plugins/multiselect/js/jquery.multi-select.js",
+			"/assets/plugins/wizard/steps.js",
+			"/assets/plugins/dropzone-master/dist/dropzone.js",
+			"/assets/plugins/timepicker/bootstrap-timepicker.min.js",
+			"/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js",
+			"/assets/plugins/bootstrap-daterangepicker/daterangepicker.js",
+            "/assets/admin/js/post-job.js",
+			"/assets/default/custom/js/create-job.js",
         );
         $this->template->append_css($css);
 		$this->template->append_js($js);
 
 		$this->load->model('Industry_model');
 		$this->load->model('User_model');
+		$this->load->model('country_model');
+		$this->load->model('material_model');
 
 
 		$industries = $this->Industry_model->getIndustries();
+		$countries = $this->country_model->all();
+		$material = $this->material_model->all();
+		$this->template->load_sub('material', $material);
 		$this->template->load_sub('industries', $industries);
+		$this->template->load_sub('countries', $countries);
 		if(auth() != null){
 			$this->template->load_sub('summary', $this->job_model->getSummary());
 		}
         $this->template->load('frontend/jobs/create_job');
 	}
+	public function newJob(){
+		$css = array(
+			"/assets/plugins/wizard/steps.css"
+		);
+		$js = array(
+			"/assets/plugins/moment/moment.js",
+			"/assets/plugins/wizard/jquery.steps.min.js",
+			"/assets/plugins/wizard/jquery.validate.min.js",
+			"/assets/plugins/styleswitcher/jQuery.style.switcher.js",
+			"/assets/plugins/wizard/steps.js",
+		);
+		$this->template->append_css($css);
+		$this->template->append_js($js);
 
+		$this->template->load('frontend/jobs/job_post');
+	}
 	public function createJob(){
 		header("Content-Type:application/json");
 		$summary = $this->job_model->getSummary();
-		if($summary->my_posts >= $summary->max_post){
+
+		if($summary->max_post == $summary->my_posts){
 			echo json_encode(array(
 				'success' => FALSE,
 				'error' => "account_type",
@@ -69,62 +100,69 @@ class CreateJob extends MX_Controller {
         $slug = $this->slug($title);
         $budget_min = $this->input->post('budget_min');
         $budget_max = $this->input->post('budget_max');
-        $project_start = date("Y-m-d h:i:s", strtotime(substr($this->input->post('project'), 0,10)));
-        $project_end = date("Y-m-d h:i:s", strtotime(substr($this->input->post('project'), -10)));
-        $bidding_start = date("Y-m-d ",strtotime(substr($this->input->post('bidding'), 0,10)));
-        $bidding_end = date("Y-m-d ",strtotime(substr($this->input->post('bidding'), -10)));
+        $project_start = $this->input->post('pstart');
+        $project_end = $this->input->post('pend');
+        $bidding_end = $this->input->post('bend');
 		$approx_tonnes = $this->input->post('tonnes');
-		$location = $this->input->post('location');
+		$country = $this->input->post('country');
+		$city = $this->input->post('city');
+		$state = $this->input->post('state');
 		$project_category = $this->input->post('industry');
+		$membership_hash = auth()->membership_hash;
         $data = array(
             'fabricator_id' => $fabricator_id,
             'title' => $title,
             'project_category' => $project_category,
-            'location' => $location,
+            'city' => $city,
+            'state' => $state,
+            'country' => $country,
             'approx_tonnes' => $approx_tonnes,
             'description' => $description,
             'budget_min' => $budget_min,
             'budget_max' => $budget_max,
             'project_start' => $project_start,
             'project_end' => $project_end,
-            'bidding_start_at' => $bidding_start,
             'bidding_expire_at' => $bidding_end,
             'slug' => $slug,
+			'membership_hash' => $membership_hash,
+			'status' => "open"
         );
-
 		$storeFolder = 'attached';
 		$files = array();
-		if (!empty($_FILES)) {
-			if(is_array($_FILES['myFile'])){
-		      	$files = $_FILES['myFile'];
+		if($_FILES){
+	      	$files = $_FILES['myFile'];
+			for($i=0; $i<count($files['name']); $i++){
+		        $tempFile = $_FILES['myFile']['tmp_name'][$i];
+		        $file = time() . $_FILES['myFile']['name'][$i];
+		        $targetPath = $storeFolder .DIRECTORY_SEPARATOR;  //4
+		        $targetFile =  $targetPath. $file;
 
-		     	for($i=0; $i<count($files['name']); $i++){
-			        $tempFile = $_FILES['myFile']['tmp_name'][$i];
-			        $file = time() . $_FILES['myFile']['name'][$i];
-			        $targetPath = $storeFolder .DIRECTORY_SEPARATOR;  //4
-			        $targetFile =  $targetPath. $file;
+		        if(move_uploaded_file($tempFile,$targetFile)){
+		          	array_push($files,array("file"=>"/".$targetFile));
+		        }
+	      	}
+			$r = $this->job_model->createJob($data);
+			$s = $this->job_model->createSkillsJob();
+			$sk = $this->job_model->createSkillsToJob($s, $r);
+			$m = $this->job_model->createMaterial($r, json_decode($this->input->post('material')));
+			$a = $this->job_model->createAttached($files,$r);
 
-			        if(move_uploaded_file($tempFile,$targetFile)){
-			          	array_push($files,array("file"=>"/".$targetFile));
-			        }
-		      	}
-				$r = $this->job_model->createJob($data);
-				$a = $this->job_model->createAttached($files,$r);
-				$this->user_model->updateUserSession();
-
-				if($r && $a){
-					echo json_encode( array(
-						'success' => 201
-					));
-				}
-			}
+			$this->user_model->updateUserSession();
+			echo json_encode(array(
+				'success' => true
+			));
+			exit;
 		}else{
 			$r = $this->job_model->createJob($data);
+			$s = $this->job_model->createSkillsJob($r);
+			$sk = $this->job_model->createSkillsToJob($s, $r);
+			$m = $this->job_model->createMaterial($r, $this->input->post('material'));
+			//$a = $this->job_model->createAttached($files,$r);
 			$this->user_model->updateUserSession();
-
-			echo json_encode( array(
-				'success' => 201
+			echo json_encode(array(
+				'success' => true
 			));
+			exit;
 		}
 
 

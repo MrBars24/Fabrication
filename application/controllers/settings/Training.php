@@ -20,7 +20,7 @@ class Training extends MX_Controller {
 				"/assets/admin/js/mask.js",
 				"/assets/plugins/moment/moment.js",
 				"/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js",
-				"/assets/admin/custom/js/bars-datatable.js",
+				"/assets/admin/custom/js/bars-dtable.js",
 				"/assets/default/custom/js/settings/settings-training.js"
 
 			)
@@ -54,7 +54,8 @@ class Training extends MX_Controller {
                 "training_name" => $this->input->post('training_name'),
                 "description" => $this->input->post('description'),
                 "date_start" => $this->input->post('date_start'),
-                "date_end" => $this->input->post('date_end')
+                "date_end" => $this->input->post('date_end'),
+				"member_id" => auth()->id
             );
 
             if($res = $this->training_model->save($data)){

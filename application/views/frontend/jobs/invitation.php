@@ -1,8 +1,20 @@
-<div class="container">
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+    </div>
+    <div class="col-md-7 align-self-center">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/work">Dashboard</a></li>
+            <li class="breadcrumb-item active">Job Invitations</li>
+        </ol>
+    </div>
+</div>
+<div class="container-fluid">
     <div class="row">
-
 <!--    Profile    -->
-        <div class="col-sm-12">
+        <div class="col-sm-3">
+          <?php $this->load->view('frontend/partials/job_bank_sidebar')?>
+        </div>
+        <div class="col-sm-9">
             <div class="card">
                 <div class="card-header">
                     <h1>Job Invitation</h1>
@@ -10,18 +22,12 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-12">
-                            <div class="profiletimeline" id="jobs-invitation-container">
-                            <div class="pagination pagination-jobs-invitation-container col-12 justify-content-center mb-4"></div>
-                                 <!-- <?php foreach(range(0, 10) as $number): ?>
-
-                                <?php $this->load->view('frontend/partials/job_invitation_item') ?>
-
-                                <?php endforeach; ?> -->
+                            <div id="jobs-invitation-container">
                             </div>
+
+                            <div class="pagination jobs-invitation-pagination"></div>
                         </div>
-
                     </div>
-
                 </div>
             </div>
 

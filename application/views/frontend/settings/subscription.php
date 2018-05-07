@@ -40,6 +40,7 @@
                                                             <?= $i->package_include; ?>
                                                         </div>
                                                         <div class="price-row mb-5">
+                                                            <button type="button" class="btn btn-danger btn-end waves-effect waves-light m-t-20">End Subscription</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -106,12 +107,12 @@
                 <div class="col-md-12 p-0">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs customtab" role="tablist">
-                        <li class="nav-item"> <a class="nav-link active show" data-toggle="tab" href="#home2" role="tab" aria-selected="false"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down">Credit Card</span></a> </li>
-                        <li class="nav-item"> <a class="nav-link " data-toggle="tab" href="#profile2" role="tab" aria-selected="true"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down">Paypal</span></a> </li>
+                        <li class="nav-item"> <a class="nav-link active show" data-toggle="tab" href="#profile2" role="tab" aria-selected="true"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down">Paypal</span></a> </li>
+                        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#home2" role="tab" aria-selected="false"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down">Credit Card</span></a> </li>
                     </ul>
                     <!-- Tab panes -->
                     <div class="tab-content">
-                        <div class="tab-pane active show" id="home2" role="tabpanel">
+                        <div class="tab-pane show" id="home2" role="tabpanel">
                             <div class="row p-20">
                                 <div class="col-sm-12 text-center">
                                     <img src="/assets/paypal-logo.png" class="img-fluid w-50">
@@ -140,7 +141,7 @@
                                 <button type="button" class="btn btn-info ml-3 pull-right">Close</button>
                             </div>
                         </div>
-                        <div class="tab-pane p-20 " id="profile2" role="tabpanel">
+                        <div class="tab-pane active p-20 " id="profile2" role="tabpanel">
                             <div class="row p-20">
                                 <div class="col-sm-12">
                                     <div class="col-sm-12 text-center mb-5">
@@ -156,4 +157,22 @@
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal modal-end fade bs-example-modal-sm" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="mySmallModalLabel">End Subscription</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">Are you sure do you want to end your current subscription?</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-yes btn-danger waves-effect">Yes</button>
+                <button type="button" class="btn btn-info waves-effect" data-dismiss="modal">No</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
 </div>

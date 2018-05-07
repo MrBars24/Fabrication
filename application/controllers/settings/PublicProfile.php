@@ -7,7 +7,7 @@ class PublicProfile extends MX_Controller {
 		parent::__construct();
 		$this->template->set_template("default");
 		$js = array(
-			"assets/default/custom/js/settings/settings-training.js"
+			"/assets/default/custom/js/settings/settings-training.js"
 		);
 		$this->template->set_additional_js($js);
 		$this->load->model('public_model');
@@ -47,7 +47,12 @@ class PublicProfile extends MX_Controller {
 		$industry = $this->industry_model->getIndustries();
 		$data = $this->public_model->getPublicProf($id);
 		$skills = $this->public_model->getMySkills($id);
-
+		$awards = $this->public_model->getMyAwards($id);
+		$works = $this->public_model->getMyWork($id);
+		$work_type= $this->public_model->getWorkTypes();
+		$this->template->load_sub('work_type', $work_type);
+		$this->template->load_sub('awards', $awards);
+		$this->template->load_sub('works', $works);
 		$this->template->load_sub('skills', $skills);
 		$this->template->load_sub('industries', $industry);
 		$this->template->load_sub('public_details', $data);
@@ -59,11 +64,13 @@ class PublicProfile extends MX_Controller {
 		$r = $this->public_model->updatePubProf($id);
 			if($r){
 				echo json_encode( array(
-					'success' => 201
+					'success' => TRUE,
+					'data' => $r
 				));
 			}
 	}
 	public function updatePublicIndustry(){
+		header("Content-Type : application/json");
 		$id = auth()->user_id;
 		$r = $this->public_model->updatePublicIndustry($id);
 			if($r){
@@ -113,30 +120,48 @@ class PublicProfile extends MX_Controller {
 		// ));
 		// exit;
 	}
+
+	public function getSkillsJob(){
+		$r = $this->public_model->getSkillsJob();
+		echo json_encode(array('results'=>$r));
+		exit;
+	}
 	public function createSkills(){
 		$skills = $this->input->post('skills');
-		$checkSkill = $this->public_model->checkSkills($skills);
 
-		if($checkSkill){
-			$data = array(
-				'user_id' => auth()->id,
-				'skills_id' => $checkSkill->id
-			);
-			$skillsInMember = $this->public_model->createSkillsInMember($data ,$checkSkill->id);
-			echo json_encode(array('success'=>True, 'data'=>$checkSkill->title, 'id'=>$skillsInMember));
-			exit;
-		}else{
-			$skill_id = $this->public_model->createSkills($skills);
-			$data = array(
-				'user_id' => auth()->id,
-				'skills_id' => $skill_id
-			);
-			$skillsInMember = $this->public_model->createSkillsInMember($data, "");
-			echo json_encode(array('success'=>True, 'data'=>$skills, 'id'=>$skillsInMember));
-			exit;
-		}
+		$data = array(
+			'user_id' => auth()->id,
+			'skills_id' => $checkSkill->id
+		);
+
+		$removeSkills = $this->public_model->removeSkills();
+		$skillsInMember = $this->public_model->createSkillsInMember($skills);
+
+		$skillsCreatetoMember = $this->public_model->createSkillsToMember($skillsInMember);
+		$skills = $this->public_model->getMySkills(auth()->id);
+		echo json_encode(array('success'=>True, 'data'=>  $skills));
+		exit;
 
 	}
+
+	public function createAward(){
+		$check = $this->public_model->addAward();
+		if($check){
+			echo json_encode(array('success'=>TRUE, 'data'=>$check));
+		}
+	}
+
+	public function deleteAward($id){
+		$deleteAward = $this->public_model->deleteAward($id);
+		if($deleteAward){
+			echo json_encode(array('success'=>true));
+			exit;
+		}else{
+			echo json_encode(array('success'=>false));
+			exit;
+		}
+	}
+
 	public function deleteSkills($id){
 		$deleteSkills = $this->public_model->deleteSkills($id);
 		if($deleteSkills){

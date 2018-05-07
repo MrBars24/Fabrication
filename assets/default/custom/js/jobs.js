@@ -1,67 +1,105 @@
 $(document).ready(function() {
 
     //init();
-    var table = $(".pagination-jobs-container").initTable({
+    var table = $(".pagination-jobs-container").infiniteScroll({
         url: '/jobs/list',
-        pageContainer: ".pagination-jobs-bars",
+        loaderContainer:'.loader-container',
+		threshold:400,
+		limit: 10,
         search:{
             'status': $("[name='status']:checked").val(),
             'string': $("#search").val(),
             'category': $("#category").val(),
             'budget': $("#budget").val()
         },
+		onSuccessRequest: function() {
+			$('.pagination-jobs-container .read-more.loading').each(function(index,elem){
+				var elem = $(this);
+				elem.removeClass('loading');
+				elem.ellipsis({
+					lines: 3,             // force ellipsis after a certain number of lines. Default is 'auto'
+					ellipClass: 'ellip',  // class used for ellipsis wrapper and to namespace ellip line
+					responsive: true,      // set to true if you want ellipsis to update on window resize. Default is false
+					lastLineText: `<a href="#">Read More ...</a>`
+				});
+				elem.find('.ellip').addClass('job-desc-min'); 
+			})
+        },
         render: function(data) {
-            var container = ``;
-            if (data.length > 0) {
-                data.forEach(function(obj, index) {
-                    var string = obj.description;
-                    var length = 95;
-                    var trimmedString = string.length > length ? 
-                                        string.substring(0, length - 3) + "..." : 
-                                        string;
+            let container = ``;
+            if(data.length > 0){
+                data.forEach(function (obj, index) {
+                    //console.log(obj);
+                    var average = "";
+                    var average_color = "";
+                    if(obj.average_rating == 0 || obj.average_rating == "" || obj.average_rating == null){ average = "100"; } else{ average = (obj.average_rating * 20 ); }
+                    if(obj.average_rating == 0 || obj.average_rating == "" || obj.average_rating == null){ average_color = "#99abb4"; } else{ average_color = "#f8ce0b"; }
+                    var location = (obj.location == "" || obj.location == null) ? "No information" : obj.location;
+                    var img = (obj.avatar == "" || obj.avatar == null || obj.avatar == undefined) ? "/assets/images/log_icon_gray.png" : obj.avatar;
+                    var dt = format_date(obj.created_at);
+                    var budget_m = (obj.budget_max == null || obj.budget_max == "") ? "" : " - "+ obj.budget_max;
+                    var description = obj.description.substring(0,180);
+                    var tonnes = (obj.approx_tonnes == 0) ? "Not sure" : obj.approx_tonnes;
                     container += `
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                        <div class="card" style="min-height:400px;">
-                            <div class="col-sm-12 text-right mt-3">
-                                    <button type="button" data-id="${obj.id}" class="btn ${(obj.is_watchlist == 1) ? "btn-outline-danger btn-unbook" : "btn-bookmark"} btn-circle"><i class="fa fa-bookmark"></i> </button>
+                    <div class="col-6 col-job-card">
+                        <a class="text-dark" href="/jobs/${obj.id}">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="col-12 p-0">
+                                        <div class="col-12 text-right p-0">
+                                            <div class="d-flex justify-content-between">
+                                                <div class="text-left col-6">
+                                                    <small>Fabricator: <br><span class="font-weight-bold"><span data-window-location="/members/${obj.fabricator_id}" class="one-line text-dark btn-company-name">${obj.fullname}</span></span></small>
+                                                    <div class="d-flex ">
+                                                        <small>
+															<div class="fa stars-outer">
+																<div class="fa stars-inner" style="width:${average}%; color: ${average_color};">
+																</div>
+															</div>
+                                                        </small>
+														<!-- <br>
+                                                        <small>(${obj.review_count} reviews)</small> -->
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                        			<button class="btn ${ (obj.is_watchlist == 1) ? "btn-danger btn-unbook"  : "btn-bookmark"} btn-sm" type="button"> ${ (obj.is_watchlist == 1) ? "Unmark"  : "Mark"} as watchlist </button>
+													<button class="btn btn-sm frward mt-1" type="button">Forward to a friend</button>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 offset-3 p-3">
+                                                <img src="${img}" alt="" class="img-fluid img-job">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h4 class="one-line card-title mb-0 job-title font-weight-bold text-dark">${obj.title}</h4>
+                                    <h6 class="mb-0">${dt}</h6>
+                                    <h6 class="text-muted pt-1 mb-0">Budget : $ ${obj.budget_min} ${budget_m} </h6>
+                                    <div class=" job-description mt-2">
+                                        <div class="read-more loading overflow-hidden">
+                                          ${description}
+                                        </div>
+                                    </div>
+                                    <div class="row ">
+                                        <div class="col-6">
+                                            <small>Industry:<span class="font-weight-bold"> <br>${obj.project_category}</span></small><br>
+                                            <small>Tonnes:<span class="font-weight-bold"> ${tonnes}</span></small>
+                                        </div>
+                                        <div class="col-6 text-right">
+                                            <h6 class="text-dark mt-1">
+                                                <small class="d-block">Bids:<span class="font-weight-bold"> ${obj.bids}</span></small>
+                                                <small class="d-block"><i class="fa fa-map-marker"></i><span class="font-weight-bold"> ${location}</span></small>
+                                                <small class="d-block">Status: ${obj.status}</small>
+                                            </h6>
+                                        </div>
+                                    </div>
                                 </div>
-                            <div class="card-body">
-                                <h4 class="font-weight-bold mb-1 text-center">${obj.title}</h4>
-                                <p class="text-secondary text-center">${trimmedString}</p>
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <small class="text-secondary mb-0">PROJECT STATUS</small>
-                                            <h6 class="text-success text-uppercase font-weight-bold">${obj.status}</h6>
-                                            <small class="text-secondary mb-0">DISCIPLINE(S)</small>
-                                            <h6 class="text-dark font-weight-bold">Structural</h6>
-                                            <small class="text-secondary mb-0">FABRICATOR</small>
-                                            <h6 class="text-dark font-weight-bold"> ${obj.fullname} </h6>
-                                        </div>
-
-                                        <div class="col-sm-6">
-                                            <small class="text-secondary mb-0">CATEGORY</small>
-                                            <h6 class="text-dark font-weight-bold">${obj.bidding_type}</h6>
-                                            <small class="text-secondary mb-0">BIDDING CLOSES</small>
-                                            <h6 class="text-success font-weight-bold"><i class="fa fa-clock"></i> ${obj.bidding_expire_at}</h6>
-                                            <small class="text-secondary mb-0">BIDS</small>
-                                            <h6 class="text-dark font-weight-bold">${obj.accepted_bid}</h6>
-                                        </div>
-                                    </div>
-                                    <div class="" style="position:absolute; bottom:20px; transform: translate(100%,0);">
-                                        <a href="/jobs/${obj.id}" class="btn btn-warning text-dark mt-auto py-0"><span class="align-middle">Job Details</span><i class="fa fa-angle-right fa-2x align-middle text-truncate mt-auto"></i></a>
-                                    </div>
                             </div>
-                        </div>
-                    </div>`;
-                });
-            } else {
-                container += `
-                <div class="container d-flex justify-content-center align-items-center" style="height: 100px;">
-                    <div class="row h-100 d-flex justify-content-center align-items-center">
-                        <h1 class="text-dark ">NO JOB POST</h1>
+						</a>
                     </div>
-                </div>
-                `;
+                    `;
+                });
+            }else{
+                container = `<h1 class="text-center">NO JOBS POSTED</h1>`;
             }
             return container;
         }
@@ -145,7 +183,7 @@ $(document).ready(function() {
             'status': status
         };
 
-        table.search(params);
+        table.searchQuery(params);
         window.history.replaceState("", "Title", "/jobs?" + $.param(params));
     }
 

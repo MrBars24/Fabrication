@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <meta name="current" content="<?=date('Y-m-d h:i:s')?>">
+    <meta name="current" content="<?=date('Y-m-d H:i:s')?>">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/logo_favicon.png">
     <title>E-fab Market online - E-fab Market</title>
@@ -26,7 +26,7 @@
 </head>
 
 
-<body class="fix-header card-no-border logo-center <?php echo isset($additional_data['bodyClass']) ? $additional_data['bodyClass'] : '' ?>">
+<body class="fix-header card-no-border logo-center <?php echo isset($additional_data['body_class']) ? $additional_data['body_class'] : '' ?>">
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
     <!-- ============================================================== -->
@@ -84,52 +84,68 @@
                         <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark" href="#"><i class="mdi mdi-menu"></i></a> </li>
 
                         <li class="nav-item hidden-sm-down search-box"> <a class="nav-link hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
-                            <?= form_open('search' , array('class'=>' app-search')) ?>
-                                <input type="text" class="form-control" placeholder="Search Job List"> <a class="srh-btn"><i class ="ti-close"></i></a>
+                            <?= form_open('search/all' , array('class'=>' app-search','method'=>'GET')) ?>
+                                <input type="text" class="form-control" placeholder="Search Job List" name="q"> <a class="srh-btn"><i class ="ti-close"></i></a>
                             <?= form_close() ?>
                         </li>
-                         <li class="nav-item dropdown mega-dropdown"> <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="mdi mdi-view-grid"></i></a>
+                         <!--<li class="nav-item dropdown mega-dropdown"> <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="mdi mdi-view-grid"></i></a>
                             <div class="dropdown-menu scale-up-left">
-                                <div class="card card-outline-inverse">
-                                    <div class="card-header p-1 text-center">
-                                        <h2 class="m-1 text-white">e-fab Steel Fabrication Supply Chain</h2>
-                                        <p class="m-0 text-white">Lorem Lorem</p>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card card-outline-inverse">
+                                            <div class="card-header text-center">
+                                                <h2 class="m-1 text-white">e-fab Steel Fabrication Supply Chain</h2>
+                                                <p class="m-0 text-white">Lorem Lorem</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="card-body d-flex">
-                                        <div class="card  col-6 px-0 mr-1">
+                                    <div class="col-12 d-flex">
+                                        <div class="card col-6 px-0">
                                             <div class="card-body">
                                                 <h5 class="m-0 text-center">Project Post</h5>
                                                 <hr>
                                                 <ul class="list-unstyled">
-                                                    <li class="media border-0">
-                                                            <div class="media-body">
-                                                            <div class="row">
-                                                                <div class="col-sm-9">
-                                                                    <h4 class="mt-0 mb-0 font-weight-bold">Budget:</h4>
-                                                                    <small class="text-muted time">Tonnes:</small>
-                                                                    <small class="text-muted time">Category:</small>
-                                                                </div>
-                                                                <div class="col-sm-3 text-right">
+                                                    <?php for($i=0; $i<4; $i++): ?>
+                                                            <li class="media">
+                                                                <div class="media-body">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-9 d-flex flex-column">
+                                                                            <h4 class="mt-0 mb-0 font-weight-bold">fIRST TEST TODAY</h4>
+                                                                            <small class="text-muted time">Budget: <span class="mt-0 mb-0 text-dark font-weight-bold">$100 - $200</span></small>
+                                                                            <small class="text-muted time">Tonnes: <span class="mt-0 mb-0 text-dark font-weight-bold">10</span></small>
+                                                                            <small class="text-muted time">Category: <span class="mt-0 mb-0 text-dark font-weight-bold">Architecture</span></small>
+                                                                        </div>
+                                                                        <div class="col-sm-3 text-right">
 
-                                                                <small class="">Bid</small>
-                                                                    <h4 class="amount">6000</h4>
+                                                                        <small class="">Bid</small>
+                                                                            <h4 class="amount">6000</h4>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                            					</ul>
+                                                            </li>
+                                                    <?php endfor; ?>
+                                                </ul>
                                             </div>
                                         </div>
-                                        <div class="card col-6 px-0 ml-1">
+                                        <div class="card col-6 px-0 ">
                                             <div class="card-body">
                                                 <h5  class="m-0 text-center">Construction Professional</h5>
                                                 <hr>
-                                                Hello
+                                                <?php for($i=0; $i<4; $i++): ?>
+                                                <div class="d-flex flex-row comment-row border p-0 mb-1">
+                                                    <div class="p-2"><span class="round"><img src="../assets/images/users/1.jpg" alt="user" width="50"></span></div>
+                                                    <div class="comment-text w-100">
+                                                        <h5>James Anderson</h5>
+                                                        <p class="mb-1 m-t-10">Lorem Ipsum is simply dummy text of the printing and type setting industry. Lorem Ipsum has beenorem Ipsum is simply dummy text of the printing and type setting industry.</p>
+                                                    </div>
+                                                </div>
+                                                <?php endfor; ?>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                         </li>
                         <!-- ============================================================== -->
                         <!-- End Messages -->
@@ -165,13 +181,19 @@
                         <?php if(isset($_SESSION['user'])): ?>
                             <?php $this->load->view('frontend/partials/header/notification')?>
                         <?php endif; ?>
+
                         <?php if(!isset($_SESSION['user'])): ?>
+
+                          <?php if((get_current_endpoint() == 'login-register')): ?>
+                          <?php else: ?>
                                 <li class="nav-item mx-1">
                                     <a href="#" class="m-t-10 text-white" data-toggle="modal" data-target="#login" >Login</a>
                                 </li>
                                 <li class="nav-item mx-3">
                                     <a href="#" class="btn btn-success text-white" data-toggle="modal" data-target="#signupModal" data-whatever="@getbootstrap">Signup</a>
                                 </li>
+                          <?php endif; ?>
+
                         <?php else: ?>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="<?= avatar();?>" alt="user" class="profile-pic" /></a>
@@ -223,7 +245,11 @@
             <?= $content ?>
             <!-- Footer -->
             <?php if(!isset($error)): ?>
+				<?php $exclude = array('work','hire');
+					if(!in_array(get_current_endpoint(),$exclude)):
+				?>
                 <?php $this->load->view('frontend/partials/footer') ?>
+				<?php endif; ?>
             <?php endif; ?>
             <!-- End of Footer -->
         </div>
@@ -237,7 +263,7 @@
                         <h4 class="modal-title font-weight-bold" id="exampleModalLabel1">Register</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                     </div>
-                    <?= form_open('register/member', array('id'=> 'form-exp')); ?>
+                    <?= form_open('register/member', array('class'=> 'form-exp popup')); ?>
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-5 border-right">
@@ -261,24 +287,30 @@
                                 </div>
                                 <div class="col-7">
                                     <h3 class="font-weight-bold mt-3 font-13"> Your New Account Details </h3>
+
+                                    <div class="register-message">
+                                    </div>
+
+
+
                                     <div class="row p-1">
                                         <div class="col-6 form-group">
-                                            <input id="firstname-focus" type="text" class="form-control" placeholder="Firstname" name="firstname">
+                                            <input id="firstname-focus" required type="text" class="form-control" placeholder="First name" name="firstname">
                                         </div>
                                         <div class="col-6 form-group">
-                                            <input type="text" class="form-control" placeholder="Lastname" name="lastname">
+                                            <input type="text" required class="form-control" placeholder="Last name" name="lastname">
                                         </div>
                                         <div class="col-12 form-group">
-                                            <input type="text" class="form-control" placeholder="Username" name="username">
+                                            <input type="text" required class="form-control" placeholder="Username" name="username">
                                         </div>
                                         <div class="col-12 form-group">
-                                            <input type="text" class="form-control" placeholder="Email Address" name="email">
+                                            <input type="email" required class="form-control" placeholder="Email Address" name="email">
                                         </div>
                                         <div class="col-6 form-group">
-                                            <input type="password" class="form-control" placeholder="Password" name="pwd">
+                                            <input type="password" required class="form-control" placeholder="Password" name="pwd">
                                         </div>
                                         <div class="col-6 form-group">
-                                            <input type="password" class="form-control" placeholder="Re-Type Password" name="rpwd">
+                                            <input type="password" required class="form-control" placeholder="Re-Type Password" name="rpwd">
                                         </div>
                                     </div>
                                     <div class="form-group mb-0">
@@ -319,6 +351,9 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                     </div>
                     <?= form_open('login', array('id'=> 'form-login')); ?>
+                    <div class="row mt-4 alert-login-message">
+
+                    </div>
                         <div class="modal-body">
                             <h3 class="box-title m-b-20"></h3>
                             <div class="form-group">
@@ -348,7 +383,7 @@
                                     <div class="checkbox checkbox-primary pull-left p-t-0">
                                         <input id="remember-signup" type="checkbox">
                                         <label > Remember me </label>
-                                    </div> <a href="javascript:void(0)" id="to-recover" class="text-dark pull-right"><i class="fa fa-lock m-r-5"></i> Forgot pwd?</a> </div>
+                                    </div> <a href="/forgot-password" id="to-recover" class="text-dark pull-right"><i class="fa fa-lock m-r-5"></i> Forgot password?</a> </div>
                             </div>
                             <div class="form-group text-center m-t-20">
                                 <div class="col-xs-12">
@@ -366,7 +401,7 @@
                             </div>
                             <div class="form-group m-b-0">
                                 <div class="col-sm-12 text-center">
-                                    <div>Don't have an account? <a href="pages-register.html" class="text-info m-l-5"><b>Sign Up</b></a></div>
+                                    <div>Don't have an account? <a href="/login-register" class="text-info m-l-5"><b>Sign Up</b></a></div>
                                 </div>
                             </div>
                         </div>
@@ -388,14 +423,16 @@
     <script src="/assets/plugins/sticky-kit-master/dist/sticky-kit.min.js" ></script>
     <script src="/assets/plugins/sparkline/jquery.sparkline.min.js" ></script>
     <script src="/assets/plugins/toastr/build/toastr.min.js" ></script>
-    <script src="/assets/global.js" deferred></script>
+    <script src="/assets/plugins/pusher/pusher.min.js"></script>
+	<script src="/assets/global.js" deferred></script>
     <script src="/assets/default/js/custom.min.js" ></script>
     <script src="/assets/plugins/styleswitcher/jQuery.style.switcher.js" ></script>
     <script src="/assets/fb.js" ></script>
     <script src="/assets/default/custom/js/login.js" ></script>
-    <script src="/assets/default/custom/js/exp-reg.js" ></script>
+    <!--<script src="/assets/default/custom/js/exp-reg.js" ></script>-->
     <script src="/assets/default/custom/js/notification.js" ></script>
     <script src="/assets/plugins/moment/moment.js" ></script>
+    <script src="/assets/default/js/scrollify.js" ></script>
 
     <?php if(isset($add_js)){
           foreach($add_js as $js){ ?>

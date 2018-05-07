@@ -117,7 +117,15 @@
                                     <td>
                                         <h6><?= $job->title ?></h6>
                                     </td>
-                                    <td><span class="label label-<?=($job->status == 'open')?'primary':'danger'?>"><?=ucfirst($job->status)?></span></td>
+									<?php  
+									switch($job->status){
+										case 'open': $class = 'primary'; break;
+										case 'close': $class = 'danger'; break;
+										case 'awarded': $class = 'success'; break;
+										default : $class = '';
+									}
+									?>
+                                    <td><span class="label label-<?=$class?>"><?=ucfirst($job->status)?></span></td>
                                     <td><?=date_new_format($job->bidding_expire_at)?></td>
                                 </tr>
                                 <?php endforeach; ?>
@@ -145,14 +153,16 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach($recent_logged as $user): ?>
+                                <?php
+								
+								foreach($recent_logged as $user): ?>
                                 <tr>
-                                    <td style="width:50px;"><span class="round"><img src="/assets/images/No_Image_Available.png" alt="user" width="50"></span></td>
+                                    <td style="width:50px;"><span class="round"><img src="<?=print_image($user->avatar)?>" alt="user" width="50"></span></td>
                                     <td>
                                         <h6><?=$user->fullname?></h6><small class="text-muted"><?= date_new_format($user->last_login,'F j, Y h:i A') ?></small>
                                     </td>
-                                    <td><?=$user->my_posts?></td>
-                                    <td><?=$user->my_bids?></td>
+                                    <td><?=$user->my_total_posts?></td>
+                                    <td><?=$user->my_total_bids?></td>
                                 </tr>
                                 <?php endforeach; ?>
                             </tbody>

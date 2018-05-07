@@ -23,12 +23,12 @@ class Notification_model extends CI_model {
             $query = $query->where('id', $id);
             return $query->get()->row();
         }
-            
+
         if (NULL != $memberId) {
             $query = $query->where('user_id', $memberId);
         }
-        
-        
+
+
         // Include hidden
         if ( !$withHidden ) {
             $query = $query->where('hidden_at IS NULL', NULL, FALSE);
@@ -61,6 +61,7 @@ class Notification_model extends CI_model {
         $query = $this->db->select('COUNT(*) as count')
         ->from('notifications')
         ->where('read_at', NULL)
+        ->where('hidden_at', NULL)
         ->where('user_id', $userId)
         ->get();
 

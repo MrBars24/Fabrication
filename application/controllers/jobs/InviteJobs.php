@@ -17,12 +17,21 @@ class InviteJobs extends MX_Controller {
             'job_id' => $this->input->post('job_id'),
             'user_id' => $id
         );
+
+
         $result = $this->invite_model->invite($id, $data);
+
         if($result){
-            echo json_encode(array(
-                'success' => TRUE
-            ));
-            exit;
+          $this->load->library('Notification');
+          $this->notification->use('new_job_invite')->send($id, array(
+              'job_id' => $this->input->post('job_id')
+            )
+          );
+
+          echo json_encode(array(
+              'success' => TRUE
+          ));
+          exit;
         }else{
             echo json_encode(array(
                 'success' => FALSE

@@ -18,7 +18,7 @@ class Training_model extends MX_Model{
             $offset = $_GET['page'];
         }
 
-        $where = array("is_deleted"=>0);
+        $where = array("is_deleted"=>0,"member_id"=>auth()->id);
         $q = $this->getIndexDataCount("trainings",$limit,$offset,'created_at','DESC',$where);
 
         return $q;
